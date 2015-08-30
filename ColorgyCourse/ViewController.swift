@@ -144,7 +144,7 @@ class ViewController: UIViewController {
         })
         
         println(UIDevice.currentDevice().name)
-        
+        self.view.addSubview(AddCourseSuccessfulView())
     }
     
     func tap() {
