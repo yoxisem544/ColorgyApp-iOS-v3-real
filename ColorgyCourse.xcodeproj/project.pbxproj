@@ -41,6 +41,8 @@
 		63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */; };
 		63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */; };
 		63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */; };
+		63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */; };
+		63FBCC711B934D3000B3084F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC701B934D3000B3084F /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,11 @@
 		63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		63FBCC691B93470700B3084F /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		63FBCC6B1B934CCB00B3084F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.0.0.a; sourceTree = "<group>"; };
+		63FBCC6F1B934D3000B3084F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		63FBCC701B934D3000B3084F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */,
+				63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */,
 				63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */,
 				5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */,
 			);
@@ -172,6 +180,8 @@
 				63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */,
 				63FBCC1C1B9345B800B3084F /* LaunchScreen.xib */,
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
+				63FBCC6F1B934D3000B3084F /* Reachability.h */,
+				63FBCC701B934D3000B3084F /* Reachability.m */,
 				63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */,
 				63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */,
 				63FBCC0E1B9345B800B3084F /* Supporting Files */,
@@ -182,6 +192,9 @@
 		63FBCC0E1B9345B800B3084F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				63FBCC6B1B934CCB00B3084F /* Flurry.h */,
+				63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */,
+				63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */,
 				63FBCC0F1B9345B800B3084F /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -381,6 +394,7 @@
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
+				63FBCC711B934D3000B3084F /* Reachability.m in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
@@ -535,6 +549,10 @@
 				INFOPLIST_FILE = ColorgyCourse/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColorgyCourse",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 			};
@@ -553,6 +571,10 @@
 				INFOPLIST_FILE = ColorgyCourse/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColorgyCourse",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 			};

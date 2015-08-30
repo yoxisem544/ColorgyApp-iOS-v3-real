@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>6FBC57E6-DE42-4DF3-A529-6A7D6C3E3FC9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ColorgyCourse</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>75CEC6E8A26E906A70DD54D56F1415275918D033</key>
+		<string>https://github.com/yoxisem544/ColorgyApp-iOS-v3-real.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ColorgyCourse.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>75CEC6E8A26E906A70DD54D56F1415275918D033</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/yoxisem544/ColorgyApp-iOS-v3-real.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>75CEC6E8A26E906A70DD54D56F1415275918D033</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>75CEC6E8A26E906A70DD54D56F1415275918D033</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ColorgyCourse</string>
+		</dict>
+	</array>
+</dict>
+</plist>

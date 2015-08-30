@@ -14,4 +14,8 @@
 
 #import "AFNetworking.h"
 
+#import "Flurry.h"
+
+#import "Reachability.h"
+
 #endif
