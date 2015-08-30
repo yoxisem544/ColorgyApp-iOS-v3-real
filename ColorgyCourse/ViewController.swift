@@ -122,7 +122,7 @@ class ViewController: UIViewController {
         
         var tm = TimeTableView(frame: self.view.frame)
         tm.delegate = self
-        self.view.addSubview(tm)
+//        self.view.addSubview(tm)
         
         
 //        ColorgyAPI.getCourseRawDataObjectWithCourseCode("1041-AC5007701", completionHandler: { (courseRawDataObject) -> Void in

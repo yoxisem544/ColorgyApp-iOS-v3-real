@@ -43,6 +43,7 @@
 		63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */; };
 		63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */; };
 		63FBCC711B934D3000B3084F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC701B934D3000B3084F /* Reachability.m */; };
+		63FBCC731B935C0100B3084F /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC721B935C0100B3084F /* Mode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.0.0.a; sourceTree = "<group>"; };
 		63FBCC6F1B934D3000B3084F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		63FBCC701B934D3000B3084F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		63FBCC721B935C0100B3084F /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				63FBCC1A1B9345B800B3084F /* Images.xcassets */,
+				63FBCC721B935C0100B3084F /* Mode.swift */,
 				63FBCC331B9346D800B3084F /* StringExtension.swift */,
 				63FBCC341B9346D800B3084F /* ColorgyUser.swift */,
 				63FBCC351B9346D800B3084F /* UserSettings.swift */,
@@ -387,6 +390,7 @@
 				63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */,
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
+				63FBCC731B935C0100B3084F /* Mode.swift in Sources */,
 				63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */,
 				63FBCC601B9346D900B3084F /* PopView.swift in Sources */,
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
@@ -553,6 +557,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ColorgyCourse",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 			};
