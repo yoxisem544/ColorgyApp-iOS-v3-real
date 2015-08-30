@@ -9,5 +9,9 @@
 #ifndef ColorgyCourse_Header_h
 #define ColorgyCourse_Header_h
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+#import "AFNetworking.h"
 
 #endif

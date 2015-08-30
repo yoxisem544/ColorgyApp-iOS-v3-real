@@ -7,13 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
 		63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC101B9345B800B3084F /* AppDelegate.swift */; };
 		63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */; };
-		63FBCC161B9345B800B3084F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC151B9345B800B3084F /* ViewController.swift */; };
 		63FBCC191B9345B800B3084F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FBCC171B9345B800B3084F /* Main.storyboard */; };
 		63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63FBCC1A1B9345B800B3084F /* Images.xcassets */; };
 		63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63FBCC1C1B9345B800B3084F /* LaunchScreen.xib */; };
 		63FBCC2A1B9345B800B3084F /* ColorgyCourseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC291B9345B800B3084F /* ColorgyCourseTests.swift */; };
+		63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC331B9346D800B3084F /* StringExtension.swift */; };
+		63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC341B9346D800B3084F /* ColorgyUser.swift */; };
+		63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC351B9346D800B3084F /* UserSettings.swift */; };
+		63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */; };
+		63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC371B9346D800B3084F /* PeriodDataObject.swift */; };
+		63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC381B9346D800B3084F /* ColorgyAPI.swift */; };
+		63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */; };
+		63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */; };
+		63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */; };
+		63FBCC551B9346D900B3084F /* LocalCachingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3C1B9346D800B3084F /* LocalCachingData.swift */; };
+		63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3D1B9346D800B3084F /* CourseDB.swift */; };
+		63FBCC571B9346D900B3084F /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3E1B9346D800B3084F /* Course.swift */; };
+		63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */; };
+		63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */; };
+		63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC411B9346D800B3084F /* UserCourseObject.swift */; };
+		63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */; };
+		63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */; };
+		63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC441B9346D800B3084F /* ColorgyLogin.swift */; };
+		63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */; };
+		63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC461B9346D900B3084F /* ViewController.swift */; };
+		63FBCC601B9346D900B3084F /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC471B9346D900B3084F /* PopView.swift */; };
+		63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC481B9346D900B3084F /* TimeTableView.swift */; };
+		63FBCC621B9346D900B3084F /* CourseCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC491B9346D900B3084F /* CourseCellView.swift */; };
+		63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */; };
+		63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */; };
+		63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */; };
+		63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +54,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.release.xcconfig"; sourceTree = "<group>"; };
+		2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.debug.xcconfig"; sourceTree = "<group>"; };
+		2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColorgyCourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorgyCourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FBCC0F1B9345B800B3084F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FBCC101B9345B800B3084F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63FBCC131B9345B800B3084F /* ColorgyCourse.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse.xcdatamodel; sourceTree = "<group>"; };
-		63FBCC151B9345B800B3084F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		63FBCC181B9345B800B3084F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63FBCC1A1B9345B800B3084F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63FBCC1D1B9345B800B3084F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		63FBCC231B9345B800B3084F /* ColorgyCourseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColorgyCourseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FBCC281B9345B800B3084F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FBCC291B9345B800B3084F /* ColorgyCourseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorgyCourseTests.swift; sourceTree = "<group>"; };
+		63FBCC331B9346D800B3084F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		63FBCC341B9346D800B3084F /* ColorgyUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyUser.swift; sourceTree = "<group>"; };
+		63FBCC351B9346D800B3084F /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyErrorType.swift; sourceTree = "<group>"; };
+		63FBCC371B9346D800B3084F /* PeriodDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeriodDataObject.swift; sourceTree = "<group>"; };
+		63FBCC381B9346D800B3084F /* ColorgyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyAPI.swift; sourceTree = "<group>"; };
+		63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyAPIResults.swift; sourceTree = "<group>"; };
+		63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyAPITrafficControlCenter.swift; sourceTree = "<group>"; };
+		63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetwrokQualityDetector.swift; sourceTree = "<group>"; };
+		63FBCC3C1B9346D800B3084F /* LocalCachingData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCachingData.swift; sourceTree = "<group>"; };
+		63FBCC3D1B9346D800B3084F /* CourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDB.swift; sourceTree = "<group>"; };
+		63FBCC3E1B9346D800B3084F /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseRawDataObject.swift; sourceTree = "<group>"; };
+		63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseRawDataArray.swift; sourceTree = "<group>"; };
+		63FBCC411B9346D800B3084F /* UserCourseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCourseObject.swift; sourceTree = "<group>"; };
+		63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCourseObjectArray.swift; sourceTree = "<group>"; };
+		63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDBManagedObject.swift; sourceTree = "<group>"; };
+		63FBCC441B9346D800B3084F /* ColorgyLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyLogin.swift; sourceTree = "<group>"; };
+		63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyLoginResult.swift; sourceTree = "<group>"; };
+		63FBCC461B9346D900B3084F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		63FBCC471B9346D900B3084F /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
+		63FBCC481B9346D900B3084F /* TimeTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
+		63FBCC491B9346D900B3084F /* CourseCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCellView.swift; sourceTree = "<group>"; };
+		63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONExtension.swift; sourceTree = "<group>"; };
+		63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		63FBCC691B93470700B3084F /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +102,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */,
+				63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */,
+				5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,9 +121,12 @@
 		63FBCC021B9345B800B3084F = {
 			isa = PBXGroup;
 			children = (
+				63FBCC691B93470700B3084F /* Header.h */,
 				63FBCC0D1B9345B800B3084F /* ColorgyCourse */,
 				63FBCC261B9345B800B3084F /* ColorgyCourseTests */,
 				63FBCC0C1B9345B800B3084F /* Products */,
+				B6CB8FEC8A15997DD6298A25 /* Pods */,
+				D3696DBF4F008F5A9563B415 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,11 +143,37 @@
 			isa = PBXGroup;
 			children = (
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
-				63FBCC151B9345B800B3084F /* ViewController.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				63FBCC1A1B9345B800B3084F /* Images.xcassets */,
+				63FBCC331B9346D800B3084F /* StringExtension.swift */,
+				63FBCC341B9346D800B3084F /* ColorgyUser.swift */,
+				63FBCC351B9346D800B3084F /* UserSettings.swift */,
+				63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */,
+				63FBCC371B9346D800B3084F /* PeriodDataObject.swift */,
+				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
+				63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */,
+				63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */,
+				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
+				63FBCC3C1B9346D800B3084F /* LocalCachingData.swift */,
+				63FBCC3D1B9346D800B3084F /* CourseDB.swift */,
+				63FBCC3E1B9346D800B3084F /* Course.swift */,
+				63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */,
+				63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */,
+				63FBCC411B9346D800B3084F /* UserCourseObject.swift */,
+				63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */,
+				63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */,
+				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
+				63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */,
+				63FBCC461B9346D900B3084F /* ViewController.swift */,
+				63FBCC471B9346D900B3084F /* PopView.swift */,
+				63FBCC481B9346D900B3084F /* TimeTableView.swift */,
+				63FBCC491B9346D900B3084F /* CourseCellView.swift */,
+				63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */,
+				63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */,
 				63FBCC1C1B9345B800B3084F /* LaunchScreen.xib */,
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
+				63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */,
+				63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */,
 				63FBCC0E1B9345B800B3084F /* Supporting Files */,
 			);
 			path = ColorgyCourse;
@@ -115,6 +204,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B6CB8FEC8A15997DD6298A25 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */,
+				130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D3696DBF4F008F5A9563B415 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,9 +228,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63FBCC2D1B9345B800B3084F /* Build configuration list for PBXNativeTarget "ColorgyCourse" */;
 			buildPhases = (
+				45EB93122BF6A527FE64291B /* Check Pods Manifest.lock */,
 				63FBCC071B9345B800B3084F /* Sources */,
 				63FBCC081B9345B800B3084F /* Frameworks */,
 				63FBCC091B9345B800B3084F /* Resources */,
+				EE3AB707EF51D6D745D55316 /* Copy Pods Resources */,
+				63FBCC6A1B93498800B3084F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -164,6 +273,7 @@
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -210,14 +320,84 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		45EB93122BF6A527FE64291B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		63FBCC6A1B93498800B3084F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" e709dd3229ee919ed0fef9ac4423afa4c9bae156 2fbc1d63ab59663379a655410b55e15089849de3798b93b390afc2613c3a9bb4";
+		};
+		EE3AB707EF51D6D745D55316 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		63FBCC071B9345B800B3084F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63FBCC161B9345B800B3084F /* ViewController.swift in Sources */,
+				63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */,
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
+				63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */,
+				63FBCC601B9346D900B3084F /* PopView.swift in Sources */,
+				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
+				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
+				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
+				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
+				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
+				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
+				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
+				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
+				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
+				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
+				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
+				63FBCC571B9346D900B3084F /* Course.swift in Sources */,
+				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
+				63FBCC621B9346D900B3084F /* CourseCellView.swift in Sources */,
+				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
+				63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */,
+				63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */,
+				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
+				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
+				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
+				63FBCC551B9346D900B3084F /* LocalCachingData.swift in Sources */,
+				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,21 +524,37 @@
 		};
 		63FBCC2E1B9345B800B3084F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColorgyCourse",
+				);
 				INFOPLIST_FILE = ColorgyCourse/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 			};
 			name = Debug;
 		};
 		63FBCC2F1B9345B800B3084F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ColorgyCourse",
+				);
 				INFOPLIST_FILE = ColorgyCourse/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 			};
 			name = Release;
 		};
@@ -415,6 +611,7 @@
 				63FBCC2F1B9345B800B3084F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63FBCC301B9345B800B3084F /* Build configuration list for PBXNativeTarget "ColorgyCourseTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +620,7 @@
 				63FBCC321B9345B800B3084F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
