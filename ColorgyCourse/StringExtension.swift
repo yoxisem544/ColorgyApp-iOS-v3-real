@@ -16,4 +16,11 @@ extension String {
     var isValidURLString: Bool {
         return (NSURL(string: self) != nil)
     }
+    
+    var uuidEncode: String {
+        if let name = UIDevice.currentDevice().name.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
+            return ("\(name)").stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
+        }
+        return "no user device name".stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
+    }
 }

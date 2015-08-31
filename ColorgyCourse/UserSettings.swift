@@ -36,6 +36,8 @@ struct UserSettingKey {
     static let localCourseCachingData = "courseDataFromServer"
     // periods data
     static let periodsData = "SchoolPeriodsData"
+    // push notification
+    static let pushNotificationDeviceToken = "pushNotificationDeviceToken"
 }
 
 class UserSetting {
@@ -47,6 +49,14 @@ class UserSetting {
             return userid
         }
         return nil
+    }
+    
+    class func UserName() -> String {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let userName = ud.objectForKey(UserSettingKey.userName) as? String {
+            return userName
+        }
+        return "no user name"
     }
     
     class func UserPossibleOrganization() -> String? {
@@ -72,6 +82,22 @@ class UserSetting {
         }
         return nil
     }
+    
+    // MARK: - push notification
+    class func storePushNotificationDeviceToken(token: NSData) {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setObject(token, forKey: UserSettingKey.pushNotificationDeviceToken)
+        ud.synchronize()
+    }
+    
+    class func getPushNotificationDeviceToken() -> NSData? {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let token = ud.objectForKey(UserSettingKey.pushNotificationDeviceToken) as? NSData {
+            return token
+        }
+        return nil
+    }
+    
     // MARK: - get / store periods data
     class func storePeriodsData(periodDataObjects: [PeriodDataObject]?) {
         if let periodDataObjects = periodDataObjects {

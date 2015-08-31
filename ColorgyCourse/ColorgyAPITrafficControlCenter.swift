@@ -24,6 +24,12 @@ class ColorgyAPITrafficControlCenter {
     // if need refresh no background job is queueing.
     // while refreshing no job accepted
     
+    class func unQueueAllJobs() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setInteger(0, forKey: TrafficKey.BackgroundJobQueue)
+        ud.synchronize()
+    }
+    
     class func queueNewBackgroundJob() {
         let ud = NSUserDefaults.standardUserDefaults()
         var jobCount = ud.integerForKey(TrafficKey.BackgroundJobQueue)

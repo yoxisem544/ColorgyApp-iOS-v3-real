@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
+		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
+		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
+		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
+		63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */; };
+		63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC041B94BA7A0077580D /* testViewController.swift */; };
+		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC101B9345B800B3084F /* AppDelegate.swift */; };
 		63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */; };
 		63FBCC191B9345B800B3084F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FBCC171B9345B800B3084F /* Main.storyboard */; };
@@ -61,6 +67,12 @@
 		130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.release.xcconfig"; sourceTree = "<group>"; };
 		2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColorgyCourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
+		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
+		63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailInformationView.swift; sourceTree = "<group>"; };
+		63ABBC041B94BA7A0077580D /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorgyCourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FBCC0F1B9345B800B3084F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FBCC101B9345B800B3084F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +168,10 @@
 			children = (
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */,
+				63ABBC041B94BA7A0077580D /* testViewController.swift */,
+				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
+				63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */,
 				63FBCC1A1B9345B800B3084F /* Images.xcassets */,
 				63FBCC721B935C0100B3084F /* Mode.swift */,
 				63FBCC331B9346D800B3084F /* StringExtension.swift */,
@@ -187,10 +203,12 @@
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
 				63FBCC6F1B934D3000B3084F /* Reachability.h */,
 				63FBCC701B934D3000B3084F /* Reachability.m */,
+				63ABBBFA1B9477930077580D /* 1.jpg */,
 				63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */,
 				63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */,
 				63FBCC0E1B9345B800B3084F /* Supporting Files */,
 				63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */,
+				63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */,
 			);
 			path = ColorgyCourse;
 			sourceTree = "<group>";
@@ -287,6 +305,7 @@
 		63FBCC031B9345B800B3084F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = David;
 				TargetAttributes = {
@@ -324,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63ABBBFB1B9477930077580D /* 1.jpg in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
@@ -399,20 +419,25 @@
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
+				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63FBCC711B934D3000B3084F /* Reachability.m in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
+				63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
+				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
 				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
 				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
 				63FBCC571B9346D900B3084F /* Course.swift in Sources */,
+				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
 				63FBCC621B9346D900B3084F /* CourseCellView.swift in Sources */,
 				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
+				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
 				63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */,
 				63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */,
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,

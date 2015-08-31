@@ -21,16 +21,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        ColorgyAPITrafficControlCenter.unQueueAllJobs()
+        
         // crashlytics
-        Fabric.with([Crashlytics.self()])
+//        Fabric.with([Crashlytics.self()])
 
-        println(Release().mode)
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil))
+        UIApplication.sharedApplication().registerForRemoteNotifications()
         
         return true
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        println(error)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        UserSetting.storePushNotificationDeviceToken(deviceToken)
     }
 
     func applicationWillResignActive(application: UIApplication) {

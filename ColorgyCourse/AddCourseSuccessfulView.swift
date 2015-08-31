@@ -17,13 +17,17 @@ class AddCourseSuccessfulView: UIView {
         // Drawing code
     }
     */
+    
+    // private API
+    private var shapeLayer: CAShapeLayer!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
     convenience init() {
         self.init(frame: CGRectMake(0, 0, 130, 130))
-        var shapeLayer = CAShapeLayer()
+        shapeLayer = CAShapeLayer()
         var path = UIBezierPath()
         path.moveToPoint(CGPoint(x: 42, y: 49))
         path.addLineToPoint(CGPoint(x: 54, y: 61))
@@ -50,6 +54,14 @@ class AddCourseSuccessfulView: UIView {
         successLabel.frame.origin.y = 61+20
         
         self.layer.cornerRadius = 2.0
+    }
+    
+    func animate() {
+        var pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        pathAnimation.duration = 0.7
+        pathAnimation.fromValue = 0
+        pathAnimation.toValue = 1
+        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEndAnimation")
     }
 
     required init(coder aDecoder: NSCoder) {

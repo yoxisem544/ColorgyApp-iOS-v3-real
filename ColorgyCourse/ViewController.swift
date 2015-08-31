@@ -9,6 +9,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var stateString: UILabel!
 
     @IBOutlet weak var accesstokenTextField: UITextField!
     @IBAction func updateAccesstokenClicked(sender: AnyObject) {
@@ -144,8 +146,10 @@ class ViewController: UIViewController {
         })
         
         println(UIDevice.currentDevice().name)
-        self.view.addSubview(AddCourseSuccessfulView())
+        self.view.addSubview(acsView)
     }
+    
+    var acsView = AddCourseSuccessfulView()
     
     func tap() {
         self.view.endEditing(true)
@@ -153,10 +157,12 @@ class ViewController: UIViewController {
 
     @IBAction func refreshtokenclicked(sender: AnyObject) {
         println("refresh clicked")
+        self.stateString.text = "refresh clicked"
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
             ColorgyAPITrafficControlCenter.refreshAccessToken { (loginResult) -> Void in
                 if loginResult != nil {
                     println("refresh ended")
+                    self.stateString.text = "refresh ended"
                 }
             }
         }, unstable: { () -> Void in
@@ -178,16 +184,29 @@ class ViewController: UIViewController {
         NetwrokQualityDetector.getNetworkQuality { (quality) -> Void in
             if quality == NetworkQuality.HighSpeedNetwork {
                 println("Hi!")
+                self.stateString.text = "HighSpeedNetwork"
             } else if quality == NetworkQuality.NormalSpeedNetwork {
                 println("NormalSpeedNetwork!")
+                self.stateString.text = "NormalSpeedNetwork"
             } else if quality == NetworkQuality.LowSpeedNetwork {
                 println("LowSpeedNetwork!")
+                self.stateString.text = "LowSpeedNetwork"
             } else if quality == NetworkQuality.VeryBadNetwork {
                 println("VeryBadNetwork!")
+                self.stateString.text = "VeryBadNetwork"
             } else if quality == NetworkQuality.NoNetwork {
                 println("NoNetwork!")
+                self.stateString.text = "NoNetwork"
             }
         }
+    }
+    @IBAction func putnotitficationtoken(sender: AnyObject) {
+        ColorgyAPI.PUTdeviceToken { (state) -> Void in
+            self.stateString.text = state
+        }
+    }
+    @IBAction func checkanimation(sender: AnyObject) {
+        acsView.animate()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

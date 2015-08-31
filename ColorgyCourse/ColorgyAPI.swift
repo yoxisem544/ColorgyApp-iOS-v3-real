@@ -13,6 +13,44 @@ class ColorgyAPI {
     // what do i need here?
     // need to 
     
+    // push notification device token
+    class func PUTdeviceToken(completionHandler: (state: String) -> Void) {
+        if let token = UserSetting.getPushNotificationDeviceToken() {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                let afManager = AFHTTPSessionManager(baseURL: nil)
+                afManager.requestSerializer = AFJSONRequestSerializer()
+                afManager.responseSerializer = AFJSONResponseSerializer()
+                
+                // need uuid, device name, device type, device token 
+                let params = [
+                    "user_device": [
+                            "[type]": "ios",
+                            "[name]": UIDevice.currentDevice().name,
+                            "[device_id]": "\(token)"
+                        ]
+                ]
+                
+                let uuid = UserSetting.UserName().uuidEncode + UIDevice.currentDevice().name.uuidEncode
+
+                let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+                println(uuid)
+                println(params)
+                println(accesstoken)
+                afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                    println("Success")
+                    completionHandler(state: "Success")
+                    }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        println("fail \(error)")
+                        completionHandler(state: "fail")
+                })
+            } else {
+                completionHandler(state: "no accesstoken")
+            }
+        } else {
+            completionHandler(state: "no push notification device token")
+        }
+    }
+    
     // download whole bunch of courses data
     /// Get courses from server.
     ///
