@@ -13,6 +13,8 @@
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
 		63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */; };
 		63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC041B94BA7A0077580D /* testViewController.swift */; };
+		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
+		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC101B9345B800B3084F /* AppDelegate.swift */; };
 		63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */; };
@@ -72,6 +74,8 @@
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
 		63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailInformationView.swift; sourceTree = "<group>"; };
 		63ABBC041B94BA7A0077580D /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
+		63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailHeaderView.xib; sourceTree = "<group>"; };
+		63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailHeaderView.swift; sourceTree = "<group>"; };
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorgyCourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FBCC0F1B9345B800B3084F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -168,6 +172,8 @@
 			children = (
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */,
+				63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */,
 				63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */,
 				63ABBC041B94BA7A0077580D /* testViewController.swift */,
 				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
@@ -344,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63ABBBFB1B9477930077580D /* 1.jpg in Resources */,
+				63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
@@ -433,6 +440,7 @@
 				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
 				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
 				63FBCC571B9346D900B3084F /* Course.swift in Sources */,
+				63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */,
 				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
 				63FBCC621B9346D900B3084F /* CourseCellView.swift in Sources */,

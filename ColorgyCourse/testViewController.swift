@@ -14,8 +14,16 @@ class testViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var y = CourseDetailInformationView()
-        self.view.addSubview(y)
+        var y = NSBundle.mainBundle().loadNibNamed("CourseDetailHeaderView", owner: self, options: nil)
+        println(y)
+        let yo = y[0] as! CourseDetailHeaderView
+        yo.frame = self.view.frame
+        yo.frame = CGRectMake(20, 20, self.view.frame.width, 300)
+        yo.autoresizingMask = self.view.autoresizingMask
+        yo.translatesAutoresizingMaskIntoConstraints()
+        self.view.addSubview(yo)
+        yo.layer.borderColor = UIColor.redColor().CGColor
+        yo.layer.borderWidth = 10
     }
 
     override func didReceiveMemoryWarning() {
