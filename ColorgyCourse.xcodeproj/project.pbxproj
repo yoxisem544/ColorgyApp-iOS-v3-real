@@ -12,6 +12,7 @@
 		639D450B1B95E5F60053870D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D450A1B95E5F60053870D /* 3.jpg */; };
 		639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D450E1B95FA680053870D /* CourseCommentCell.swift */; };
 		639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D45101B95FAA30053870D /* CourseCommentViewController.swift */; };
+		639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D45121B9612230053870D /* TestStretchyViewController.swift */; };
 		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
 		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
@@ -77,6 +78,7 @@
 		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		639D450E1B95FA680053870D /* CourseCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentCell.swift; sourceTree = "<group>"; };
 		639D45101B95FAA30053870D /* CourseCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentViewController.swift; sourceTree = "<group>"; };
+		639D45121B9612230053870D /* TestStretchyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStretchyViewController.swift; sourceTree = "<group>"; };
 		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				639D45121B9612230053870D /* TestStretchyViewController.swift */,
 				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
 				63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */,
 				639D450E1B95FA680053870D /* CourseCommentCell.swift */,
@@ -455,6 +458,7 @@
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
 				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
 				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
+				639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */,
 				63FBCC571B9346D900B3084F /* Course.swift in Sources */,
 				63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */,
 				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,

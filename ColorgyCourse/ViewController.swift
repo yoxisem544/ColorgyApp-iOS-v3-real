@@ -220,6 +220,10 @@ extension ViewController: TimeTableViewDelegate {
     func timeTableView(userDidTapOnCell cell: CourseCellView) {
         println(cell.courseInfo.name)
     }
+    
+    func timeTableViewDidScroll(scrollView: UIScrollView) {
+        
+    }
 }
 
 extension ViewController: UITextFieldDelegate {

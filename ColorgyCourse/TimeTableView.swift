@@ -10,6 +10,7 @@ import UIKit
 
 protocol TimeTableViewDelegate {
     func timeTableView(userDidTapOnCell cell: CourseCellView)
+    func timeTableViewDidScroll(scrollView: UIScrollView)
 }
 
 class TimeTableView: UIView {
@@ -31,6 +32,27 @@ class TimeTableView: UIView {
     }
     
     var delegate: TimeTableViewDelegate!
+    var bounces: Bool! {
+        didSet {
+            println("didset bounces \(bounces)")
+            self.timetableContentScrollView.bounces = bounces
+            self.sessionSideBarScrollView.bounces = bounces
+            self.weekdayHeaderScrollView.bounces = bounces
+            println("didset bounces \(self.timetableContentScrollView.bounces) \(self.sessionSideBarScrollView.bounces) \(self.weekdayHeaderScrollView.bounces)")
+        }
+    }
+    
+    func expendFrameToFit() {
+        let tmHeight = self.timetableContentScrollView.contentSize.height
+        self.timetableContentScrollView.bounds.size = CGSize(width: self.timetableContentScrollView.bounds.width, height: tmHeight)
+        self.sessionSideBarScrollView.bounds.size = CGSize(width: self.sessionSideBarScrollView.bounds.width, height: tmHeight)
+        
+        self.timetableContentScrollView.frame.origin.y = self.weekdayHeaderHeight
+        self.sessionSideBarScrollView.frame.origin.y = self.weekdayHeaderHeight
+        
+        self.bounds.size = CGSize(width: self.bounds.width, height: tmHeight + self.weekdayHeaderHeight)
+        self.frame.origin = CGPointZero
+    }
     
     // setup course cell views
     private var courseCellViewsOnTimetable: [CourseCellView]?
@@ -106,9 +128,9 @@ class TimeTableView: UIView {
     private let courseCellSpacing: CGFloat = 2
     private let courseContainerWidth: CGFloat
     
-    private let weekdayHeaderHeight: CGFloat = 35
+    let weekdayHeaderHeight: CGFloat = 35
     
-    private var timetableContentScrollView: UIScrollView!
+    var timetableContentScrollView: UIScrollView!
     private var weekdayHeaderScrollView: UIScrollView!
     private var sessionSideBarScrollView: UIScrollView!
     
@@ -229,6 +251,12 @@ extension TimeTableView: UIScrollViewDelegate {
         } else if scrollView == self.sessionSideBarScrollView {
             self.timetableContentScrollView.contentOffset.y = self.sessionSideBarScrollView.contentOffset.y
         }
+        
+//        self.sessionSideBarScrollView.bounds.size = CGSize(width: self.sessionSideBarScrollView.bounds.width, height: self.bounds.height)
+//        self.timetableContentScrollView.bounds.size = CGSize(width: self.timetableContentScrollView.bounds.width, height: self.bounds.height)
+        
+        // delegate self timetable
+        delegate?.timeTableViewDidScroll(timetableContentScrollView)
     }
 }
 

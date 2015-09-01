@@ -550,6 +550,7 @@
                                                 <segment title="選擇課程"/>
                                                 <segment title="已選課程"/>
                                             </segments>
+                                            <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="SegementedControlValueChanged:" destination="Bgc-mQ-wie" eventType="valueChanged" id="KqW-96-ZNv"/>
                                             </connections>
@@ -613,6 +614,7 @@
                                                         <constraint firstAttribute="width" constant="52" id="SYy-bb-6HS"/>
                                                     </constraints>
                                                     <state key="normal" title="加入">
+                                                        <color key="titleColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
@@ -684,6 +686,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="addCourseButton" destination="2ht-56-RJV" id="8IX-Qy-fvT"/>
                                             <outlet property="bottomSeparatorLineView" destination="FY2-s2-VOU" id="wXq-cs-VYs"/>
                                             <outlet property="courseTitleLabel" destination="MSO-c0-KhF" id="rmM-Fe-1hI"/>
                                             <outlet property="lecturerImageView" destination="Hkz-Wj-i6P" id="JZw-59-AI2"/>
@@ -724,6 +727,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJS-B4-VoS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="189" y="1109"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="ZSw-Ib-ozm">
+            <objects>
+                <viewController id="1RY-S8-26C" customClass="TestStretchyViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="48s-qL-o5j"/>
+                        <viewControllerLayoutGuide type="bottom" id="hDy-LK-IYM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e8a-JB-5tb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="xkK-Pn-ZJr"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q1r-lD-9Pn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1939" y="376"/>
         </scene>
         <!--Item-->
         <scene sceneID="Wha-Di-67n">
@@ -772,7 +794,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJv-Fd-7Qe" userLabel="Content text label">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJv-Fd-7Qe" userLabel="Content text label">
                                                     <rect key="frame" x="16" y="77" width="560" height="58"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1044,8 +1066,8 @@
                         <segue destination="Bgc-mQ-wie" kind="relationship" relationship="viewControllers" id="xGC-zd-pi6"/>
                         <segue destination="OLe-6w-Txn" kind="relationship" relationship="viewControllers" id="ZZ4-9x-ugm"/>
                         <segue destination="nbg-Zb-ovO" kind="relationship" relationship="viewControllers" id="oU1-MH-Yel"/>
-                        <segue destination="Em5-AM-kdT" kind="relationship" relationship="viewControllers" id="kMG-tX-deI"/>
                         <segue destination="8OH-aQ-sLS" kind="relationship" relationship="viewControllers" id="UEf-1G-2cI"/>
+                        <segue destination="1RY-S8-26C" kind="relationship" relationship="viewControllers" id="xSg-P9-ZfN"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>

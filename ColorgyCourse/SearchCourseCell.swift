@@ -25,4 +25,16 @@ class SearchCourseCell: UITableViewCell {
     @IBOutlet weak var middleSeparatorLineView: UIView!
     @IBOutlet weak var bottomSeparatorLineView: UIView!
 
+    override func layoutSubviews() {
+        // configure button border
+        self.addCourseButton?.layer.borderWidth = 1.0
+        self.addCourseButton?.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
+        self.addCourseButton?.layer.cornerRadius = 4.0
+        
+        // bottom line 
+        self.bottomSeparatorLineView.backgroundColor = UIColor.clearColor()
+        
+        // cell configure
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
 }
