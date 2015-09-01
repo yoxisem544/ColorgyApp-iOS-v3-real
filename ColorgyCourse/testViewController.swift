@@ -18,12 +18,17 @@ class testViewController: UIViewController {
         println(y)
         let yo = y[0] as! CourseDetailHeaderView
         yo.frame = self.view.frame
-        yo.frame = CGRectMake(20, 20, self.view.frame.width, 300)
+        yo.frame = CGRectMake(0, 0, self.view.frame.width, 279)
         yo.autoresizingMask = self.view.autoresizingMask
         yo.translatesAutoresizingMaskIntoConstraints()
-        self.view.addSubview(yo)
-        yo.layer.borderColor = UIColor.redColor().CGColor
-        yo.layer.borderWidth = 10
+        
+        // scroll view 
+        var scrollView = UIScrollView(frame: self.view.frame)
+        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*2)
+        scrollView.backgroundColor = UIColor.lightGrayColor()
+        scrollView.addSubview(yo)
+        
+        self.view.addSubview(scrollView)
     }
 
     override func didReceiveMemoryWarning() {

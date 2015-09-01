@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
+		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
+		639D450B1B95E5F60053870D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D450A1B95E5F60053870D /* 3.jpg */; };
 		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
 		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
@@ -69,6 +71,8 @@
 		130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.release.xcconfig"; sourceTree = "<group>"; };
 		2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColorgyCourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
@@ -209,6 +213,8 @@
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
 				63FBCC6F1B934D3000B3084F /* Reachability.h */,
 				63FBCC701B934D3000B3084F /* Reachability.m */,
+				639D450A1B95E5F60053870D /* 3.jpg */,
+				639D45081B95E5E00053870D /* 2.jpg */,
 				63ABBBFA1B9477930077580D /* 1.jpg */,
 				63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */,
 				63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */,
@@ -351,9 +357,11 @@
 			files = (
 				63ABBBFB1B9477930077580D /* 1.jpg in Resources */,
 				63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */,
+				639D450B1B95E5F60053870D /* 3.jpg in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
+				639D45091B95E5E00053870D /* 2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
