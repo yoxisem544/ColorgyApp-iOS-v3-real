@@ -48,38 +48,48 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func GetMeAPI(sender: AnyObject) {
-        ColorgyAPI.me { (result, error) -> Void in
-            if error != nil {
-                println("error \(error)")
-            } else {
-                if let result = result {
-                    UserSetting.storeAPIMeResult(result: result)
-                    println("user now is \(ColorgyUser())")
-                }
-            }
+    @IBAction func checkCanlogout(sender: AnyObject) {
+        LogoutHelper.logoutPrepare(success: { () -> Void in
+            println("ready to logout")
+            LogoutHelper.logout({ () -> Void in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
+                self.presentViewController(vc, animated: true, completion: nil)
+            })
+        }) { () -> Void in
+            println("fail, not ready to logout")
         }
+    }
+    
+    @IBAction func GetMeAPI(sender: AnyObject) {
+        ColorgyAPI.me({ (result) -> Void in
+            UserSetting.storeAPIMeResult(result: result)
+            println("user now is \(ColorgyUser())")
+        }, failure: { () -> Void in
+            println("error getting me api")
+        })
     }
     
     @IBOutlet weak var getuseridtextfield: UITextField!
     @IBAction func getusercourses(sender: AnyObject) {
         if let id = self.getuseridtextfield.text {
             ColorgyAPI.getUserCoursesWithUserId(id, completionHandler: { (userCourseObjects) -> Void in
-                println("okgetcourse")
-
                 if let a = userCourseObjects {
                     for aa in a {
                         println(aa)
                     }
                 }
+            }, failure: { () -> Void in
+                println("fail to get user courses")
             })
         }
     }
     @IBAction func getselfcourses(sender: AnyObject) {
-        ColorgyAPI.getMeCourses { (userCourseObjects) -> Void in
-            println("幹幹幹")
+        ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
             println(userCourseObjects)
-        }
+        }, failure: { () -> Void in
+            println("幹幹幹")
+        })
     }
     @IBAction func downloadcoursescli(sender: AnyObject) {
         if let counts = self.coursecounttextfield.text.toInt() {
@@ -147,6 +157,18 @@ class ViewController: UIViewController {
         
         println(UIDevice.currentDevice().name)
         self.view.addSubview(acsView)
+        
+//        UserSetting.generateAndStoreDeviceUUID()
+//        UserSetting.setNeedDeletePushNotitficationDeviceToken()
+//        UserSetting.successfullyDeleteToken()
+//        BackgroundWorker().startJobs()
+        
+        UserSetting.generateAndStoreDeviceUUID()
+        LogoutHelper.logoutPrepare(success: { () -> Void in
+            println("ready to logout")
+            }, failure: { () -> Void in
+            println("not ready to logout")
+        })
     }
     
     var acsView = AddCourseSuccessfulView()
@@ -159,12 +181,14 @@ class ViewController: UIViewController {
         println("refresh clicked")
         self.stateString.text = "refresh clicked"
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
-            ColorgyAPITrafficControlCenter.refreshAccessToken { (loginResult) -> Void in
+            ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
                 if loginResult != nil {
                     println("refresh ended")
                     self.stateString.text = "refresh ended"
                 }
-            }
+            }, failure: { () -> Void in
+                
+            })
         }, unstable: { () -> Void in
             println("low speed")
         })
@@ -201,8 +225,10 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func putnotitficationtoken(sender: AnyObject) {
-        ColorgyAPI.PUTdeviceToken { (state) -> Void in
-            self.stateString.text = state
+        ColorgyAPI.PUTdeviceToken(success: { () -> Void in
+            println("put device token ok")
+        }) { () -> Void in
+            println("put device token fail")
         }
     }
     @IBAction func checkanimation(sender: AnyObject) {

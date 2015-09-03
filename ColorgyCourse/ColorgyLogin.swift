@@ -32,9 +32,10 @@ class ColorgyLogin {
                 if let token = result.token.tokenString {
                     println(token)
                     handler(token: token)
+                } else {
+                    handler(token: nil)
                 }
             }
-            handler(token: nil)
         })
     }
     

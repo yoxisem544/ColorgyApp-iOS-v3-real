@@ -24,10 +24,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ColorgyAPITrafficControlCenter.unQueueAllJobs()
         
         // crashlytics
-//        Fabric.with([Crashlytics.self()])
+        Fabric.with([Crashlytics.self()])
 
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil))
         UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        // show view
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if !UserSetting.isLogin() {
+            // need login
+            var vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        } else {
+            var vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        }
         
         return true
     }

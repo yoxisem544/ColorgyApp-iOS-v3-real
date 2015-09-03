@@ -97,4 +97,12 @@ class PeriodDataObject: Printable {
             return nil
         }
     }
+    
+    func timeOnSystem() -> (startAt: String?, endAt: String?) {
+        let timeArr = self.time.componentsSeparatedByString("-")
+        let startTime = timeArr.first
+        let endTime = timeArr.last
+        
+        return (startTime, endTime)
+    }
 }

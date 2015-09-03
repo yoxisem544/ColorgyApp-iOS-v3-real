@@ -41,7 +41,7 @@ class TestStretchyViewController: UIViewController {
         
         // add a imageview
         headerImageView = UIImageView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height / 2))
-        headerImageView.image = UIImage(named: "1.jpg")
+        headerImageView.image = UIImage(named: "4.jpg")
         headerImageView.contentMode = UIViewContentMode.ScaleAspectFill
         headerImageView.clipsToBounds = true
         backScrollV.addSubview(headerImageView)
@@ -58,7 +58,7 @@ class TestStretchyViewController: UIViewController {
             // enlarge
 //            println("headerImageViewHeight \(headerImageViewHeight)")
             headerImageView.bounds.size.height = headerImageViewHeight + yOffset
-            headerImageView.image = UIImage(named: "1.jpg")
+            headerImageView.image = UIImage(named: "4.jpg")
             headerImageView.frame.origin.y = -yOffset
         }
         

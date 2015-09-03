@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dmA-uD-mjY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -150,6 +150,15 @@
                                     <action selector="checkanimation:" destination="OLe-6w-Txn" eventType="touchUpInside" id="Kif-GC-Cb2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Vt-yg-VZ9">
+                                <rect key="frame" x="464" y="353" width="129" height="30"/>
+                                <state key="normal" title="Check can logout?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="checkCanlogout:" destination="OLe-6w-Txn" eventType="touchUpInside" id="pRT-2Z-BSA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -175,6 +184,7 @@
                             <constraint firstItem="rn6-PA-sE2" firstAttribute="leading" secondItem="lsL-cd-Fap" secondAttribute="leadingMargin" id="O1y-Uq-D47"/>
                             <constraint firstItem="piw-ri-X2x" firstAttribute="top" secondItem="fqR-Cj-3VT" secondAttribute="bottom" id="OhT-66-vbR"/>
                             <constraint firstItem="1il-CO-cgo" firstAttribute="top" secondItem="b4U-fb-cFb" secondAttribute="bottom" constant="8" id="QAn-6e-9Go"/>
+                            <constraint firstItem="0Vt-yg-VZ9" firstAttribute="top" secondItem="w5N-ok-TlS" secondAttribute="bottom" constant="8" id="Ru7-iV-NN8"/>
                             <constraint firstItem="ayT-QW-t1B" firstAttribute="trailing" secondItem="lsL-cd-Fap" secondAttribute="trailingMargin" id="SOq-5M-XPd"/>
                             <constraint firstItem="Jsj-xa-7jn" firstAttribute="leading" secondItem="lsL-cd-Fap" secondAttribute="leadingMargin" id="So0-tU-6nv"/>
                             <constraint firstItem="VCM-7F-ACT" firstAttribute="top" secondItem="BSu-ee-Emd" secondAttribute="bottom" constant="8" id="UIu-Bu-ZJH"/>
@@ -187,6 +197,7 @@
                             <constraint firstItem="egA-Ov-05Y" firstAttribute="top" secondItem="hBl-zq-Xgn" secondAttribute="bottom" constant="8" id="mUw-3P-QrV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w5N-ok-TlS" secondAttribute="trailing" constant="-10" id="njA-o3-vzS"/>
                             <constraint firstItem="hQq-12-Lb6" firstAttribute="leading" secondItem="lsL-cd-Fap" secondAttribute="leadingMargin" id="oFK-PW-zxW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Vt-yg-VZ9" secondAttribute="trailing" constant="-9" id="pif-rB-kSA"/>
                             <constraint firstItem="BSu-ee-Emd" firstAttribute="top" secondItem="piw-ri-X2x" secondAttribute="bottom" constant="8" id="qA6-qQ-knT"/>
                             <constraint firstItem="rn6-PA-sE2" firstAttribute="top" secondItem="7Mj-PY-QmP" secondAttribute="bottom" constant="8" id="qAR-WT-vGE"/>
                             <constraint firstItem="VCM-7F-ACT" firstAttribute="leading" secondItem="lsL-cd-Fap" secondAttribute="leadingMargin" id="qFo-Dn-YEd"/>
@@ -250,7 +261,7 @@
                                     <constraint firstAttribute="height" constant="47" id="lWq-hc-sNw"/>
                                 </constraints>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="快點通知你的同學來點名！" translatesAutoresizingMaskIntoConstraints="NO" id="yGl-Vb-nh8">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="快點通知你的同學來點名！" translatesAutoresizingMaskIntoConstraints="NO" id="yGl-Vb-nh8">
                                 <rect key="frame" x="87" y="80" width="497" height="512"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -1052,10 +1063,54 @@
             </objects>
             <point key="canvasLocation" x="-2074" y="1021"/>
         </scene>
+        <!--Test Login View Controller-->
+        <scene sceneID="gJ8-9l-gQk">
+            <objects>
+                <viewController storyboardIdentifier="TestLoginViewController" id="nV4-rk-Bkl" customClass="TestLoginViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yXt-4d-SXs"/>
+                        <viewControllerLayoutGuide type="bottom" id="x2v-Uo-tN8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XLa-GQ-dy0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hI-d5-uUG">
+                                <rect key="frame" x="272" y="104" width="57" height="30"/>
+                                <state key="normal" title="FB login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fblogin:" destination="nV4-rk-Bkl" eventType="touchUpInside" id="8f1-mo-x2b"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login status will show here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhp-4t-Enc">
+                                <rect key="frame" x="196" y="164" width="208" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6hI-d5-uUG" firstAttribute="top" secondItem="yXt-4d-SXs" secondAttribute="bottom" constant="84" id="9ru-uq-5c7"/>
+                            <constraint firstAttribute="centerX" secondItem="6hI-d5-uUG" secondAttribute="centerX" constant="-0.5" id="d14-D6-FF5"/>
+                            <constraint firstItem="Jhp-4t-Enc" firstAttribute="top" secondItem="6hI-d5-uUG" secondAttribute="bottom" constant="30" id="fe4-qV-guc"/>
+                            <constraint firstItem="Jhp-4t-Enc" firstAttribute="centerX" secondItem="6hI-d5-uUG" secondAttribute="centerX" constant="-0.5" id="gXK-W7-bEr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="Jhp-4t-Enc" id="Qgz-tV-6mq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="llw-LJ-zWb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1020" y="-127"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Pkd-jz-l42">
             <objects>
-                <tabBarController id="dmA-uD-mjY" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="dmA-uD-mjY" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="kAh-oL-Xn4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -1072,7 +1127,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-591" y="768"/>
+            <point key="canvasLocation" x="-567" y="795"/>
         </scene>
     </scenes>
     <resources>

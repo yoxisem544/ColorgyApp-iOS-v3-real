@@ -38,11 +38,24 @@ struct UserSettingKey {
     static let periodsData = "SchoolPeriodsData"
     // push notification
     static let pushNotificationDeviceToken = "pushNotificationDeviceToken"
+    static let deviceUUID = "pushNotificationDeviceUUID"
 }
 
 class UserSetting {
+    
+    // change login state
+    class func changeLoginStateSuccessfully() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(true, forKey: UserSettingKey.isLogin)
+        ud.synchronize()
+    }
 
     // MARK: - getters
+    class func isLogin() -> Bool {
+        let ud = NSUserDefaults.standardUserDefaults()
+        return ud.boolForKey(UserSettingKey.isLogin)
+    }
+    
     class func UserId() -> Int? {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userid = ud.objectForKey(UserSettingKey.userId) as? Int {
@@ -51,12 +64,12 @@ class UserSetting {
         return nil
     }
     
-    class func UserName() -> String {
+    class func UserName() -> String? {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userName = ud.objectForKey(UserSettingKey.userName) as? String {
             return userName
         }
-        return "no user name"
+        return nil
     }
     
     class func UserPossibleOrganization() -> String? {
@@ -94,6 +107,35 @@ class UserSetting {
         let ud = NSUserDefaults.standardUserDefaults()
         if let token = ud.objectForKey(UserSettingKey.pushNotificationDeviceToken) as? NSData {
             return token
+        }
+        return nil
+    }
+    
+    /// This method will generate a unique uuid of this device, according to username and device name.
+    /// This will be unique, and get set only **once**.
+    ///
+    /// **Dont delete this while logout, any reset of this uuid must via BackgroundWorker.**
+    class func generateAndStoreDeviceUUID() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        // if user has a username
+        if let username = UserSetting.UserName() {
+            // and doesn't have a device uuid set
+            if getDeviceUUID() == nil {
+                // generate and store one
+                let deviceUUID = username.uuidEncode + UIDevice.currentDevice().name.uuidEncode
+                ud.setObject(deviceUUID, forKey: UserSettingKey.deviceUUID)
+                ud.synchronize()
+            }
+        }
+    }
+    
+    /// A device alway have a uuid
+    /// **generateAndStoreDeviceUUID** must get called when user login
+    /// after logout, delete this uuid
+    class func getDeviceUUID() -> String? {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let uuid = ud.objectForKey(UserSettingKey.deviceUUID) as? String {
+            return uuid
         }
         return nil
     }
@@ -214,6 +256,10 @@ class UserSetting {
         ud.removeObjectForKey(UserSettingKey.localCourseCachingData)
         // period data
         ud.removeObjectForKey(UserSettingKey.periodsData)
+        // push notification
+        // put it to background worker
+//        self.setNeedDeletePushNotitficationDeviceToken()
+        ud.removeObjectForKey(UserSettingKey.deviceUUID)
         ud.synchronize()
     }
     // 2. refresh token expired logout

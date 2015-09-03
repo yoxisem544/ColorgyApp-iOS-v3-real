@@ -85,7 +85,7 @@ class ColorgyAPITrafficControlCenter {
     /// **Will auto save result if successfully login**
     ///
     /// :returns: loginResult:  ColorgyLoginResult?
-    class func refreshAccessToken(completionHandler: (loginResult: ColorgyLoginResult?) -> Void) {
+    class func refreshAccessToken(completionHandler: (loginResult: ColorgyLoginResult?) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -121,15 +121,18 @@ class ColorgyAPITrafficControlCenter {
                             UserSetting.refreshTokenExpiredUserSettingDeletion()
                             println(ColorgyErrorType.TrafficError.refreshTokenExpired)
                             
-                            completionHandler(loginResult: nil)
+//                            completionHandler(loginResult: nil)
+                            failure()
                     })
             } else {
                 println("no refresh token")
-                completionHandler(loginResult: nil)
+//                completionHandler(loginResult: nil)
+                failure()
             }
         } else {
             println("cant refresh")
-            completionHandler(loginResult: nil)
+//            completionHandler(loginResult: nil)
+            failure()
         }
     }
 }

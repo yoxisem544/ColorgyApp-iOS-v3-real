@@ -11,46 +11,143 @@ import Foundation
 class ColorgyAPI {
     
     // what do i need here?
-    // need to 
+    // need to
     
+    // MARK: - push notification device token
     // push notification device token
-    class func PUTdeviceToken(completionHandler: (state: String) -> Void) {
-        if let token = UserSetting.getPushNotificationDeviceToken() {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                let afManager = AFHTTPSessionManager(baseURL: nil)
-                afManager.requestSerializer = AFJSONRequestSerializer()
-                afManager.responseSerializer = AFJSONResponseSerializer()
-                
-                // need uuid, device name, device type, device token 
-                let params = [
-                    "user_device": [
-                            "[type]": "ios",
-                            "[name]": UIDevice.currentDevice().name,
-                            "[device_id]": "\(token)"
-                        ]
-                ]
-                
-                let uuid = UserSetting.UserName().uuidEncode + UIDevice.currentDevice().name.uuidEncode
-
-                let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
-                println(uuid)
-                println(params)
-                println(accesstoken)
-                afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                    println("Success")
-                    completionHandler(state: "Success")
-                    }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
-                        println("fail \(error)")
-                        completionHandler(state: "fail")
-                })
-            } else {
-                completionHandler(state: "no accesstoken")
-            }
+    class func PUTdeviceToken(#success: () -> Void, failure: () -> Void) {
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
         } else {
-            completionHandler(state: "no push notification device token")
+            if let token = UserSetting.getPushNotificationDeviceToken() {
+                if let accesstoken = UserSetting.UserAccessToken() {
+                    let afManager = AFHTTPSessionManager(baseURL: nil)
+                    afManager.requestSerializer = AFJSONRequestSerializer()
+                    afManager.responseSerializer = AFJSONResponseSerializer()
+                    
+                    // need uuid, device name, device type, device token 
+                    let params = [
+                        "user_device": [
+                                "[type]": "ios",
+                                "[name]": UIDevice.currentDevice().name,
+                                "[device_id]": "\(token)"
+                            ]
+                    ]
+                    
+                    var uuid = UserSetting.getDeviceUUID()
+                    if uuid == nil {
+                        UserSetting.generateAndStoreDeviceUUID()
+                        uuid = UserSetting.getDeviceUUID()
+                    }
+                    
+                    if let uuid = uuid {
+                    let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+                        println(uuid)
+                        println(params)
+                        println(accesstoken)
+                        afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                            println("Success")
+                            success()
+                            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                                println("fail \(error)")
+                                failure()
+                        })
+                    } else {
+                        failure()
+                    }
+                } else {
+                    failure()
+                }
+            } else {
+                failure()
+            }
         }
     }
     
+    /// Get all the token stored in server
+    class func GETdeviceToken(#success: (devices: [[String : String]]) -> Void, failure: () -> Void) {
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let token = UserSetting.getPushNotificationDeviceToken() {
+                if let accesstoken = UserSetting.UserAccessToken() {
+                    let afManager = AFHTTPSessionManager(baseURL: nil)
+                    afManager.requestSerializer = AFJSONRequestSerializer()
+                    afManager.responseSerializer = AFJSONResponseSerializer()
+                    
+                    let url = "https://colorgy.io:443/api/v1/me/devices.json?access_token=\(accesstoken)"
+                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                        let json = JSON(response)
+                        var devices = [[String : String]]()
+                        
+                        for (index: String, json: JSON) in json {
+                            if let name = json["name"].string {
+                                if let uuid = json["uuid"].string {
+                                    devices.append(["name": name, "uuid": uuid])
+                                }
+                            }
+                        }
+                        
+                        success(devices: devices)
+                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        println(error)
+                            failure()
+                    })
+                } else {
+                    failure()
+                }
+            } else {
+                // no device token
+                failure()
+            }
+        }
+    }
+    
+    /// Delete a uuid and push notification token set.
+    /// Always call this in background worker.
+    class func DELETEdeviceTokenAndPushNotificationPare(#success: () -> Void, failure: () -> Void) {
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                if let uuid = UserSetting.getDeviceUUID() {
+                    let afManager = AFHTTPSessionManager(baseURL: nil)
+                    afManager.requestSerializer = AFJSONRequestSerializer()
+                    afManager.responseSerializer = AFJSONResponseSerializer()
+                    
+                    println(uuid)
+                    let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+                    afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                        success()
+                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        failure()
+                    })
+                } else {
+                    println("no need delete uuid token pare")
+                    success()
+                }
+            } else {
+                println("no access token")
+                failure()
+            }
+        }
+    }
+    
+    // MARK: - check if token expired
+    /// Check if token has expired
+    class func checkIfTokenHasExpired(#unexpired: () -> Void, expired: () -> Void) {
+        ColorgyAPI.me({ (result) -> Void in
+            // still working
+            unexpired()
+        }, failure: { () -> Void in
+            expired()
+        })
+    }
+    
+    // MARK: - course API
     // download whole bunch of courses data
     /// Get courses from server.
     ///
@@ -273,7 +370,7 @@ class ColorgyAPI {
     /// 
     /// :returns: result: ColorgyAPIMeResult?, you can store it.
     /// :returns: error: An error if you got one, then handle it.
-    class func me(completionHandler: (result: ColorgyAPIMeResult?, error: AnyObject?) -> Void) {
+    class func me(completionHandler: (result: ColorgyAPIMeResult) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -283,7 +380,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             println(ColorgyErrorType.TrafficError.stillRefreshing)
-            completionHandler(result: nil, error: ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
                 let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
@@ -303,25 +400,31 @@ class ColorgyAPI {
                             // will pass in a json, then generate a result
                             let json = JSON(response)
                             println("ME get!")
-                            let result = ColorgyAPIMeResult(json: json)
-                            // return to main queue
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                completionHandler(result: result, error: nil)
-                            })
+                            if let result = ColorgyAPIMeResult(json: json) {
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    completionHandler(result: result)
+                                })
+                            } else {
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    failure
+                                })
+                            }
                         })
                         }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
                             println("fail to get me API")
-                            completionHandler(result: nil, error: "fail to get me API")
+                            failure()
                     })
                 } else {
                     println(ColorgyErrorType.invalidURLString)
-                    completionHandler(result: nil, error: ColorgyErrorType.invalidURLString)
+                    failure()
                 }
             } else {
-                completionHandler(result: nil, error: ColorgyErrorType.noAccessToken)
+                failure()
             }
         }
         
@@ -331,14 +434,14 @@ class ColorgyAPI {
     /// Get self courses from server.
     ///
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
-    class func getMeCourses(completionHanlder: (userCourseObjects: [UserCourseObject]?) -> Void) {
+    class func getMeCourses(completionHanlder: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userId = UserSetting.UserId() {
             let userIdString = String(userId)
-            ColorgyAPI.getUserCoursesWithUserId(userIdString, completionHandler: completionHanlder)
+            ColorgyAPI.getUserCoursesWithUserId(userIdString, completionHandler: completionHanlder, failure: failure)
         } else {
             println(ColorgyErrorType.noSuchUser)
-            completionHanlder(userCourseObjects: nil)
+            failure()
         }
     }
     // get other's courses
@@ -348,7 +451,7 @@ class ColorgyAPI {
     ///
     /// :param: userid: A specific user id
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
-    class func getUserCoursesWithUserId(userid: String, completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void) {
+    class func getUserCoursesWithUserId(userid: String, completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -356,7 +459,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             println(ColorgyErrorType.TrafficError.stillRefreshing)
-            completionHandler(userCourseObjects: nil)
+            failure()
         } else {
             let user = ColorgyUser()
             if let user = user {
@@ -388,19 +491,19 @@ class ColorgyAPI {
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
                                 println(ColorgyErrorType.APIFailure.failGetUserCourses)
-                                completionHandler(userCourseObjects: nil)
+                                failure()
                         })
                     } else {
                         println(ColorgyErrorType.invalidURLString)
-                        completionHandler(userCourseObjects: nil)
+                        failure()
                     }
                 } else {
                     println(ColorgyErrorType.noAccessToken)
-                    completionHandler(userCourseObjects: nil)
+                    failure()
                 }
             } else {
                 println(ColorgyErrorType.noSuchUser)
-                completionHandler(userCourseObjects: nil)
+                failure()
             }
         }
         
