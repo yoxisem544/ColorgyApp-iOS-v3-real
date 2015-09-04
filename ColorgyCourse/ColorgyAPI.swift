@@ -153,7 +153,7 @@ class ColorgyAPI {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, success: (courseRawDataDictionary: [[String : AnyObject]], json: JSON) -> Void, failure: () -> Void) {
+    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courseRawDataDictionary: [[String : AnyObject]], json: JSON) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -166,7 +166,7 @@ class ColorgyAPI {
             if let organization = UserSetting.UserPossibleOrganization() {
                 if let accesstoken = UserSetting.UserAccessToken() {
                     let coursesCount = count ?? 20000
-                    let url = "https://colorgy.io:443/api/v1/\(organization.lowercaseString)/courses.json?per_page=\(String(coursesCount))&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&access_token=\(accesstoken)"
+                    let url = "https://colorgy.io:443/api/v1/\(organization.lowercaseString)/courses.json?per_page=\(String(coursesCount))&&&filter%5Byear%5D=\(year)&filter%5Bterm%5D=\(term)&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&access_token=\(accesstoken)"
                     if url.isValidURLString {
                         // queue job
                         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
@@ -319,6 +319,7 @@ class ColorgyAPI {
                     })
                 } else {
                     println(ColorgyErrorType.invalidURLString)
+                    println(url)
                     completionHandler(userCourseObjects: nil)
                 }
             } else {
@@ -372,6 +373,69 @@ class ColorgyAPI {
             } else {
                 println(ColorgyErrorType.noAccessToken)
                 completionHandler(periodDataObjects: nil)
+            }
+        }
+    }
+    
+    /// You can simply get a user info API using this.
+    ///
+    /// :returns: result: ColorgyAPIMeResult?, you can store it.
+    /// :returns: error: An error if you got one, then handle it.
+    class func getUserInfo(#user_id: Int, success: (result: ColorgyAPIUserResult) -> Void, failure: () -> Void) {
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        println("getting user \(user_id) API")
+        
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                let url = "https://colorgy.io:443/api/v1/users/\(user_id).json?access_token=\(accesstoken)"
+                
+                if url.isValidURLString {
+                    // queue job
+                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                    // then start job
+                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                        // job ended
+                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                        // into background
+                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                            // then handle response
+                            println("me API successfully get")
+                            // will pass in a json, then generate a result
+                            let json = JSON(response)
+                            println("user \(user_id) get!")
+                            if let result = ColorgyAPIUserResult(json: json) {
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    // ok
+                                    success(result: result)
+                                })
+                            } else {
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    failure()
+                                })
+                            }
+                        })
+                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            // job ended
+                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                            // then handle response
+                            println("fail to get user \(user_id) API")
+                            failure()
+                    })
+                } else {
+                    println(ColorgyErrorType.invalidURLString)
+                    failure()
+                }
+            } else {
+                failure()
             }
         }
     }

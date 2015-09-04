@@ -9,7 +9,7 @@
         <!--Login View Controller-->
         <scene sceneID="o18-KD-aiY">
             <objects>
-                <viewController id="4HF-Ka-ckl" customClass="FBLoginViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Main Login View" id="4HF-Ka-ckl" customClass="FBLoginViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4BJ-4X-927"/>
                         <viewControllerLayoutGuide type="bottom" id="GE0-yb-MhE"/>
@@ -205,9 +205,6 @@
                                 <state key="normal" title="Update Token">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="updateAccesstokenClicked:" destination="OLe-6w-Txn" eventType="touchUpInside" id="5DQ-mx-Gch"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="fb token" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BSu-ee-Emd">
                                 <rect key="frame" x="16" y="58" width="498" height="30"/>
@@ -389,9 +386,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="kTb-UG-zsT"/>
                     <connections>
-                        <outlet property="accesstokenTextField" destination="piw-ri-X2x" id="DZH-zF-0Fi"/>
                         <outlet property="colorgyAccessTokenTextField" destination="PeO-DU-trx" id="q0G-Xs-EKl"/>
                         <outlet property="coursecounttextfield" destination="7Mj-PY-QmP" id="ffj-X2-D0h"/>
+                        <outlet property="deviceUUID" destination="piw-ri-X2x" id="XVE-Wk-CE9"/>
                         <outlet property="fbAccessTokenTextField" destination="BSu-ee-Emd" id="X1W-Kf-kKS"/>
                         <outlet property="getuseridtextfield" destination="YAD-t4-15j" id="3uX-5P-R3C"/>
                         <outlet property="stateString" destination="VCM-7F-ACT" id="8LW-LE-bAa"/>
@@ -399,6 +396,124 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q9g-Bh-Eb9" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Item-->
+        <scene sceneID="PDy-ru-2cc">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="WeL-yU-op6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="YA9-92-TzF"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IEE-sb-FIa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="7fG-gq-jbL" kind="relationship" relationship="rootViewController" id="2pS-mk-ikT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NDt-J3-71n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="215" y="1147"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="sQ4-2k-OIh">
+            <objects>
+                <viewController id="7fG-gq-jbL" customClass="TimeTableViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3SO-PY-hqZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="iaB-ZC-di2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DID-uN-ALm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe8-ph-jaJ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="03v-bJ-MGE"/>
+                                </constraints>
+                                <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="我的課表" id="dNZ-x5-ifO">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ypJ-94-dAL">
+                                            <connections>
+                                                <action selector="addCourseButtonClicked:" destination="7fG-gq-jbL" id="Unl-Qr-j3O"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Xe8-ph-jaJ" firstAttribute="top" secondItem="DID-uN-ALm" secondAttribute="top" id="CrK-68-8er"/>
+                            <constraint firstAttribute="trailing" secondItem="Xe8-ph-jaJ" secondAttribute="trailing" id="L7c-d0-l7F"/>
+                            <constraint firstItem="Xe8-ph-jaJ" firstAttribute="leading" secondItem="DID-uN-ALm" secondAttribute="leading" id="q4z-bx-ySE"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="DXd-Tp-Emg"/>
+                    <navigationItem key="navigationItem" id="z0W-Hj-kar"/>
+                    <connections>
+                        <segue destination="Bgc-mQ-wie" kind="show" identifier="Show Add Course" id="NNK-n9-lWU"/>
+                        <segue destination="N5z-L9-5a0" kind="show" identifier="Timetable Show Detail Info" id="iw3-Wa-rtI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dg8-qF-ftE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="860" y="1147"/>
+        </scene>
+        <!--Detail Course View Controller-->
+        <scene sceneID="rZn-wk-AXf">
+            <objects>
+                <viewController id="N5z-L9-5a0" customClass="DetailCourseViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="50d-Zd-Uc5"/>
+                        <viewControllerLayoutGuide type="bottom" id="PIu-12-vQK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6Wt-GJ-QKm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mci-eL-quh">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="Wgb-Ey-RNq"/>
+                                </constraints>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Title" id="K49-xi-Oms">
+                                        <barButtonItem key="leftBarButtonItem" image="backButton" id="Zzy-QB-cDz">
+                                            <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="backButtonClicked:" destination="N5z-L9-5a0" id="msB-gO-8xA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mci-eL-quh" firstAttribute="top" secondItem="6Wt-GJ-QKm" secondAttribute="top" id="Qan-dl-647"/>
+                            <constraint firstAttribute="trailing" secondItem="Mci-eL-quh" secondAttribute="trailing" id="UdY-PU-tYY"/>
+                            <constraint firstItem="Mci-eL-quh" firstAttribute="leading" secondItem="6Wt-GJ-QKm" secondAttribute="leading" id="bXF-JZ-Q91"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailNavigationItem" destination="K49-xi-Oms" id="vPN-Zo-rvf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wQ9-gv-O7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1234" y="2025"/>
         </scene>
         <!--Item-->
         <scene sceneID="51b-8V-mpt">
@@ -732,6 +847,12 @@
                                 <items>
                                     <navigationItem id="hv4-mf-yMG">
                                         <nil key="title"/>
+                                        <barButtonItem key="leftBarButtonItem" image="backButton" id="S5b-As-MUm">
+                                            <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="backButtonClicked:" destination="Bgc-mQ-wie" id="2pk-Bb-9Fa"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ajT-Vd-K0P">
                                             <rect key="frame" x="180" y="27" width="240" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -916,7 +1037,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJS-B4-VoS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="189" y="1109"/>
+            <point key="canvasLocation" x="1611" y="1147"/>
         </scene>
         <!--Item-->
         <scene sceneID="ZSw-Ib-ozm">
@@ -1297,11 +1418,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Bgc-mQ-wie" kind="relationship" relationship="viewControllers" id="xGC-zd-pi6"/>
                         <segue destination="OLe-6w-Txn" kind="relationship" relationship="viewControllers" id="ZZ4-9x-ugm"/>
                         <segue destination="nbg-Zb-ovO" kind="relationship" relationship="viewControllers" id="oU1-MH-Yel"/>
                         <segue destination="8OH-aQ-sLS" kind="relationship" relationship="viewControllers" id="UEf-1G-2cI"/>
                         <segue destination="1RY-S8-26C" kind="relationship" relationship="viewControllers" id="xSg-P9-ZfN"/>
+                        <segue destination="WeL-yU-op6" kind="relationship" relationship="viewControllers" id="2pv-XB-sXO"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1312,6 +1433,7 @@
     <resources>
         <image name="1.jpg" width="500" height="500"/>
         <image name="3.jpg" width="189" height="267"/>
+        <image name="backButton" width="12" height="20"/>
         <image name="closeButton" width="14" height="14"/>
         <image name="colorgyLogo" width="94" height="107"/>
         <image name="facebookLogin" width="249" height="44"/>

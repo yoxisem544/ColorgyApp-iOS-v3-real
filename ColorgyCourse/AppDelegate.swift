@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        if !UserSetting.isLogin() {
 //            // need login
-//            var vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
+//            var vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
 //            self.window?.rootViewController = vc
 //            self.window?.makeKeyAndVisible()
 //        } else {

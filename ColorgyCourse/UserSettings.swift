@@ -272,6 +272,7 @@ class UserSetting {
         ud.removeObjectForKey(UserSettingKey.isGuideShownToUser)
         // local caching data
         ud.removeObjectForKey(UserSettingKey.localCourseCachingData)
+        ud.removeObjectForKey(UserSettingKey.localCourseCachingDataDictionaries)
         // period data
         ud.removeObjectForKey(UserSettingKey.periodsData)
         // push notification

@@ -26,6 +26,7 @@ class SearchCourseViewController: UIViewController {
         searchControl = UISearchController(searchResultsController: nil)
         searchControl.searchResultsUpdater = self
         searchControl.searchBar.sizeToFit()
+        searchControl.dimsBackgroundDuringPresentation = false
         // assign to tableview header view
         searchCourseTableView.tableHeaderView = searchControl.searchBar
         
@@ -38,6 +39,8 @@ class SearchCourseViewController: UIViewController {
         courseSegementedControl.layer.cornerRadius = 0
         
         // configure navigation controller
+        
+        
 //        UserSetting.deleteLocalCourseDataDictionaries()
 //        UserSetting.deleteLocalCourseDataCaching()
         
@@ -78,7 +81,7 @@ class SearchCourseViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(alert, animated: true, completion: nil)
         })
-        ColorgyAPI.getSchoolCourseData(20000, success: { (courseRawDataDictionary, json) -> Void in
+        ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courseRawDataDictionary, json) -> Void in
             // ok!
             // save this
             UserSetting.storeRawCourseJSON(json)
@@ -110,6 +113,10 @@ class SearchCourseViewController: UIViewController {
     @IBAction func SegementedControlValueChanged(sender: UISegmentedControl) {
         
         println(sender.selectedSegmentIndex)
+    }
+    
+    @IBAction func backButtonClicked(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     private struct Storyboard {

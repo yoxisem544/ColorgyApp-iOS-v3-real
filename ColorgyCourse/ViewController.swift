@@ -12,10 +12,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var stateString: UILabel!
 
-    @IBOutlet weak var accesstokenTextField: UITextField!
-    @IBAction func updateAccesstokenClicked(sender: AnyObject) {
-        println(self.user?.accessToken)
-    }
+    @IBOutlet weak var deviceUUID: UITextField!
+    
     
     @IBOutlet weak var fbAccessTokenTextField: UITextField!
     @IBAction func LoginToFacebook(sender: UIButton) {
@@ -53,7 +51,7 @@ class ViewController: UIViewController {
             println("ready to logout")
             LogoutHelper.logout({ () -> Void in
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
+                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
                 self.presentViewController(vc, animated: true, completion: nil)
             })
         }) { () -> Void in
@@ -93,7 +91,7 @@ class ViewController: UIViewController {
     }
     @IBAction func downloadcoursescli(sender: AnyObject) {
         if let counts = self.coursecounttextfield.text.toInt() {
-            ColorgyAPI.getSchoolCourseData(counts, success: { (courseRawDataObjects, json) -> Void in
+            ColorgyAPI.getSchoolCourseData(counts, year: 2015, term: 1, success: { (courseRawDataObjects, json) -> Void in
                     println("ok fetch school course")
                 }, failure: {
                    println("fuck of the fail download course")
@@ -146,11 +144,11 @@ class ViewController: UIViewController {
 //            }
 //        })
         
-        ColorgyAPI.getSchoolCourseData(5, success: { (courseRawDataObjects, json) -> Void in
-            println("Get!")
-            }, failure: {
-              println("fuck fail Get!")
-        })
+//        ColorgyAPI.getSchoolCourseData(5, year: 2015, term: 1, success: { (courseRawDataObjects, json) -> Void in
+//            println("Get!")
+//            }, failure: {
+//              println("fuck fail Get!")
+//        })
         
         println(UIDevice.currentDevice().name)
         self.view.addSubview(acsView)
@@ -160,12 +158,14 @@ class ViewController: UIViewController {
 //        UserSetting.successfullyDeleteToken()
 //        BackgroundWorker().startJobs()
         
-        UserSetting.generateAndStoreDeviceUUID()
-        LogoutHelper.logoutPrepare(success: { () -> Void in
-            println("ready to logout")
-            }, failure: { () -> Void in
-            println("not ready to logout")
-        })
+
+//        LogoutHelper.logoutPrepare(success: { () -> Void in
+//            println("ready to logout")
+//            }, failure: { () -> Void in
+//            println("not ready to logout")
+//        })
+        
+        self.deviceUUID.text = UserSetting.getDeviceUUID()
     }
     
     var acsView = AddCourseSuccessfulView()
