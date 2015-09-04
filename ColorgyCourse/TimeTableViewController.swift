@@ -43,12 +43,22 @@ class TimeTableViewController: UIViewController {
             if let userCourseObjects = userCourseObjects {
                 for object in userCourseObjects {
                     ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
-                        if let courseRawDataObject = courseRawDataObject {
-                            if let course = Course(rawData: courseRawDataObject) {
-                                self.courses.append(course)
-                                self.timetableView.courses = self.courses
+                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                            if let courseRawDataObject = courseRawDataObject {
+                                if let course = Course(rawData: courseRawDataObject) {
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.courses.append(course)
+                                        var b = NSDate()
+                                        if userCourseObjects.count == self.courses.count {
+                                            self.timetableView.courses = self.courses
+                                        }
+                                        var now = NSDate().timeIntervalSinceDate(b)
+                                        println(now*1000)
+                                    })
+                                }
                             }
-                        }
+                        })
                     })
                 }
             }

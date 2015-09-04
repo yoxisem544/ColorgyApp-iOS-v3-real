@@ -58,7 +58,8 @@ class DetailCourseViewController: UIViewController {
         // test
         classmatesView = ClassmatesContainerView()
         classmatesView.frame.origin.y = 330
-        classmatesView.backgroundColor = UIColor.blueColor()
+//        classmatesView.backgroundColor = UIColor.blueColor()
+        classmatesView.delegate = self
         self.contentScrollView.addSubview(classmatesView)
     }
     
@@ -91,20 +92,24 @@ class DetailCourseViewController: UIViewController {
     @IBAction func backButtonClicked(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Show Classmate Timetable" {
+            let vc = segue.destinationViewController as! ClassmateTimeTableViewController
+            if let userCourseObject = sender as? UserCourseObject {
+                vc.userCourseObject = userCourseObject
+            }
+        }
     }
-    */
 
 }
 
 extension DetailCourseViewController : ClassmatesContainerViewDelegate {
     func classmatesContainerView(userDidTapOnUser userCourseObject: UserCourseObject) {
         println(userCourseObject)
+        self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }
 }

@@ -509,11 +509,30 @@
                     </view>
                     <connections>
                         <outlet property="detailNavigationItem" destination="K49-xi-Oms" id="vPN-Zo-rvf"/>
+                        <segue destination="K3c-Ak-t2R" kind="show" identifier="Show Classmate Timetable" id="8pc-uN-emN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wQ9-gv-O7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1234" y="2025"/>
+        </scene>
+        <!--Classmate Time Table View Controller-->
+        <scene sceneID="UDH-KL-9u8">
+            <objects>
+                <viewController id="K3c-Ak-t2R" customClass="ClassmateTimeTableViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TXA-aC-PeP"/>
+                        <viewControllerLayoutGuide type="bottom" id="F5m-sG-b5h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZY5-je-1di">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="29S-hS-95e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1978" y="2025"/>
         </scene>
         <!--Item-->
         <scene sceneID="51b-8V-mpt">
