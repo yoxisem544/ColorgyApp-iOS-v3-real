@@ -128,6 +128,97 @@ class Course: Printable {
         }
         self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations)
     }
+    
+    private struct Key {
+        // required
+        static let name = "name"
+        // TODO: uuid <-> code, this is not good
+        static let uuid = "code"
+        static let year = "year"
+        static let term = "term"
+        
+        // optional
+        static let credits = "credits"
+        static let lecturer = "lecturer"
+        // caution key is _type in json
+        static let type = "_type"
+        static let id = "id"
+        
+        static let day_1 = "day_1"
+        static let day_2 = "day_2"
+        static let day_3 = "day_3"
+        static let day_4 = "day_4"
+        static let day_5 = "day_5"
+        static let day_6 = "day_6"
+        static let day_7 = "day_7"
+        static let day_8 = "day_8"
+        static let day_9 = "day_9"
+        static let period_1 = "period_1"
+        static let period_2 = "period_2"
+        static let period_3 = "period_3"
+        static let period_4 = "period_4"
+        static let period_5 = "period_5"
+        static let period_6 = "period_6"
+        static let period_7 = "period_7"
+        static let period_8 = "period_8"
+        static let period_9 = "period_9"
+        static let location_1 = "location_1"
+        static let location_2 = "location_2"
+        static let location_3 = "location_3"
+        static let location_4 = "location_4"
+        static let location_5 = "location_5"
+        static let location_6 = "location_6"
+        static let location_7 = "location_7"
+        static let location_8 = "location_8"
+        static let location_9 = "location_9"
+    }
+    
+    convenience init?(dictionary: [String : AnyObject]?) {
+        // what do we need of a course?
+        var code: String? = nil
+        var name: String? = nil
+        var year: Int? = nil
+        var term: Int? = nil
+        var lecturer: String? = nil
+        var credits: Int? = nil
+        var _type: String? = nil
+        // how to configure location period ?
+        var days: [Int]? = nil
+        var periods: [Int]? = nil
+        var locations: [String]? = nil
+        
+        if let dictionary = dictionary {
+            // not a array
+            code = dictionary[Key.uuid] as? String
+            name = dictionary[Key.name] as? String
+            year = dictionary[Key.year] as? Int
+            term = dictionary[Key.term] as? Int
+            lecturer = dictionary[Key.lecturer] as? String
+            credits = dictionary[Key.credits] as? Int
+            _type = dictionary[Key.type] as? String
+            days = [Int]()
+            periods = [Int]()
+            locations = [String]()
+            // prepare data...
+            var daysRawData = [dictionary[Key.day_1] ,dictionary[Key.day_2] ,dictionary[Key.day_3] ,dictionary[Key.day_4] ,dictionary[Key.day_5] ,dictionary[Key.day_6] ,dictionary[Key.day_7] ,dictionary[Key.day_8] ,dictionary[Key.day_9]]
+            var periodsRawData = [dictionary[Key.period_1] ,dictionary[Key.period_2] ,dictionary[Key.period_3] ,dictionary[Key.period_4] ,dictionary[Key.period_5] ,dictionary[Key.period_6] ,dictionary[Key.period_7] ,dictionary[Key.period_8] ,dictionary[Key.period_9]]
+            var locationsRawData = [dictionary[Key.location_1] ,dictionary[Key.location_2] ,dictionary[Key.location_3] ,dictionary[Key.location_4] ,dictionary[Key.location_5] ,dictionary[Key.location_6] ,dictionary[Key.location_7] ,dictionary[Key.location_8] ,dictionary[Key.location_9]]
+            // loop
+            for index in 0..<9 {
+                if let day = daysRawData[index]  as? Int {
+                    days?.append(day)
+                }
+                if let period = periodsRawData[index]  as? Int {
+                    periods?.append(period)
+                }
+                if let location = locationsRawData[index]  as? String {
+                    locations?.append(location)
+                }
+            }
+        }
+        
+        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations)
+    }
 
     // dont know if always have data in to this init? considering....
 //    convenience init?(courseObject: CourseDBManagedObject) {
@@ -136,6 +227,7 @@ class Course: Printable {
     
     // functions?
     class func generateCourseArrayWithRawDataObjects(rawDataObjects: [CourseRawDataObject]) -> [Course]? {
+        var befor = NSDate()
         if rawDataObjects.count != 0 {
             var courses = [Course]()
             for rawDataObject in rawDataObjects {
@@ -143,6 +235,8 @@ class Course: Printable {
                     courses.append(course)
                 }
             }
+            var now = NSDate().timeIntervalSinceDate(befor)
+            println(now*1000)
             // check array length
             if courses.count == 0 {
                 // if this array contains on element, return nil
@@ -152,6 +246,46 @@ class Course: Printable {
             }
         } else {
              return nil
+        }
+        
+    }
+    
+    class func generateCourseArrayWithDictionaries(dictionaries: [[String : AnyObject]]?) -> [Course]? {
+        var befor = NSDate()
+        if let dictionaries = dictionaries {
+            var courses = [Course]()
+            
+            for dictionary in dictionaries {
+                if let course = Course(dictionary: dictionary) {
+                    courses.append(course)
+                }
+            }
+            
+            var now = NSDate().timeIntervalSinceDate(befor)
+            println("PPPP is \(now*1000)")
+            // check length
+            if courses.count == 0 {
+                return nil
+            } else {
+                return courses
+            }
+
+        } else {
+            return nil
+        }
+    }
+    
+    var periodsString: String {
+        get {
+            let weekdays = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            var temp = ""
+            if (days?.count != 0) && (periods?.count != 0) && days != nil && periods != nil {
+                for index in 0..<periods!.count {
+                    // cause day is 1~7
+                    temp += weekdays[days![index]] + "\(periods![index])"
+                }
+            }
+            return temp
         }
     }
 }

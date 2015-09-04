@@ -153,7 +153,7 @@ class ColorgyAPI {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, completionHandler: (courseRawDataObjects: [CourseRawDataObject]?, json: JSON?) -> Void) {
+    class func getSchoolCourseData(count: Int?, success: (courseRawDataDictionary: [[String : AnyObject]], json: JSON) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -161,7 +161,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             println(ColorgyErrorType.TrafficError.stillRefreshing)
-            completionHandler(courseRawDataObjects: nil, json: nil)
+            failure()
         } else {
             if let organization = UserSetting.UserPossibleOrganization() {
                 if let accesstoken = UserSetting.UserAccessToken() {
@@ -180,25 +180,37 @@ class ColorgyAPI {
                                 // then handle response
                                 let json = JSON(response)
                                 let courseRawDataArray = CourseRawDataArray(json: json)
-                                // return to main queue
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    completionHandler(courseRawDataObjects: courseRawDataArray.objects, json: json)
-                                })
+                                var dicts = [[String : AnyObject]]()
+                                if courseRawDataArray.objects != nil {
+                                    for object in courseRawDataArray.objects! {
+                                        dicts.append(object.dictionary)
+                                    }
+                                    // return to main queue
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        success(courseRawDataDictionary: dicts, json: json)
+                                    })
+                                } else {
+                                    // fail to generate objects
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        failure()
+                                    })
+                                }
+                                
                             })
                             }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                                 // job ended
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
                                 println(ColorgyErrorType.APIFailure.failDownloadCourses)
-                                completionHandler(courseRawDataObjects: nil, json: nil)
+                                failure()
                         })
                     } else {
                         println(ColorgyErrorType.invalidURLString)
-                        completionHandler(courseRawDataObjects: nil, json: nil)
+                        failure()
                     }
                 }
             } else {
-                completionHandler(courseRawDataObjects: nil, json: nil)
+                failure()
                 println(ColorgyErrorType.noOrganization)
             }
         }

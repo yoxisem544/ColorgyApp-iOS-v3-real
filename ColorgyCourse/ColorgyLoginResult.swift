@@ -30,7 +30,7 @@ class ColorgyLoginResult {
     /// Initialization: Pass in json, then will generate a ColorgyLoginResult
     ///
     /// You can simply store this to **UserSetting.storeLoginResult**
-    init(response: JSON?) {
+    init?(response: JSON?) {
         if let response = response {
             created_at = response[OAuthKey.created_at].int
             scope = response[OAuthKey.scope].string
@@ -38,6 +38,13 @@ class ColorgyLoginResult {
             access_token = response[OAuthKey.access_token].string
             refresh_token = response[OAuthKey.refresh_token].string
             expires_in = response[OAuthKey.expires_in].int
+            
+            if access_token == nil {
+                return nil
+            }
+            if refresh_token == nil {
+                 return nil
+            }
         }
     }
 }

@@ -93,10 +93,10 @@ class ViewController: UIViewController {
     }
     @IBAction func downloadcoursescli(sender: AnyObject) {
         if let counts = self.coursecounttextfield.text.toInt() {
-            ColorgyAPI.getSchoolCourseData(counts, completionHandler: { (courseRawDataObjects, json) -> Void in
-                if let rawdataobjects = courseRawDataObjects {
+            ColorgyAPI.getSchoolCourseData(counts, success: { (courseRawDataObjects, json) -> Void in
                     println("ok fetch school course")
-                }
+                }, failure: {
+                   println("fuck of the fail download course")
             })
         }
         
@@ -146,13 +146,10 @@ class ViewController: UIViewController {
 //            }
 //        })
         
-        ColorgyAPI.getSchoolCourseData(5, completionHandler: { (courseRawDataObjects, json) -> Void in
-            if let courseRawDataObjects = courseRawDataObjects {
-                println("Get!")
-                if let cs = Course.generateCourseArrayWithRawDataObjects(courseRawDataObjects) {
-                    tm.courses = cs
-                }
-            }
+        ColorgyAPI.getSchoolCourseData(5, success: { (courseRawDataObjects, json) -> Void in
+            println("Get!")
+            }, failure: {
+              println("fuck fail Get!")
         })
         
         println(UIDevice.currentDevice().name)

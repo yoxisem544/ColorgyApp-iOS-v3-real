@@ -30,18 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
         // show view
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if !UserSetting.isLogin() {
-            // need login
-            var vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        } else {
-            var vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        }
+//        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        if !UserSetting.isLogin() {
+//            // need login
+//            var vc = storyboard.instantiateViewControllerWithIdentifier("TestLoginViewController") as! TestLoginViewController
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
+//        } else {
+//            var vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
+//        }
         
         return true
     }

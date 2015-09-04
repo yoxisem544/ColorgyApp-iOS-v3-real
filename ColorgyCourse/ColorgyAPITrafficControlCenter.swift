@@ -108,9 +108,12 @@ class ColorgyAPITrafficControlCenter {
                     // change to refresing finish state
                     ColorgyAPITrafficControlCenter.changeRefreshingState()
                     let json = JSON(response)
-                    let result = ColorgyLoginResult(response: json)
-                    UserSetting.storeLoginResult(result: result)
-                    completionHandler(loginResult: result)
+                    if let result = ColorgyLoginResult(response: json) {
+                        UserSetting.storeLoginResult(result: result)
+                        completionHandler(loginResult: result)
+                    } else {
+                        failure()
+                    }
                     println("refresk okok")
                         }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                             // change to refresing finish state

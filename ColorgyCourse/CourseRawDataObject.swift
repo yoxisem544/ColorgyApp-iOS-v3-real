@@ -59,6 +59,57 @@ class CourseRawDataObject: Printable {
     var location_8: String?
     var location_9: String?
     
+    // dictionary getter
+    var dictionary: [String : AnyObject] {
+        get {
+            var temp = [String : AnyObject]()
+            
+            // required
+            temp[rawDataKey.name] = name
+            // TODO: uuid <-> code, this is not good
+            temp[rawDataKey.uuid] = uuid
+            temp[rawDataKey.year] = year
+            temp[rawDataKey.term] = term
+            
+            // optional
+            temp[rawDataKey.credits] = credits
+            temp[rawDataKey.lecturer] = lecturer
+            // caution key is _type in json
+            temp[rawDataKey.type] = type
+            temp[rawDataKey.id] = id
+            
+            temp[rawDataKey.day_1] = day_1
+            temp[rawDataKey.day_2] = day_2
+            temp[rawDataKey.day_3] = day_3
+            temp[rawDataKey.day_4] = day_4
+            temp[rawDataKey.day_5] = day_5
+            temp[rawDataKey.day_6] = day_6
+            temp[rawDataKey.day_7] = day_7
+            temp[rawDataKey.day_8] = day_8
+            temp[rawDataKey.day_9] = day_9
+            temp[rawDataKey.period_1] = period_1
+            temp[rawDataKey.period_2] = period_2
+            temp[rawDataKey.period_3] = period_3
+            temp[rawDataKey.period_4] = period_4
+            temp[rawDataKey.period_5] = period_5
+            temp[rawDataKey.period_6] = period_6
+            temp[rawDataKey.period_7] = period_7
+            temp[rawDataKey.period_8] = period_8
+            temp[rawDataKey.period_9] = period_9
+            temp[rawDataKey.location_1] = location_1
+            temp[rawDataKey.location_2] = location_2
+            temp[rawDataKey.location_3] = location_3
+            temp[rawDataKey.location_4] = location_4
+            temp[rawDataKey.location_5] = location_5
+            temp[rawDataKey.location_6] = location_6
+            temp[rawDataKey.location_7] = location_7
+            temp[rawDataKey.location_8] = location_8
+            temp[rawDataKey.location_9] = location_9
+            
+            return temp
+        }
+    }
+    
     var description: String { return  "{\n\tname: \(name)\n\tuuid: \(uuid)\n\tyear: \(year)\n\tterm: \(term)\n\tcredits: \(credits)\n\tlecturer: \(lecturer)\n\ttype: \(type)\n\tid: \(id)\n\tday_1: \(day_1)\n\tday_2: \(day_2)\n\tday_3: \(day_3)\n\tday_4: \(day_4)\n\tday_5: \(day_5)\n\tday_6: \(day_6)\n\tday_7: \(day_7)\n\tday_8: \(day_8)\n\tday_9: \(day_9)\n\tperiod_1: \(period_1)\n\tperiod_2: \(period_2)\n\tperiod_3: \(period_3)\n\tperiod_4: \(period_4)\n\tperiod_5: \(period_5)\n\tperiod_6: \(period_6)\n\tperiod_7: \(period_7)\n\tperiod_8: \(period_8)\n\tperiod_9: \(period_9)\n\tlocation_1: \(location_1)\n\tlocation_2: \(location_2)\n\tlocation_3: \(location_3)\n\tlocation_4: \(location_4)\n\tlocation_5: \(location_5)\n\tlocation_6: \(location_6)\n\tlocation_7: \(location_7)\n\tlocation_8: \(location_8)\n\tlocation_9: \(location_9)\n}" }
     
     private struct rawDataKey {
@@ -278,5 +329,4 @@ class CourseRawDataObject: Printable {
         return 9
 
     }
-    
 }

@@ -14,6 +14,10 @@ class SearchCourseViewController: UIViewController {
     @IBOutlet weak var courseSegementedControl: UISegmentedControl!
     @IBOutlet weak var navigationBar: UINavigationBar!
     var searchControl = UISearchController()
+    
+    // private API
+    private var localCachingObjects: [Course]! = [Course]()
+    private var filteredCourses: [Course]! = [Course]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +43,58 @@ class SearchCourseViewController: UIViewController {
 //        var de = AlertDeleteCourseView()
 //        self.tabBarController?.view.addSubview(de)
 //        de.delegate = self
+        
+        // check if user already have course downloaded
+        if LocalCachingData.JSONRawData != nil {
+//            LocalCachingData.courseRawDataObjects
+        } else {
+            // block and download
+            blockAndDownloadCourse()
+        }
+        
+        // load course data
+        loadLocalCachingData()
+    }
+    
+    private func loadLocalCachingData() {
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            if let courses = LocalCachingData.courses {
+                self.localCachingObjects = courses
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.searchCourseTableView.reloadData()
+            })
+        })
+    }
+    
+    private func blockAndDownloadCourse() {
+        let alert = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
+        self.presentViewController(alert, animated: true, completion: nil)
+        ColorgyAPI.getSchoolCourseData(0, success: { (courseRawDataDictionary, json) -> Void in
+            // ok!
+            // save this
+            UserSetting.storeRawCourseJSON(json)
+            // generate array of dictionary
+            UserSetting.storeLocalCourseDataDictionary(courseRawDataDictionary)
+            
+            // dismiss alert
+            alert.message = "下載完成！ 😆"
+            
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
+            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            })
+            }, failure: { () -> Void in
+                // no data, error
+                // TODO: test while fail to get courses
+                alert.message = "下載課程資料時出錯了 😖"
+                
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    alert.dismissViewControllerAnimated(true, completion: nil)
+                })
+        })
     }
     
     // segemented control action
@@ -68,11 +124,51 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 
 extension SearchCourseViewController : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        println("yo")
         if searchController.active {
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            filterContentForSearchText(searchController.searchBar.text)
         } else {
-            self.navigationController?.setNavigationBarHidden(false, animated: true)
+
+        }
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        
+        if searchText != "" {
+            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                // init container
+                self.filteredCourses = [Course]()
+                
+                for localCachingObject in self.localCachingObjects {
+                    var isMatch: Bool = false
+                    
+                    // course name
+                    if localCachingObject.name.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch) != nil {
+                        isMatch = true
+                    }
+                    // course lecturer name
+                    if let lecturer = localCachingObject.lecturer {
+                        if lecturer.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch) != nil {
+                            isMatch = true
+                        }
+                    }
+                    // course code
+                    if localCachingObject.code.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch) != nil {
+                        isMatch = true
+                    }
+                    
+                    // if match, append it
+                    if isMatch {
+                        self.filteredCourses.append(localCachingObject)
+                    }
+                }
+                
+                // after filtering, return to main queue
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.searchCourseTableView.reloadData()
+                    println("reload after filtering")
+                })
+            })
         }
     }
 }
@@ -83,10 +179,23 @@ extension SearchCourseViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        if searchControl.active {
+            // searching
+            return self.filteredCourses.count
+        } else {
+            return self.localCachingObjects.count
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
+        
+        if searchControl.active {
+            // searching
+            cell.course = filteredCourses[indexPath.row]
+        } else {
+            cell.course = localCachingObjects[indexPath.row]
+        }
+        
         return cell
     }
 }

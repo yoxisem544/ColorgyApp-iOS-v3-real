@@ -24,6 +24,19 @@ class SearchCourseCell: UITableViewCell {
     // -------------------------------------------------------
     @IBOutlet weak var middleSeparatorLineView: UIView!
     @IBOutlet weak var bottomSeparatorLineView: UIView!
+    
+    // public API
+    var course: Course! {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    private func updateUI() {
+        courseTitleLabel?.text = course.name
+        lecturerNameLabel?.text = course.lecturer
+        periodLabel?.text = course.periodsString
+    }
 
     override func layoutSubviews() {
         // configure button border

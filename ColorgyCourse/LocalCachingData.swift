@@ -32,6 +32,15 @@ class LocalCachingData {
         }
         return nil
     }
+    /// dictionary format of local course caching data.
+    /// Might be nil if there is something wrong with this data
+    class var dictionaryArrayFormat: [[String : AnyObject]]? {
+        if let dicts = UserSetting.getLocalCourseDataDictionary() {
+            // create a dictionary array using dicts.
+            return dicts
+        }
+        return nil
+    }
     /// Get local caching data out with an array of [CourseRawDataObject]?
     ///
     /// [CourseRawDataObject]? might be nil
@@ -54,14 +63,22 @@ class LocalCachingData {
     ///
     /// Might be nil
     class var courses: [Course]? {
+        if let dictionaries = LocalCachingData.dictionaryArrayFormat {
+            return Course.generateCourseArrayWithDictionaries(dictionaries)
+        }
+        return nil
+    }
+    
+    /// Get local caching data out with an array of [Course]?
+    ///
+    /// Might be nil
+    class var coursesUsingRawObjects: [Course]? {
         if let objects = LocalCachingData.courseRawDataObjects {
-            if objects.count == 0 {
-                return nil
-            }
             return Course.generateCourseArrayWithRawDataObjects(objects)
         }
         return nil
     }
+    
     /// A raw data of local caching course. If you want to use it, then you must transform it first.
     ///
     /// This data is NSData? type

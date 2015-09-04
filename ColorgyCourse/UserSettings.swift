@@ -34,6 +34,7 @@ struct UserSettingKey {
     static let isGuideShownToUser = "isGuideShownToUser"
     // local course caching data 
     static let localCourseCachingData = "courseDataFromServer"
+    static let localCourseCachingDataDictionary = "localCourseCachingDataDictionary"
     // periods data
     static let periodsData = "SchoolPeriodsData"
     // push notification
@@ -192,6 +193,18 @@ class UserSetting {
     class func deleteLocalCourseDataCaching() {
         NSUserDefaults.standardUserDefaults().removeObjectForKey(UserSettingKey.localCourseCachingData)
         NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func storeLocalCourseDataDictionary(dictionary: [[String : AnyObject]]) {
+        NSUserDefaults.standardUserDefaults().setObject(dictionary, forKey: UserSettingKey.localCourseCachingDataDictionary)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func getLocalCourseDataDictionary() -> [[String : AnyObject]]? {
+        if let dicts = NSUserDefaults.standardUserDefaults().objectForKey(UserSettingKey.localCourseCachingDataDictionary) as? [[String : AnyObject]] {
+            return dicts
+        }
+        return nil
     }
     
     // MARK: - save user settings
