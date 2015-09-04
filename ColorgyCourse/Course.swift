@@ -38,10 +38,12 @@ class Course: Printable {
     var periods: [Int]?
     /// Location of course. Its an array. Wont contain nil object.
     var locations: [String]?
+    /// general code of this course, might be nil
+    var general_code: String?
     
-    var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n}" }
+    var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
     
-    private init?(code: String?, name: String?, year: Int?, term: Int?, lecturer: String?, credits: Int?, _type: String?, days: [Int]?, periods: [Int]?, locations: [String]?) {
+    private init?(code: String?, name: String?, year: Int?, term: Int?, lecturer: String?, credits: Int?, _type: String?, days: [Int]?, periods: [Int]?, locations: [String]?, general_code: String?) {
         // optional part
         self.days = days
         self.periods = periods
@@ -49,6 +51,8 @@ class Course: Printable {
         self._type = _type
         self.lecturer = lecturer
         self.credits = credits
+        // new part
+        self.general_code = general_code
         // required part
         self.code = ""
         self.name = ""
@@ -95,14 +99,18 @@ class Course: Printable {
         var days: [Int]? = nil
         var periods: [Int]? = nil
         var locations: [String]? = nil
+        // new part
+        var general_code: String? = nil
+        
         if let rawData = rawData {
-            code = rawData.uuid
+            code = rawData.code
             name = rawData.name
             year = rawData.year
             term = rawData.term
             lecturer = rawData.lecturer
             credits = rawData.credits
             _type = rawData.type
+            general_code = rawData.general_code
             if rawData.sessionLength() > 0 {
                 // init days, periods, locations array.
                 days = [Int]()
@@ -126,14 +134,13 @@ class Course: Printable {
                 }
             }
         }
-        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations)
+        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations, general_code: general_code)
     }
     
     private struct Key {
         // required
         static let name = "name"
-        // TODO: uuid <-> code, this is not good
-        static let uuid = "code"
+        static let code = "code"
         static let year = "year"
         static let term = "term"
         
@@ -171,6 +178,8 @@ class Course: Printable {
         static let location_7 = "location_7"
         static let location_8 = "location_8"
         static let location_9 = "location_9"
+        
+        static let general_code = "general_code"
     }
     
     convenience init?(dictionary: [String : AnyObject]?) {
@@ -186,16 +195,19 @@ class Course: Printable {
         var days: [Int]? = nil
         var periods: [Int]? = nil
         var locations: [String]? = nil
+        var general_code: String? = nil
         
         if let dictionary = dictionary {
             // not a array
-            code = dictionary[Key.uuid] as? String
+            code = dictionary[Key.code] as? String
             name = dictionary[Key.name] as? String
             year = dictionary[Key.year] as? Int
             term = dictionary[Key.term] as? Int
             lecturer = dictionary[Key.lecturer] as? String
             credits = dictionary[Key.credits] as? Int
             _type = dictionary[Key.type] as? String
+            // new part
+            general_code = dictionary[Key.general_code] as? String
             days = [Int]()
             periods = [Int]()
             locations = [String]()
@@ -217,7 +229,7 @@ class Course: Printable {
             }
         }
         
-        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations)
+        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations, general_code: general_code)
     }
 
     // dont know if always have data in to this init? considering....

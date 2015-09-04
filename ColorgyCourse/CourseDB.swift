@@ -39,7 +39,7 @@ class CourseDB {
     class func deleteCourseWithCourseCode(code: String) {
         if let courseObjects = CourseDB.getAllStoredCoursesObject() {
             for courseObject in courseObjects {
-                if courseObject.uuid == code {
+                if courseObject.code == code {
                     if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
                         var e: NSError?
                         managedObjectContext.deleteObject(courseObject)
@@ -86,7 +86,7 @@ class CourseDB {
             courseObject.lecturer = "蔡明忠"
             courseObject.year = 2015
             courseObject.term = 1
-            courseObject.uuid = "1041-AC5007701"
+            courseObject.code = "1041-AC5007701"
             courseObject.credits = 3
             
             // save

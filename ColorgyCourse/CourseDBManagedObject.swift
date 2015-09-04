@@ -14,7 +14,7 @@ class CourseDBManagedObject: NSManagedObject {
     @NSManaged var name: String!
     @NSManaged var lecturer: String!
     @NSManaged var credits: Int32
-    @NSManaged var uuid: String!
+    @NSManaged var code: String!
     
     @NSManaged var id: Int32
     @NSManaged var type: String
@@ -50,4 +50,6 @@ class CourseDBManagedObject: NSManagedObject {
     @NSManaged var location_7: String!
     @NSManaged var location_8: String!
     @NSManaged var location_9: String!
+    
+    @NSManaged var general_code: String!
 }

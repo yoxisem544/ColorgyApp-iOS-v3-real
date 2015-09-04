@@ -21,7 +21,7 @@ class CourseRawDataObject: Printable {
     // cache data from server
     // required
     var name: String
-    var uuid: String
+    var code: String
     var year: Int
     var term: Int
     
@@ -59,6 +59,9 @@ class CourseRawDataObject: Printable {
     var location_8: String?
     var location_9: String?
     
+    // new part
+    var general_code: String?
+    
     // dictionary getter
     var dictionary: [String : AnyObject] {
         get {
@@ -66,8 +69,7 @@ class CourseRawDataObject: Printable {
             
             // required
             temp[rawDataKey.name] = name
-            // TODO: uuid <-> code, this is not good
-            temp[rawDataKey.uuid] = uuid
+            temp[rawDataKey.code] = code
             temp[rawDataKey.year] = year
             temp[rawDataKey.term] = term
             
@@ -106,17 +108,19 @@ class CourseRawDataObject: Printable {
             temp[rawDataKey.location_8] = location_8
             temp[rawDataKey.location_9] = location_9
             
+            // new part
+            temp[rawDataKey.general_code] = general_code
+            
             return temp
         }
     }
     
-    var description: String { return  "{\n\tname: \(name)\n\tuuid: \(uuid)\n\tyear: \(year)\n\tterm: \(term)\n\tcredits: \(credits)\n\tlecturer: \(lecturer)\n\ttype: \(type)\n\tid: \(id)\n\tday_1: \(day_1)\n\tday_2: \(day_2)\n\tday_3: \(day_3)\n\tday_4: \(day_4)\n\tday_5: \(day_5)\n\tday_6: \(day_6)\n\tday_7: \(day_7)\n\tday_8: \(day_8)\n\tday_9: \(day_9)\n\tperiod_1: \(period_1)\n\tperiod_2: \(period_2)\n\tperiod_3: \(period_3)\n\tperiod_4: \(period_4)\n\tperiod_5: \(period_5)\n\tperiod_6: \(period_6)\n\tperiod_7: \(period_7)\n\tperiod_8: \(period_8)\n\tperiod_9: \(period_9)\n\tlocation_1: \(location_1)\n\tlocation_2: \(location_2)\n\tlocation_3: \(location_3)\n\tlocation_4: \(location_4)\n\tlocation_5: \(location_5)\n\tlocation_6: \(location_6)\n\tlocation_7: \(location_7)\n\tlocation_8: \(location_8)\n\tlocation_9: \(location_9)\n}" }
+    var description: String { return  "{\n\tname: \(name)\n\tcode: \(code)\n\tyear: \(year)\n\tterm: \(term)\n\tcredits: \(credits)\n\tlecturer: \(lecturer)\n\ttype: \(type)\n\tid: \(id)\n\tday_1: \(day_1)\n\tday_2: \(day_2)\n\tday_3: \(day_3)\n\tday_4: \(day_4)\n\tday_5: \(day_5)\n\tday_6: \(day_6)\n\tday_7: \(day_7)\n\tday_8: \(day_8)\n\tday_9: \(day_9)\n\tperiod_1: \(period_1)\n\tperiod_2: \(period_2)\n\tperiod_3: \(period_3)\n\tperiod_4: \(period_4)\n\tperiod_5: \(period_5)\n\tperiod_6: \(period_6)\n\tperiod_7: \(period_7)\n\tperiod_8: \(period_8)\n\tperiod_9: \(period_9)\n\tlocation_1: \(location_1)\n\tlocation_2: \(location_2)\n\tlocation_3: \(location_3)\n\tlocation_4: \(location_4)\n\tlocation_5: \(location_5)\n\tlocation_6: \(location_6)\n\tlocation_7: \(location_7)\n\tlocation_8: \(location_8)\n\tlocation_9: \(location_9)\n\tgeneral_code: \(general_code)\n}" }
     
     private struct rawDataKey {
         // required
         static let name = "name"
-        // TODO: uuid <-> code, this is not good
-        static let uuid = "code"
+        static let code = "code"
         static let year = "year"
         static let term = "term"
         
@@ -154,6 +158,9 @@ class CourseRawDataObject: Printable {
         static let location_7 = "location_7"
         static let location_8 = "location_8"
         static let location_9 = "location_9"
+        
+        // new part
+        static let general_code = "general_code"
     }
     
     // 2. init
@@ -163,7 +170,7 @@ class CourseRawDataObject: Printable {
     /// :param: json: a json from server. This json is from **school API**, not user API.
     init?(json: JSON?) {
         self.name = ""
-        self.uuid = ""
+        self.code = ""
         self.year = Int()
         self.term = Int()
         if let json = json {
@@ -175,8 +182,8 @@ class CourseRawDataObject: Printable {
                 } else {
                     return nil
                 }
-                if let uuid = json[rawDataKey.uuid].string {
-                    self.uuid = uuid
+                if let code = json[rawDataKey.code].string {
+                    self.code = code
                 } else {
                     return nil
                 }
@@ -286,6 +293,9 @@ class CourseRawDataObject: Printable {
                 }
                 if let location_9 = json[rawDataKey.location_9].string {
                     self.location_9 = location_9
+                }
+                if let general_code = json[rawDataKey.general_code].string {
+                    self.general_code = general_code
                 }
             } else {
                 return nil

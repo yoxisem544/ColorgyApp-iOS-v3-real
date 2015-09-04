@@ -34,7 +34,7 @@ struct UserSettingKey {
     static let isGuideShownToUser = "isGuideShownToUser"
     // local course caching data 
     static let localCourseCachingData = "courseDataFromServer"
-    static let localCourseCachingDataDictionary = "localCourseCachingDataDictionary"
+    static let localCourseCachingDataDictionaries = "localCourseCachingDataDictionaries"
     // periods data
     static let periodsData = "SchoolPeriodsData"
     // push notification
@@ -195,13 +195,18 @@ class UserSetting {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    class func storeLocalCourseDataDictionary(dictionary: [[String : AnyObject]]) {
-        NSUserDefaults.standardUserDefaults().setObject(dictionary, forKey: UserSettingKey.localCourseCachingDataDictionary)
+    class func storeLocalCourseDataDictionaries(dictionaries: [[String : AnyObject]]) {
+        NSUserDefaults.standardUserDefaults().setObject(dictionaries, forKey: UserSettingKey.localCourseCachingDataDictionaries)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func deleteLocalCourseDataDictionaries() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(UserSettingKey.localCourseCachingDataDictionaries)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     class func getLocalCourseDataDictionary() -> [[String : AnyObject]]? {
-        if let dicts = NSUserDefaults.standardUserDefaults().objectForKey(UserSettingKey.localCourseCachingDataDictionary) as? [[String : AnyObject]] {
+        if let dicts = NSUserDefaults.standardUserDefaults().objectForKey(UserSettingKey.localCourseCachingDataDictionaries) as? [[String : AnyObject]] {
             return dicts
         }
         return nil

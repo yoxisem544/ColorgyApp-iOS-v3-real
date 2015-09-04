@@ -38,22 +38,27 @@ class SearchCourseViewController: UIViewController {
         courseSegementedControl.layer.cornerRadius = 0
         
         // configure navigation controller
+//        UserSetting.deleteLocalCourseDataDictionaries()
+//        UserSetting.deleteLocalCourseDataCaching()
         
-        // testing region
-//        var de = AlertDeleteCourseView()
-//        self.tabBarController?.view.addSubview(de)
-//        de.delegate = self
-        
-        // check if user already have course downloaded
-        if LocalCachingData.JSONRawData != nil {
-//            LocalCachingData.courseRawDataObjects
-        } else {
-            // block and download
-            blockAndDownloadCourse()
-        }
+        downloadCourseIfNecessary()
         
         // load course data
         loadLocalCachingData()
+    }
+    
+    func downloadCourseIfNecessary() {
+        // check if user already have course downloaded
+        // TODO: - need async
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            if LocalCachingData.dictionaryArrayFormat != nil {
+                //            LocalCachingData.courseRawDataObjects
+            } else {
+                // block and download
+                self.blockAndDownloadCourse()
+            }
+        })
     }
     
     private func loadLocalCachingData() {
@@ -70,20 +75,24 @@ class SearchCourseViewController: UIViewController {
     
     private func blockAndDownloadCourse() {
         let alert = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
-        self.presentViewController(alert, animated: true, completion: nil)
-        ColorgyAPI.getSchoolCourseData(0, success: { (courseRawDataDictionary, json) -> Void in
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+        ColorgyAPI.getSchoolCourseData(20000, success: { (courseRawDataDictionary, json) -> Void in
             // ok!
             // save this
             UserSetting.storeRawCourseJSON(json)
             // generate array of dictionary
-            UserSetting.storeLocalCourseDataDictionary(courseRawDataDictionary)
+            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
             
             // dismiss alert
             alert.message = "下載完成！ 😆"
             
             let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
             dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                alert.dismissViewControllerAnimated(true, completion: nil)
+                alert.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.loadLocalCachingData()
+                })
             })
             }, failure: { () -> Void in
                 // no data, error

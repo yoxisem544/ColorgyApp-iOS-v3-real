@@ -36,6 +36,7 @@ class SearchCourseCell: UITableViewCell {
         courseTitleLabel?.text = course.name
         lecturerNameLabel?.text = course.lecturer
         periodLabel?.text = course.periodsString
+        locationLabel?.text = course.general_code
     }
 
     override func layoutSubviews() {
