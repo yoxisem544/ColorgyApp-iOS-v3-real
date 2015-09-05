@@ -116,6 +116,8 @@ class SearchCourseViewController: UIViewController {
     }
     
     @IBAction func backButtonClicked(sender: AnyObject) {
+        self.searchControl.searchBar.resignFirstResponder()
+        self.searchControl.dismissViewControllerAnimated(false, completion: nil)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -138,12 +140,23 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
     
 }
 
+extension SearchCourseViewController : SearchCourseCellDelegate {
+    func searchCourseCell(didTapDeleteCourseButton course: Course) {
+        println("didtapdelete")
+    }
+    
+    func searchCourseCell(didTapAddCourseButton course: Course) {
+        println("didtapadd")
+    }
+}
+
 extension SearchCourseViewController : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if searchController.active {
+            println("searchController.searchBar.text \"\(searchController.searchBar.text)\"")
             filterContentForSearchText(searchController.searchBar.text)
         } else {
-
+            self.searchCourseTableView.reloadData()
         }
     }
     
@@ -185,6 +198,8 @@ extension SearchCourseViewController : UISearchResultsUpdating {
                     println("reload after filtering")
                 })
             })
+        } else {
+            self.searchCourseTableView.reloadData()
         }
     }
 }
@@ -208,8 +223,10 @@ extension SearchCourseViewController : UITableViewDataSource {
         if searchControl.active {
             // searching
             cell.course = filteredCourses[indexPath.row]
+            cell.delegate = self
         } else {
             cell.course = localCachingObjects[indexPath.row]
+            cell.delegate = self
         }
         
         return cell

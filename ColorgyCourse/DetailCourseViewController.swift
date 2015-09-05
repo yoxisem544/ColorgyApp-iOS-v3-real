@@ -60,6 +60,7 @@ class DetailCourseViewController: UIViewController {
         classmatesView.frame.origin.y = 330
 //        classmatesView.backgroundColor = UIColor.blueColor()
         classmatesView.delegate = self
+        classmatesView.peoplePerRow = 4
         self.contentScrollView.addSubview(classmatesView)
     }
     

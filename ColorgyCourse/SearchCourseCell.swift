@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol SearchCourseCellDelegate {
+    func searchCourseCell(didTapDeleteCourseButton course: Course)
+    func searchCourseCell(didTapAddCourseButton course: Course)
+}
+
 class SearchCourseCell: UITableViewCell {
 
     @IBOutlet weak var courseTitleLabel: UILabel!
@@ -25,10 +30,48 @@ class SearchCourseCell: UITableViewCell {
     @IBOutlet weak var middleSeparatorLineView: UIView!
     @IBOutlet weak var bottomSeparatorLineView: UIView!
     
+    @IBAction func AddButtonClicked(sender: AnyObject) {
+        if hasEnrolledState {
+            delegate?.searchCourseCell(didTapDeleteCourseButton: course)
+        } else {
+            delegate?.searchCourseCell(didTapAddCourseButton: course)
+        }
+    }
+    
     // public API
     var course: Course! {
         didSet {
             updateUI()
+            checkIfEnrolled()
+        }
+    }
+    
+    var delegate: SearchCourseCellDelegate!
+    
+    // private
+    var hasEnrolledState: Bool = false {
+        didSet {
+            updateButtonTitle()
+        }
+    }
+    
+    private func checkIfEnrolled() {
+        if let courses = CourseDB.getAllStoredCoursesObject() {
+            for course in courses {
+                // find if match
+                println("course.code \(course.code) == self.course.code \(self.course.code)")
+                if course.code == self.course.code {
+                    hasEnrolledState = true
+                }
+            }
+        }
+    }
+    
+    private func updateButtonTitle() {
+        if hasEnrolledState {
+            addCourseButton.setTitle("刪除", forState: UIControlState.Normal)
+        } else {
+            addCourseButton.setTitle("加入", forState: UIControlState.Normal)
         }
     }
     

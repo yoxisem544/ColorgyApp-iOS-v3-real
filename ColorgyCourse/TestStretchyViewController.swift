@@ -48,6 +48,15 @@ class TestStretchyViewController: UIViewController {
         
         headerImageViewHeight = headerImageView.bounds.height
         
+        // test db
+//        CourseDB.storeFakeData()
+        var dd = CourseDB.getAllStoredCoursesObject()
+        println(dd!)
+        println(dd!.first?.code)
+        println(dd!.first?.period_1)
+        var yo = Course(courseDBManagedObject: dd!.first)
+        println(yo)
+//        CourseDB.deleteAllCourses()
     }
     
     func updateHeaderView(scrollView: UIScrollView) {
