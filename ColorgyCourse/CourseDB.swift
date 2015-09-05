@@ -15,7 +15,7 @@ class CourseDB {
     /// This method will delete all courses stored in data base.
     class func deleteAllCourses() {
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "CourseDBManagedObject_v1")
+            let fetchRequest = NSFetchRequest(entityName: "CourseDBManagedObject")
             var e: NSError?
             var coursesInDB: [CourseDBManagedObject] = managedObjectContext.executeFetchRequest(fetchRequest, error: &e) as! [CourseDBManagedObject]
             if e != nil {
@@ -62,7 +62,7 @@ class CourseDB {
     class func getAllStoredCoursesObject() -> [CourseDBManagedObject]? {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "CourseDBManagedObject_v1")
+            let fetchRequest = NSFetchRequest(entityName: "CourseDBManagedObject")
             var e: NSError?
             var coursesInDB: [CourseDBManagedObject] = managedObjectContext.executeFetchRequest(fetchRequest, error: &e) as! [CourseDBManagedObject]
             if e != nil {
@@ -81,7 +81,7 @@ class CourseDB {
     class func storeCourseToDB(course: Course?) {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject_v1", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
+            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             if let course = course {
                 
                 courseObject.code = course.code
@@ -123,7 +123,7 @@ class CourseDB {
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject_v1", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
+            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             if let courses = courses {
                 for course in courses {
                     self.storeCourseToDB(course)
@@ -135,7 +135,7 @@ class CourseDB {
     // fake data
     class func storeFakeData() {
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject_v1", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
+            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             // assign data
             courseObject.name = "自動化工程"
             courseObject.lecturer = "蔡明忠"
