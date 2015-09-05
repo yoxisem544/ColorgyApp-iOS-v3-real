@@ -15,6 +15,7 @@
 		6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */; };
 		6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */; };
 		6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */; };
+		6348F8801B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */; };
 		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
 		639D450B1B95E5F60053870D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D450A1B95E5F60053870D /* 3.jpg */; };
 		639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D450E1B95FA680053870D /* CourseCommentCell.swift */; };
@@ -94,6 +95,7 @@
 		6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCourseViewController.swift; sourceTree = "<group>"; };
 		6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmatesContainerView.swift; sourceTree = "<group>"; };
 		6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateTimeTableViewController.swift; sourceTree = "<group>"; };
+		6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDBManagedObjectOld.swift; sourceTree = "<group>"; };
 		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		639D450E1B95FA680053870D /* CourseCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentCell.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				63FBCC411B9346D800B3084F /* UserCourseObject.swift */,
 				63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */,
 				63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */,
+				6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */,
 				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
 				63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */,
 				63FBCC461B9346D900B3084F /* ViewController.swift */,
@@ -493,6 +496,7 @@
 				6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63FBCC711B934D3000B3084F /* Reachability.m in Sources */,
+				6348F8801B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
