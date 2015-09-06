@@ -32,6 +32,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // old db delete
         CourseDBManagedObjectOld.deleteAll()
         
+//        let fontFamilyNames = UIFont.familyNames()
+//        for familyName in fontFamilyNames {
+//            println("------------------------------")
+//            println("Font Family Name = [\(familyName)]")
+//            let names = UIFont.fontNamesForFamilyName(familyName as! String)
+//            println("Font Names = [\(names)]")
+//        }
+        // segemented control font face
+        var attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as [NSObject : AnyObject]
+        UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)
+        
         // show view
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -56,12 +56,16 @@ class AddCourseSuccessfulView: UIView {
         self.layer.cornerRadius = 2.0
     }
     
-    func animate() {
+    func animate(complete: () -> Void) {
         var pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
         pathAnimation.duration = 0.7
         pathAnimation.fromValue = 0
         pathAnimation.toValue = 1
         shapeLayer.addAnimation(pathAnimation, forKey: "strokeEndAnimation")
+        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.7))
+        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+            complete()
+        })
     }
 
     required init(coder aDecoder: NSCoder) {

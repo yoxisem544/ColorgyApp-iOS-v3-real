@@ -18,6 +18,24 @@ class SearchCourseViewController: UIViewController {
     // private API
     private var localCachingObjects: [Course]! = [Course]()
     private var filteredCourses: [Course]! = [Course]()
+    // successful add course view 
+    private var successfullyAddCourseView: AddCourseSuccessfulView!
+    private func configureSuccessfullyAddCourseView() {
+        self.successfullyAddCourseView = AddCourseSuccessfulView()
+        self.successfullyAddCourseView.center = self.view.center
+        self.tabBarController?.view.addSubview(self.successfullyAddCourseView)
+        self.successfullyAddCourseView.hidden = true
+    }
+    
+    private func animateSuccessfullyAddCourseView(completeHandler: () -> Void) {
+        self.successfullyAddCourseView.animate(completeHandler)
+    }
+    private func showeSuccessfullyAddCourseView() {
+        self.successfullyAddCourseView.hidden = false
+    }
+    private func hideSuccessfullyAddCourseView() {
+        self.successfullyAddCourseView.hidden = true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +61,14 @@ class SearchCourseViewController: UIViewController {
         
 //        UserSetting.deleteLocalCourseDataDictionaries()
 //        UserSetting.deleteLocalCourseDataCaching()
-        
+
         downloadCourseIfNecessary()
         
         // load course data
         loadLocalCachingData()
+        
+        // configure successful add course view
+        configureSuccessfullyAddCourseView()
     }
     
     func downloadCourseIfNecessary() {
@@ -147,6 +168,14 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
     
     func searchCourseCell(didTapAddCourseButton course: Course) {
         println("didtapadd")
+        ColorgyAPI.PUTCourseToServer(course.code, success: { () -> Void in
+            self.showeSuccessfullyAddCourseView()
+            self.animateSuccessfullyAddCourseView({ () -> Void in
+                self.hideSuccessfullyAddCourseView()
+            })
+            }, failure: { () -> Void in
+            
+        })
     }
 }
 

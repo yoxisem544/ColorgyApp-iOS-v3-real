@@ -37,7 +37,7 @@
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="CourseDBManagedObject" representedClassName="ColorgyCourse. CourseDBManagedObject" syncable="YES">
+    <entity name="CourseDBManagedObject" representedClassName="ColorgyCourse.CourseDBManagedObject" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="color_of_cell" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="credits" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>

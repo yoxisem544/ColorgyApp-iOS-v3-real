@@ -49,7 +49,7 @@ class TestStretchyViewController: UIViewController {
         headerImageViewHeight = headerImageView.bounds.height
         
         // test db
-//        CourseDB.storeFakeData()
+        CourseDB.storeFakeData()
         var dd = CourseDB.getAllStoredCoursesObject()
         println(dd!)
         println(dd!.first?.code)

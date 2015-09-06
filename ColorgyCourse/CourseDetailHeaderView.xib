@@ -13,9 +13,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1id-vY-rN1">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="設計史" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIF-rR-iax">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設計史" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIF-rR-iax">
                             <rect key="frame" x="32" y="30" width="536" height="29"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="29" id="Gjb-1k-O7n"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="24"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -23,6 +26,9 @@
                     <color key="backgroundColor" red="0.23137254900000001" green="0.2274509804" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="90" id="206-Ng-c7w"/>
+                        <constraint firstItem="cIF-rR-iax" firstAttribute="top" secondItem="1id-vY-rN1" secondAttribute="top" constant="30" id="9zW-yH-nlO"/>
+                        <constraint firstAttribute="trailing" secondItem="cIF-rR-iax" secondAttribute="trailing" constant="32" id="FH2-Rd-Iqe"/>
+                        <constraint firstItem="cIF-rR-iax" firstAttribute="leading" secondItem="1id-vY-rN1" secondAttribute="leading" constant="32" id="ZTY-GG-zuI"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="878-A6-u8J" userLabel="DetailContainerView">
@@ -45,7 +51,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nol-3g-8Ci">
                             <rect key="frame" x="301" y="0.0" width="299" height="44"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="mlr-i8-iTI">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="codeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="mlr-i8-iTI">
                                     <rect key="frame" x="16" y="16" width="12" height="12"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="12" id="8jH-LW-TxH"/>
@@ -53,9 +59,9 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="橋本環奈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svW-Cy-tWt">
-                                    <rect key="frame" x="36" y="14" width="247" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <rect key="frame" x="36" y="16" width="247" height="13"/>
+                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
+                                    <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -71,7 +77,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJD-D7-uY5">
                             <rect key="frame" x="0.0" y="45" width="300" height="45"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ufG-mN-FPy">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ufG-mN-FPy">
                                     <rect key="frame" x="16" y="16" width="12" height="12"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="12" id="SP1-ai-6Bl"/>
@@ -79,9 +85,9 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="橋本環奈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97c-g5-Cz6">
-                                    <rect key="frame" x="36" y="14" width="248" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <rect key="frame" x="36" y="16" width="248" height="13"/>
+                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
+                                    <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -97,7 +103,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71z-Qo-V68">
                             <rect key="frame" x="301" y="45" width="299" height="45"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="QQJ-TE-yZK">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="periodIcon" translatesAutoresizingMaskIntoConstraints="NO" id="QQJ-TE-yZK">
                                     <rect key="frame" x="16" y="16" width="12" height="12"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="12" id="NLv-QJ-VLC"/>
@@ -105,9 +111,9 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="橋本環奈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="otm-uI-SKW">
-                                    <rect key="frame" x="36" y="14" width="247" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <rect key="frame" x="36" y="16" width="247" height="13"/>
+                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
+                                    <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -123,7 +129,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5Q-lb-1Ex">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="OYM-7g-2nW">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lecturerIcon" translatesAutoresizingMaskIntoConstraints="NO" id="OYM-7g-2nW">
                                     <rect key="frame" x="16" y="16" width="12" height="12"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="12" id="2HU-Yk-Dxe"/>
@@ -131,9 +137,9 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="橋本環奈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8z-gq-Da8">
-                                    <rect key="frame" x="36" y="14" width="248" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <rect key="frame" x="36" y="16" width="248" height="13"/>
+                                    <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="13"/>
+                                    <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -178,8 +184,8 @@
                     <rect key="frame" x="0.0" y="196" width="600" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="點名通知" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8x-NG-kD8">
-                            <rect key="frame" x="48" y="12" width="64" height="20"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <rect key="frame" x="48" y="14" width="64" height="16"/>
+                            <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -212,12 +218,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wyn-yA-wxp">
                     <rect key="frame" x="0.0" y="241" width="600" height="44"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="課程評論" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibJ-zG-sRk">
-                            <rect key="frame" x="48" y="12" width="64" height="20"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil" translatesAutoresizingMaskIntoConstraints="NO" id="TDc-gb-P18">
                             <rect key="frame" x="16" y="14" width="16" height="16"/>
                             <constraints>
@@ -232,6 +232,12 @@
                                 <constraint firstAttribute="height" constant="13" id="esh-ZE-bNe"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="課程評論" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibJ-zG-sRk">
+                            <rect key="frame" x="48" y="14" width="64" height="16"/>
+                            <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="16"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -248,8 +254,8 @@
                     <rect key="frame" x="0.0" y="286" width="600" height="44"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的同學" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B52-1k-pda">
-                            <rect key="frame" x="48" y="12" width="64" height="20"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <rect key="frame" x="48" y="12" width="64" height="16"/>
+                            <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -290,14 +296,24 @@
                 <constraint firstAttribute="trailing" secondItem="878-A6-u8J" secondAttribute="trailing" id="uJF-Qv-bAH"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="codeLabel" destination="svW-Cy-tWt" id="pbj-mw-hy3"/>
+                <outlet property="creditsLabel" destination="97c-g5-Cz6" id="VrF-b4-tNb"/>
+                <outlet property="lecturerLabel" destination="g8z-gq-Da8" id="Pap-HF-MlM"/>
+                <outlet property="periodsLabel" destination="otm-uI-SKW" id="cX1-OL-qw6"/>
+                <outlet property="titleLabel" destination="cIF-rR-iax" id="QmK-cy-1Rg"/>
+            </connections>
             <point key="canvasLocation" x="516" y="294"/>
         </view>
     </objects>
     <resources>
-        <image name="1.jpg" width="500" height="500"/>
         <image name="alarm" width="17" height="18"/>
         <image name="classmatesIcon" width="18" height="18"/>
+        <image name="codeIcon" width="14" height="14"/>
+        <image name="creditsIcon" width="14" height="14"/>
+        <image name="lecturerIcon" width="13" height="13"/>
         <image name="pencil" width="17" height="18"/>
+        <image name="periodIcon" width="14" height="14"/>
         <image name="tableViewNext" width="9" height="13"/>
     </resources>
 </document>

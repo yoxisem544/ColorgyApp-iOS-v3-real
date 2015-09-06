@@ -44,13 +44,15 @@ class DetailCourseViewController: UIViewController {
         headerView.frame = CGRectMake(0, 0, self.view.frame.width, 330)
         headerView.autoresizingMask = self.view.autoresizingMask
         headerView.translatesAutoresizingMaskIntoConstraints()
+        // set content
+        headerView.course = course
         
         //
         self.automaticallyAdjustsScrollViewInsets = false
         
         // content scorll view
         self.contentScrollView = UIScrollView(frame: CGRectMake(0, navHeight, self.view.frame.width, self.view.frame.height - navHeight - tabBarHeight))
-        self.contentScrollView.backgroundColor = UIColor.lightGrayColor()
+        self.contentScrollView.backgroundColor = UIColor(red: 250/255.0, green: 247/255.0, blue: 245/255.0, alpha: 1)
         self.view.addSubview(self.contentScrollView)
         self.contentScrollView.addSubview(headerView)
         self.contentScrollView.contentSize = self.view.bounds.size
@@ -58,7 +60,7 @@ class DetailCourseViewController: UIViewController {
         // test
         classmatesView = ClassmatesContainerView()
         classmatesView.frame.origin.y = 330
-//        classmatesView.backgroundColor = UIColor.blueColor()
+        classmatesView.backgroundColor = UIColor.whiteColor()
         classmatesView.delegate = self
         classmatesView.peoplePerRow = 4
         self.contentScrollView.addSubview(classmatesView)
@@ -74,7 +76,10 @@ class DetailCourseViewController: UIViewController {
             if let userCourseObjects = userCourseObjects {
                 self.userCourseObjects = userCourseObjects
                 println(userCourseObjects)
+                // set and will auto adjust hieght
                 self.classmatesView.userCourseObjects = userCourseObjects
+                // adjust content size height
+                self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
             }
         })
     }

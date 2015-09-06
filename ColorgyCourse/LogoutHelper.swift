@@ -27,7 +27,8 @@ class LogoutHelper {
                         var isMatched = false
                         for device in devices {
                             // loop through all devices, check if this token matches server token
-                            if device["name"] == "\(deviceToken)" {
+//                            if device["name"] == "\(deviceToken)" {
+                            if device["name"] == UIDevice.currentDevice().name {
                                 // if match
                                 isMatched = true
                                 // delete uuid token pare
@@ -35,8 +36,17 @@ class LogoutHelper {
                                     // delete success
                                     success()
                                     }, failure: { () -> Void in
-                                        // fail to delete device, matbe try again?
-                                        failure()
+                                        // TODO: -  deelte using matched uuid
+                                        if let uuid = device["uuid"] {
+                                            ColorgyAPI.DELETEdeviceTokenAndPushNotificationPareUsingUUID(uuid, success: { () -> Void in
+                                                success()
+                                            }, failure: { () -> Void in
+                                                failure()
+                                            })
+                                        } else {
+                                            // fail to delete device, matbe try again?
+                                            failure()
+                                        }
                                 })
                             }
                         }

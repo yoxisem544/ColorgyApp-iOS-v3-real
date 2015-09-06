@@ -10,12 +10,26 @@ import UIKit
 
 class CourseDetailHeaderView: UIView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var lecturerLabel: UILabel!
+    @IBOutlet weak var codeLabel: UILabel!
+    @IBOutlet weak var creditsLabel: UILabel!
+    @IBOutlet weak var periodsLabel: UILabel!
+    
+    // public api
+    var course: Course! {
+        didSet {
+            updateUI()
+        }
     }
-    */
+    
+    private func updateUI() {
+        titleLabel?.text = course?.name
+        lecturerLabel?.text = course?.lecturer
+        codeLabel?.text = course?.general_code
+        creditsLabel?.text = "\((course?.credits ?? 0))"
+        periodsLabel?.text = course?.periodsString
+    }
 
 }

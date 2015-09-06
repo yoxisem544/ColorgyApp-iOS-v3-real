@@ -166,6 +166,11 @@ class ViewController: UIViewController {
 //        })
         
         self.deviceUUID.text = UserSetting.getDeviceUUID()
+        ColorgyAPI.PUTdeviceToken(success: { () -> Void in
+            println("OK")
+        }) { () -> Void in
+            println("FIAL")
+        }
     }
     
     var acsView = AddCourseSuccessfulView()
@@ -229,7 +234,9 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func checkanimation(sender: AnyObject) {
-        acsView.animate()
+        acsView.animate { () -> Void in
+            
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

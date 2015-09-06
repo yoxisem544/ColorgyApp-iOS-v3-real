@@ -29,9 +29,9 @@ class ColorgyAPI {
                     // need uuid, device name, device type, device token 
                     let params = [
                         "user_device": [
-                                "[type]": "ios",
-                                "[name]": UIDevice.currentDevice().name,
-                                "[device_id]": "\(token)"
+                                "type": "ios",
+                                "name": UIDevice.currentDevice().name,
+                                "device_id": "\(token)"
                             ]
                     ]
                     
@@ -124,6 +124,37 @@ class ColorgyAPI {
                         success()
                         }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                         failure()
+                    })
+                } else {
+                    println("no need delete uuid token pare")
+                    success()
+                }
+            } else {
+                println("no access token")
+                failure()
+            }
+        }
+    }
+    
+    /// Delete a uuid and push notification token set.
+    /// Always call this in background worker.
+    class func DELETEdeviceTokenAndPushNotificationPareUsingUUID(uuid: String?, success: () -> Void, failure: () -> Void) {
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                if let uuid = uuid {
+                    let afManager = AFHTTPSessionManager(baseURL: nil)
+                    afManager.requestSerializer = AFJSONRequestSerializer()
+                    afManager.responseSerializer = AFJSONResponseSerializer()
+                    
+                    println(uuid)
+                    let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+                    afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                        success()
+                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            failure()
                     })
                 } else {
                     println("no need delete uuid token pare")
@@ -586,7 +617,127 @@ class ColorgyAPI {
     }
     
     // PUT class
+    class func PUTCourseToServer(courseCode: String, success: () -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                if let deviceUUID = UserSetting.getDeviceUUID() {
+                    if let school = UserSetting.UserPossibleOrganization() {
+                        let uuid = "\(courseCode)-\(deviceUUID)"
+                        let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
+                        
+                        let params = ["user_courses":
+                            [
+                                "course_code": courseCode,
+                                "course_organization_code": school.lowercaseString,
+                                "year": 2015,
+                                "term": 1
+                            ]
+                        ]
+                        
+                        println(url)
+                        println(params)
+                        
+                        if url.isValidURLString {
+                            // queue job
+                            ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                            afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                                // job ended
+                                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                success()
+                                }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                                    // job ended
+                                    ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                    println(task)
+                                    failure()
+                            })
+                        } else {
+                            println("url invalid")
+                            failure()
+                        }
+                    } else {
+                        println("no school")
+                        failure()
+                    }
+                } else {
+                    println("no device uuid")
+                    failure()
+                }
+            } else {
+                println(ColorgyErrorType.noAccessToken)
+                failure()
+            }
+        }
+    }
     // DELETE class
+    class func DELETECourseToServer(courseCode: String, success: () -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            println(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                if let deviceUUID = UserSetting.getDeviceUUID() {
+                    if let school = UserSetting.UserPossibleOrganization() {
+                        // get self course data from server
+                        ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
+                            if let userCourseObjects = userCourseObjects {
+                                for userCourseObject in userCourseObjects {
+                                    if courseCode == userCourseObject.course_code  {
+                                        let uuid = userCourseObject.uuid
+                                        let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
+                                        
+                                        if url.isValidURLString {
+                                            // queue job
+                                            ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                                            afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                                                // job ended
+                                                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                                success()
+                                                }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                                                    // job ended
+                                                    ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                                    failure()
+                                            })
+                                        } else {
+                                            println("url invalid")
+                                            failure()
+                                        }
+                                    }
+                                }
+                            } else {
+                                println("fail to get me course")
+                                failure()
+                            }
+                        }, failure: { () -> Void in
+                            println("cant get me courses")
+                            failure()
+                        })
+                    } else {
+                        println("no school")
+                        failure()
+                    }
+                } else {
+                    println("no device uuid")
+                    failure()
+                }
+            } else {
+                println(ColorgyErrorType.noAccessToken)
+                failure()
+            }
+        }
+    }
     // get user basic info
     // after get user basic info, do i need to download their image?
     // no, i'll download it if i need it
