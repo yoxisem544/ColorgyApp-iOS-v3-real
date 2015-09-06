@@ -106,9 +106,9 @@ class TimeTableView: UIView {
     
     private func courseCellViewOn(#day: Int, period: Int) -> CourseCellView {
         // day and period all starting from 1
-        var cellV = CourseCellView(frame: CGRectMake(0, 0, courseCellWidth, courseCellWidth))
+        var cellV = CourseCellView(frame: CGRectMake(0, 0, courseCellWidth, courseCellHeight))
         let x = (courseContainerWidth / 2) + CGFloat(day - 1) * courseContainerWidth
-        let y = (courseContainerWidth / 2) + CGFloat(period - 1) * courseContainerWidth
+        let y = (courseContainerHeight / 2) + CGFloat(period - 1) * courseContainerHeight
         cellV.center = CGPoint(x: x, y: y)
         
         return cellV
@@ -129,8 +129,10 @@ class TimeTableView: UIView {
     private let sessionSideBarWidth: CGFloat = 37
     
     private let courseCellWidth: CGFloat
+    private let courseCellHeight: CGFloat = 44
     private let courseCellSpacing: CGFloat = 2
     private let courseContainerWidth: CGFloat
+    private let courseContainerHeight: CGFloat
     
     let weekdayHeaderHeight: CGFloat = 35
     
@@ -148,6 +150,8 @@ class TimeTableView: UIView {
         courseCellWidth = (screenWidth - (4 * courseCellSpacing) - sessionSideBarWidth) / CGFloat(5)
         // this is width without spacing, more accurate for align
         courseContainerWidth = (screenWidth - sessionSideBarWidth) / CGFloat(5)
+        // height of container is 1 pixel lager then cell height
+        courseContainerHeight = courseCellHeight + 2
         
         // init!
         super.init(frame: frame)
@@ -155,16 +159,16 @@ class TimeTableView: UIView {
         var periods = UserSetting.getPeriodData()
         
         // first configure session side bar view
-        var sessionSideBarView = UIView(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerWidth * CGFloat(periods.count)))
+        var sessionSideBarView = UIView(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight * CGFloat(periods.count)))
         for (index, period: [String : String]) in enumerate(periods) {
-            var periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerWidth))
-            periodLabel.textColor = UIColor.blackColor()
+            var periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight))
+            periodLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
             periodLabel.text = period["code"]
             periodLabel.textAlignment = NSTextAlignment.Center
             periodLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
-            let baseOffset = courseContainerWidth / 2
+            let baseOffset = courseContainerHeight / 2
             periodLabel.center.x = sessionSideBarView.bounds.midX
-            periodLabel.center.y = baseOffset + CGFloat(index) * courseContainerWidth
+            periodLabel.center.y = baseOffset + CGFloat(index) * courseContainerHeight
             sessionSideBarView.addSubview(periodLabel)
         }
         // after we generate content of session side bar scroll view, we are going to add it
@@ -189,7 +193,7 @@ class TimeTableView: UIView {
             var dayLabel = UILabel(frame: CGRectMake(0, 0, 60, 20))
             dayLabel.textAlignment = NSTextAlignment.Center
             dayLabel.text = day
-            dayLabel.textColor = UIColor.blackColor()
+            dayLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
             dayLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
             let baseOffset = courseContainerWidth / 2
             dayLabel.center.x = baseOffset + CGFloat(index) * courseContainerWidth
@@ -222,9 +226,9 @@ class TimeTableView: UIView {
         timetableContentScrollView.showsVerticalScrollIndicator = false
         // add rows to timetable scroll view
         for index in 1...periods.count {
-            var rowView = UIView(frame: CGRectMake(0, 0, timetableContentScrollView.contentSize.width, courseContainerWidth - 2))
+            var rowView = UIView(frame: CGRectMake(0, 0, timetableContentScrollView.contentSize.width, courseContainerHeight - 2))
             rowView.backgroundColor = UIColor(red: 250/255.0, green: 247/255.0, blue: 245/255.0, alpha: 1)
-            rowView.center.y = (courseContainerWidth / 2) + CGFloat(index - 1) * courseContainerWidth
+            rowView.center.y = (courseContainerHeight / 2) + CGFloat(index - 1) * courseContainerHeight
             timetableContentScrollView.addSubview(rowView)
         }
         

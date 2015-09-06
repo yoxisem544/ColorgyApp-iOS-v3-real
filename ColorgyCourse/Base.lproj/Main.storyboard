@@ -1065,6 +1065,9 @@
                                                 <action selector="SegementedControlValueChanged:" destination="Bgc-mQ-wie" eventType="valueChanged" id="KqW-96-ZNv"/>
                                             </connections>
                                         </segmentedControl>
+                                        <barButtonItem key="rightBarButtonItem" image="downloadFromCloud" id="ahQ-Uf-Kpq">
+                                            <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1148,16 +1151,16 @@
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3BD-1a-Hgi" userLabel="MiddleSeparator">
                                                     <rect key="frame" x="12" y="54" width="572" height="1"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.98039215686274506" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="A8y-RH-ak9"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FY2-s2-VOU">
-                                                    <rect key="frame" x="0.0" y="99" width="600" height="1"/>
-                                                    <color key="backgroundColor" red="0.93333333330000001" green="0.50980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="0.0" y="98" width="600" height="2"/>
+                                                    <color key="backgroundColor" red="0.98039215686274506" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="TAB-q1-kPd"/>
+                                                        <constraint firstAttribute="height" constant="2" id="TAB-q1-kPd"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -1638,6 +1641,7 @@
         <image name="closeButton" width="14" height="14"/>
         <image name="codeIcon" width="14" height="14"/>
         <image name="colorgyLogo" width="94" height="107"/>
+        <image name="downloadFromCloud" width="21" height="22"/>
         <image name="facebookLogin" width="249" height="44"/>
         <image name="lecturerIcon" width="13" height="13"/>
         <image name="mail" width="26" height="23"/>

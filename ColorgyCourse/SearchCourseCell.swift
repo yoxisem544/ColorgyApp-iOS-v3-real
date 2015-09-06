@@ -89,7 +89,7 @@ class SearchCourseCell: UITableViewCell {
         self.addCourseButton?.layer.cornerRadius = 4.0
         
         // bottom line 
-        self.bottomSeparatorLineView.backgroundColor = UIColor.clearColor()
+//        self.bottomSeparatorLineView.backgroundColor = UIColor.clearColor()
         
         // cell configure
         self.selectionStyle = UITableViewCellSelectionStyle.None
