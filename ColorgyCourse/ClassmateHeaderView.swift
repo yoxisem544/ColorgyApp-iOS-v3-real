@@ -46,23 +46,34 @@ class ClassmateHeaderView: UIView {
     }
     
     private func updateUI() {
-        // enlarge
-        self.bounds.size.height = headerImageViewHeight + yOffset
-        coverImageView.bounds.size.height = self.bounds.size.height
-        dimView.bounds.size.height = coverImageView.bounds.size.height
-        userProfileImage.bounds.size = CGSize(width: userProfileImageHeight + yOffset, height: userProfileImageHeight + yOffset)
-        // move up
-        self.frame.origin.y = -yOffset
-        coverImageView.frame.origin.y = 0
-        dimView.frame.origin.y = 0
-        // set image
+        if yOffset >= 0 {
+            // enlarge
+            self.bounds.size.height = headerImageViewHeight + yOffset
+            coverImageView.bounds.size.height = self.bounds.size.height
+            dimView.bounds.size.height = coverImageView.bounds.size.height
+            userProfileImage.bounds.size = CGSize(width: userProfileImageHeight + yOffset, height: userProfileImageHeight + yOffset)
+            // move up
+            self.frame.origin.y = -yOffset
+            coverImageView.frame.origin.y = 0
+            dimView.frame.origin.y = 0
+            // set image
+            
+            // user name profile image
+            userProfileImage.center = dimView.center
+            userProfileImage.layer.cornerRadius = userProfileImage.bounds.width / 2
+            userNameLabel.frame.origin.y = userProfileImage.frame.origin.y + userProfileImage.bounds.maxY + 8
+        }
         
-        // user name profile image
-        userProfileImage.center = dimView.center
-        userProfileImage.layer.cornerRadius = userProfileImage.bounds.width / 2
-        userNameLabel.frame.origin.y = userProfileImage.frame.origin.y + userProfileImage.bounds.maxY + 8
-        
-        // button
+        // hide show button
+        println(yOffset)
+        if -yOffset >= 0 {
+            backButton.frame.origin.y = -yOffset + 32
+            if -yOffset >= (self.bounds.height - 12 - backButton.bounds.height - 32) {
+                backButton.frame.origin.y = (self.bounds.height - 12 - backButton.bounds.height)
+            }
+        } else {
+            backButton.frame.origin.y = 32
+        }
     }
 
     override init(frame: CGRect) {

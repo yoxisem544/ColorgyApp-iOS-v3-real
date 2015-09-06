@@ -169,12 +169,10 @@ class ClassmateTimeTableViewController: UIViewController {
 
     func updateHeader(scrollView: UIScrollView) {
         
-        if scrollView.contentOffset.y <= 0 {
-            // scroll down
-            let yOffset = -scrollView.contentOffset.y
-            // enlarge
-            self.headerView.yOffset = yOffset
-        }
+        // scroll down
+        let yOffset = -scrollView.contentOffset.y
+        // enlarge
+        self.headerView.yOffset = yOffset
     }
     
     func shiftHeader(scrollView: UIScrollView) {
