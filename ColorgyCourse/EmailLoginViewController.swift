@@ -10,6 +10,7 @@ import UIKit
 
 class EmailLoginViewController: UIViewController {
 
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
     
@@ -103,6 +104,7 @@ class EmailLoginViewController: UIViewController {
         
         emailLoginTextField.hidden = true
         passwordLoginTextField.hidden = true
+        closeButton.hidden = true
     }
     
     func showButtons() {
@@ -110,6 +112,7 @@ class EmailLoginViewController: UIViewController {
         
         emailLoginTextField.hidden = false
         passwordLoginTextField.hidden = false
+        closeButton.hidden = false
     }
     
 

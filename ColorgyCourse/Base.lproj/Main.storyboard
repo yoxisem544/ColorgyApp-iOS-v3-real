@@ -174,6 +174,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="ffQ-Gw-7GU" id="Ig7-ww-bEZ"/>
                         <outlet property="emailLoginButton" destination="HfG-WX-RwI" id="EJs-aP-fPD"/>
                         <outlet property="emailLoginTextField" destination="ZOR-yh-2Lu" id="3RF-ch-PqA"/>
                         <outlet property="passwordLoginTextField" destination="usR-Bm-a3q" id="UJA-M6-rry"/>
@@ -402,7 +403,6 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="WeL-yU-op6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="YA9-92-TzF"/>
-                    <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IEE-sb-FIa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1141,7 +1141,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設計史" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSO-c0-KhF">
-                                                    <rect key="frame" x="32" y="15" width="492" height="24"/>
+                                                    <rect key="frame" x="20" y="15" width="504" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="c8R-mV-ZmC"/>
                                                     </constraints>
@@ -1184,7 +1184,7 @@
                                                 <constraint firstItem="Yxy-CG-RtM" firstAttribute="top" secondItem="9LU-r3-zHN" secondAttribute="bottom" constant="6" id="bv5-ni-Hs3"/>
                                                 <constraint firstItem="2ht-56-RJV" firstAttribute="leading" secondItem="MSO-c0-KhF" secondAttribute="trailing" constant="8" id="dS9-1r-gw2"/>
                                                 <constraint firstItem="Hkz-Wj-i6P" firstAttribute="centerX" secondItem="gZF-z2-LDa" secondAttribute="centerX" constant="-0.5" id="jVM-2Q-CF0"/>
-                                                <constraint firstItem="MSO-c0-KhF" firstAttribute="leading" secondItem="X2i-jc-snY" secondAttribute="leadingMargin" constant="24" id="kGt-Es-n61"/>
+                                                <constraint firstItem="MSO-c0-KhF" firstAttribute="leading" secondItem="X2i-jc-snY" secondAttribute="leadingMargin" constant="12" id="kGt-Es-n61"/>
                                                 <constraint firstItem="CBl-OX-Fyb" firstAttribute="leading" secondItem="gZF-z2-LDa" secondAttribute="trailing" constant="8" id="l8H-yD-pXR"/>
                                                 <constraint firstItem="2ht-56-RJV" firstAttribute="top" secondItem="X2i-jc-snY" secondAttribute="topMargin" constant="7" id="lTg-rm-oev"/>
                                                 <constraint firstItem="3BD-1a-Hgi" firstAttribute="top" secondItem="MSO-c0-KhF" secondAttribute="bottom" constant="15" id="lqu-UM-l46"/>

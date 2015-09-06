@@ -28,7 +28,7 @@ class CourseDetailHeaderView: UIView {
         titleLabel?.text = course?.name
         lecturerLabel?.text = course?.lecturer
         codeLabel?.text = course?.general_code
-        creditsLabel?.text = "\((course?.credits ?? 0))"
+        creditsLabel?.text = "\((course?.credits ?? 0)) 學分"
         periodsLabel?.text = course?.periodsString
     }
 

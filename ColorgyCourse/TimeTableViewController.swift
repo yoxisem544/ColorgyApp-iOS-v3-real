@@ -19,7 +19,7 @@ class TimeTableViewController: UIViewController {
     @IBAction func addCourseButtonClicked(sender: AnyObject) {
         self.performSegueWithIdentifier("Show Add Course", sender: sender)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

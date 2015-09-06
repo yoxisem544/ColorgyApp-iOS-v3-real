@@ -11,11 +11,11 @@ import UIKit
 class ClassmateTimeTableViewController: UIViewController {
     
     var timetable: TimeTableView!
-    var headerImageView: UIImageView!
+    var headerView: ClassmateHeaderView!
     var headerImageViewHeight: CGFloat!
     
     var userProfileImage: UIImage!
-    
+    var coverPhoto: UIImage!
     // public API
     var userCourseObject: UserCourseObject!
     
@@ -24,6 +24,10 @@ class ClassmateTimeTableViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+        // configure navigation bar
 
         // Do any additional setup after loading the view.
         var contentScrollView = UIScrollView(frame: self.view.frame)
@@ -51,10 +55,14 @@ class ClassmateTimeTableViewController: UIViewController {
         contentScrollView.contentSize.height = timetable.bounds.height + headerImageViewHeight
         
         // configure header imageiview
-        headerImageView = UIImageView(frame: CGRectMake(0, 0, self.view.bounds.width, headerImageViewHeight))
-        headerImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        headerImageView.clipsToBounds = true
-        contentScrollView.addSubview(headerImageView)
+        headerView = ClassmateHeaderView(frame: CGRectMake(0, 0, self.view.frame.width, headerImageViewHeight))
+        headerView.delegate = self
+        contentScrollView.addSubview(headerView)
+        contentScrollView.contentInset.bottom = 49
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -79,8 +87,37 @@ class ClassmateTimeTableViewController: UIViewController {
                                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                                     transition.type = kCATransitionFade
                                     self.userProfileImage = UIImage(data: data)
-                                    self.headerImageView.image = self.userProfileImage
-                                    self.headerImageView.layer.addAnimation(transition, forKey: nil)
+                                    self.headerView.userProfileImage?.image = self.userProfileImage
+                                    self.headerView.userProfileImage?.layer.addAnimation(transition, forKey: nil)
+                                })
+                            }
+                        }
+                    }
+                    // username
+                    if let username = result.name {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            var transition = CATransition()
+                            transition.duration = 0.4
+                            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                            transition.type = kCATransitionFade
+                            self.headerView.userNameLabel?.text = username
+                            self.headerView.userNameLabel?.layer.addAnimation(transition, forKey: nil)
+                        })
+                    }
+                    // user cover_photo
+                    if let url_string = result.cover_photo_url {
+                        if let url = NSURL(string: url_string) {
+                            if let data = NSData(contentsOfURL: url) {
+                                println(data)
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    var transition = CATransition()
+                                    transition.duration = 0.4
+                                    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                                    transition.type = kCATransitionFade
+                                    self.coverPhoto = UIImage(data: data)
+                                    self.headerView.coverImageView?.image = self.coverPhoto
+                                    self.headerView.coverImageView?.layer.addAnimation(transition, forKey: nil)
+                                    self.headerView.xOffset = 0
                                 })
                             }
                         }
@@ -120,32 +157,6 @@ class ClassmateTimeTableViewController: UIViewController {
             }, failure: { () -> Void in
 
         })
-//        ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
-//            if let userCourseObjects = userCourseObjects {
-//                for object in userCourseObjects {
-//                    ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
-//                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-//                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-//                            if let courseRawDataObject = courseRawDataObject {
-//                                if let course = Course(rawData: courseRawDataObject) {
-//                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                        self.courses.append(course)
-//                                        var b = NSDate()
-//                                        if userCourseObjects.count == self.courses.count {
-//                                            self.timetableView.courses = self.courses
-//                                        }
-//                                        var now = NSDate().timeIntervalSinceDate(b)
-//                                        println(now*1000)
-//                                    })
-//                                }
-//                            }
-//                        })
-//                    })
-//                }
-//            }
-//            }, failure: { () -> Void in
-//                
-//        })
     }
     
     override func viewDidLayoutSubviews() {
@@ -162,12 +173,14 @@ class ClassmateTimeTableViewController: UIViewController {
             // scroll down
             let yOffset = -scrollView.contentOffset.y
             // enlarge
-            headerImageView.bounds.size.height = headerImageViewHeight + yOffset
-            // move up
-            headerImageView.frame.origin.y = -yOffset
-            // set image
-            headerImageView.image = userProfileImage
+            self.headerView.yOffset = yOffset
         }
+    }
+    
+    func shiftHeader(scrollView: UIScrollView) {
+        
+        let offset = -scrollView.contentOffset.x
+        self.headerView.xOffset = offset * 0.3
     }
     
     // MARK: - Navigation
@@ -184,6 +197,12 @@ class ClassmateTimeTableViewController: UIViewController {
 
 }
 
+extension ClassmateTimeTableViewController : ClassmateHeaderViewDelegate {
+    func classmateHeaderViewBacButtonClicked() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+}
+
 extension ClassmateTimeTableViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         self.updateHeader(scrollView)
@@ -192,7 +211,8 @@ extension ClassmateTimeTableViewController : UIScrollViewDelegate {
 
 extension ClassmateTimeTableViewController : TimeTableViewDelegate {
     func timeTableViewDidScroll(scrollView: UIScrollView) {
-        
+        println(scrollView.contentOffset.x)
+        shiftHeader(scrollView)
     }
     
     func timeTableView(userDidTapOnCell cell: CourseCellView) {
