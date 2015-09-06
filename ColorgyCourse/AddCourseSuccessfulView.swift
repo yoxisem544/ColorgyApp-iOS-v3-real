@@ -57,15 +57,42 @@ class AddCourseSuccessfulView: UIView {
     }
     
     func animate(complete: () -> Void) {
+        
+        // initial state
+        self.hidden = false
+        self.transform = CGAffineTransformMakeScale(0.3, 0.3)
+        self.alpha = 0.5
         var pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        pathAnimation.duration = 0.7
+        pathAnimation.duration = 0.0
         pathAnimation.fromValue = 0
-        pathAnimation.toValue = 1
-        shapeLayer.addAnimation(pathAnimation, forKey: "strokeEndAnimation")
-        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.7))
-        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-            complete()
-        })
+        pathAnimation.toValue = 0
+        self.shapeLayer.addAnimation(pathAnimation, forKey: "strokeEndAnimation")
+        
+        UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.4, options: nil, animations: { () -> Void in
+            self.alpha = 1.0
+            self.transform = CGAffineTransformIdentity
+        }) { (finished) -> Void in
+            if finished {
+                // check
+                var pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+                pathAnimation.duration = 0.3
+                pathAnimation.fromValue = 0
+                pathAnimation.toValue = 1
+                self.shapeLayer.addAnimation(pathAnimation, forKey: "strokeEndAnimation")
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.7))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    complete()
+                    UIView.animateWithDuration(0.15, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.2, options: nil, animations: { () -> Void in
+                        self.transform = CGAffineTransformMakeScale(0.1, 0.1)
+                        self.alpha = 0.1
+                    }, completion: { (finished) -> Void in
+                        if finished {
+                            self.hidden = true
+                        }
+                    })
+                })
+            }
+        }
     }
 
     required init(coder aDecoder: NSCoder) {

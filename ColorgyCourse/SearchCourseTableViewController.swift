@@ -27,8 +27,11 @@ class SearchCourseViewController: UIViewController {
         self.successfullyAddCourseView.hidden = true
     }
     
-    private func animateSuccessfullyAddCourseView(completeHandler: () -> Void) {
-        self.successfullyAddCourseView.animate(completeHandler)
+    private func animateSuccessfullyAddCourseView() {
+        configureSuccessfullyAddCourseView()
+        self.successfullyAddCourseView.animate { () -> Void in
+            
+        }
     }
     private func showeSuccessfullyAddCourseView() {
         self.successfullyAddCourseView.hidden = false
@@ -168,11 +171,9 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
     
     func searchCourseCell(didTapAddCourseButton course: Course) {
         println("didtapadd")
+
         ColorgyAPI.PUTCourseToServer(course.code, success: { () -> Void in
-            self.showeSuccessfullyAddCourseView()
-            self.animateSuccessfullyAddCourseView({ () -> Void in
-                self.hideSuccessfullyAddCourseView()
-            })
+            self.animateSuccessfullyAddCourseView()
             }, failure: { () -> Void in
             
         })

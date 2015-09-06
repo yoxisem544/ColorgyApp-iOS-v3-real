@@ -72,6 +72,10 @@ class TimeTableView: UIView {
             // add these to view
             for ccv in self.courseCellViewsOnTimetable! {
                 self.timetableContentScrollView.addSubview(ccv)
+                ccv.alpha = 0
+                UIView.animateWithDuration(0.4, animations: { () -> Void in
+                    ccv.alpha = 1
+                })
             }
         }
     }
@@ -157,6 +161,7 @@ class TimeTableView: UIView {
             periodLabel.textColor = UIColor.blackColor()
             periodLabel.text = period["code"]
             periodLabel.textAlignment = NSTextAlignment.Center
+            periodLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
             let baseOffset = courseContainerWidth / 2
             periodLabel.center.x = sessionSideBarView.bounds.midX
             periodLabel.center.y = baseOffset + CGFloat(index) * courseContainerWidth
@@ -185,6 +190,7 @@ class TimeTableView: UIView {
             dayLabel.textAlignment = NSTextAlignment.Center
             dayLabel.text = day
             dayLabel.textColor = UIColor.blackColor()
+            dayLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
             let baseOffset = courseContainerWidth / 2
             dayLabel.center.x = baseOffset + CGFloat(index) * courseContainerWidth
             dayLabel.center.y = headerView.bounds.midY

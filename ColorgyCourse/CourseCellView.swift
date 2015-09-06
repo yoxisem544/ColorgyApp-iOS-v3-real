@@ -43,6 +43,8 @@ class CourseCellView: UIView {
         }
     }
     
+    private let marginSpacing: CGFloat = 2.0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -55,17 +57,22 @@ class CourseCellView: UIView {
         self.addGestureRecognizer(tapGes)
         
         // labels
-        self.courseTitleLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.width, self.bounds.height / 2))
+        self.courseTitleLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.width - marginSpacing * 2, self.bounds.height / 2))
         self.courseTitleLabel.textAlignment = NSTextAlignment.Center
+        self.courseTitleLabel.lineBreakMode = NSLineBreakMode.ByClipping
         self.courseTitleLabel.textColor = UIColor.whiteColor()
         self.courseTitleLabel.adjustsFontSizeToFitWidth = true
         self.courseTitleLabel.minimumScaleFactor = 0.8
+        self.courseTitleLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
+        println(UIFont(name: "STHeitiTC-Medium", size: 15))
         
-        self.courseLocationLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.width, self.bounds.height / 2))
+        self.courseLocationLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.width - marginSpacing * 2, self.bounds.height / 2))
         self.courseLocationLabel.textAlignment = NSTextAlignment.Center
+        self.courseLocationLabel.lineBreakMode = NSLineBreakMode.ByClipping
         self.courseLocationLabel.textColor = UIColor.whiteColor()
         self.courseLocationLabel.adjustsFontSizeToFitWidth = true
         self.courseLocationLabel.minimumScaleFactor = 0.5
+        self.courseLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
         
         self.courseTitleLabel.center.x = self.bounds.midX
         self.courseTitleLabel.center.y = (self.bounds.midY + self.bounds.minY) / 2

@@ -72,6 +72,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         UserSetting.storePushNotificationDeviceToken(deviceToken)
+        // update token
+        ColorgyAPI.PUTdeviceToken(success: { () -> Void in
+            
+        }) { () -> Void in
+            
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -170,15 +170,17 @@ class ClassmateTimeTableViewController: UIViewController {
         }
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Show Detail Course" {
+            let vc = segue.destinationViewController as! DetailCourseViewController
+            if let course = sender as? Course {
+                vc.course = course
+            }
+        }
     }
-    */
 
 }
 
@@ -194,6 +196,8 @@ extension ClassmateTimeTableViewController : TimeTableViewDelegate {
     }
     
     func timeTableView(userDidTapOnCell cell: CourseCellView) {
-        
+        if let course = cell.courseInfo {
+            self.performSegueWithIdentifier("Show Detail Course", sender: course)
+        }
     }
 }
