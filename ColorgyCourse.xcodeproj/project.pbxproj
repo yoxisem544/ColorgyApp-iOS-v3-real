@@ -16,6 +16,7 @@
 		6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */; };
 		6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */; };
 		6348F8801B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */; };
+		635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635959421B9DA07B00371AE7 /* CourseNotification.swift */; };
 		636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */; };
 		636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */; };
 		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
@@ -99,6 +100,7 @@
 		6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateTimeTableViewController.swift; sourceTree = "<group>"; };
 		6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDBManagedObjectOld.swift; sourceTree = "<group>"; };
 		6348F8811B9B0C31005E4D37 /* ColorgyCourse_v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v2.xcdatamodel; sourceTree = "<group>"; };
+		635959421B9DA07B00371AE7 /* CourseNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseNotification.swift; sourceTree = "<group>"; };
 		636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalSettingsTableViewController.swift; sourceTree = "<group>"; };
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
 		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
 				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
 				6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */,
 				636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */,
@@ -489,6 +492,7 @@
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
 				63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */,
+				635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */,
 				639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */,
 				63FBCC731B935C0100B3084F /* Mode.swift in Sources */,
 				63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */,

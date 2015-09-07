@@ -151,8 +151,17 @@ class SearchCourseViewController: UIViewController {
 }
 
 extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
-    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
+    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
         println("didTapDeleteCourseAlertDeleteCourseView")
+        ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
+            CourseDB.deleteCourseWithCourseCode(course.code)
+            alertDeleteCourseView.hideView(0.8)
+            // successfully delete course
+            // change state
+            cell.hasEnrolledState = false
+        }) { () -> Void in
+            alertDeleteCourseView.hideView(0.4)
+        }
     }
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
         println("didTapPreserveCourseAlertDeleteCourseView")
@@ -165,15 +174,25 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 }
 
 extension SearchCourseViewController : SearchCourseCellDelegate {
-    func searchCourseCell(didTapDeleteCourseButton course: Course) {
+    func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell) {
         println("didtapdelete")
+        
+        // alert user first
+        let alertV = AlertDeleteCourseView()
+        alertV.delegate = self
+        alertV.course = course
+        alertV.cellView = cell
+        self.tabBarController?.view.addSubview(alertV)
     }
-    
-    func searchCourseCell(didTapAddCourseButton course: Course) {
-        println("didtapadd")
 
+    func searchCourseCell(didTapAddCourseButton course: Course, cell: SearchCourseCell) {
+        println("didtapadd")
+        println("\(course)")
+        println("didtapadd")
         ColorgyAPI.PUTCourseToServer(course.code, success: { () -> Void in
             self.animateSuccessfullyAddCourseView()
+            CourseDB.storeCourseToDB(course)
+            cell.hasEnrolledState = true
             }, failure: { () -> Void in
             
         })

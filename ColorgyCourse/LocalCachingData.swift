@@ -64,6 +64,7 @@ class LocalCachingData {
     /// Might be nil
     class var courses: [Course]? {
         if let dictionaries = LocalCachingData.dictionaryArrayFormat {
+            // TODO: 產生course的locaiton會有 "" 之情況
             return Course.generateCourseArrayWithDictionaries(dictionaries)
         }
         return nil

@@ -102,7 +102,8 @@ class CourseDB {
                 var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
                 var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
                 // loop
-                if (course.days != nil) && (course.periods != nil) {
+                if (course.days?.count > 0) && (course.periods?.count > 0) {
+                    println("course.sessionLength \(course.sessionLength)")
                     for index in 0..<course.sessionLength {
                         daysRawData[index] = Int32(course.days![index])
                         periodsRawData[index] = Int32(course.periods![index])

@@ -222,9 +222,12 @@ class Course: Printable {
                 }
                 if let period = periodsRawData[index]  as? Int {
                     periods?.append(period)
-                }
-                if let location = locationsRawData[index]  as? String {
-                    locations?.append(location)
+                    // TODO: i put this part inside this is, location wont be nil
+                    // but period and day will be nil
+                    // so i make this inside to prevent generating "" string
+                    if let location = locationsRawData[index]  as? String {
+                        locations?.append(location)
+                    }
                 }
             }
         }

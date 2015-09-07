@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AlertDeleteCourseViewDelegate {
-    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView)
+    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell)
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView)
     func alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView)
 }
@@ -23,6 +23,9 @@ class AlertDeleteCourseView: UIView {
         // Drawing code
     }
     */
+    
+    var course: Course!
+    var cellView: SearchCourseCell!
     
     var delegate: AlertDeleteCourseViewDelegate!
     
@@ -86,14 +89,22 @@ class AlertDeleteCourseView: UIView {
     
     func tap(gesture: UITapGestureRecognizer) {
         delegate?.alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView: self)
+        hideView(0.4)
     }
     
     func deleteC() {
-        delegate?.alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView: self)
+        delegate?.alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView: self, course: course, cell: cellView)
     }
     
     func preserveC() {
         delegate?.alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView: self)
+        hideView(0.4)
+    }
+    
+    func hideView(duration: Double) {
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.alpha = 0
+        })
     }
     
     func generateCover() {

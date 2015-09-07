@@ -9,8 +9,8 @@
 import UIKit
 
 protocol SearchCourseCellDelegate {
-    func searchCourseCell(didTapDeleteCourseButton course: Course)
-    func searchCourseCell(didTapAddCourseButton course: Course)
+    func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell)
+    func searchCourseCell(didTapAddCourseButton course: Course, cell: SearchCourseCell)
 }
 
 class SearchCourseCell: UITableViewCell {
@@ -32,9 +32,9 @@ class SearchCourseCell: UITableViewCell {
     
     @IBAction func AddButtonClicked(sender: AnyObject) {
         if hasEnrolledState {
-            delegate?.searchCourseCell(didTapDeleteCourseButton: course)
+            delegate?.searchCourseCell(didTapDeleteCourseButton: course, cell: self)
         } else {
-            delegate?.searchCourseCell(didTapAddCourseButton: course)
+            delegate?.searchCourseCell(didTapAddCourseButton: course, cell: self)
         }
     }
     
@@ -42,7 +42,6 @@ class SearchCourseCell: UITableViewCell {
     var course: Course! {
         didSet {
             updateUI()
-            checkIfEnrolled()
         }
     }
     
@@ -93,5 +92,7 @@ class SearchCourseCell: UITableViewCell {
         
         // cell configure
         self.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        checkIfEnrolled()
     }
 }

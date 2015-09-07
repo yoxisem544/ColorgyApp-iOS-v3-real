@@ -630,6 +630,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="avk-OX-1Z1" kind="relationship" relationship="rootViewController" id="Zuv-iY-QjX"/>
@@ -639,7 +642,7 @@
             </objects>
             <point key="canvasLocation" x="-1228" y="1540"/>
         </scene>
-        <!--Root View Controller-->
+        <!--我的資料-->
         <scene sceneID="oLu-7s-daD">
             <objects>
                 <tableViewController id="avk-OX-1Z1" customClass="PersonalSettingsTableViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
@@ -793,7 +796,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="5RY-Zw-3CZ"/>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="U01-r9-f4j"/>
+                    <navigationItem key="navigationItem" title="我的資料" id="U01-r9-f4j"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="snR-fE-snP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

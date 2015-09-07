@@ -23,6 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ColorgyAPITrafficControlCenter.unQueueAllJobs()
         
+        // test region
+        CourseNotification.registerForCourseNotification()
+        println()
+        
+        UIApplication.sharedApplication().unregisterForRemoteNotifications()
+        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
+        println()
         // crashlytics
         Fabric.with([Crashlytics.self()])
 

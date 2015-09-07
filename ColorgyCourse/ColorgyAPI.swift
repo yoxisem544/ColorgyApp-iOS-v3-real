@@ -677,7 +677,7 @@ class ColorgyAPI {
         }
     }
     // DELETE class
-    class func DELETECourseToServer(courseCode: String, success: () -> Void, failure: () -> Void) {
+    class func DELETECourseToServer(courseCode: String, success: (courseCode: String) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -693,8 +693,11 @@ class ColorgyAPI {
                         // get self course data from server
                         ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
                             if let userCourseObjects = userCourseObjects {
+                                println(userCourseObjects)
+                                var isMatch = false
                                 for userCourseObject in userCourseObjects {
                                     if courseCode == userCourseObject.course_code  {
+                                        isMatch = true
                                         let uuid = userCourseObject.uuid
                                         let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
                                         
@@ -704,7 +707,7 @@ class ColorgyAPI {
                                             afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                                                 // job ended
                                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                                                success()
+                                                success(courseCode: courseCode)
                                                 }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                                                     // job ended
                                                     ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
@@ -715,6 +718,11 @@ class ColorgyAPI {
                                             failure()
                                         }
                                     }
+                                }
+                                // if no uuid match, shows that server doesnt store this course
+                                if !isMatch {
+                                    // TODO: something wierd
+                                    failure()
                                 }
                             } else {
                                 println("fail to get me course")
