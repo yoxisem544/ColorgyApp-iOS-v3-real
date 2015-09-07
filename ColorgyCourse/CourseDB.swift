@@ -102,13 +102,72 @@ class CourseDB {
                 var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
                 var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
                 // loop
+//                if (course.days?.count > 0) && (course.periods?.count > 0) {
+//                    println("course.sessionLength \(course.sessionLength)")
+//                    for index in 0..<course.sessionLength {
+//                        println("index \(index)")
+//                        println("daysRawData[index] \(daysRawData[index])")
+//                        println("Int32(course.days![index]) \(Int32(course.days![index]))")
+//                        println("daysRawData[index] \(daysRawData[index])")
+//                        daysRawData[index] = Int32(course.days![index])
+//                        periodsRawData[index] = Int32(course.periods![index])
+//                        locationsRawData[index] = course.locations?[index]
+//                    }
+//                }
+                
+                //
                 if (course.days?.count > 0) && (course.periods?.count > 0) {
-                    println("course.sessionLength \(course.sessionLength)")
-                    for index in 0..<course.sessionLength {
-                        daysRawData[index] = Int32(course.days![index])
-                        periodsRawData[index] = Int32(course.periods![index])
-                        locationsRawData[index] = course.locations?[index]
+                    if course.days?.count >= 1 && course.periods?.count >= 1 {
+                        courseObject.day_1 = Int32(course.days![1 - 1])
+                        courseObject.period_1 = Int32(course.periods![1 - 1])
+                        courseObject.location_1 = course.locations?[1 - 1]
                     }
+                    println("Int32(course.days![1 - 1]) \(Int32(course.days![1 - 1]))")
+                    println("Int32(course.periods![1 - 1]) \(Int32(course.periods![1 - 1]))")
+                    println("courseObject.day_1 \(courseObject.day_1)")
+                    println("courseObject.period_1 \(courseObject.period_1)")
+                    println("courseObject.location_1 \(courseObject.location_1)")
+                    if course.days?.count >= 2 && course.periods?.count >= 2 {
+                        courseObject.day_2 = Int32(course.days![2 - 1])
+                        courseObject.period_2 = Int32(course.periods![2 - 1])
+                        courseObject.location_2 = course.locations?[2 - 1]
+                    }
+                    if course.days?.count >= 3 && course.periods?.count >= 3 {
+                        courseObject.day_3 = Int32(course.days![3 - 1])
+                        courseObject.period_3 = Int32(course.periods![3 - 1])
+                        courseObject.location_3 = course.locations?[3 - 1]
+                    }
+                    if course.days?.count >= 4 && course.periods?.count >= 4 {
+                        courseObject.day_4 = Int32(course.days![4 - 1])
+                        courseObject.period_4 = Int32(course.periods![4 - 1])
+                        courseObject.location_4 = course.locations?[4 - 1]
+                    }
+                    if course.days?.count >= 5 && course.periods?.count >= 5 {
+                        courseObject.day_5 = Int32(course.days![5 - 1])
+                        courseObject.period_5 = Int32(course.periods![5 - 1])
+                        courseObject.location_5 = course.locations?[5 - 1]
+                    }
+                    if course.days?.count >= 6 && course.periods?.count >= 6 {
+                        courseObject.day_6 = Int32(course.days![6 - 1])
+                        courseObject.period_6 = Int32(course.periods![6 - 1])
+                        courseObject.location_6 = course.locations?[6 - 1]
+                    }
+                    if course.days?.count >= 7 && course.periods?.count >= 7 {
+                        courseObject.day_7 = Int32(course.days![7 - 1])
+                        courseObject.period_7 = Int32(course.periods![7 - 1])
+                        courseObject.location_7 = course.locations?[7 - 1]
+                    }
+                    if course.days?.count >= 8 && course.periods?.count >= 8 {
+                        courseObject.day_8 = Int32(course.days![8 - 1])
+                        courseObject.period_8 = Int32(course.periods![8 - 1])
+                        courseObject.location_8 = course.locations?[8 - 1]
+                    }
+                    if course.days?.count >= 9 && course.periods?.count >= 9 {
+                        courseObject.day_9 = Int32(course.days![9 - 1])
+                        courseObject.period_9 = Int32(course.periods![9 - 1])
+                        courseObject.location_9 = course.locations?[9 - 1]
+                    }
+
                 }
                 
                 // save

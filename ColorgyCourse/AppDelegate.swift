@@ -21,7 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // reset all jobs
         ColorgyAPITrafficControlCenter.unQueueAllJobs()
+        
+        // get ready to launch
+        AppLaunchHelper.startJob()
         
         // test region
         CourseNotification.registerForCourseNotification()
@@ -35,19 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // crashlytics
         Fabric.with([Crashlytics.self()])
 
+        
+        // register for notification
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil))
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
-        // old db delete
-        CourseDBManagedObjectOld.deleteAll()
-        
-//        let fontFamilyNames = UIFont.familyNames()
-//        for familyName in fontFamilyNames {
-//            println("------------------------------")
-//            println("Font Family Name = [\(familyName)]")
-//            let names = UIFont.fontNamesForFamilyName(familyName as! String)
-//            println("Font Names = [\(names)]")
-//        }
         // segemented control font face
         var attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as [NSObject : AnyObject]
         UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)

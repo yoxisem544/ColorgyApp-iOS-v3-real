@@ -271,13 +271,16 @@ class Course: Printable {
             // loop
             for index in 0..<9 {
                 let day = Int(daysRawData[index])
-                days?.append(day)
-                
-                let period = Int(periodsRawData[index])
-                periods?.append(period)
+                // day must not be 0
+                if day != 0 {
+                    days?.append(day)
+                    
+                    let period = Int(periodsRawData[index])
+                    periods?.append(period)
 
-                if let location = locationsRawData[index] {
-                    locations?.append(location)
+                    if let location = locationsRawData[index] {
+                        locations?.append(location)
+                    }
                 }
             }
         }
