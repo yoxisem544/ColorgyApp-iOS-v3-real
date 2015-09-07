@@ -75,14 +75,15 @@ class ClassmateHeaderView: UIView {
                 self.bounds.size.height = originHeight
             }
 //            backButton.frame.origin.y = (self.bounds.maxY - (-yOffset + 32))
-            backButton.frame.origin.y = self.frame.origin.y - yOffset + 32
+            backButton.frame.origin.y = self.frame.origin.y - yOffset + 20
             // 12 + 20 + 32 is bottom margin buttonheight and top margin
+            // but 12 top is now gone, 20 of status bar is left
             println("self.bounds.height \(self.bounds.height)")
-            if -yOffset >= (self.bounds.height - 64) {
+            if -yOffset >= (self.bounds.height - 20 - 32) {
                 backButton.frame.origin.y = (self.bounds.height - 12 - backButton.bounds.height)
             }
         } else {
-            backButton.frame.origin.y = 32
+            backButton.frame.origin.y = 20
         }
     }
 
@@ -127,9 +128,9 @@ class ClassmateHeaderView: UIView {
 //        backButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
 //        backButton.frame = CGRectMake(16, 32, 12, 20)
         backButton = UIButton(frame: backImage.frame)
-        backButton.frame.origin = CGPoint(x: 16, y: 32)
-        print(backButton.frame)
-        print()
+        backButton.frame.origin = CGPoint(x: 0, y: 20)
+        backButton.frame.size.height = 20 + 24
+        backButton.frame.size.width = 16 + 12 + 16
 //        backButton.tintColor = UIColor.whiteColor()
         backButton.setImage(backImage.image, forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
