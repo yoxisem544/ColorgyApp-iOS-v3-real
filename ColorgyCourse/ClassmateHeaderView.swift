@@ -14,6 +14,8 @@ protocol ClassmateHeaderViewDelegate {
 
 class ClassmateHeaderView: UIView {
     
+    var originHeight: CGFloat!
+    
     var coverImageView: UIImageView!
     var headerImageViewHeight: CGFloat!
     var dimView: UIView!
@@ -61,14 +63,22 @@ class ClassmateHeaderView: UIView {
             // user name profile image
             userProfileImage.center = dimView.center
             userProfileImage.layer.cornerRadius = userProfileImage.bounds.width / 2
-            userNameLabel.frame.origin.y = userProfileImage.frame.origin.y + userProfileImage.bounds.maxY + 8
+            userNameLabel.frame.origin.y = userProfileImage.frame.origin.y + userProfileImage.bounds.maxY + 16
         }
         
         // hide show button
         println(yOffset)
         if -yOffset >= 0 {
-            backButton.frame.origin.y = -yOffset + 32
-            if -yOffset >= (self.bounds.height - 12 - backButton.bounds.height - 32) {
+            // probelm with going up
+            // maybe add height of button
+            if originHeight <= self.bounds.height {
+                self.bounds.size.height = originHeight
+            }
+//            backButton.frame.origin.y = (self.bounds.maxY - (-yOffset + 32))
+            backButton.frame.origin.y = self.frame.origin.y - yOffset + 32
+            // 12 + 20 + 32 is bottom margin buttonheight and top margin
+            println("self.bounds.height \(self.bounds.height)")
+            if -yOffset >= (self.bounds.height - 64) {
                 backButton.frame.origin.y = (self.bounds.height - 12 - backButton.bounds.height)
             }
         } else {
@@ -79,7 +89,7 @@ class ClassmateHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.clipsToBounds = true
-        
+        originHeight = frame.height
         // background
         headerImageViewHeight = frame.height
         coverImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.width, self.bounds.height))

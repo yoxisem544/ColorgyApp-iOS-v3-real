@@ -56,6 +56,7 @@ class DetailCourseViewController: UIViewController {
         self.view.addSubview(self.contentScrollView)
         self.contentScrollView.addSubview(headerView)
         self.contentScrollView.contentSize = self.view.bounds.size
+        self.contentScrollView.contentInset.bottom = 49
         
         // test
         classmatesView = ClassmatesContainerView()
