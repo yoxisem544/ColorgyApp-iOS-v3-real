@@ -54,19 +54,7 @@ class SearchCourseCell: UITableViewCell {
         }
     }
     
-    private func checkIfEnrolled() {
-        if let courses = CourseDB.getAllStoredCoursesObject() {
-            for course in courses {
-                // find if match
-                println("course.code \(course.code) == self.course.code \(self.course.code)")
-                if course.code == self.course.code {
-                    hasEnrolledState = true
-                }
-            }
-        }
-    }
-    
-    private func updateButtonTitle() {
+    func updateButtonTitle() {
         if hasEnrolledState {
             addCourseButton.setTitle("刪除", forState: UIControlState.Normal)
         } else {
@@ -92,7 +80,5 @@ class SearchCourseCell: UITableViewCell {
         
         // cell configure
         self.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        checkIfEnrolled()
     }
 }

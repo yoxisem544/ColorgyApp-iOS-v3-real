@@ -266,6 +266,23 @@ extension SearchCourseViewController : UITableViewDataSource {
             return self.localCachingObjects.count
         }
     }
+    
+    
+    func checkIfEnrolled(courseCode: String) -> Bool {
+        if let courses = CourseDB.getAllStoredCoursesObject() {
+            for course in courses {
+                // find if match
+                if let code = course.code {
+                    if code == courseCode {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
         
@@ -273,9 +290,11 @@ extension SearchCourseViewController : UITableViewDataSource {
             // searching
             cell.course = filteredCourses[indexPath.row]
             cell.delegate = self
+            cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
         } else {
             cell.course = localCachingObjects[indexPath.row]
             cell.delegate = self
+            cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
         }
         
         return cell
