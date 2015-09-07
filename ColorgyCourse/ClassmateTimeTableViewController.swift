@@ -59,6 +59,14 @@ class ClassmateTimeTableViewController: UIViewController {
         headerView.delegate = self
         contentScrollView.addSubview(headerView)
         contentScrollView.contentInset.bottom = 49
+        
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            // load data, not on main queue
+            self.loadUserImage()
+            self.loadUserCourse()
+        })
+
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -67,9 +75,6 @@ class ClassmateTimeTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        loadUserImage()
-        loadUserCourse()
     }
     
     func loadUserImage() {

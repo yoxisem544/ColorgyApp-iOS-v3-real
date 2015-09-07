@@ -65,23 +65,29 @@ class DetailCourseViewController: UIViewController {
         classmatesView.delegate = self
         classmatesView.peoplePerRow = 4
         self.contentScrollView.addSubview(classmatesView)
+        
+        downloadCourseInfo()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        downloadCourseInfo()
+        
     }
     
     private func downloadCourseInfo() {
-        ColorgyAPI.getStudentsInSpecificCourse(course.code, completionHandler: { (userCourseObjects) -> Void in
-            if let userCourseObjects = userCourseObjects {
-                self.userCourseObjects = userCourseObjects
-                println(userCourseObjects)
-                // set and will auto adjust hieght
-                self.classmatesView.userCourseObjects = userCourseObjects
-                // adjust content size height
-                self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
-            }
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+       
+            ColorgyAPI.getStudentsInSpecificCourse(self.course.code, completionHandler: { (userCourseObjects) -> Void in
+                if let userCourseObjects = userCourseObjects {
+                    self.userCourseObjects = userCourseObjects
+                    println(userCourseObjects)
+                    // set and will auto adjust hieght
+                    self.classmatesView.userCourseObjects = userCourseObjects
+                    // adjust content size height
+                    self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
+                }
+            })
         })
     }
     
