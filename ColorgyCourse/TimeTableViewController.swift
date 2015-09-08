@@ -34,7 +34,30 @@ class TimeTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        downloadAndRefreshTable()
+//        downloadAndRefreshTable()
+        
+        // get courses from db
+        getAndSetDataToTimeTable()
+        
+        // test update
+        CourseUpdateHelper.updateCourse()
+    }
+    
+    private func getAndSetDataToTimeTable() {
+        let qos = Int(QOS_CLASS_USER_INITIATED.value)
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            var courses = [Course]()
+            if let objects = CourseDB.getAllStoredCoursesObject() {
+                for obj in objects {
+                    if let course = Course(courseDBManagedObject: obj) {
+                        courses.append(course)
+                    }
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.timetableView.courses = courses
+            })
+        })
     }
     
     private func downloadAndRefreshTable() {

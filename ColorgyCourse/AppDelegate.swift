@@ -27,9 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // get ready to launch
         AppLaunchHelper.startJob()
         
-        // test region
-        CourseNotification.registerForCourseNotification()
-        println()
+        // every time open the app, download new data
+        CourseUpdateHelper.needUpdateCourse()
         
         UIApplication.sharedApplication().unregisterForRemoteNotifications()
         println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())

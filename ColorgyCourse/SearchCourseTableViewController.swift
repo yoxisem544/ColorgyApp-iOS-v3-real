@@ -190,6 +190,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // successfully delete course
             // change state
             cell.hasEnrolledState = false
+            CourseUpdateHelper.needUpdateCourse()
         }) { () -> Void in
             alertDeleteCourseView.hideView(0.4)
         }
@@ -223,6 +224,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         ColorgyAPI.PUTCourseToServer(course.code, success: { () -> Void in
             self.animateSuccessfullyAddCourseView()
             CourseDB.storeCourseToDB(course)
+            CourseUpdateHelper.needUpdateCourse()
             cell.hasEnrolledState = true
             }, failure: { () -> Void in
             

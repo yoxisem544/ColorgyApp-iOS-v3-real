@@ -20,6 +20,7 @@
 		636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */; };
 		636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */; };
 		638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */; };
+		638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */; };
 		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
 		639D450B1B95E5F60053870D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D450A1B95E5F60053870D /* 3.jpg */; };
 		639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D450E1B95FA680053870D /* CourseCommentCell.swift */; };
@@ -105,6 +106,7 @@
 		636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalSettingsTableViewController.swift; sourceTree = "<group>"; };
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
+		638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseUpdateHelper.swift; sourceTree = "<group>"; };
 		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		639D450E1B95FA680053870D /* CourseCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentCell.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */,
 				63ABBC041B94BA7A0077580D /* testViewController.swift */,
 				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
+				638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */,
 				63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */,
 				63FBCC1A1B9345B800B3084F /* Images.xcassets */,
 				63FBCC721B935C0100B3084F /* Mode.swift */,
@@ -528,6 +531,7 @@
 				639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */,
 				63FBCC571B9346D900B3084F /* Course.swift in Sources */,
 				63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */,
+				638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */,
 				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
