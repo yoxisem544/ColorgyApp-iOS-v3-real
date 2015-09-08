@@ -740,7 +740,7 @@
         <!--活動牆-->
         <scene sceneID="mpn-s9-DsR">
             <objects>
-                <viewController id="kTZ-0y-3Uf" sceneMemberID="viewController">
+                <viewController id="kTZ-0y-3Uf" customClass="ActivityWebViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="l4B-R8-Mtb"/>
                         <viewControllerLayoutGuide type="bottom" id="xRv-Pj-Fzh"/>
@@ -761,12 +761,30 @@
                                     <navigationItem title="活動牆" id="4y5-Sy-TRh"/>
                                 </items>
                             </navigationBar>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ca-0I-HzY">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="qct-Nm-IzU">
+                                <rect key="frame" x="0.0" y="64" width="600" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="8kv-sC-keF"/>
+                                </constraints>
+                                <color key="progressTintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="6Ca-0I-HzY" firstAttribute="top" secondItem="I4M-Dd-SDK" secondAttribute="bottom" id="Ckz-qc-QRs"/>
+                            <constraint firstItem="qct-Nm-IzU" firstAttribute="top" secondItem="I4M-Dd-SDK" secondAttribute="bottom" id="Ehq-so-CDP"/>
                             <constraint firstItem="I4M-Dd-SDK" firstAttribute="top" secondItem="0Ap-ff-0Xg" secondAttribute="top" id="G6O-Nd-gIZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qct-Nm-IzU" secondAttribute="trailing" constant="-16" id="Jco-ql-Fbq"/>
                             <constraint firstAttribute="trailing" secondItem="I4M-Dd-SDK" secondAttribute="trailing" id="aJa-RB-WKD"/>
+                            <constraint firstItem="qct-Nm-IzU" firstAttribute="leading" secondItem="0Ap-ff-0Xg" secondAttribute="leadingMargin" constant="-16" id="ezU-9P-ni9"/>
+                            <constraint firstAttribute="trailing" secondItem="6Ca-0I-HzY" secondAttribute="trailing" id="k3P-6Z-KSR"/>
                             <constraint firstItem="I4M-Dd-SDK" firstAttribute="leading" secondItem="0Ap-ff-0Xg" secondAttribute="leading" id="uHD-ey-1zJ"/>
+                            <constraint firstItem="xRv-Pj-Fzh" firstAttribute="top" secondItem="6Ca-0I-HzY" secondAttribute="bottom" id="uob-Ai-czw"/>
+                            <constraint firstItem="6Ca-0I-HzY" firstAttribute="leading" secondItem="0Ap-ff-0Xg" secondAttribute="leading" id="yqT-CU-hXh"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="活動牆" image="activityBoard" id="lSh-Ae-akP">
@@ -774,6 +792,12 @@
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="activityBoardSelected"/>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="navItem" destination="4y5-Sy-TRh" id="t0T-jq-U2s"/>
+                        <outlet property="navigationBar" destination="I4M-Dd-SDK" id="rc2-me-QQ8"/>
+                        <outlet property="progressView" destination="qct-Nm-IzU" id="Kmj-m2-gvL"/>
+                        <outlet property="webView" destination="6Ca-0I-HzY" id="qA2-zK-7Jo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0P-Uc-mAf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

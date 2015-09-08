@@ -39,6 +39,7 @@
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
 		63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */; };
+		63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */; };
 		63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776641B9720C800B15AF0 /* LogoutHelper.swift */; };
 		63E776671B973A2C00B15AF0 /* UserStatusChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776661B973A2C00B15AF0 /* UserStatusChecker.swift */; };
 		63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */; };
@@ -128,6 +129,7 @@
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
 		63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDataFromServerDBManagedObject.swift; sourceTree = "<group>"; };
+		63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityWebViewController.swift; sourceTree = "<group>"; };
 		63E776641B9720C800B15AF0 /* LogoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
 		63E776661B973A2C00B15AF0 /* UserStatusChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatusChecker.swift; sourceTree = "<group>"; };
 		63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLoginViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
+				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
 				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
 				6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */,
 				636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */,
@@ -543,6 +546,7 @@
 				638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */,
 				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
+				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
 				6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */,
 				6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */,
