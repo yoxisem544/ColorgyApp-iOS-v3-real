@@ -55,6 +55,7 @@ class SearchCourseViewController: UIViewController {
         searchCourseTableView.estimatedRowHeight = searchCourseTableView.rowHeight
         searchCourseTableView.rowHeight = 101
         searchCourseTableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        searchCourseTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
         // configure segemented control
         courseSegementedControl.layer.cornerRadius = 0
@@ -64,7 +65,10 @@ class SearchCourseViewController: UIViewController {
         
 //        UserSetting.deleteLocalCourseDataDictionaries()
 //        UserSetting.deleteLocalCourseDataCaching()
-
+        
+        // check if need to refresh
+        
+        // download course
         downloadCourseIfNecessary()
         
         // load course data
@@ -72,6 +76,18 @@ class SearchCourseViewController: UIViewController {
         
         // configure successful add course view
         configureSuccessfullyAddCourseView()
+    }
+    
+    func checkToken() {
+        NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
+            ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+                
+            }, failure: { () -> Void in
+                
+            })
+        }) { () -> Void in
+            
+        }
     }
     
     func downloadCourseIfNecessary() {
@@ -89,7 +105,8 @@ class SearchCourseViewController: UIViewController {
     }
     
     private func loadLocalCachingData() {
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INITIATED.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             if let courses = LocalCachingData.courses {
                 self.localCachingObjects = courses
@@ -99,6 +116,20 @@ class SearchCourseViewController: UIViewController {
             })
         })
     }
+    
+    @IBAction func updateCourseDataClicked(sender: AnyObject) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let alert = UIAlertController(title: "更新課程資料", message: "你要更新課程資料嗎？過程可能需要數分鐘歐！", preferredStyle: UIAlertControllerStyle.Alert)
+            let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                self.blockAndDownloadCourse()
+            })
+            let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
     
     private func blockAndDownloadCourse() {
         let alert = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
@@ -211,11 +242,12 @@ extension SearchCourseViewController : UISearchResultsUpdating {
     
     func filterContentForSearchText(searchText: String) {
         
+        self.filteredCourses = [Course]()
+        
         if searchText != "" {
-            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            let qos = Int(QOS_CLASS_USER_INITIATED.value)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                // init container
-                self.filteredCourses = [Course]()
                 
                 for localCachingObject in self.localCachingObjects {
                     var isMatch: Bool = false

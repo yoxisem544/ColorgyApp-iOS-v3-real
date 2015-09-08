@@ -398,11 +398,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q9g-Bh-Eb9" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--Item-->
+        <!--我的課表-->
         <scene sceneID="PDy-ru-2cc">
             <objects>
                 <navigationController navigationBarHidden="YES" id="WeL-yU-op6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="YA9-92-TzF"/>
+                    <tabBarItem key="tabBarItem" title="我的課表" image="timetable" id="YA9-92-TzF">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="timetableSelected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IEE-sb-FIa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -621,11 +625,15 @@
             </objects>
             <point key="canvasLocation" x="-2056" y="2977"/>
         </scene>
-        <!--Item-->
+        <!--我的資料-->
         <scene sceneID="Bee-mh-vef">
             <objects>
                 <navigationController id="bWU-kc-GY7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="UMR-gA-O99"/>
+                    <tabBarItem key="tabBarItem" title="我的資料" image="personalInfo" id="UMR-gA-O99">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="personalInfoSelected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8p5-a1-8vY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -653,80 +661,6 @@
                         <color key="separatorColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
-                            <tableViewSection headerTitle=" " id="8Aj-l7-pKp">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="b10-0Z-pwb">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b10-0Z-pwb" id="kSW-96-lkK">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="個人資料" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFY-Xn-UZo">
-                                                    <rect key="frame" x="16" y="13" width="68" height="17"/>
-                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tableviewNextGray" translatesAutoresizingMaskIntoConstraints="NO" id="s0q-1A-8of">
-                                                    <rect key="frame" x="575" y="15" width="9" height="13"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="9" id="9sz-An-fHv"/>
-                                                        <constraint firstAttribute="height" constant="13" id="duo-iu-YNe"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="s0q-1A-8of" secondAttribute="trailing" constant="16" id="4ia-nA-2wP"/>
-                                                <constraint firstItem="BFY-Xn-UZo" firstAttribute="leading" secondItem="kSW-96-lkK" secondAttribute="leadingMargin" constant="8" id="64f-zx-pJb"/>
-                                                <constraint firstItem="s0q-1A-8of" firstAttribute="top" secondItem="kSW-96-lkK" secondAttribute="top" constant="15" id="BcW-pM-IzH"/>
-                                                <constraint firstItem="BFY-Xn-UZo" firstAttribute="top" secondItem="kSW-96-lkK" secondAttribute="topMargin" constant="5" id="U3Z-P0-Jwr"/>
-                                                <constraint firstItem="BFY-Xn-UZo" firstAttribute="leading" secondItem="kSW-96-lkK" secondAttribute="leading" constant="16" id="rBa-ym-MRJ"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="64f-zx-pJb"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle=" " id="E1d-qL-QhK">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="E0X-e8-xbd">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E0X-e8-xbd" id="3mh-1B-aDl">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bui-D5-AJx">
-                                                    <rect key="frame" x="16" y="13" width="34" height="17"/>
-                                                    <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tableviewNextGray" translatesAutoresizingMaskIntoConstraints="NO" id="0hS-9w-auY">
-                                                    <rect key="frame" x="575" y="15" width="9" height="13"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="9" id="BPB-bA-dXw"/>
-                                                        <constraint firstAttribute="height" constant="13" id="Sxh-W1-gkg"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Bui-D5-AJx" firstAttribute="leading" secondItem="3mh-1B-aDl" secondAttribute="leadingMargin" constant="8" id="12C-Ws-9bX"/>
-                                                <constraint firstItem="Bui-D5-AJx" firstAttribute="leading" secondItem="3mh-1B-aDl" secondAttribute="leading" constant="16" id="436-Cb-N93"/>
-                                                <constraint firstAttribute="trailing" secondItem="0hS-9w-auY" secondAttribute="trailing" constant="16" id="B8U-zC-waN"/>
-                                                <constraint firstItem="Bui-D5-AJx" firstAttribute="top" secondItem="3mh-1B-aDl" secondAttribute="topMargin" constant="5" id="XSi-JZ-AL3"/>
-                                                <constraint firstItem="0hS-9w-auY" firstAttribute="top" secondItem="3mh-1B-aDl" secondAttribute="top" constant="15" id="Zmd-oq-AyS"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="12C-Ws-9bX"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle=" " id="k0j-DP-Qxb">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="x4q-kj-5aV">
@@ -1070,6 +1004,9 @@
                                         </segmentedControl>
                                         <barButtonItem key="rightBarButtonItem" image="downloadFromCloud" id="ahQ-Uf-Kpq">
                                             <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="updateCourseDataClicked:" destination="Bgc-mQ-wie" id="dj4-rc-xKn"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -1650,8 +1587,12 @@
         <image name="mail" width="26" height="23"/>
         <image name="mailLarge" width="55" height="47"/>
         <image name="periodIcon" width="14" height="14"/>
+        <image name="personalInfo" width="23" height="24"/>
+        <image name="personalInfoSelected" width="23" height="23"/>
         <image name="starEmpty" width="10" height="10"/>
         <image name="tableviewNextGray" width="9" height="13"/>
+        <image name="timetable" width="24" height="24"/>
+        <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="wOd-GH-GTc"/>

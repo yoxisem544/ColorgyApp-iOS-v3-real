@@ -206,7 +206,8 @@ class ColorgyAPI {
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background
-                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                            let qos = Int(QOS_CLASS_USER_INITIATED.value)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 // then handle response
                                 let json = JSON(response)
@@ -276,7 +277,8 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         // into background
-                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        let qos = Int(QOS_CLASS_USER_INITIATED.value)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                             // then handle response
                             println(response)
@@ -331,7 +333,8 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         // into background
-                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        let qos = Int(QOS_CLASS_USER_INITIATED.value)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                             // then handle response
                             let json = JSON(response)
@@ -384,7 +387,8 @@ class ColorgyAPI {
                     // job ended
                     ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                     // into background
-                    let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                    let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                    let qos = Int(QOS_CLASS_USER_INITIATED.value)
                     dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                         // then handle response
                         let json = JSON(response)
@@ -434,7 +438,8 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         // into background
-                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        let qos = Int(QOS_CLASS_USER_INITIATED.value)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                             // then handle response
                             println("me API successfully get")
@@ -500,7 +505,8 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         // into background
-                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        let qos = Int(QOS_CLASS_USER_INITIATED.value)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                             // then handle response
                             println("me API successfully get")
@@ -582,7 +588,8 @@ class ColorgyAPI {
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background
-                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                            let qos = Int(QOS_CLASS_USER_INITIATED.value)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 // then handle response
                                 // will return a array of courses

@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // segemented control font face
         var attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as [NSObject : AnyObject]
         UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)
+        UITabBar.appearance().tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
         
         // show view
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

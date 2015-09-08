@@ -38,14 +38,16 @@ class TimeTableViewController: UIViewController {
     }
     
     private func downloadAndRefreshTable() {
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INITIATED.value)
+//        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             self.courses = [Course]()
             ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
                 if let userCourseObjects = userCourseObjects {
                     for object in userCourseObjects {
                         ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
-                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+//                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                            let qos = Int(QOS_CLASS_USER_INITIATED.value)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 if let courseRawDataObject = courseRawDataObject {
                                     if let course = Course(rawData: courseRawDataObject) {

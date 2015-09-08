@@ -124,6 +124,8 @@ class ColorgyAPITrafficControlCenter {
                             UserSetting.refreshTokenExpiredUserSettingDeletion()
                             println(ColorgyErrorType.TrafficError.refreshTokenExpired)
                             
+                            
+                            
 //                            completionHandler(loginResult: nil)
                             failure()
                     })
