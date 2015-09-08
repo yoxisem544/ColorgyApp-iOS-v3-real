@@ -36,11 +36,38 @@ class TimeTableViewController: UIViewController {
         super.viewDidAppear(animated)
 //        downloadAndRefreshTable()
         
+        // check token
+        checkToken()
+        
         // get courses from db
         getAndSetDataToTimeTable()
         
         // test update
         CourseUpdateHelper.updateCourse()
+    }
+    
+    private func checkToken() {
+        NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
+            ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+                
+                }, failure: { () -> Void in
+                    if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
+                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                            let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
+                            let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                                self.presentViewController(vc, animated: true, completion: nil)
+                            })
+                            alert.addAction(ok)
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        })
+                    }
+            })
+            }) { () -> Void in
+                
+        }
     }
     
     private func getAndSetDataToTimeTable() {

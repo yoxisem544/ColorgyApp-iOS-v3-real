@@ -64,7 +64,6 @@ class CourseCellView: UIView {
         self.courseTitleLabel.adjustsFontSizeToFitWidth = true
         self.courseTitleLabel.minimumScaleFactor = 0.8
         self.courseTitleLabel.font = UIFont(name: "STHeitiTC-Light", size: 15)
-        println(UIFont(name: "STHeitiTC-Medium", size: 15))
         
         self.courseLocationLabel = UILabel(frame: CGRectMake(0, 0, self.bounds.width - marginSpacing * 2, self.bounds.height / 2))
         self.courseLocationLabel.textAlignment = NSTextAlignment.Center

@@ -10,6 +10,9 @@ import Foundation
 
 class CourseNotification {
     class func registerForCourseNotification() {
+        // delete all
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        // then register new one
         if let objects = CourseDB.getAllStoredCoursesObject() {
             var courses = [Course]()
             for object in objects {
@@ -19,9 +22,13 @@ class CourseNotification {
             }
             // get out all course stored in db
             for course in courses {
-                checkNeedNotifiedCourse(course)
+                var needNotifiedCourses = checkNeedNotifiedCourse(course)
+                for needNotifiedCourse in needNotifiedCourses {
+                    setupNotificationWithMessage("yoyoyo", day: needNotifiedCourse.day, session: needNotifiedCourse.period)
+                }
             }
             
+            println(UIApplication.sharedApplication().scheduledLocalNotifications)
         }
     }
     
@@ -66,7 +73,7 @@ class CourseNotification {
         return []
     }
     
-    func setupNotificationWithMessage(message: String, day: Int, session: Int) {
+    class func setupNotificationWithMessage(message: String, day: Int, session: Int) {
         
         let ud = NSUserDefaults.standardUserDefaults()
         let periodData = UserSetting.getPeriodData()
@@ -92,13 +99,14 @@ class CourseNotification {
                         component.second = 0
                         calendar.timeZone = NSTimeZone.defaultTimeZone()
                         var dateToFire = calendar.dateFromComponents(component)
-                        
+                        println("day: \(day), session: \(session) on component \(component)")
                         // set up local notification
                         let localNotification = UILocalNotification()
                         localNotification.timeZone = NSTimeZone.defaultTimeZone()
                         localNotification.fireDate = dateToFire
                         localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
                         localNotification.alertBody = message
+                        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
                     }
                 }
             }
