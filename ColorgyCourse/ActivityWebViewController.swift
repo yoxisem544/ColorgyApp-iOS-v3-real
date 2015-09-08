@@ -26,6 +26,8 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         //        title = publisher.title
         webView.delegate = self
         webView.stopLoading()
+        webView.sizeToFit()
+        webView.scalesPageToFit = true
         
         // 
         navigationBar.tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
@@ -37,7 +39,9 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         var reload = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reloadPage")
         self.navItem.setRightBarButtonItems([reload], animated: false)
         
-        let pageURL = NSURL(string: "https://google.com")!
+        login()
+        
+        let pageURL = NSURL(string: "https://colorgy.io/mobile-index")!
         let request = NSURLRequest(URL: pageURL)
         webView.loadRequest(request)
 //        navigationController?.hidesBarsOnSwipe = true
@@ -53,14 +57,31 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         }
     }
     
-    func loginThreeTimes() {
-        
+    func goForward() {
+        if self.webView.canGoForward {
+            self.webView.goForward()
+        }
+    }
+    
+    func goBack() {
+        if self.webView.canGoBack {
+            self.webView.goBack()
+        }
+    }
+    
+    func login() {
+        if let accessToken = UserSetting.UserAccessToken() {
+            var reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
+            println(reqObj.URL)
+            self.webView.loadRequest(reqObj)
+        }
     }
     
     
     func webViewDidStartLoad(webView: UIWebView) {
         hasFinishLoading = false
         progressView.progress = 0.05
+        progressView.hidden = false
         updateProgress()
     }
     
