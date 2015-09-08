@@ -65,13 +65,27 @@ class PersonalSettingsTableViewController: UITableViewController {
                     let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
                     self.presentViewController(vc, animated: true, completion: nil)
                     }, failure: { () -> Void in
-                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
-                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                            let alert = UIAlertController(title: "登出失敗", message: "請檢查網路有沒有暢通～再重新試一次唷！", preferredStyle: UIAlertControllerStyle.Alert)
-                            let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: nil)
-                            alert.addAction(ok)
-                            self.presentViewController(alert, animated: true, completion: nil)
-                        })
+                        if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
+                            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+                            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                                let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
+                                let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                                    self.presentViewController(vc, animated: true, completion: nil)
+                                })
+                                alert.addAction(ok)
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            })
+                        } else {
+                            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+                            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                                let alert = UIAlertController(title: "登出失敗", message: "請檢查網路有沒有暢通～再重新試一次唷！", preferredStyle: UIAlertControllerStyle.Alert)
+                                let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: nil)
+                                alert.addAction(ok)
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            })
+                        }
                 })
             })
             let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)

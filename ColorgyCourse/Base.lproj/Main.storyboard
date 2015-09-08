@@ -397,6 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q9g-Bh-Eb9" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-2056" y="-577"/>
         </scene>
         <!--我的課表-->
         <scene sceneID="PDy-ru-2cc">
@@ -737,6 +738,25 @@
             <point key="canvasLocation" x="-1228" y="2262"/>
         </scene>
         <!--Item-->
+        <scene sceneID="mpn-s9-DsR">
+            <objects>
+                <viewController id="kTZ-0y-3Uf" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="l4B-R8-Mtb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xRv-Pj-Fzh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Ap-ff-0Xg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="lSh-Ae-akP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J0P-Uc-mAf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-536" y="1877"/>
+        </scene>
+        <!--Item-->
         <scene sceneID="pTw-I9-BhS">
             <objects>
                 <viewController id="wAE-S0-RTc" sceneMemberID="viewController">
@@ -962,7 +982,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2d1-ri-PNX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="166" y="1916"/>
+            <point key="canvasLocation" x="-2056" y="3789"/>
         </scene>
         <!--Item-->
         <scene sceneID="zly-Kv-hsj">
@@ -1564,9 +1584,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="OLe-6w-Txn" kind="relationship" relationship="viewControllers" id="ZZ4-9x-ugm"/>
                         <segue destination="WeL-yU-op6" kind="relationship" relationship="viewControllers" id="2pv-XB-sXO"/>
                         <segue destination="bWU-kc-GY7" kind="relationship" relationship="viewControllers" id="V5u-Vk-4fI"/>
+                        <segue destination="kTZ-0y-3Uf" kind="relationship" relationship="viewControllers" id="1Ow-rL-siM"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>
