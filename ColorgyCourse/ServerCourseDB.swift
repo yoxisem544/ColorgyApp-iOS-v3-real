@@ -47,6 +47,9 @@ class ServerCourseDB {
                 courseObject.type = course._type
                 courseObject.year = Int32(course.year)
                 courseObject.term = Int32(course.term)
+                if let credits = course.credits {
+                    courseObject.credits = Int32(credits)
+                }
                 
                 courseObject.general_code = course.general_code
                 //                courseObject.color_of_cell
