@@ -18,8 +18,9 @@ class AppLaunchHelper {
         let possibelorg = UserSetting.UserPossibleOrganization()
         // periods data
         let perioddata = UserSetting.getPeriodData()
+        let isRefreshable = ColorgyAPITrafficControlCenter.isRefershTokenRefreshable()
         
-        if ((perioddata == [[:]]) || (deviceuuid == nil) || (possibelorg == nil)) {
+        if ((perioddata == [[:]]) || (deviceuuid == nil) || (possibelorg == nil) || !isRefreshable) {
             UserSetting.deleteAllUserSettings()
         }
         

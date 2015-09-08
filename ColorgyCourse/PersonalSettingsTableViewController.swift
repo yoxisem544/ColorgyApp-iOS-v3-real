@@ -58,6 +58,9 @@ class PersonalSettingsTableViewController: UITableViewController {
             let alert = UIAlertController(title: "準備登出", message: "確定要登出嗎？登出將會移除手機上的資料，不會影響存在網路上的資料！", preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) in
                 LogoutHelper.logoutPrepare(success: { () -> Void in
+                    UserSetting.deleteAllUserSettings()
+                    ServerCourseDB.deleteAllCourses()
+                    CourseDB.deleteAllCourses()
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
                     self.presentViewController(vc, animated: true, completion: nil)

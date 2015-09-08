@@ -13,6 +13,25 @@ class ColorgyAPITrafficControlCenter {
     struct TrafficKey {
         static let IsRefreshingAccessToken = "IsRefreshingAccessToken"
         static let BackgroundJobQueue = "BackgroundJobQueue"
+        static let isRefershTokenRefreshable = "isRefershTokenRefreshableKEY"
+    }
+    
+    // get refresh token state
+    class func isRefershTokenRefreshable() -> Bool {
+        let ud = NSUserDefaults.standardUserDefaults()
+        return ud.boolForKey(TrafficKey.isRefershTokenRefreshable)
+    }
+    
+    class func setRefreshStateToCanRefresh() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(true, forKey: TrafficKey.isRefershTokenRefreshable)
+        ud.synchronize()
+    }
+    
+    class func setRefreshStateToCanNOTRefresh() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(false, forKey: TrafficKey.isRefershTokenRefreshable)
+        ud.synchronize()
     }
     
     class func isTokenRefreshing() -> Bool {
@@ -118,7 +137,7 @@ class ColorgyAPITrafficControlCenter {
                         }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
                             // change to refresing finish state
                             ColorgyAPITrafficControlCenter.changeRefreshingState()
-                            
+                            ColorgyAPITrafficControlCenter.setRefreshStateToCanNOTRefresh()
                             // TODO: - very critical part, refresh fail, token expired -
                             // logout user here
                             UserSetting.refreshTokenExpiredUserSettingDeletion()

@@ -29,6 +29,8 @@ class FBLoginViewController: UIViewController {
                             UserSetting.storeAPIMeResult(result: result)
 //                            self.statusLabel.text = "generateAndStoreDeviceUUID"
                             UserSetting.generateAndStoreDeviceUUID()
+                            // set state refresh can use
+                            ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
                             
                             // get period data
                             ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
