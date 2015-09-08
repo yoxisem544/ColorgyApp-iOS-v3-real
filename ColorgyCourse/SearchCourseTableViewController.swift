@@ -105,7 +105,13 @@ class SearchCourseViewController: UIViewController {
 //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         let qos = Int(QOS_CLASS_USER_INITIATED.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            if let courses = ServerCourseDB.getAllStoredCoursesObject() {
+            if let courseObjects = ServerCourseDB.getAllStoredCoursesObject() {
+                var courses = [Course]()
+                for courseObject in courseObjects {
+                    if let course = Course(courseDataFromServerDBManagedObject: courseObject) {
+                        courses.append(course)
+                    }
+                }
                 self.localCachingObjects = courses
             } else {
                 self.blockAndDownloadCourse()

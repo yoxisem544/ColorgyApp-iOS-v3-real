@@ -76,11 +76,6 @@ class ServerCourseDB {
                         courseObject.period_1 = Int32(course.periods![1 - 1])
                         courseObject.location_1 = course.locations?[1 - 1]
                     }
-                    println("Int32(course.days![1 - 1]) \(Int32(course.days![1 - 1]))")
-                    println("Int32(course.periods![1 - 1]) \(Int32(course.periods![1 - 1]))")
-                    println("courseObject.day_1 \(courseObject.day_1)")
-                    println("courseObject.period_1 \(courseObject.period_1)")
-                    println("courseObject.location_1 \(courseObject.location_1)")
                     if course.days?.count >= 2 && course.periods?.count >= 2 {
                         courseObject.day_2 = Int32(course.days![2 - 1])
                         courseObject.period_2 = Int32(course.periods![2 - 1])
@@ -150,10 +145,10 @@ class ServerCourseDB {
     /// @link hello
     ///
     /// :returns: [CourseDBManagedObject]?
-    class func getAllStoredCoursesObject() -> [Course]? {
+    class func getAllStoredCoursesObject() -> [CourseDataFromServerDBManagedObject]? {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "CourseDBManagedObject")
+            let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
             var e: NSError?
             var coursesInDB: [CourseDataFromServerDBManagedObject] = managedObjectContext.executeFetchRequest(fetchRequest, error: &e) as! [CourseDataFromServerDBManagedObject]
             if e != nil {
@@ -163,13 +158,15 @@ class ServerCourseDB {
                 return nil
             } else {
                 // a pack of data from local db
-                var courses = [Course]()
-                for cObject in coursesInDB {
-                    if let course = Course(courseDataFromServerDBManagedObject: cObject) {
-                        courses.append(course)
-                    }
-                }
-                return courses
+//                var courses = [Course]()
+//                println(coursesInDB)
+//                for cObject in coursesInDB {
+//                    if let course = Course(courseDataFromServerDBManagedObject: cObject) {
+//                        courses.append(course)
+//                    }
+//                }
+//                return courses
+                return coursesInDB
             }
         }
         return nil
