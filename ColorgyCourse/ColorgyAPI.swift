@@ -184,7 +184,7 @@ class ColorgyAPI {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courseRawDataDictionary: [[String : AnyObject]], json: JSON) -> Void, failure: () -> Void) {
+    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -207,20 +207,31 @@ class ColorgyAPI {
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background
 //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                            let qos = Int(QOS_CLASS_USER_INITIATED.value)
+                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 // then handle response
                                 let json = JSON(response)
                                 let courseRawDataArray = CourseRawDataArray(json: json)
                                 var dicts = [[String : AnyObject]]()
+                                // this dic can use to generate [course]
                                 if courseRawDataArray.objects != nil {
                                     for object in courseRawDataArray.objects! {
                                         dicts.append(object.dictionary)
                                     }
+                                    // successfully get a dicts
+                                    // generate [cours]
+                                    var courses = Course.generateCourseArrayWithDictionaries(dicts)
                                     // return to main queue
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        success(courseRawDataDictionary: dicts, json: json)
-                                    })
+                                    if let courses = courses {
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            success(courses: courses, json: json)
+                                        })
+                                    } else {
+                                        // fail to generate objects
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            failure()
+                                        })
+                                    }
                                 } else {
                                     // fail to generate objects
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in

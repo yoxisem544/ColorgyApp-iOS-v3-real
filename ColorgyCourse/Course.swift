@@ -288,6 +288,59 @@ class Course: Printable {
         self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations, general_code: general_code)
     }
     
+    convenience init?(courseDataFromServerDBManagedObject: CourseDataFromServerDBManagedObject?) {
+        // what do we need of a course?
+        var code: String? = nil
+        var name: String? = nil
+        var year: Int? = nil
+        var term: Int? = nil
+        var lecturer: String? = nil
+        var credits: Int? = nil
+        var _type: String? = nil
+        // how to configure location period ?
+        var days: [Int]? = nil
+        var periods: [Int]? = nil
+        var locations: [String]? = nil
+        var general_code: String? = nil
+        
+        if let courseDataFromServerDBManagedObject = courseDataFromServerDBManagedObject {
+            // not a array
+            code = courseDataFromServerDBManagedObject.code
+            name = courseDataFromServerDBManagedObject.name
+            year = Int(courseDataFromServerDBManagedObject.year)
+            term = Int(courseDataFromServerDBManagedObject.term)
+            lecturer = courseDataFromServerDBManagedObject.lecturer
+            credits = Int(courseDataFromServerDBManagedObject.credits)
+            _type = courseDataFromServerDBManagedObject.type
+            // new part
+            general_code = courseDataFromServerDBManagedObject.general_code
+            days = [Int]()
+            periods = [Int]()
+            locations = [String]()
+            // prepare data...
+            var daysRawData = [courseDataFromServerDBManagedObject.day_1 ,courseDataFromServerDBManagedObject.day_2 ,courseDataFromServerDBManagedObject.day_3 ,courseDataFromServerDBManagedObject.day_4 ,courseDataFromServerDBManagedObject.day_5 ,courseDataFromServerDBManagedObject.day_6 ,courseDataFromServerDBManagedObject.day_7 ,courseDataFromServerDBManagedObject.day_8 ,courseDataFromServerDBManagedObject.day_9]
+            var periodsRawData = [courseDataFromServerDBManagedObject.period_1 ,courseDataFromServerDBManagedObject.period_2 ,courseDataFromServerDBManagedObject.period_3 ,courseDataFromServerDBManagedObject.period_4 ,courseDataFromServerDBManagedObject.period_5 ,courseDataFromServerDBManagedObject.period_6 ,courseDataFromServerDBManagedObject.period_7 ,courseDataFromServerDBManagedObject.period_8 ,courseDataFromServerDBManagedObject.period_9]
+            var locationsRawData = [courseDataFromServerDBManagedObject.location_1 ,courseDataFromServerDBManagedObject.location_2 ,courseDataFromServerDBManagedObject.location_3 ,courseDataFromServerDBManagedObject.location_4 ,courseDataFromServerDBManagedObject.location_5 ,courseDataFromServerDBManagedObject.location_6 ,courseDataFromServerDBManagedObject.location_7 ,courseDataFromServerDBManagedObject.location_8 ,courseDataFromServerDBManagedObject.location_9]
+            // loop
+            for index in 0..<9 {
+                let day = Int(daysRawData[index])
+                // day must not be 0
+                if day != 0 {
+                    days?.append(day)
+                    
+                    let period = Int(periodsRawData[index])
+                    periods?.append(period)
+                    
+                    if let location = locationsRawData[index] {
+                        locations?.append(location)
+                    }
+                }
+            }
+        }
+        
+        self.init(code: code, name: name, year: year, term: term, lecturer: lecturer, credits: credits, _type: _type, days: days, periods: periods, locations: locations, general_code: general_code)
+    }
+    
     // dont know if always have data in to this init? considering....
 //    convenience init?(courseObject: CourseDBManagedObject) {
 //        

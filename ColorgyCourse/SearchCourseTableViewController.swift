@@ -68,11 +68,8 @@ class SearchCourseViewController: UIViewController {
         
         // check if need to refresh
         
-        // download course
-        downloadCourseIfNecessary()
-        
         // load course data
-        loadLocalCachingData()
+        loadCourseData()
         
         // configure successful add course view
         configureSuccessfullyAddCourseView()
@@ -104,12 +101,14 @@ class SearchCourseViewController: UIViewController {
         })
     }
     
-    private func loadLocalCachingData() {
+    private func loadCourseData() {
 //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         let qos = Int(QOS_CLASS_USER_INITIATED.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            if let courses = LocalCachingData.courses {
+            if let courses = ServerCourseDB.getAllStoredCoursesObject() {
                 self.localCachingObjects = courses
+            } else {
+                self.blockAndDownloadCourse()
             }
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.searchCourseTableView.reloadData()
@@ -136,20 +135,23 @@ class SearchCourseViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(alert, animated: true, completion: nil)
         })
-        ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courseRawDataDictionary, json) -> Void in
+        ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
             // ok!
             // save this
-            UserSetting.storeRawCourseJSON(json)
+//            UserSetting.storeRawCourseJSON(json)
             // generate array of dictionary
-            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
+//            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
             
             // dismiss alert
             alert.message = "下載完成！ 😆"
             
+            // store data
+            ServerCourseDB.storeABunchOfCoursesToDB(courses)
+            
             let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
             dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
                 alert.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    self.loadLocalCachingData()
+                    self.loadCourseData()
                 })
             })
             }, failure: { () -> Void in
