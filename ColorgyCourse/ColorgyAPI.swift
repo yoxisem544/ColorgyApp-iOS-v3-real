@@ -390,32 +390,37 @@ class ColorgyAPI {
             completionHandler(periodDataObjects: nil)
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/ntust_period_data.json?access_token=\(accesstoken)"
-                // queue job
-                ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                // then start job
-                afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                    // job ended
-                    ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                    // into background
-//                    let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                    let qos = Int(QOS_CLASS_USER_INITIATED.value)
-                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                        // then handle response
-                        let json = JSON(response)
-                        let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
-                        UserSetting.storePeriodsData(resultObjects)
-                            // return to main queue
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                completionHandler(periodDataObjects: resultObjects)
-                            })
-                    })
-                    }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                if let school = UserSetting.UserPossibleOrganization() {
+                let url = "https://colorgy.io:443/api/v1/\(school.lowercaseString)/period_data.json?access_token=\(accesstoken)"
+                    // queue job
+                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                    // then start job
+                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        // then handle response
-                        completionHandler(periodDataObjects: nil)
-                })
+                        // into background
+    //                    let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                        let qos = Int(QOS_CLASS_USER_INITIATED.value)
+                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                            // then handle response
+                            let json = JSON(response)
+                            let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
+                            UserSetting.storePeriodsData(resultObjects)
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    completionHandler(periodDataObjects: resultObjects)
+                                })
+                        })
+                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            // job ended
+                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                            // then handle response
+                            completionHandler(periodDataObjects: nil)
+                    })
+                } else {
+                    println(ColorgyErrorType.noOrganization)
+                    completionHandler(periodDataObjects: nil)
+                }
             } else {
                 println(ColorgyErrorType.noAccessToken)
                 completionHandler(periodDataObjects: nil)
