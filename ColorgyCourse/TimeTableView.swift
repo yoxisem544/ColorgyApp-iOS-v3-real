@@ -31,6 +31,14 @@ class TimeTableView: UIView {
         }
     }
     
+    let cellColors = [
+        UIColor(red:0.973,  green:0.588,  blue:0.502, alpha:1),
+        UIColor(red:0.961,  green:0.651,  blue:0.137, alpha:1),
+        UIColor(red:0.027,  green:0.580,  blue:0.749, alpha:1),
+        UIColor(red:0,  green:0.816,  blue:0.678, alpha:1),
+        UIColor(red:0.969,  green:0.420,  blue:0.616, alpha:1)
+    ]
+    
     var delegate: TimeTableViewDelegate!
     var bounces: Bool! {
         didSet {
@@ -60,12 +68,14 @@ class TimeTableView: UIView {
         // init container
         self.courseCellViewsOnTimetable = [CourseCellView]()
         if let courses = self.courses {
-            for course in courses {
+            for (index: Int, course: Course) in enumerate(courses) {
                 // generate cell
                 var views = generateCourseCellViewWithCourse(course)
                 // add subview
                 for view in views {
                     self.courseCellViewsOnTimetable?.append(view)
+                    // change color
+                    view.backgroundColor = cellColors[index%cellColors.count]
                 }
             }
             // after getting course cell view

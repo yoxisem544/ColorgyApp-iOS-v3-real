@@ -175,6 +175,7 @@ class CourseDB {
                 
                 // save
                 var e: NSError?
+                // TODO: fuck the nil
                 if managedObjectContext.save(&e) != true {
                     println(ColorgyErrorType.DBFailure.saveFail)
                 }

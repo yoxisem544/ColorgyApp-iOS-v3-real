@@ -57,14 +57,9 @@ class ClassmatesContainerView: UIView {
             // loop through all objects
             for rowIndex in 0..<rows {
                 // first new a containerview
-                let containerView = UIView(frame: CGRectMake(0, CGFloat(rowIndex) * imageViewHeight, self.bounds.width, imageViewHeight + spacing))
+                let containerView = UIView(frame: CGRectMake(0, CGFloat(rowIndex) * (imageViewHeight + spacing * 1), self.bounds.width, imageViewHeight + spacing * 1))
                 for peopleIndex in 0..<peoplePerRow {
                     let profileImageView = UIImageView(frame: CGRectMake(0, 0, imageViewHeight, imageViewHeight))
-                    // arrange
-                    // x
-                    profileImageView.frame.origin.x = CGFloat(peopleIndex + 1) * spacing + CGFloat(peopleIndex) * imageViewHeight
-                    // y
-                    profileImageView.center.y = containerView.bounds.midY
                     // style
                     profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
                     profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
@@ -81,6 +76,13 @@ class ClassmatesContainerView: UIView {
                     // check if end of row, be careful of end row
                     // TODO: check index problem
                     if (rowIndex * peoplePerRow + (peopleIndex)) < userCourseObjects.count {
+                        // arrange
+                        // x
+                        profileImageView.frame.origin.x = CGFloat(peopleIndex + 1) * spacing + CGFloat(peopleIndex) * imageViewHeight
+                        // y
+                        println("containerView.bounds.midY \(containerView.bounds.midY)")
+                        println("profileImageView.center.y \(profileImageView.center.y)")
+                        profileImageView.center.y = containerView.bounds.midY
                         // add to its subview
                         containerView.addSubview(profileImageView)
                     }
@@ -89,7 +91,7 @@ class ClassmatesContainerView: UIView {
                 self.addSubview(containerView)
             }
             // after well prepared, resize view
-            self.frame.size = CGSize(width: self.bounds.width, height: CGFloat(rows) * (imageViewHeight + spacing))
+            self.frame.size = CGSize(width: self.bounds.width, height: CGFloat(rows) * (imageViewHeight + spacing * 1))
         }
     }
     

@@ -24,7 +24,7 @@ class CourseNotification {
             for course in courses {
                 var needNotifiedCourses = checkNeedNotifiedCourse(course)
                 for needNotifiedCourse in needNotifiedCourses {
-                    setupNotificationWithMessage("yoyoyo", day: needNotifiedCourse.day, session: needNotifiedCourse.period)
+                    setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
                 }
             }
             
@@ -32,10 +32,10 @@ class CourseNotification {
         }
     }
     
-    class func checkNeedNotifiedCourse(course: Course) -> [(day: Int, period: Int)] {
+    class func checkNeedNotifiedCourse(course: Course) -> [(day: Int, period: Int, index: Int)] {
         if course.sessionLength > 0 {
             // if course if more then one period per week
-            var needNotifiedCourses: [(day: Int, period: Int)] = []
+            var needNotifiedCourses: [(day: Int, period: Int, index: Int)] = []
             if let days = course.days {
                 // loop thorugh days inside course
                 if let periods = course.periods {
@@ -58,7 +58,7 @@ class CourseNotification {
                         }
                         // check if need to append this current course index
                         if needNotify {
-                            needNotifiedCourses.append(currentCourse)
+                            needNotifiedCourses.append((day: currentCourse.day, period: currentCourse.period, index: index))
                         }
                     }
                 }
@@ -73,7 +73,7 @@ class CourseNotification {
         return []
     }
     
-    class func setupNotificationWithMessage(message: String, day: Int, session: Int) {
+    class func setupNotificationWithMessage(course: Course, day: Int, session: Int, index: Int) {
         
         let ud = NSUserDefaults.standardUserDefaults()
         let periodData = UserSetting.getPeriodData()
@@ -105,6 +105,9 @@ class CourseNotification {
                         localNotification.timeZone = NSTimeZone.defaultTimeZone()
                         localNotification.fireDate = dateToFire
                         localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
+                        let location = course.locations?[index] ?? ""
+                        var message = "\(startTime) 在 \(location) 上 \(course.name)"
+                        println(message)
                         localNotification.alertBody = message
                         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
                     }

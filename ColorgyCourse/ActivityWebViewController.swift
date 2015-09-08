@@ -41,7 +41,7 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         
         login()
         
-        let pageURL = NSURL(string: "https://colorgy.io/mobile-index")!
+        let pageURL = NSURL(string: "https://table.colorgy.io/polls")!
         let request = NSURLRequest(URL: pageURL)
         webView.loadRequest(request)
 //        navigationController?.hidesBarsOnSwipe = true
