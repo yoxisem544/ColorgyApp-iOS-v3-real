@@ -37,6 +37,8 @@
 		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
 		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
+		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
+		63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */; };
 		63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776641B9720C800B15AF0 /* LogoutHelper.swift */; };
 		63E776671B973A2C00B15AF0 /* UserStatusChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776661B973A2C00B15AF0 /* UserStatusChecker.swift */; };
 		63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */; };
@@ -107,6 +109,7 @@
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
 		638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseUpdateHelper.swift; sourceTree = "<group>"; };
+		638E165A1B9EBAF400F6CEC2 /* ColorgyCourse_v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v3.xcdatamodel; sourceTree = "<group>"; };
 		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		639D450E1B95FA680053870D /* CourseCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentCell.swift; sourceTree = "<group>"; };
@@ -123,6 +126,8 @@
 		63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailHeaderView.xib; sourceTree = "<group>"; };
 		63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailHeaderView.swift; sourceTree = "<group>"; };
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
+		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
+		63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDataFromServerDBManagedObject.swift; sourceTree = "<group>"; };
 		63E776641B9720C800B15AF0 /* LogoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
 		63E776661B973A2C00B15AF0 /* UserStatusChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStatusChecker.swift; sourceTree = "<group>"; };
 		63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLoginViewController.swift; sourceTree = "<group>"; };
@@ -259,12 +264,14 @@
 				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
 				63FBCC3C1B9346D800B3084F /* LocalCachingData.swift */,
 				63FBCC3D1B9346D800B3084F /* CourseDB.swift */,
+				63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */,
 				63FBCC3E1B9346D800B3084F /* Course.swift */,
 				63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */,
 				63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */,
 				63FBCC411B9346D800B3084F /* UserCourseObject.swift */,
 				63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */,
 				63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */,
+				63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */,
 				6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */,
 				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
 				63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */,
@@ -510,6 +517,7 @@
 				630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */,
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
+				63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */,
 				6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */,
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
@@ -522,6 +530,7 @@
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
 				63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */,
+				63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
 				63E776671B973A2C00B15AF0 /* UserStatusChecker.swift in Sources */,
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
@@ -791,10 +800,11 @@
 		63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				638E165A1B9EBAF400F6CEC2 /* ColorgyCourse_v3.xcdatamodel */,
 				6348F8811B9B0C31005E4D37 /* ColorgyCourse_v2.xcdatamodel */,
 				63FBCC131B9345B800B3084F /* ColorgyCourse.xcdatamodel */,
 			);
-			currentVersion = 6348F8811B9B0C31005E4D37 /* ColorgyCourse_v2.xcdatamodel */;
+			currentVersion = 638E165A1B9EBAF400F6CEC2 /* ColorgyCourse_v3.xcdatamodel */;
 			path = ColorgyCourse.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
