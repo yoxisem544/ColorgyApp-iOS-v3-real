@@ -19,6 +19,14 @@ class SearchCourseViewController: UIViewController {
     private var localCachingObjects: [Course]! = [Course]()
     private var filteredCourses: [Course]! = [Course]()
     private var enrolledCourses: [Course]! = [Course]()
+    
+    private let cellColors = [
+        UIColor(red:0.973,  green:0.588,  blue:0.502, alpha:1),
+        UIColor(red:0.961,  green:0.651,  blue:0.137, alpha:1),
+        UIColor(red:0.027,  green:0.580,  blue:0.749, alpha:1),
+        UIColor(red:0,  green:0.816,  blue:0.678, alpha:1),
+        UIColor(red:0.969,  green:0.420,  blue:0.616, alpha:1)
+    ]
     // successful add course view 
     private var successfullyAddCourseView: AddCourseSuccessfulView!
     private func configureSuccessfullyAddCourseView() {
@@ -223,6 +231,7 @@ class SearchCourseViewController: UIViewController {
         if sender.selectedSegmentIndex == 1 {
             // reload enrolled data
             loadEnrolledCourses()
+            searchControl.searchBar.hidden = true
         }
         self.searchCourseTableView.reloadData()
     }
@@ -238,6 +247,7 @@ class SearchCourseViewController: UIViewController {
     }
 }
 
+// MARK: - AlertDeleteCourseViewDelegate
 extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
         println("didTapDeleteCourseAlertDeleteCourseView")
@@ -266,6 +276,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
     
 }
 
+// MARK: - SearchCourseCellDelegate
 extension SearchCourseViewController : SearchCourseCellDelegate {
     func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell) {
         println("didtapdelete")
@@ -297,6 +308,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
     }
 }
 
+// MARK: - UISearchResultsUpdating
 extension SearchCourseViewController : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if searchController.active {
@@ -352,6 +364,7 @@ extension SearchCourseViewController : UISearchResultsUpdating {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension SearchCourseViewController : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -397,15 +410,18 @@ extension SearchCourseViewController : UITableViewDataSource {
                 // searching
                 cell.course = filteredCourses[indexPath.row]
                 cell.delegate = self
+                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
                 cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
             } else {
                 cell.course = localCachingObjects[indexPath.row]
                 cell.delegate = self
+                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
                 cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
             }
         } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
             cell.course = enrolledCourses[indexPath.row]
             cell.delegate = self
+            cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
             cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
         }
         
