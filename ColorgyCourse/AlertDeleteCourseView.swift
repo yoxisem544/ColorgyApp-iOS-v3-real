@@ -45,7 +45,7 @@ class AlertDeleteCourseView: UIView {
         
         // garbage can
         var garbageCanImageView = UIImageView(frame: CGRectMake(0, 0, 53, 63))
-        garbageCanImageView.image = UIImage(named: "1.jpg")
+        garbageCanImageView.image = UIImage(named: "garbageCan")
         garbageCanImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         // confrim button

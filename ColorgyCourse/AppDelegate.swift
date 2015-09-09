@@ -30,11 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // every time open the app, download new data
         CourseUpdateHelper.needUpdateCourse()
         
-        UIApplication.sharedApplication().unregisterForRemoteNotifications()
-        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
-        UIApplication.sharedApplication().registerForRemoteNotifications()
-        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
-        println()
+//        UIApplication.sharedApplication().unregisterForRemoteNotifications()
+//        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
+//        UIApplication.sharedApplication().registerForRemoteNotifications()
+//        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
+//        println()
         // crashlytics
         Fabric.with([Crashlytics.self()])
 
@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         }
-        
+
         return true
     }
     
@@ -97,6 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
 
     func applicationDidBecomeActive(application: UIApplication) {

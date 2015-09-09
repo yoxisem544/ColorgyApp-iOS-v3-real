@@ -18,6 +18,18 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
     
     @IBOutlet weak var navItem: UINavigationItem!
     
+    private var islogin: Bool = false {
+        didSet {
+            if islogin {
+                let pageURL = NSURL(string: "https://colorgy.io/mobile-index")!
+                let request = NSURLRequest(URL: pageURL)
+                webView.loadRequest(request)
+            } else {
+                login()
+            }
+        }
+    }
+    
     private var hasFinishLoading = false
     
     
@@ -41,19 +53,20 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         
         login()
         
-        let pageURL = NSURL(string: "https://table.colorgy.io/polls")!
-        let request = NSURLRequest(URL: pageURL)
-        webView.loadRequest(request)
+//        let pageURL = NSURL(string: "https://colorgy.io/mobile-index")!
+//        let request = NSURLRequest(URL: pageURL)
+//        webView.loadRequest(request)
 //        navigationController?.hidesBarsOnSwipe = true
     }
     
     func reloadPage() {
         // login again
+        islogin = false
         if let accessToken = UserSetting.UserAccessToken() {
+            println(accessToken)
             var reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
             println(reqObj.URL)
             self.webView.loadRequest(reqObj)
-            self.webView.reload()
         }
     }
     
@@ -86,6 +99,14 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
+        // if not login
+        if !islogin {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                self.islogin = true
+            }
+        }
+        
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
             [weak self] in
             if let _self = self {

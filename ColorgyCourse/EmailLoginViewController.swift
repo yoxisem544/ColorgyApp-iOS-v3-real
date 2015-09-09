@@ -64,7 +64,7 @@ class EmailLoginViewController: UIViewController {
                             UserSetting.changeLoginStateSuccessfully()
                         } else {
                             // fail to get period data
-                            let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。")
+                            let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
                             self.presentViewController(alert, animated: true, completion: nil)
                             self.showButtons()
                         }

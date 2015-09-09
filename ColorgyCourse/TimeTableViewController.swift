@@ -43,7 +43,7 @@ class TimeTableViewController: UIViewController {
         getAndSetDataToTimeTable()
         
         // test update
-        CourseUpdateHelper.updateCourse()
+//        CourseUpdateHelper.updateCourse()
     }
     
     private func checkToken() {

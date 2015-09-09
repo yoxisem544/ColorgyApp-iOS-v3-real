@@ -62,6 +62,7 @@ class CourseUpdateHelper {
 //                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                             courses.append(course)
                                             var b = NSDate()
+                                            println("counter is \(counter)")
                                             if counter == courses.count {
                                                 success(courses: courses)
                                             }

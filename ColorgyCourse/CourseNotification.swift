@@ -92,9 +92,14 @@ class CourseNotification {
             if let startTime = time.componentsSeparatedByString("-").first {
                 // if get start time
                 if let startTimeHour = startTime.componentsSeparatedByString(":").first?.toInt() {
-                    component.hour = startTimeHour
                     if let startTimeMinute = startTime.componentsSeparatedByString(":").last?.toInt() {
-                        component.minute = startTimeMinute
+                        component.hour = startTimeHour
+                        component.minute = startTimeMinute - 10
+                        if (startTimeMinute - 10) < 0 {
+                            // less then 10 mins
+                            component.hour = startTimeHour - 1
+                            component.minute = (startTimeMinute - 10) + 60
+                        }
                         // got hour and minute
                         component.second = 0
                         calendar.timeZone = NSTimeZone.defaultTimeZone()
@@ -109,6 +114,11 @@ class CourseNotification {
                         var message = "\(startTime) 在 \(location) 上 \(course.name)"
                         println(message)
                         localNotification.alertBody = message
+                        localNotification.soundName = "default"
+                        
+                        let currentBadgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber
+                        localNotification.applicationIconBadgeNumber = currentBadgeCount + 1
+                        
                         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
                     }
                 }

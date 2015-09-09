@@ -72,7 +72,7 @@ class PeriodDataObject: Printable {
             if let time = json[PeriodKey.time].string {
                 self.time = time
             } else {
-                return nil
+//                return nil
             }
         } else {
             return nil

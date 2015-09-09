@@ -18,6 +18,7 @@ class SearchCourseViewController: UIViewController {
     // private API
     private var localCachingObjects: [Course]! = [Course]()
     private var filteredCourses: [Course]! = [Course]()
+    private var enrolledCourses: [Course]! = [Course]()
     // successful add course view 
     private var successfullyAddCourseView: AddCourseSuccessfulView!
     private func configureSuccessfullyAddCourseView() {
@@ -74,6 +75,7 @@ class SearchCourseViewController: UIViewController {
         
         // configure successful add course view
         configureSuccessfullyAddCourseView()
+        
     }
     
     func checkToken() {
@@ -129,10 +131,24 @@ class SearchCourseViewController: UIViewController {
             } else {
                 self.blockAndDownloadCourse()
             }
+            self.loadEnrolledCourses()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.searchCourseTableView.reloadData()
             })
         })
+    }
+    
+    private func loadEnrolledCourses() {
+        // enrolled courses
+        if let courseObjects = CourseDB.getAllStoredCoursesObject() {
+            var courses = [Course]()
+            for object in courseObjects {
+                if let course = Course(courseDBManagedObject: object) {
+                    courses.append(course)
+                }
+            }
+            self.enrolledCourses = courses
+        }
     }
     
     @IBAction func updateCourseDataClicked(sender: AnyObject) {
@@ -189,6 +205,11 @@ class SearchCourseViewController: UIViewController {
     @IBAction func SegementedControlValueChanged(sender: UISegmentedControl) {
         
         println(sender.selectedSegmentIndex)
+        if sender.selectedSegmentIndex == 1 {
+            // reload enrolled data
+            loadEnrolledCourses()
+        }
+        self.searchCourseTableView.reloadData()
     }
     
     @IBAction func backButtonClicked(sender: AnyObject) {
@@ -314,11 +335,18 @@ extension SearchCourseViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchControl.active {
-            // searching
-            return self.filteredCourses.count
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            if searchControl.active {
+                // searching
+                return self.filteredCourses.count
+            } else {
+                return self.localCachingObjects.count
+            }
+        } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
+            // enrolled course
+            return self.enrolledCourses.count
         } else {
-            return self.localCachingObjects.count
+            return 0
         }
     }
     
@@ -341,16 +369,23 @@ extension SearchCourseViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
         
-        if searchControl.active {
-            // searching
-            cell.course = filteredCourses[indexPath.row]
-            cell.delegate = self
-            cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-        } else {
-            cell.course = localCachingObjects[indexPath.row]
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            if searchControl.active {
+                // searching
+                cell.course = filteredCourses[indexPath.row]
+                cell.delegate = self
+                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+            } else {
+                cell.course = localCachingObjects[indexPath.row]
+                cell.delegate = self
+                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+            }
+        } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
+            cell.course = enrolledCourses[indexPath.row]
             cell.delegate = self
             cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
         }
+        
         
         return cell
     }
