@@ -37,7 +37,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        println()
         // crashlytics
         Fabric.with([Crashlytics.self()])
-
+        
+        // Flurry setup
+        if Release().mode {
+            // setup Flurry
+            Flurry.startSession("CX3C3VH67FHPZFF7S2J5") // replace flurryKey with your own key
+//            Flurry.setCrashReportingEnabled(true)       // records app crashing in Flurry
+//            Flurry.logEvent("User Start Application")        // Example of even logging
+//            Flurry.setDebugLogEnabled(false)
+        }
         
         // register for notification
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil))
@@ -93,11 +101,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("User Close Application, application enter background")
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("User Start Application, application enter foreground")
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {

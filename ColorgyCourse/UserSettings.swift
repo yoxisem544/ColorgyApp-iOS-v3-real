@@ -122,8 +122,11 @@ class UserSetting {
         if let username = UserSetting.UserName() {
             // and doesn't have a device uuid set
             if getDeviceUUID() == nil {
+                // generate random uuid
+                let randomUUID = NSUUID().UUIDString
                 // generate and store one
-                let deviceUUID = username.uuidEncode + UIDevice.currentDevice().name.uuidEncode
+                let deviceUUID = "\(username.uuidEncode)-\(UIDevice.currentDevice().name.uuidEncode)-\(randomUUID)"
+                println(deviceUUID)
                 ud.setObject(deviceUUID, forKey: UserSettingKey.deviceUUID)
                 ud.synchronize()
             }

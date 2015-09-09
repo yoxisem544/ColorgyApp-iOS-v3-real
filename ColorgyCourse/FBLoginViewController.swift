@@ -90,6 +90,21 @@ class FBLoginViewController: UIViewController {
         configureLoginButton()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("User On FB Login View", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("User On FB Login View", withParameters: nil)
+        }
+    }
+    
     // MARK: - show/hide buttons
     func showButtons() {
         FBloginButton.hidden = false
