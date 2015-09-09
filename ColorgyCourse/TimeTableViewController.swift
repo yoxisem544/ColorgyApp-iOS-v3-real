@@ -39,6 +39,8 @@ class TimeTableViewController: UIViewController {
         super.viewDidAppear(animated)
         if Release().mode {
             Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
+        } else {
+            Flurry.logEvent("test: Using User Timetable", timed: true)
         }
         
         // check token
@@ -55,6 +57,8 @@ class TimeTableViewController: UIViewController {
         super.viewDidDisappear(animated)
         if Release().mode {
             Flurry.endTimedEvent("User Using User Timetable", withParameters: nil)
+        } else {
+            Flurry.logEvent("test: Using User Timetable", timed: true)
         }
     }
     
@@ -101,7 +105,9 @@ class TimeTableViewController: UIViewController {
                         courses.append(course)
                     }
                 }
+                println(courses)
             }
+            CourseNotification.registerForCourseNotification()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.timetableView.courses = courses
             })

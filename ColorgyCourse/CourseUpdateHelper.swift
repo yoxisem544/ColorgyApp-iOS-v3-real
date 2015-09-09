@@ -32,7 +32,7 @@ class CourseUpdateHelper {
             // store
             CourseDB.storeABunchOfCoursesToDB(courses)
             // setup notifications
-            CourseNotification.registerForCourseNotification()
+//            CourseNotification.registerForCourseNotification()
             
             // cancel need update
             let ud = NSUserDefaults.standardUserDefaults()
