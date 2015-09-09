@@ -36,6 +36,9 @@ class FBLoginViewController: UIViewController {
                             ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
                                 if let periodDataObjects = periodDataObjects {
                                     UserSetting.storePeriodsData(periodDataObjects)
+                                    if Release().mode {
+                                        Flurry.logEvent("v3.0: User login using FB")
+                                    }
                                     // ready to change view
                                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                     let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
@@ -91,17 +94,17 @@ class FBLoginViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewDidAppear(animated)
         // Flurry
         if Release().mode {
-            Flurry.logEvent("User On FB Login View", timed: true)
+            Flurry.logEvent("v3.0: User On FB Login View", timed: true)
         }
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         if Release().mode {
-            Flurry.endTimedEvent("User On FB Login View", withParameters: nil)
+            Flurry.endTimedEvent("v3.0: User On FB Login View", withParameters: nil)
         }
     }
     

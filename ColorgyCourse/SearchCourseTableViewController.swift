@@ -78,6 +78,21 @@ class SearchCourseViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("v3.0: User Using Search Course View", withParameters: nil)
+        }
+    }
+    
     func checkToken() {
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
             ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
@@ -233,6 +248,10 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // change state
             cell.hasEnrolledState = false
             CourseUpdateHelper.needUpdateCourse()
+            // Flurry
+            if Release().mode {
+                Flurry.logEvent("v3.0: User Delete A Course")
+            }
         }) { () -> Void in
             alertDeleteCourseView.hideView(0.4)
         }
@@ -268,6 +287,10 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
             CourseDB.storeCourseToDB(course)
             CourseUpdateHelper.needUpdateCourse()
             cell.hasEnrolledState = true
+            // Flurry
+            if Release().mode {
+                Flurry.logEvent("v3.0: User Add A Course")
+            }
             }, failure: { () -> Void in
             
         })

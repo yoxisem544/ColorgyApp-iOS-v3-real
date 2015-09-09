@@ -46,6 +46,10 @@ class PersonalSettingsTableViewController: UITableViewController {
             } else {
                 UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/1529686803975150")!)
             }
+            // Flurry
+            if Release().mode {
+                Flurry.logEvent("v3.0: User goto FB fan page using app.")
+            }
         })
         let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
         alert.addAction(ok)
@@ -61,6 +65,10 @@ class PersonalSettingsTableViewController: UITableViewController {
                     UserSetting.deleteAllUserSettings()
                     ServerCourseDB.deleteAllCourses()
                     CourseDB.deleteAllCourses()
+                    // Flurry
+                    if Release().mode {
+                        Flurry.logEvent("v3.0: User Logout App")
+                    }
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
                     self.presentViewController(vc, animated: true, completion: nil)

@@ -29,6 +29,21 @@ class EmailLoginViewController: UIViewController {
         configureTextFields()
         configureLoginButton()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User On Email Login View", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("User On Email Login View", withParameters: nil)
+        }
+    }
 
     @IBOutlet weak var emailLoginButton: UIButton!
     func configureLoginButton() {
@@ -57,6 +72,9 @@ class EmailLoginViewController: UIViewController {
                     ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
                         if let periodDataObjects = periodDataObjects {
                             UserSetting.storePeriodsData(periodDataObjects)
+                            if Release().mode {
+                                Flurry.logEvent("v3.0: User login using Email")
+                            }
                             // ready to change view
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController

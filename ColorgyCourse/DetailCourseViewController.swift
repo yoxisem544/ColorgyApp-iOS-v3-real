@@ -71,7 +71,17 @@ class DetailCourseViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Using Detail Course View", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("v3.0: User Using Detail Course View", withParameters: nil)
+        }
     }
     
     private func downloadCourseInfo() {
@@ -123,6 +133,11 @@ class DetailCourseViewController: UIViewController {
 extension DetailCourseViewController : ClassmatesContainerViewDelegate {
     func classmatesContainerView(userDidTapOnUser userCourseObject: UserCourseObject) {
         println(userCourseObject)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo")
+            Flurry.logEvent("v3.0: Profile photo of User: \(userCourseObject.user_id) is tapped.")
+        }
         self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }
 }

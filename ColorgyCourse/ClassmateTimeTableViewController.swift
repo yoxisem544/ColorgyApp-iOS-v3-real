@@ -69,12 +69,25 @@ class ClassmateTimeTableViewController: UIViewController {
 
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Watching Other's Timetable View", timed: true)
+            Flurry.logEvent("v3.0: User: \(userCourseObject.user_id)'s timetable is being watching.", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("v3.0: User Watching Other's Timetable View", withParameters: nil)
+            Flurry.logEvent("v3.0: User: \(userCourseObject.user_id)'s timetable is being watching.", timed: true)
+        }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     func loadUserImage() {

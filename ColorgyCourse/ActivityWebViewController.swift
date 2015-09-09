@@ -59,6 +59,21 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
 //        navigationController?.hidesBarsOnSwipe = true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Using Activity Board", timed: true)
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("v3.0: User Using Activity Board", withParameters: nil)
+        }
+    }
+    
     func reloadPage() {
         // login again
         islogin = false

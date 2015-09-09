@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         // Flurry
         if Release().mode {
-            Flurry.logEvent("User Close Application, application enter background")
+            Flurry.logEvent("v3.0: User Close Application, application enter background")
         }
     }
 
@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         // Flurry
         if Release().mode {
-            Flurry.logEvent("User Start Application, application enter foreground")
+            Flurry.logEvent("v3.0: User Start Application, application enter foreground")
         }
     }
 

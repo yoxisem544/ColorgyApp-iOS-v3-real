@@ -17,6 +17,9 @@ class TimeTableViewController: UIViewController {
     var courses: [Course]!
 
     @IBAction func addCourseButtonClicked(sender: AnyObject) {
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Tap Add Button To Search Course View")
+        }
         self.performSegueWithIdentifier("Show Add Course", sender: sender)
     }
 
@@ -34,7 +37,9 @@ class TimeTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        downloadAndRefreshTable()
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
+        }
         
         // check token
         checkToken()
@@ -43,13 +48,23 @@ class TimeTableViewController: UIViewController {
         getAndSetDataToTimeTable()
         
         // test update
-//        CourseUpdateHelper.updateCourse()
+        CourseUpdateHelper.updateCourse()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if Release().mode {
+            Flurry.endTimedEvent("User Using User Timetable", withParameters: nil)
+        }
     }
     
     private func checkToken() {
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
             ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
-                
+                // if user get a new token 
+                // load data again
+                self.getAndSetDataToTimeTable()
+                println(UserSetting.UserAccessToken())
                 }, failure: { () -> Void in
                     if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
                         let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
@@ -136,6 +151,9 @@ class TimeTableViewController: UIViewController {
 
 extension TimeTableViewController : TimeTableViewDelegate {
     func timeTableView(userDidTapOnCell cell: CourseCellView) {
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Tap on Course on Their Timetable")
+        }
         self.performSegueWithIdentifier("Timetable Show Detail Info", sender: cell.courseInfo)
     }
     
