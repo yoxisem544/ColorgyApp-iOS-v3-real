@@ -48,7 +48,7 @@ class TimeTableViewController: UIViewController {
         getAndSetDataToTimeTable()
         
         // test update
-        CourseUpdateHelper.updateCourse()
+//        CourseUpdateHelper.updateCourse()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -60,28 +60,34 @@ class TimeTableViewController: UIViewController {
     
     private func checkToken() {
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
-            ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
-                // if user get a new token 
-                // load data again
-                self.getAndSetDataToTimeTable()
-                println(UserSetting.UserAccessToken())
-                }, failure: { () -> Void in
-                    if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
-                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
-                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                            let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
-                            let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-                                self.presentViewController(vc, animated: true, completion: nil)
+            ColorgyAPI.checkIfTokenHasExpired(unexpired: { () -> Void in
+                // if accesstoken work, update course
+                CourseUpdateHelper.updateCourse()
+            }, expired: { () -> Void in
+                ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+                    // if user get a new token
+                    // load data again
+                    self.getAndSetDataToTimeTable()
+                    println(UserSetting.UserAccessToken())
+                    }, failure: { () -> Void in
+                        if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
+                            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+                            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                                let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
+                                let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                                    self.presentViewController(vc, animated: true, completion: nil)
+                                })
+                                alert.addAction(ok)
+                                self.presentViewController(alert, animated: true, completion: nil)
                             })
-                            alert.addAction(ok)
-                            self.presentViewController(alert, animated: true, completion: nil)
-                        })
-                    }
-            })
+                        }
+                    })
+                })
             }) { () -> Void in
-                
+                // if accesstoken not work, do nothing
+//                CourseUpdateHelper.updateCourse()
         }
     }
     

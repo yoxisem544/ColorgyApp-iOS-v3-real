@@ -46,7 +46,7 @@ class NetwrokQualityDetector {
     }
     
     class func getNetworkQuality(completionHandler: (quality: NetworkQuality) -> Void) {
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INITIATED.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             let speed = self.testSpeed()
             // return to main queue
