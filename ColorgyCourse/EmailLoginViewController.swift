@@ -28,6 +28,40 @@ class EmailLoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureTextFields()
         configureLoginButton()
+        
+        // delegate
+        emailLoginTextField.delegate = self
+        emailLoginTextField.returnKeyType = UIReturnKeyType.Next
+        passwordLoginTextField.delegate = self
+        passwordLoginTextField.returnKeyType = UIReturnKeyType.Go
+        
+        // register for keyboard notification
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+        
+        // tap to dismiss keyboard
+        let tap = UITapGestureRecognizer(target: self, action: "tap")
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func tap() {
+        emailLoginTextField.resignFirstResponder()
+        passwordLoginTextField.resignFirstResponder()
+    }
+    
+    func keyboardDidHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.view.frame.origin = CGPointZero
+        })
+    }
+    
+    func keyboardDidShow(notification: NSNotification) {
+        let userInfo = notification.userInfo ?? [:]
+        let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size
+        let offset = (self.view.frame.height - keyboardSize.height) / 2
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.view.frame.origin.y = -offset
+        })
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -52,6 +86,10 @@ class EmailLoginViewController: UIViewController {
         emailLoginButton.layer.cornerRadius = 2.0
     }
     @IBAction func emailLoginButtonClicked(sender: AnyObject) {
+        // hide keyboard
+        emailLoginTextField.resignFirstResponder()
+        passwordLoginTextField.resignFirstResponder()
+        self.view.endEditing(true)
         hideButtons()
         if canLogin() {
             let username = emailLoginTextField.text
@@ -116,6 +154,7 @@ class EmailLoginViewController: UIViewController {
     }
     
     @IBAction func closeButtonClicked(sender: AnyObject) {
+        self.view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -137,4 +176,17 @@ class EmailLoginViewController: UIViewController {
     
 
 
+}
+
+extension EmailLoginViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == emailLoginTextField {
+            passwordLoginTextField.becomeFirstResponder()
+        } else if textField == passwordLoginTextField {
+            passwordLoginTextField.resignFirstResponder()
+            self.emailLoginButtonClicked(self.emailLoginButton)
+        }
+        
+        return true
+    }
 }

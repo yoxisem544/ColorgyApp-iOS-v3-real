@@ -45,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            Flurry.setCrashReportingEnabled(true)       // records app crashing in Flurry
 //            Flurry.logEvent("User Start Application")        // Example of even logging
 //            Flurry.setDebugLogEnabled(false)
+        } else {
+            Flurry.startSession("X6GB6M2ZG455YCBWQS6H") // for dev
+            Flurry.logEvent("User Start Application, for testing")
+            Flurry.setDebugLogEnabled(true)
         }
         
         // register for notification
@@ -58,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // show view
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window?.backgroundColor = UIColor.whiteColor()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if !UserSetting.isLogin() {
             // dump data
@@ -110,14 +115,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        // Flurry
-        if Release().mode {
-            Flurry.logEvent("v3.0: User Start Application, application enter foreground")
-        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Start Application, applicationDidBecomeActive")
+        } else {
+            Flurry.logEvent("User applicationWillEnterForeground, for testing")
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
