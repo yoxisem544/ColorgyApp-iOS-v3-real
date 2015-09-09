@@ -24,7 +24,7 @@ class CourseUpdateHelper {
         // get data from server
         downloadCourse({ (courses) -> Void in
             // parse
-            
+
             // compare
             
             // maybe delete all and store

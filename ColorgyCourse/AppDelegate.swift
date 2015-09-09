@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // every time open the app, download new data
         CourseUpdateHelper.needUpdateCourse()
+
         
 //        UIApplication.sharedApplication().unregisterForRemoteNotifications()
 //        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())

@@ -46,14 +46,14 @@ class FBLoginViewController: UIViewController {
                                     UserSetting.changeLoginStateSuccessfully()
                                 } else {
                                     // fail to get period data
-                                    let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。")
+                                    let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
                                     self.presentViewController(alert, animated: true, completion: nil)
                                     self.showButtons()
                                 }
                             })
                             }, failure: { () -> Void in
 //                                self.statusLabel.text = "fail get me api"
-                                let alert = ErrorAlertView.alertUserWithError("讀取個人資料錯誤，請重新登入。")
+                                let alert = ErrorAlertView.alertUserWithError("讀取個人資料錯誤，請重新登入。如果你是第一次登入，請至Colorgy網頁填寫你的學校！如果有不清楚的地方請到粉專詢問！")
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 self.showButtons()
                         })

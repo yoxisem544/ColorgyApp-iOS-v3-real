@@ -671,7 +671,7 @@ class ColorgyAPI {
     }
     
     // PUT class
-    class func PUTCourseToServer(courseCode: String, success: () -> Void, failure: () -> Void) {
+    class func PUTCourseToServer(courseCode: String, year: Int, term: Int, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -682,17 +682,17 @@ class ColorgyAPI {
             failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
-                if let deviceUUID = UserSetting.getDeviceUUID() {
+                if let user_id = UserSetting.UserId() {
                     if let school = UserSetting.UserPossibleOrganization() {
-                        let uuid = "\(courseCode)-\(deviceUUID)"
+                        let uuid = "\(user_id)-\(year)-\(term)-\(school.uppercaseString)-\(courseCode)"
                         let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
                         
                         let params = ["user_courses":
                             [
                                 "course_code": courseCode,
-                                "course_organization_code": school.lowercaseString,
-                                "year": 2015,
-                                "term": 1
+                                "course_organization_code": school.uppercaseString,
+                                "year": year,
+                                "term": term
                             ]
                         ]
                         
@@ -721,7 +721,7 @@ class ColorgyAPI {
                         failure()
                     }
                 } else {
-                    println("no device uuid")
+                    println("no user id")
                     failure()
                 }
             } else {

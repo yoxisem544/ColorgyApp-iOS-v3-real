@@ -282,7 +282,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         println("didtapadd")
         println("\(course)")
         println("didtapadd")
-        ColorgyAPI.PUTCourseToServer(course.code, success: { () -> Void in
+        ColorgyAPI.PUTCourseToServer(course.code, year: 2015, term: 1, success: { () -> Void in
             self.animateSuccessfullyAddCourseView()
             CourseDB.storeCourseToDB(course)
             CourseUpdateHelper.needUpdateCourse()

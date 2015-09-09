@@ -60,7 +60,7 @@ class EmailLoginViewController: UIViewController {
         let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().size
         let offset = (self.view.frame.height - keyboardSize.height) / 2
         UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.view.frame.origin.y = -offset
+            self.view.frame.origin.y = -(self.emailLoginTextField.frame.origin.y - offset)
         })
     }
     
@@ -120,7 +120,7 @@ class EmailLoginViewController: UIViewController {
                             UserSetting.changeLoginStateSuccessfully()
                         } else {
                             // fail to get period data
-                            let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
+                            let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。如果你是第一次登入，請至Colorgy網頁填寫你的學校！如果有不清楚的地方請到粉專詢問！")
                             self.presentViewController(alert, animated: true, completion: nil)
                             self.showButtons()
                         }
