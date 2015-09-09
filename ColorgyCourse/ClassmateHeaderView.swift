@@ -79,8 +79,9 @@ class ClassmateHeaderView: UIView {
             // 12 + 20 + 32 is bottom margin buttonheight and top margin
             // but 12 top is now gone, 20 of status bar is left
             println("self.bounds.height \(self.bounds.height)")
-            if -yOffset >= (self.bounds.height - 20 - 32) {
-                backButton.frame.origin.y = (self.bounds.height - 12 - backButton.bounds.height)
+            // top is 20 for status bar, 12 for invisible status bar and button margin
+            if -yOffset >= (self.bounds.height - 20 - 12 - backButton.bounds.height) {
+                backButton.frame.origin.y = (self.bounds.height - 20 - backButton.bounds.height)
             }
         } else {
             backButton.frame.origin.y = 20
