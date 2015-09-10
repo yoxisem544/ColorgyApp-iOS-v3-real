@@ -231,7 +231,6 @@ class SearchCourseViewController: UIViewController {
         if sender.selectedSegmentIndex == 1 {
             // reload enrolled data
             loadEnrolledCourses()
-            searchControl.searchBar.hidden = true
         }
         self.searchCourseTableView.reloadData()
     }

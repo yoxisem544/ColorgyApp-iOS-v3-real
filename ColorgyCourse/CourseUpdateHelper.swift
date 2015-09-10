@@ -20,27 +20,42 @@ class CourseUpdateHelper {
         ud.synchronize()
     }
     
-    class func updateCourse() {
-        // get data from server
-        downloadCourse({ (courses) -> Void in
-            // parse
+    class func finishUpdateCourse() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(false, forKey: Key.needUpdateKey)
+        ud.synchronize()
+    }
+    
+    class func shouldUpdateCourse() -> Bool {
+        let ud = NSUserDefaults.standardUserDefaults()
+        return ud.boolForKey(Key.needUpdateKey)
+    }
+    
+    class func updateCourse(didUpdateCourse: () -> Void) {
+        // check if need update
+        if self.shouldUpdateCourse() {
+            // get data from server
+            downloadCourse({ (courses) -> Void in
+                // parse
 
-            // compare
-            
-            // maybe delete all and store
-            CourseDB.deleteAllCourses()
-            // store
-            CourseDB.storeABunchOfCoursesToDB(courses)
-            // setup notifications
-//            CourseNotification.registerForCourseNotification()
-            
-            // cancel need update
-            let ud = NSUserDefaults.standardUserDefaults()
-            ud.setBool(false, forKey: Key.needUpdateKey)
-            ud.synchronize()
-        }, failure: { () -> Void in
-            
-        })
+                // compare
+                
+                // maybe delete all and store
+                CourseDB.deleteAllCourses()
+                // store
+                CourseDB.storeABunchOfCoursesToDB(courses)
+                // setup notifications
+    //            CourseNotification.registerForCourseNotification()
+                
+                // cancel need update
+                self.finishUpdateCourse()
+                
+                // return a code block
+                didUpdateCourse()
+            }, failure: { () -> Void in
+                
+            })
+        }
     }
     
     class func downloadCourse(success: (courses: [Course]) -> Void, failure: () -> Void) {

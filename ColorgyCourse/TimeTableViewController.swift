@@ -65,7 +65,9 @@ class TimeTableViewController: UIViewController {
     private func checkToken() {
         ColorgyAPI.checkIfTokenHasExpired(unexpired: { () -> Void in
             // if accesstoken work, update course
-            CourseUpdateHelper.updateCourse()
+            CourseUpdateHelper.updateCourse({ () -> Void in
+                self.getAndSetDataToTimeTable()
+            })
             }, expired: { () -> Void in
                 NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
                     ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
