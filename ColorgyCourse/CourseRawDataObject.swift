@@ -15,7 +15,7 @@ import Foundation
 /// This object make it easier to deal with json formate data.
 ///
 /// This json is from school API, not user API.
-class CourseRawDataObject: Printable {
+class CourseRawDataObject: CustomStringConvertible {
     
     // 1. properties
     // cache data from server

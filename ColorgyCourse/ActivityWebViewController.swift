@@ -44,11 +44,11 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         // 
         navigationBar.tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
         // buttons
-        var nextPage = UIBarButtonItem(image: UIImage(named: "forward"), style: UIBarButtonItemStyle.Done, target: self, action: "goForward")
-        var previousPage = UIBarButtonItem(image: UIImage(named: "backward"), style: UIBarButtonItemStyle.Done, target: self, action: "goBack")
+        let nextPage = UIBarButtonItem(image: UIImage(named: "forward"), style: UIBarButtonItemStyle.Done, target: self, action: "goForward")
+        let previousPage = UIBarButtonItem(image: UIImage(named: "backward"), style: UIBarButtonItemStyle.Done, target: self, action: "goBack")
         self.navItem.setLeftBarButtonItems([previousPage, nextPage], animated: false)
         
-        var reload = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reloadPage")
+        let reload = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reloadPage")
         self.navItem.setRightBarButtonItems([reload], animated: false)
         
         login()
@@ -78,9 +78,9 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         // login again
         islogin = false
         if let accessToken = UserSetting.UserAccessToken() {
-            println(accessToken)
-            var reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
-            println(reqObj.URL)
+            print(accessToken)
+            let reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
+            print(reqObj.URL)
             self.webView.loadRequest(reqObj)
         }
     }
@@ -99,8 +99,8 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
     
     func login() {
         if let accessToken = UserSetting.UserAccessToken() {
-            var reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
-            println(reqObj.URL)
+            let reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
+            print(reqObj.URL)
             self.webView.loadRequest(reqObj)
         }
     }

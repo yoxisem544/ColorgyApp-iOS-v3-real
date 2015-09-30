@@ -52,16 +52,28 @@ class CourseDBManagedObjectOld: NSManagedObject {
     @NSManaged var location_9: String!
     
     class func deleteAll() {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "Course")
-            var e: NSError?
-            var coursesInDBOld: [CourseDBManagedObjectOld] = managedObjectContext.executeFetchRequest(fetchRequest, error: &e) as! [CourseDBManagedObjectOld]
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Course")
+        do {
+            let coursesInDBOld = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObjectOld]
             for course in coursesInDBOld {
                 managedObjectContext.deleteObject(course)
-                if managedObjectContext.save(&e) != true {
-                    println(ColorgyErrorType.DBFailure.saveFail)
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
                 }
             }
+        } catch {
+           print("fail to execute fetch request")
         }
+//            var coursesInDBOld: [CourseDBManagedObjectOld] = managedObjectContext.executeFetchRequest(fetchRequest, error: &e) as! [CourseDBManagedObjectOld]
+//            for course in coursesInDBOld {
+//                managedObjectContext.deleteObject(course)
+//                if managedObjectContext.save(&e) != true {
+//                    print(ColorgyErrorType.DBFailure.saveFail)
+//                }
+//            }
+        
     }
 }

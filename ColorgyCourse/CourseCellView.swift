@@ -53,7 +53,7 @@ class CourseCellView: UIView {
         self.clipsToBounds = true
         
         // tap gesture
-        var tapGes = UITapGestureRecognizer(target: self, action: "tap:")
+        let tapGes = UITapGestureRecognizer(target: self, action: "tap:")
         self.addGestureRecognizer(tapGes)
         
         // labels

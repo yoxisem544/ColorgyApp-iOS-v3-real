@@ -53,7 +53,7 @@ class ColorgyAPITrafficControlCenter {
         let ud = NSUserDefaults.standardUserDefaults()
         var jobCount = ud.integerForKey(TrafficKey.BackgroundJobQueue)
         jobCount++
-        println("jobs \(jobCount)")
+        print("jobs \(jobCount)")
         ud.setInteger(jobCount, forKey: TrafficKey.BackgroundJobQueue)
         ud.synchronize()
     }
@@ -62,7 +62,7 @@ class ColorgyAPITrafficControlCenter {
         let ud = NSUserDefaults.standardUserDefaults()
         var jobCount = ud.integerForKey(TrafficKey.BackgroundJobQueue)
         jobCount--
-        println("jobs \(jobCount)")
+        print("jobs \(jobCount)")
         if jobCount < 0 {
             jobCount = 0
         }
@@ -133,29 +133,29 @@ class ColorgyAPITrafficControlCenter {
                     } else {
                         failure()
                     }
-                    println("refresk okok")
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
-                            // change to refresing finish state
-                            ColorgyAPITrafficControlCenter.changeRefreshingState()
-                            ColorgyAPITrafficControlCenter.setRefreshStateToCanNOTRefresh()
-                            // TODO: - very critical part, refresh fail, token expired -
-                            // logout user here
-                            UserSetting.refreshTokenExpiredUserSettingDeletion()
-                            println(ColorgyErrorType.TrafficError.refreshTokenExpired)
-                            
-                            
-                            
-//                            completionHandler(loginResult: nil)
-                            failure()
-                    })
+                    print("refresk okok")
+                    }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        // change to refresing finish state
+                        ColorgyAPITrafficControlCenter.changeRefreshingState()
+                        ColorgyAPITrafficControlCenter.setRefreshStateToCanNOTRefresh()
+                        // TODO: - very critical part, refresh fail, token expired -
+                        // logout user here
+                        UserSetting.refreshTokenExpiredUserSettingDeletion()
+                        print(ColorgyErrorType.TrafficError.refreshTokenExpired)
+                        
+                        
+                        
+                        //                            completionHandler(loginResult: nil)
+                        failure()
+                })
             } else {
-                println("no refresh token")
-//                completionHandler(loginResult: nil)
+                print("no refresh token")
+                //                completionHandler(loginResult: nil)
                 failure()
             }
         } else {
-            println("cant refresh")
-//            completionHandler(loginResult: nil)
+            print("cant refresh")
+            //            completionHandler(loginResult: nil)
             failure()
         }
     }

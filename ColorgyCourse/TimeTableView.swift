@@ -42,11 +42,11 @@ class TimeTableView: UIView {
     var delegate: TimeTableViewDelegate!
     var bounces: Bool! {
         didSet {
-            println("didset bounces \(bounces)")
+            print("didset bounces \(bounces)")
             self.timetableContentScrollView.bounces = bounces
             self.sessionSideBarScrollView.bounces = bounces
             self.weekdayHeaderScrollView.bounces = bounces
-            println("didset bounces \(self.timetableContentScrollView.bounces) \(self.sessionSideBarScrollView.bounces) \(self.weekdayHeaderScrollView.bounces)")
+            print("didset bounces \(self.timetableContentScrollView.bounces) \(self.sessionSideBarScrollView.bounces) \(self.weekdayHeaderScrollView.bounces)")
         }
     }
     
@@ -68,14 +68,14 @@ class TimeTableView: UIView {
         // init container
         self.courseCellViewsOnTimetable = [CourseCellView]()
         if let courses = self.courses {
-            for (index: Int, course: Course) in enumerate(courses) {
+            for course in courses.enumerate() {
                 // generate cell
-                var views = generateCourseCellViewWithCourse(course)
+                let views = generateCourseCellViewWithCourse(course.element)
                 // add subview
                 for view in views {
                     self.courseCellViewsOnTimetable?.append(view)
                     // change color
-                    view.backgroundColor = cellColors[index%cellColors.count]
+                    view.backgroundColor = cellColors[course.index%cellColors.count]
                 }
             }
             // after getting course cell view
@@ -96,14 +96,14 @@ class TimeTableView: UIView {
             if course.days?.count == course.periods?.count {
                 // init array
                 var views = [CourseCellView]()
-                for (index: Int, day: Int) in enumerate(days) {
+                for dayOfCourse: (index: Int, element: Int) in days.enumerate() {
                     // get periods and day, loop through
-                    let day = course.days![index]
-                    let period = course.periods![index]
+                    let day = course.days![dayOfCourse.index]
+                    let period = course.periods![dayOfCourse.index]
                     let view = courseCellViewOn(day: day, period: period)
                     // assign content and index to this view
                     view.courseInfo = course
-                    view.index = index
+                    view.index = dayOfCourse.index
                     // its delegate
                     view.delegate = self
                     views.append(view)
@@ -114,9 +114,9 @@ class TimeTableView: UIView {
         return []
     }
     
-    private func courseCellViewOn(#day: Int, period: Int) -> CourseCellView {
+    private func courseCellViewOn(day day: Int, period: Int) -> CourseCellView {
         // day and period all starting from 1
-        var cellV = CourseCellView(frame: CGRectMake(0, 0, courseCellWidth, courseCellHeight))
+        let cellV = CourseCellView(frame: CGRectMake(0, 0, courseCellWidth, courseCellHeight))
         let x = (courseContainerWidth / 2) + CGFloat(day - 1) * courseContainerWidth
         let y = (courseContainerHeight / 2) + CGFloat(period - 1) * courseContainerHeight
         cellV.center = CGPoint(x: x, y: y)
@@ -166,19 +166,19 @@ class TimeTableView: UIView {
         // init!
         super.init(frame: frame)
         
-        var periods = UserSetting.getPeriodData()
+        let periods = UserSetting.getPeriodData()
         
         // first configure session side bar view
-        var sessionSideBarView = UIView(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight * CGFloat(periods.count)))
-        for (index, period: [String : String]) in enumerate(periods) {
-            var periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight))
+        let sessionSideBarView = UIView(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight * CGFloat(periods.count)))
+        for period in periods.enumerate() {
+            let periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight))
             periodLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
-            periodLabel.text = period["code"]
+            periodLabel.text = period.element["code"]
             periodLabel.textAlignment = NSTextAlignment.Center
             periodLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
             let baseOffset = courseContainerHeight / 2
             periodLabel.center.x = sessionSideBarView.bounds.midX
-            periodLabel.center.y = baseOffset + CGFloat(index) * courseContainerHeight
+            periodLabel.center.y = baseOffset + CGFloat(period.index) * courseContainerHeight
             sessionSideBarView.addSubview(periodLabel)
         }
         // after we generate content of session side bar scroll view, we are going to add it
@@ -198,15 +198,15 @@ class TimeTableView: UIView {
         self.sessionSideBarScrollView.backgroundColor = UIColor.whiteColor()
         
         // second configure header
-        var headerView = UIView(frame: CGRectMake(0, 0, courseContainerWidth * 7, weekdayHeaderHeight))
-        for (index, day: String) in enumerate(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]) {
-            var dayLabel = UILabel(frame: CGRectMake(0, 0, 60, 20))
+        let headerView = UIView(frame: CGRectMake(0, 0, courseContainerWidth * 7, weekdayHeaderHeight))
+        for day in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].enumerate() {
+            let dayLabel = UILabel(frame: CGRectMake(0, 0, 60, 20))
             dayLabel.textAlignment = NSTextAlignment.Center
-            dayLabel.text = day
+            dayLabel.text = day.element
             dayLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
             dayLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
             let baseOffset = courseContainerWidth / 2
-            dayLabel.center.x = baseOffset + CGFloat(index) * courseContainerWidth
+            dayLabel.center.x = baseOffset + CGFloat(day.index) * courseContainerWidth
             dayLabel.center.y = headerView.bounds.midY
             headerView.addSubview(dayLabel)
         }
@@ -236,7 +236,7 @@ class TimeTableView: UIView {
         timetableContentScrollView.showsVerticalScrollIndicator = false
         // add rows to timetable scroll view
         for index in 1...periods.count {
-            var rowView = UIView(frame: CGRectMake(0, 0, timetableContentScrollView.contentSize.width, courseContainerHeight - 2))
+            let rowView = UIView(frame: CGRectMake(0, 0, timetableContentScrollView.contentSize.width, courseContainerHeight - 2))
             rowView.backgroundColor = UIColor(red: 250/255.0, green: 247/255.0, blue: 245/255.0, alpha: 1)
             rowView.center.y = (courseContainerHeight / 2) + CGFloat(index - 1) * courseContainerHeight
             timetableContentScrollView.addSubview(rowView)

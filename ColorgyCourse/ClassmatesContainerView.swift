@@ -80,8 +80,8 @@ class ClassmatesContainerView: UIView {
                         // x
                         profileImageView.frame.origin.x = CGFloat(peopleIndex + 1) * spacing + CGFloat(peopleIndex) * imageViewHeight
                         // y
-                        println("containerView.bounds.midY \(containerView.bounds.midY)")
-                        println("profileImageView.center.y \(profileImageView.center.y)")
+                        print("containerView.bounds.midY \(containerView.bounds.midY)")
+                        print("profileImageView.center.y \(profileImageView.center.y)")
                         profileImageView.center.y = containerView.bounds.midY
                         // add to its subview
                         containerView.addSubview(profileImageView)
@@ -96,9 +96,9 @@ class ClassmatesContainerView: UIView {
     }
     
     func loadProfileImageViews() {
-        for (index: Int, userCourseObject: UserCourseObject) in enumerate(self.userCourseObjects) {
-            ColorgyAPI.getUserInfo(user_id: userCourseObject.user_id, success: { (result) -> Void in
-                let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        for userCourseObject in self.userCourseObjects.enumerate() {
+            ColorgyAPI.getUserInfo(user_id: userCourseObject.element.user_id, success: { (result) -> Void in
+                let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
                 dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                     if let ava_url = result.avatar_url {
                         if let url = NSURL(string: ava_url) {
@@ -110,15 +110,15 @@ class ClassmatesContainerView: UIView {
                                     transition.duration = 0.4
                                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                                     transition.type = kCATransitionFade
-                                    self.profileImageViews[index].image = image
-                                    self.profileImageViews[index].layer.addAnimation(transition, forKey: nil)
+                                    self.profileImageViews[userCourseObject.index].image = image
+                                    self.profileImageViews[userCourseObject.index].layer.addAnimation(transition, forKey: nil)
                                 })
                             }
                         }
                     }
                 })
             }, failure: { () -> Void in
-                println()
+
             })
         }
     }

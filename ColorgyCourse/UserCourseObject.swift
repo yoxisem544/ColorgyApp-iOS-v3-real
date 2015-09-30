@@ -9,7 +9,7 @@
 import Foundation
 
 /// This is used when you are getting data that have relationship with user's courses.
-class UserCourseObject: Printable {
+class UserCourseObject: CustomStringConvertible {
     // uuid here is not code, is server's
     /// UUID here is a server stamp, must be unique.
     var uuid: String

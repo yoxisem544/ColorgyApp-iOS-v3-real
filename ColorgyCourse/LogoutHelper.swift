@@ -10,7 +10,7 @@ import Foundation
 
 class LogoutHelper {
     
-    class func logoutPrepare(#success: () -> Void, failure: () -> Void) {
+    class func logoutPrepare(success success: () -> Void, failure: () -> Void) {
         // check network
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
             // check token if is expired

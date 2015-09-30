@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PeriodDataObject: Printable {
+class PeriodDataObject: CustomStringConvertible {
     
     // 1. properties
     var code: String
@@ -20,7 +20,7 @@ class PeriodDataObject: Printable {
     // dictionary
     var dictionary: [String : String] {
         get {
-            var dict = [
+            let dict = [
                 PeriodKey.code: self.code,
                 PeriodKey.order: "\(self.order)",
                 PeriodKey.id: "\(self.id)",

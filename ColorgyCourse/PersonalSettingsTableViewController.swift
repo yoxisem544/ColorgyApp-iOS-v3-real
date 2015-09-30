@@ -105,7 +105,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 
 }
 
-extension PersonalSettingsTableViewController : UITableViewDelegate {
+extension PersonalSettingsTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             goToFanPage()

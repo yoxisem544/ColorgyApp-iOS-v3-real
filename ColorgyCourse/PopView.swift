@@ -47,7 +47,8 @@ class PopView: UIView {
         messageLabel.layer.borderColor = UIColor.redColor().CGColor
         
         // button
-        var okButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//        var okButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let okButton = UIButton(type: UIButtonType.System) 
         okButton.frame = CGRectMake(0, 0, popContentViewWidth/2, 30)
         okButton.setTitle("OK!", forState: UIControlState.Normal)
         okButton.addTarget(self, action: "okButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)

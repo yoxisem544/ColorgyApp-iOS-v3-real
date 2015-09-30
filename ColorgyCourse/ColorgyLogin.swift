@@ -17,7 +17,7 @@ class ColorgyLogin {
     }
     
     /// Login Colorgy using email password
-    class func loginToColorgyWithUsername(#username: String, password: String, success: (result: ColorgyLoginResult) -> Void, failure: () -> Void) {
+    class func loginToColorgyWithUsername(username username: String, password: String, success: (result: ColorgyLoginResult) -> Void, failure: () -> Void) {
         let afManager = AFHTTPSessionManager(baseURL: NSURL(string: "https://colorgy.io/oauth/token"))
         
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -54,15 +54,15 @@ class ColorgyLogin {
         let permissions = ["email"]
         login.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if error != nil {
-                println(ColorgyErrorType.failToLoginFB)
+                print(ColorgyErrorType.failToLoginFB)
                 handler(token: nil)
             } else if result.isCancelled {
-                println(ColorgyErrorType.canceledFBLogin)
+                print(ColorgyErrorType.canceledFBLogin)
                 handler(token: nil)
             } else {
-                println("logged in")
+                print("logged in")
                 if let token = result.token.tokenString {
-                    println(token)
+                    print(token)
                     handler(token: token)
                 } else {
                     handler(token: nil)
@@ -84,7 +84,7 @@ class ColorgyLogin {
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        println("prepare to login to colorgy")
+        print("prepare to login to colorgy")
         
         let params = [
             "grant_type": "password",
@@ -97,7 +97,7 @@ class ColorgyLogin {
         ]
         
         afManager.POST("https://colorgy.io/oauth/token", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            println("ok 200 from colorgy")
+            print("ok 200 from colorgy")
             let json = JSON(response)
             if let result = ColorgyLoginResult(response: json) {
                 UserSetting.storeLoginResult(result: result)
@@ -107,7 +107,7 @@ class ColorgyLogin {
             }
             
             }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
-                println(ColorgyErrorType.failToLoginColorgy)
+                print(ColorgyErrorType.failToLoginColorgy)
                 handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
         })
     }

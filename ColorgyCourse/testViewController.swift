@@ -15,15 +15,16 @@ class testViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         var y = NSBundle.mainBundle().loadNibNamed("CourseDetailHeaderView", owner: self, options: nil)
-        println(y)
+        print(y)
         let yo = y[0] as! CourseDetailHeaderView
         yo.frame = self.view.frame
         yo.frame = CGRectMake(0, 0, self.view.frame.width, 279)
         yo.autoresizingMask = self.view.autoresizingMask
-        yo.translatesAutoresizingMaskIntoConstraints()
+        // TODO: this is a function in swift 1.2
+        yo.translatesAutoresizingMaskIntoConstraints = true
         
         // scroll view 
-        var scrollView = UIScrollView(frame: self.view.frame)
+        let scrollView = UIScrollView(frame: self.view.frame)
         scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height*2)
         scrollView.backgroundColor = UIColor.lightGrayColor()
         scrollView.addSubview(yo)

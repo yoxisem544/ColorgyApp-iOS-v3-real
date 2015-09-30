@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ColorgyUser: Printable {
+class ColorgyUser: CustomStringConvertible {
     // access token
     var accessToken: String?
     var refreshToken: String?

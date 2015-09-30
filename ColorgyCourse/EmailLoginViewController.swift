@@ -92,8 +92,8 @@ class EmailLoginViewController: UIViewController {
         self.view.endEditing(true)
         hideButtons()
         if canLogin() {
-            let username = emailLoginTextField.text
-            let password = passwordLoginTextField.text
+            let username = emailLoginTextField.text ?? ""
+            let password = passwordLoginTextField.text ?? ""
             ColorgyLogin.loginToColorgyWithUsername(username: username, password: password, success: { (result) -> Void in
                 UserSetting.storeLoginResult(result: result)
                 // get me api
@@ -146,7 +146,7 @@ class EmailLoginViewController: UIViewController {
     
     func canLogin() -> Bool {
         if emailLoginTextField.text != "" {
-            if count(passwordLoginTextField.text) >= 8 {
+            if passwordLoginTextField.text?.characters.count >= 8 {
                 return true
             }
         }

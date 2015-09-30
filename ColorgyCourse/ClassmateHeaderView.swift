@@ -67,7 +67,7 @@ class ClassmateHeaderView: UIView {
         }
         
         // hide show button
-        println(yOffset)
+        print(yOffset)
         if -yOffset >= 0 {
             // probelm with going up
             // maybe add height of button
@@ -78,7 +78,7 @@ class ClassmateHeaderView: UIView {
             backButton.frame.origin.y = self.frame.origin.y - yOffset + 20
             // 12 + 20 + 32 is bottom margin buttonheight and top margin
             // but 12 top is now gone, 20 of status bar is left
-            println("self.bounds.height \(self.bounds.height)")
+            print("self.bounds.height \(self.bounds.height)")
             // top is 20 for status bar, 12 for invisible status bar and button margin
             if -yOffset >= (self.bounds.height - 20 - 12 - backButton.bounds.height) {
                 backButton.frame.origin.y = (self.bounds.height - 20 - backButton.bounds.height)
@@ -125,7 +125,7 @@ class ClassmateHeaderView: UIView {
         userNameLabel.frame.origin.y = userProfileImage.frame.origin.y + userProfileImage.bounds.maxY + 16
         
         // add buttons
-        var backImage = UIImageView(image: UIImage(named: "backButtonWhite"))
+        let backImage = UIImageView(image: UIImage(named: "backButtonWhite"))
 //        backButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
 //        backButton.frame = CGRectMake(16, 32, 12, 20)
         backButton = UIButton(frame: backImage.frame)

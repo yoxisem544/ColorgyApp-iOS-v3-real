@@ -22,13 +22,13 @@ class CourseNotification {
             }
             // get out all course stored in db
             for course in courses {
-                var needNotifiedCourses = checkNeedNotifiedCourse(course)
+                let needNotifiedCourses = checkNeedNotifiedCourse(course)
                 for needNotifiedCourse in needNotifiedCourses {
                     setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
                 }
             }
             
-            println(UIApplication.sharedApplication().scheduledLocalNotifications)
+            print(UIApplication.sharedApplication().scheduledLocalNotifications)
         }
     }
     
@@ -39,9 +39,12 @@ class CourseNotification {
             if let days = course.days {
                 // loop thorugh days inside course
                 if let periods = course.periods {
-                    for (index: Int, day: Int) in enumerate(days) {
+                    for sajk in days.enumerate() {
+                        sajk.element
+                    }
+                    for dayOfCourse in days.enumerate() {
                         // check every index of course
-                        let currentCourse = (day: day, period: periods[index])
+                        let currentCourse = (day: dayOfCourse.element, period: periods[dayOfCourse.index])
                         // loop through all course and check
                         // rules: check day first, then check if previous session has same course
                         var needNotify = true
@@ -58,18 +61,18 @@ class CourseNotification {
                         }
                         // check if need to append this current course index
                         if needNotify {
-                            needNotifiedCourses.append((day: currentCourse.day, period: currentCourse.period, index: index))
+                            needNotifiedCourses.append((day: currentCourse.day, period: currentCourse.period, index: dayOfCourse.index))
                         }
                     }
                 }
             }
             // prepare to return
-            println("course \(course)")
-            println("needNotifiedCourses \(needNotifiedCourses)")
+            print("course \(course)")
+            print("needNotifiedCourses \(needNotifiedCourses)")
             return needNotifiedCourses
         }
-        println("course \(course)")
-        println("needNotifiedCourses \([])")
+        print("course \(course)")
+        print("needNotifiedCourses \([])")
         return []
     }
     
@@ -77,8 +80,8 @@ class CourseNotification {
         
         let ud = NSUserDefaults.standardUserDefaults()
         let periodData = UserSetting.getPeriodData()
-        var calendar = NSCalendar.currentCalendar()
-        var component = NSDateComponents()
+        let calendar = NSCalendar.currentCalendar()
+        let component = NSDateComponents()
         component.year = 2014
         component.month = 12
         component.day = day
@@ -91,8 +94,9 @@ class CourseNotification {
         if let time = time {
             if let startTime = time.componentsSeparatedByString("-").first {
                 // if get start time
-                if let startTimeHour = startTime.componentsSeparatedByString(":").first?.toInt() {
-                    if let startTimeMinute = startTime.componentsSeparatedByString(":").last?.toInt() {
+                // if there is no first time component, set string to -, then convertion will fail.
+                if let startTimeHour = Int(startTime.componentsSeparatedByString(":").first ?? "-") {
+                    if let startTimeMinute = Int(startTime.componentsSeparatedByString(":").last ?? "-") {
                         component.hour = startTimeHour
                         component.minute = startTimeMinute - 10
                         if (startTimeMinute - 10) < 0 {
@@ -103,16 +107,18 @@ class CourseNotification {
                         // got hour and minute
                         component.second = 0
                         calendar.timeZone = NSTimeZone.defaultTimeZone()
-                        var dateToFire = calendar.dateFromComponents(component)
-                        println("day: \(day), session: \(session) on component \(component)")
+                        let dateToFire = calendar.dateFromComponents(component)
+                        print("day: \(day), session: \(session) on component \(component)")
                         // set up local notification
                         let localNotification = UILocalNotification()
                         localNotification.timeZone = NSTimeZone.defaultTimeZone()
                         localNotification.fireDate = dateToFire
-                        localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
+//                        localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
+                        // TODO: week???
+                        localNotification.repeatInterval = NSCalendarUnit.WeekOfYear
                         let location = course.locations?[index] ?? ""
-                        var message = "\(startTime) 在 \(location) 上 \(course.name)"
-                        println(message)
+                        let message = "\(startTime) 在 \(location) 上 \(course.name)"
+                        print(message)
                         localNotification.alertBody = message
                         localNotification.soundName = "default"
                         

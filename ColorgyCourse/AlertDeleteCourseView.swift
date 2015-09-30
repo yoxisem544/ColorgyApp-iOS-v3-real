@@ -44,12 +44,12 @@ class AlertDeleteCourseView: UIView {
         self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
         
         // garbage can
-        var garbageCanImageView = UIImageView(frame: CGRectMake(0, 0, 53, 63))
+        let garbageCanImageView = UIImageView(frame: CGRectMake(0, 0, 53, 63))
         garbageCanImageView.image = UIImage(named: "garbageCan")
         garbageCanImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         // confrim button
-        var confirmButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let confirmButton = UIButton(type: UIButtonType.System) 
         confirmButton.frame = CGRectMake(0, 0, 112, 32)
         confirmButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1)
         confirmButton.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
@@ -58,7 +58,8 @@ class AlertDeleteCourseView: UIView {
         confirmButton.setTitle("刪除課程", forState: UIControlState.Normal)
         
         // cancel button
-        var cancelButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+//        var cancelButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let cancelButton = UIButton(type: UIButtonType.System) 
         cancelButton.frame = CGRectMake(0, 0, 112, 32)
         cancelButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1)
         cancelButton.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
@@ -81,7 +82,7 @@ class AlertDeleteCourseView: UIView {
         self.addSubview(cancelButton)
         
         // gesture
-        var tap = UITapGestureRecognizer(target: self, action: "tap:")
+        let tap = UITapGestureRecognizer(target: self, action: "tap:")
         self.addGestureRecognizer(tap)
         confirmButton.addTarget(self, action: "deleteC", forControlEvents: UIControlEvents.TouchUpInside)
         cancelButton.addTarget(self, action: "preserveC", forControlEvents: UIControlEvents.TouchUpInside)
@@ -109,7 +110,7 @@ class AlertDeleteCourseView: UIView {
     
     func generateCover() {
         // draw a garbage can
-        var path = UIBezierPath()
+        let path = UIBezierPath()
         path.moveToPoint(CGPoint(x: 0, y: 0))
         // up
         path.addLineToPoint(CGPoint(x: 0, y: -10))
@@ -141,7 +142,7 @@ class AlertDeleteCourseView: UIView {
         
         //        path.closePath()
         
-        var shapeLayer = CAShapeLayer()
+        let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.CGPath
         shapeLayer.strokeColor = UIColor.whiteColor().CGColor
         shapeLayer.lineWidth = 3.0

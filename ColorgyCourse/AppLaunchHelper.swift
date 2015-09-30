@@ -35,7 +35,7 @@ class AppLaunchHelper {
                         // ok refresh
                         }, failure: { () -> Void in
                             // fail to refresh
-                            println("fail to refresh")
+                            print("fail to refresh")
                     })
                     }, unstable: { () -> Void in
                         // network unstable

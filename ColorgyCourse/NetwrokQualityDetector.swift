@@ -11,24 +11,38 @@ import Foundation
 class NetwrokQualityDetector {
     class func testSpeed() -> Double {
         let url = SampleURL.jQuery
-        var request = NSURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60)
-        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?> = nil
+        let request = NSURLRequest(URL: NSURL(string: url)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60)
+        let response: AutoreleasingUnsafeMutablePointer<NSURLResponse?> = nil
         
-        var before = NSDate()
+        let before = NSDate()
         
-        var responseData = NSURLConnection.sendSynchronousRequest(request, returningResponse: response, error: nil)
-        if let responseData = responseData {
+        do {
+            let responseData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: response)
             // clear cache
             NSURLCache.sharedURLCache().removeAllCachedResponses()
             
-            var now = NSDate().timeIntervalSinceDate(before)
+            let now = NSDate().timeIntervalSinceDate(before)
             // nstimeinterval specific in second.
-            var speed = Double(responseData.length) / now / 1024
+            let speed = Double(responseData.length) / now / 1024
             
             return speed
-        } else {
+        } catch {
+            print("send sync error")
             return 0
         }
+//        var responseData = NSURLConnection.sendSynchronousRequest(request, returningResponse: response)
+//        if let responseData = responseData {
+//            // clear cache
+//            NSURLCache.sharedURLCache().removeAllCachedResponses()
+//            
+//            var now = NSDate().timeIntervalSinceDate(before)
+//            // nstimeinterval specific in second.
+//            var speed = Double(responseData.length) / now / 1024
+//            
+//            return speed
+//        } else {
+//            return 0
+//        }
     }
     
     class func getQualityWithSpeed(speed: Double) -> NetworkQuality {
@@ -46,7 +60,7 @@ class NetwrokQualityDetector {
     }
     
     class func getNetworkQuality(completionHandler: (quality: NetworkQuality) -> Void) {
-        let qos = Int(QOS_CLASS_USER_INITIATED.value)
+        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             let speed = self.testSpeed()
             // return to main queue
@@ -63,7 +77,7 @@ class NetwrokQualityDetector {
     ///
     /// :returns: stable(): If speed is greater than 30KB/s
     /// :returns: unstable(): If speed is less than 30KB/s
-    class func isNetworkStableToUse(#stable: () -> Void, unstable: () -> Void) {
+    class func isNetworkStableToUse(stable stable: () -> Void, unstable: () -> Void) {
         self.getNetworkQuality { (quality) -> Void in
             if quality == NetworkQuality.HighSpeedNetwork || quality == NetworkQuality.NormalSpeedNetwork || quality == NetworkQuality.LowSpeedNetwork {
                 // good

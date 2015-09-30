@@ -126,7 +126,7 @@ class UserSetting {
                 let randomUUID = NSUUID().UUIDString
                 // generate and store one
                 let deviceUUID = "\(username.uuidEncode)-\(UIDevice.currentDevice().name.uuidEncode)-\(randomUUID)"
-                println(deviceUUID)
+                print(deviceUUID)
                 ud.setObject(deviceUUID, forKey: UserSettingKey.deviceUUID)
                 ud.synchronize()
             }
@@ -155,9 +155,9 @@ class UserSetting {
             var count = 0
             dicts.sort({ (v1, v2) -> Bool in
                 // TODO: unwrap dictionary string danger
-                let n1 = v1["order"]?.toInt()
-                let n2 = v2["order"]?.toInt()
-                println("\(n1), \(n2)")
+                let n1 = Int(v1["order"] ?? "")
+                let n2 = Int(v2["order"] ?? "")
+                print("\(n1), \(n2)")
                 if ((n1 != nil) && (n2 != nil)) {
                     return (n1! < n2!)
                 } else {
@@ -186,9 +186,16 @@ class UserSetting {
     // MARK: - store local course caching data
     class func storeRawCourseJSON(rawJSON: JSON?) {
         if let json = rawJSON {
-            if let data = json.rawData(){
+//            if let data = json.rawData(){
+//                NSUserDefaults.standardUserDefaults().setObject(data, forKey: UserSettingKey.localCourseCachingData)
+//                NSUserDefaults.standardUserDefaults().synchronize()
+//            }
+            do {
+                let data = try json.rawData()
                 NSUserDefaults.standardUserDefaults().setObject(data, forKey: UserSettingKey.localCourseCachingData)
                 NSUserDefaults.standardUserDefaults().synchronize()
+            } catch {
+                
             }
         }
     }
@@ -217,7 +224,7 @@ class UserSetting {
     
     // MARK: - save user settings
     // store at first time login
-    class func storeLoginResult(#result: ColorgyLoginResult) {
+    class func storeLoginResult(result result: ColorgyLoginResult) {
         let ud = NSUserDefaults.standardUserDefaults()
         ud.setObject(result.access_token, forKey: UserSettingKey.userAccessToken)
         ud.setObject(result.created_at, forKey: UserSettingKey.accessTokenCreatedTime)
@@ -228,7 +235,7 @@ class UserSetting {
         ud.synchronize()
     }
     
-    class func storeAPIMeResult(#result: ColorgyAPIMeResult) {
+    class func storeAPIMeResult(result result: ColorgyAPIMeResult) {
         let ud = NSUserDefaults.standardUserDefaults()
         ud.setObject(result._type, forKey: UserSettingKey.userType)
         ud.setObject(result.avatar_url, forKey: UserSettingKey.userAvatarUrl)

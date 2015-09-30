@@ -43,7 +43,9 @@ class DetailCourseViewController: UIViewController {
         let headerView = headerViews[0] as! CourseDetailHeaderView
         headerView.frame = CGRectMake(0, 0, self.view.frame.width, 330)
         headerView.autoresizingMask = self.view.autoresizingMask
-        headerView.translatesAutoresizingMaskIntoConstraints()
+//        headerView.translatesAutoresizingMaskIntoConstraints()
+        headerView.translatesAutoresizingMaskIntoConstraints = true
+
         // set content
         headerView.course = course
         
@@ -85,13 +87,13 @@ class DetailCourseViewController: UIViewController {
     }
     
     private func downloadCourseInfo() {
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
        
             ColorgyAPI.getStudentsInSpecificCourse(self.course.code, completionHandler: { (userCourseObjects) -> Void in
                 if let userCourseObjects = userCourseObjects {
                     self.userCourseObjects = userCourseObjects
-                    println(userCourseObjects)
+                    print(userCourseObjects)
                     // set and will auto adjust hieght
                     self.classmatesView.userCourseObjects = userCourseObjects
                     // adjust content size height
@@ -132,7 +134,7 @@ class DetailCourseViewController: UIViewController {
 
 extension DetailCourseViewController : ClassmatesContainerViewDelegate {
     func classmatesContainerView(userDidTapOnUser userCourseObject: UserCourseObject) {
-        println(userCourseObject)
+        print(userCourseObject)
         // Flurry
         if Release().mode {
             Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo")

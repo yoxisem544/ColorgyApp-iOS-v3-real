@@ -16,7 +16,7 @@ class UserCourseObjectArray {
         if let json = json {
             // init array of objects
             self.objects = [UserCourseObject]()
-            println("json is array? \(json.isArray)")
+            print("json is array? \(json.isArray)")
             if json.isArray {
                 // loop
                 for (index: String, json: JSON) in json {

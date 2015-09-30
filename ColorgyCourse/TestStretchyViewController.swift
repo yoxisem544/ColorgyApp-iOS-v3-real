@@ -13,12 +13,12 @@ class TestStretchyViewController: UIViewController {
     var tm: TimeTableView!
     var headerImageView: UIImageView!
     var headerImageViewHeight: CGFloat!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        var backScrollV = UIScrollView(frame: self.view.frame)
+        let backScrollV = UIScrollView(frame: self.view.frame)
         backScrollV.backgroundColor = UIColor.brownColor()
         
         self.view.addSubview(backScrollV)
@@ -50,22 +50,22 @@ class TestStretchyViewController: UIViewController {
         
         // test db
         CourseDB.storeFakeData()
-        var dd = CourseDB.getAllStoredCoursesObject()
-        println(dd!)
-        println(dd!.first?.code)
-        println(dd!.first?.period_1)
-        var yo = Course(courseDBManagedObject: dd!.first)
-        println(yo)
-//        CourseDB.deleteAllCourses()
+        let dd = CourseDB.getAllStoredCoursesObject()
+        print(dd!)
+        print(dd!.first?.code)
+        print(dd!.first?.period_1)
+        let yo = Course(courseDBManagedObject: dd!.first)
+        print(yo)
+        //        CourseDB.deleteAllCourses()
     }
     
     func updateHeaderView(scrollView: UIScrollView) {
         
         if scrollView.contentOffset.y <= 0 {
-//            println(scrollView.contentOffset.y)
+            //            print(scrollView.contentOffset.y)
             let yOffset = -scrollView.contentOffset.y
             // enlarge
-//            println("headerImageViewHeight \(headerImageViewHeight)")
+            //            print("headerImageViewHeight \(headerImageViewHeight)")
             headerImageView.bounds.size.height = headerImageViewHeight + yOffset
             headerImageView.image = UIImage(named: "4.jpg")
             headerImageView.frame.origin.y = -yOffset
@@ -74,29 +74,29 @@ class TestStretchyViewController: UIViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        println("viewWillLayoutSubviews")
+        print("viewWillLayoutSubviews")
     }
     
     override func viewDidLayoutSubviews() {
-        println("viewDidLayoutSubviews")
+        print("viewDidLayoutSubviews")
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
 
 extension TestStretchyViewController : TimeTableViewDelegate {

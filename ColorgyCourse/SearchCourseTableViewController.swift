@@ -27,7 +27,7 @@ class SearchCourseViewController: UIViewController {
         UIColor(red:0,  green:0.816,  blue:0.678, alpha:1),
         UIColor(red:0.969,  green:0.420,  blue:0.616, alpha:1)
     ]
-    // successful add course view 
+    // successful add course view
     private var successfullyAddCourseView: AddCourseSuccessfulView!
     private func configureSuccessfullyAddCourseView() {
         self.successfullyAddCourseView = AddCourseSuccessfulView()
@@ -48,7 +48,7 @@ class SearchCourseViewController: UIViewController {
     private func hideSuccessfullyAddCourseView() {
         self.successfullyAddCourseView.hidden = true
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,8 +72,8 @@ class SearchCourseViewController: UIViewController {
         // configure navigation controller
         
         
-//        UserSetting.deleteLocalCourseDataDictionaries()
-//        UserSetting.deleteLocalCourseDataCaching()
+        //        UserSetting.deleteLocalCourseDataDictionaries()
+        //        UserSetting.deleteLocalCourseDataCaching()
         
         // check if need to refresh
         checkToken()
@@ -105,30 +105,30 @@ class SearchCourseViewController: UIViewController {
         NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
             ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
                 
-            }, failure: { () -> Void in
-                if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
-                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
-                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                        let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
-                        let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-                            self.presentViewController(vc, animated: true, completion: nil)
+                }, failure: { () -> Void in
+                    if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
+                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                            let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
+                            let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                                self.presentViewController(vc, animated: true, completion: nil)
+                            })
+                            alert.addAction(ok)
+                            self.presentViewController(alert, animated: true, completion: nil)
                         })
-                        alert.addAction(ok)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    })
-                }
+                    }
             })
-        }) { () -> Void in
-            
+            }) { () -> Void in
+                
         }
     }
     
     func downloadCourseIfNecessary() {
         // check if user already have course downloaded
         // TODO: - need async
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             if LocalCachingData.dictionaryArrayFormat != nil {
                 //            LocalCachingData.courseRawDataObjects
@@ -140,8 +140,8 @@ class SearchCourseViewController: UIViewController {
     }
     
     private func loadCourseData() {
-//        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-        let qos = Int(QOS_CLASS_USER_INITIATED.value)
+        //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             if let courseObjects = ServerCourseDB.getAllStoredCoursesObject() {
                 var courses = [Course]()
@@ -196,9 +196,9 @@ class SearchCourseViewController: UIViewController {
         ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
             // ok!
             // save this
-//            UserSetting.storeRawCourseJSON(json)
+            //            UserSetting.storeRawCourseJSON(json)
             // generate array of dictionary
-//            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
+            //            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
             
             // dismiss alert
             alert.message = "下載完成！ 😆"
@@ -227,7 +227,7 @@ class SearchCourseViewController: UIViewController {
     // segemented control action
     @IBAction func SegementedControlValueChanged(sender: UISegmentedControl) {
         
-        println(sender.selectedSegmentIndex)
+        print(sender.selectedSegmentIndex)
         if sender.selectedSegmentIndex == 1 {
             // reload enrolled data
             loadEnrolledCourses()
@@ -249,7 +249,7 @@ class SearchCourseViewController: UIViewController {
 // MARK: - AlertDeleteCourseViewDelegate
 extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
-        println("didTapDeleteCourseAlertDeleteCourseView")
+        print("didTapDeleteCourseAlertDeleteCourseView")
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
             CourseDB.deleteCourseWithCourseCode(course.code)
             alertDeleteCourseView.hideView(0.8)
@@ -261,15 +261,15 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             if Release().mode {
                 Flurry.logEvent("v3.0: User Delete A Course")
             }
-        }) { () -> Void in
-            alertDeleteCourseView.hideView(0.4)
+            }) { () -> Void in
+                alertDeleteCourseView.hideView(0.4)
         }
     }
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
-        println("didTapPreserveCourseAlertDeleteCourseView")
+        print("didTapPreserveCourseAlertDeleteCourseView")
     }
     func alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
-        println("didTapOnBackgroundAlertDeleteCourseView")
+        print("didTapOnBackgroundAlertDeleteCourseView")
     }
     
     
@@ -278,7 +278,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 // MARK: - SearchCourseCellDelegate
 extension SearchCourseViewController : SearchCourseCellDelegate {
     func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell) {
-        println("didtapdelete")
+        print("didtapdelete")
         
         // alert user first
         let alertV = AlertDeleteCourseView()
@@ -287,11 +287,11 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         alertV.cellView = cell
         self.tabBarController?.view.addSubview(alertV)
     }
-
+    
     func searchCourseCell(didTapAddCourseButton course: Course, cell: SearchCourseCell) {
-        println("didtapadd")
-        println("\(course)")
-        println("didtapadd")
+        print("didtapadd")
+        print("\(course)")
+        print("didtapadd")
         ColorgyAPI.PUTCourseToServer(course.code, year: 2015, term: 1, success: { () -> Void in
             self.animateSuccessfullyAddCourseView()
             CourseDB.storeCourseToDB(course)
@@ -302,7 +302,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
                 Flurry.logEvent("v3.0: User Add A Course")
             }
             }, failure: { () -> Void in
-            
+                
         })
     }
 }
@@ -311,8 +311,9 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
 extension SearchCourseViewController : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if searchController.active {
-            println("searchController.searchBar.text \"\(searchController.searchBar.text)\"")
-            filterContentForSearchText(searchController.searchBar.text)
+            print("searchController.searchBar.text \"\(searchController.searchBar.text)\"")
+            // TODO: optional chaining??
+            filterContentForSearchText(searchController.searchBar.text!)
         } else {
             self.searchCourseTableView.reloadData()
         }
@@ -323,8 +324,8 @@ extension SearchCourseViewController : UISearchResultsUpdating {
         self.filteredCourses = [Course]()
         
         if searchText != "" {
-//            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-            let qos = Int(QOS_CLASS_USER_INITIATED.value)
+            //            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 
                 for localCachingObject in self.localCachingObjects {
@@ -354,7 +355,7 @@ extension SearchCourseViewController : UISearchResultsUpdating {
                 // after filtering, return to main queue
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.searchCourseTableView.reloadData()
-                    println("reload after filtering")
+                    print("reload after filtering")
                 })
             })
         } else {
@@ -432,3 +433,4 @@ extension SearchCourseViewController : UITableViewDataSource {
 extension SearchCourseViewController : UITableViewDelegate {
     
 }
+

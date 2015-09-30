@@ -53,11 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // register for notification
-        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil))
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil))
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
         // segemented control font face
-        var attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as [NSObject : AnyObject]
+        // TODO: optional chaining??
+        let attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as! [NSObject : AnyObject]
         UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)
         UITabBar.appearance().tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
         
@@ -69,11 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // dump data
             CourseDB.deleteAllCourses()
             // need login
-            var vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         } else {
-            var vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         }
@@ -86,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        println(error)
+        print(error)
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
@@ -139,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "misk.ColorgyCourse" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1]
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -157,43 +158,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var failureReason = "There was an error creating or loading the application's saved data."
         // migration options
         var options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options, error: &error) == nil {
-            coordinator = nil
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+        } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
-            dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            
+            dict[NSUnderlyingErrorKey] = error as NSError
+            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
             abort()
+//            coordinator = nil
+//            // Report any error we got.
+//            var dict = [String: AnyObject]()
+//            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
+//            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+//            dict[NSUnderlyingErrorKey] = error
+//            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+//            // Replace this with code to handle the error appropriately.
+//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            NSLog("Unresolved error \(error), \(error!.userInfo)")
+//            abort()
         }
+//        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options) == nil {
+//            coordinator = nil
+//            // Report any error we got.
+//            var dict = [String: AnyObject]()
+//            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
+//            dict[NSLocalizedFailureReasonErrorKey] = failureReason
+//            dict[NSUnderlyingErrorKey] = error
+//            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+//            // Replace this with code to handle the error appropriately.
+//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            NSLog("Unresolved error \(error), \(error!.userInfo)")
+//            abort()
+//        }
         
         return coordinator
     }()
 
-    lazy var managedObjectContext: NSManagedObjectContext? = {
+    lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
-        if coordinator == nil {
-            return nil
-        }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
-    }()
+        }()
 
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
                 abort()
             }
         }

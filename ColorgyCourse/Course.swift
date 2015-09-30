@@ -12,7 +12,7 @@ import Foundation
 ///
 /// - Must use CourseRawData to create
 ///
-class Course: Printable {
+class Course: CustomStringConvertible {
     
 
     // properties
@@ -348,7 +348,7 @@ class Course: Printable {
     
     // functions?
     class func generateCourseArrayWithRawDataObjects(rawDataObjects: [CourseRawDataObject]) -> [Course]? {
-        var befor = NSDate()
+        let befor = NSDate()
         if rawDataObjects.count != 0 {
             var courses = [Course]()
             for rawDataObject in rawDataObjects {
@@ -356,8 +356,8 @@ class Course: Printable {
                     courses.append(course)
                 }
             }
-            var now = NSDate().timeIntervalSinceDate(befor)
-            println(now*1000)
+            let now = NSDate().timeIntervalSinceDate(befor)
+            print(now*1000)
             // check array length
             if courses.count == 0 {
                 // if this array contains on element, return nil
@@ -372,7 +372,7 @@ class Course: Printable {
     }
     
     class func generateCourseArrayWithDictionaries(dictionaries: [[String : AnyObject]]?) -> [Course]? {
-        var befor = NSDate()
+        let befor = NSDate()
         if let dictionaries = dictionaries {
             var courses = [Course]()
             
@@ -382,8 +382,8 @@ class Course: Printable {
                 }
             }
             
-            var now = NSDate().timeIntervalSinceDate(befor)
-            println("PPPP is \(now*1000)")
+            let now = NSDate().timeIntervalSinceDate(befor)
+            print("PPPP is \(now*1000)")
             // check length
             if courses.count == 0 {
                 return nil
