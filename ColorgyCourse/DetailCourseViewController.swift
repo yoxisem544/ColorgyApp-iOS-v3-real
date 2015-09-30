@@ -91,6 +91,7 @@ class DetailCourseViewController: UIViewController {
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
        
             ColorgyAPI.getStudentsInSpecificCourse(self.course.code, completionHandler: { (userCourseObjects) -> Void in
+                print(userCourseObjects)
                 if let userCourseObjects = userCourseObjects {
                     self.userCourseObjects = userCourseObjects
                     print(userCourseObjects)

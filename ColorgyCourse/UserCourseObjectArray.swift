@@ -19,7 +19,7 @@ class UserCourseObjectArray {
             print("json is array? \(json.isArray)")
             if json.isArray {
                 // loop
-                for (index: String, json: JSON) in json {
+                for (index, json) : (String, JSON) in json {
                     if let object = UserCourseObject(json: json) {
                         self.objects?.append(object)
                     }

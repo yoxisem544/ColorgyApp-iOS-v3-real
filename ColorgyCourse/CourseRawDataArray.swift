@@ -25,7 +25,7 @@ class CourseRawDataArray {
             self.objects = [CourseRawDataObject]()
             if json.isArray {
                 // an array of object
-                for (index: String, json: JSON) in json {
+                for (index, json) : (String, JSON) in json {
                     // loop through all the array
                     if let courseRawData = CourseRawDataObject(json: json) {
                         self.objects?.append(courseRawData)

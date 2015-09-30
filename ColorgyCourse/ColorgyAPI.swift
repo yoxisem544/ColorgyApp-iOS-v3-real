@@ -92,7 +92,7 @@ class ColorgyAPI {
                         let json = JSON(response)
                         var devices = [[String : String]]()
                         
-                        for (index: String, json: JSON) in json {
+                        for (index, json) : (String, JSON) in json {
                             if let name = json["name"].string {
                                 if let uuid = json["uuid"].string {
                                     devices.append(["name": name, "uuid": uuid])
@@ -378,7 +378,9 @@ class ColorgyAPI {
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                             // then handle response
                             let json = JSON(response)
+                            print(json)
                             let objects = UserCourseObjectArray(json: json).objects
+                            print(objects)
                             // return to main queue
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 completionHandler(userCourseObjects: objects)

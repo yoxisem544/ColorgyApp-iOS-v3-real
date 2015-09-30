@@ -65,6 +65,7 @@ class UserCourseObject: CustomStringConvertible {
         self.year = Int()
         self.term = Int()
         self._type = String()
+        print(json)
         if let json = json {
             if let uuid = json[UserCourseObjectKey.uuid].string {
                 self.uuid = uuid
