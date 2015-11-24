@@ -57,18 +57,23 @@ class ChooseSchoolViewController: UIViewController {
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == Storyboard.showDepartmentSegue {
+            let destinationVC = segue.destinationViewController as! ChooseDepartmentViewController
+            destinationVC.school = sender as! String
+        }
     }
-    */
+
     
     struct Storyboard {
         static let cellIdentifier = "ChooseSchoolIdentifer"
+        static let showDepartmentSegue = "show department"
     }
 
 }
@@ -87,6 +92,13 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
             return 0
         } else {
             return schools.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let school = schools?[indexPath.row].name {
+            performSegueWithIdentifier(Storyboard.showDepartmentSegue, sender: school)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
 }

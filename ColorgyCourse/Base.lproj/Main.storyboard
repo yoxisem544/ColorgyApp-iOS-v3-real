@@ -1810,9 +1810,6 @@
                                         <rect key="frame" x="69" y="37" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" title="Button"/>
-                                        <connections>
-                                            <segue destination="lY1-wj-Zpl" kind="presentation" id="G3N-2E-lgh"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ckA-GZ-xdf">
                                         <rect key="frame" x="69" y="66" width="46" height="30"/>
@@ -1875,6 +1872,7 @@
                     </view>
                     <connections>
                         <outlet property="schoolTableView" destination="qUz-ZB-KSU" id="cgl-sg-8i0"/>
+                        <segue destination="lY1-wj-Zpl" kind="presentation" identifier="show department" id="BLJ-xc-DVf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gx1-i6-Ykd" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -11,6 +11,7 @@ import UIKit
 class ChooseDepartmentViewController: UIViewController {
     
     @IBOutlet weak var departmentTableView: UITableView!
+    var school: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,8 @@ class ChooseDepartmentViewController: UIViewController {
         // Do any additional setup after loading the view.
         departmentTableView.delegate = self
         departmentTableView.dataSource = self
+        
+        print(school)
     }
 
     override func didReceiveMemoryWarning() {
