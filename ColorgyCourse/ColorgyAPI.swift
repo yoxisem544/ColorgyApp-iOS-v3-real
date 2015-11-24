@@ -53,7 +53,7 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         success()
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                         print("fail \(error)")
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
@@ -101,7 +101,7 @@ class ColorgyAPI {
                         }
                         
                         success(devices: devices)
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             print(error)
@@ -138,7 +138,7 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         success()
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             failure()
@@ -175,7 +175,7 @@ class ColorgyAPI {
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         success()
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             failure()
@@ -264,7 +264,7 @@ class ColorgyAPI {
                                 }
                                 
                             })
-                            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                                 // job ended
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
@@ -325,7 +325,7 @@ class ColorgyAPI {
                                     completionHandler(courseRawDataObject: object)
                                 })
                             })
-                            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                                 // job ended
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
@@ -386,7 +386,7 @@ class ColorgyAPI {
                                 completionHandler(userCourseObjects: objects)
                             })
                         })
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
@@ -444,7 +444,7 @@ class ColorgyAPI {
                                 completionHandler(periodDataObjects: resultObjects)
                             })
                         })
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
@@ -508,7 +508,7 @@ class ColorgyAPI {
                                 })
                             }
                         })
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
@@ -574,7 +574,7 @@ class ColorgyAPI {
                                 })
                             }
                         })
-                        }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
@@ -649,7 +649,7 @@ class ColorgyAPI {
                                     completionHandler(userCourseObjects: userCourseObjects)
                                 })
                             })
-                            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                                 // job ended
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
@@ -708,7 +708,7 @@ class ColorgyAPI {
                                 // job ended
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 success()
-                                }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                                }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                                     // job ended
                                     ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                     print(task)
@@ -764,7 +764,7 @@ class ColorgyAPI {
                                                 // job ended
                                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                                 success(courseCode: courseCode)
-                                                }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                                                }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                                                     // job ended
                                                     ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                                     failure()

@@ -11,6 +11,8 @@
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
 		630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158821B998B47008172E9 /* ErrorAlertView.swift */; };
+		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
+		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
 		6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */; };
 		6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */; };
@@ -99,6 +101,8 @@
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
+		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
+		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
 		6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCourseViewController.swift; sourceTree = "<group>"; };
 		6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmatesContainerView.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */,
+				6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */,
 				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
 				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
 				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
@@ -360,6 +366,7 @@
 				63FBCC091B9345B800B3084F /* Resources */,
 				EE3AB707EF51D6D745D55316 /* Copy Pods Resources */,
 				63FBCC6A1B93498800B3084F /* ShellScript */,
+				8CD88F98D1CF84D9F03D2F4A /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -482,6 +489,21 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" e709dd3229ee919ed0fef9ac4423afa4c9bae156 2fbc1d63ab59663379a655410b55e15089849de3798b93b390afc2613c3a9bb4";
 		};
+		8CD88F98D1CF84D9F03D2F4A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EE3AB707EF51D6D745D55316 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -513,6 +535,7 @@
 				639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */,
 				63FBCC731B935C0100B3084F /* Mode.swift in Sources */,
 				63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */,
+				6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */,
 				63FBCC601B9346D900B3084F /* PopView.swift in Sources */,
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
@@ -538,6 +561,7 @@
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
 				63E776671B973A2C00B15AF0 /* UserStatusChecker.swift in Sources */,
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
+				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
 				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
 				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
@@ -693,6 +717,7 @@
 			baseConfigurationReference = 2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -717,6 +742,7 @@
 			baseConfigurationReference = 130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

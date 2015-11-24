@@ -41,7 +41,7 @@ class ColorgyLogin {
             } else {
                 failure()
             }
-            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
         })
     }
@@ -106,7 +106,7 @@ class ColorgyLogin {
                 handler(response: nil, error: "fail to parse login result")
             }
             
-            }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(ColorgyErrorType.failToLoginColorgy)
                 handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
         })

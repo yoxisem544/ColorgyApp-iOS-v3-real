@@ -134,7 +134,7 @@ class ColorgyAPITrafficControlCenter {
                         failure()
                     }
                     print("refresk okok")
-                    }, failure: { (task: NSURLSessionDataTask, error: NSError) -> Void in
+                    }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                         // change to refresing finish state
                         ColorgyAPITrafficControlCenter.changeRefreshingState()
                         ColorgyAPITrafficControlCenter.setRefreshStateToCanNOTRefresh()
