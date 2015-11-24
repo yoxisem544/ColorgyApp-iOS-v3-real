@@ -11,12 +11,27 @@ import UIKit
 class ChooseSchoolViewController: UIViewController {
     
     @IBOutlet weak var schoolTableView: UITableView!
+
+    var schools: [School]! {
+        didSet {
+            if schools == nil {
+                ColorgyAPI.getSchools({ (schools) -> Void in
+                    self.schools = schools
+                    }) { () -> Void in
+                        print("failllll...")
+                }
+            } else {
+                // reload data
+                self.schoolTableView.reloadData()
+            }
+        }
+    }
     
     @IBAction func test() {
-        ColorgyAPI.getSchools({ () -> Void in
-            
+        ColorgyAPI.getSchools({ (schools) -> Void in
+            print(schools)
             }) { () -> Void in
-                
+                print("failllll...")
         }
     }
 
@@ -26,6 +41,14 @@ class ChooseSchoolViewController: UIViewController {
         // Do any additional setup after loading the view.
         schoolTableView.delegate = self
         schoolTableView.dataSource = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if schools == nil {
+            schools = nil
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,12 +76,17 @@ class ChooseSchoolViewController: UIViewController {
 extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cellIdentifier, forIndexPath: indexPath)
-        cell.textLabel?.text = "\(indexPath.row)"
+        let name = (schools == nil ? "" : schools[indexPath.row].name)
+        cell.textLabel?.text = "\(name)"
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if schools == nil {
+            return 0
+        } else {
+            return schools.count
+        }
     }
 }

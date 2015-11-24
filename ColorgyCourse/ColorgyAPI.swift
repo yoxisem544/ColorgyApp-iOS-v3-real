@@ -819,7 +819,7 @@ class ColorgyAPI {
     //    }
     
     
-    class func getSchools(success: () -> Void, failure: () -> Void) {
+    class func getSchools(success: (schools: [School]) -> Void, failure: () -> Void) {
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
@@ -835,8 +835,7 @@ class ColorgyAPI {
                     afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                         let json = JSON(response)
-                        print(json)
-                        success()
+                        success(schools: School.generateSchoolsWithJSON(json))
                         }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             failure()

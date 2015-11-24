@@ -47,9 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            Flurry.logEvent("User Start Application")        // Example of even logging
 //            Flurry.setDebugLogEnabled(false)
         } else {
-            Flurry.startSession("X6GB6M2ZG455YCBWQS6H") // for dev
-            Flurry.logEvent("User Start Application, for testing")
-            Flurry.setDebugLogEnabled(true)
+//            Flurry.startSession("X6GB6M2ZG455YCBWQS6H") // for dev
+//            Flurry.logEvent("User Start Application, for testing")
+//            Flurry.setDebugLogEnabled(true)
         }
         
         // register for notification
