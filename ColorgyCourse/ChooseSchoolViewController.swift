@@ -11,6 +11,14 @@ import UIKit
 class ChooseSchoolViewController: UIViewController {
     
     @IBOutlet weak var schoolTableView: UITableView!
+    
+    @IBAction func test() {
+        ColorgyAPI.getSchools({ () -> Void in
+            
+            }) { () -> Void in
+                
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

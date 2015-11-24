@@ -818,4 +818,35 @@ class ColorgyAPI {
     //        static let delete = "DELETE"
     //    }
     
+    
+    class func getSchools(success: () -> Void, failure: () -> Void) {
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+        } else {
+            if let accesstoken = UserSetting.UserAccessToken() {
+                let url = "https://colorgy.io:443/api/v1/organizations.json?access_token=\(accesstoken)"
+                if url.isValidURLString {
+                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                        let json = JSON(response)
+                        print(json)
+                        success()
+                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                            failure()
+                    })
+                } else {
+                    print("url not valid")
+                }
+            } else {
+                print("no token")
+            }
+        }
+    }
 }

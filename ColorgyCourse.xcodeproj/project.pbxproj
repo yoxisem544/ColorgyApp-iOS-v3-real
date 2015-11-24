@@ -12,6 +12,7 @@
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
 		630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158821B998B47008172E9 /* ErrorAlertView.swift */; };
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
+		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
 		6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */; };
@@ -102,6 +103,7 @@
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
+		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
 		6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCourseViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				639D45181B96B8B50053870D /* BackgroundWorker.swift */,
 				63E776641B9720C800B15AF0 /* LogoutHelper.swift */,
 				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
+				631746701C04110400F612B9 /* School.swift */,
 				63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */,
 				63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */,
 				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
@@ -584,6 +587,7 @@
 				636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */,
 				639D45171B96B8520053870D /* CourseNotificationCenter.swift in Sources */,
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
+				631746711C04110400F612B9 /* School.swift in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				63FBCC551B9346D900B3084F /* LocalCachingData.swift in Sources */,
