@@ -20,7 +20,12 @@ class ChooseDepartmentViewController: UIViewController {
         departmentTableView.delegate = self
         departmentTableView.dataSource = self
         
-        print(school)
+//        print(school)
+        ColorgyAPI.getDepartments("NTUST", success: { () -> Void in
+            print("DE!")
+            }) { () -> Void in
+                
+        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -22,6 +22,7 @@
 		635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635959421B9DA07B00371AE7 /* CourseNotification.swift */; };
 		636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */; };
 		636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */; };
+		638D64F91C045F1F00EACEC0 /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D64F81C045F1F00EACEC0 /* Department.swift */; };
 		638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */; };
 		638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */; };
 		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
@@ -114,6 +115,7 @@
 		635959421B9DA07B00371AE7 /* CourseNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseNotification.swift; sourceTree = "<group>"; };
 		636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalSettingsTableViewController.swift; sourceTree = "<group>"; };
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
+		638D64F81C045F1F00EACEC0 /* Department.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
 		638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseUpdateHelper.swift; sourceTree = "<group>"; };
 		638E165A1B9EBAF400F6CEC2 /* ColorgyCourse_v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v3.xcdatamodel; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */,
 				6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */,
+				638D64F81C045F1F00EACEC0 /* Department.swift */,
 				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
 				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
 				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
@@ -411,7 +414,6 @@
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -592,6 +594,7 @@
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				63FBCC551B9346D900B3084F /* LocalCachingData.swift in Sources */,
 				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,
+				638D64F91C045F1F00EACEC0 /* Department.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +726,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ColorgyCourse",
@@ -748,6 +752,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ColorgyCourse",
