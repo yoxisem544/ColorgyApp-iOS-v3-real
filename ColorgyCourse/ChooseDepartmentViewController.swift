@@ -12,6 +12,23 @@ class ChooseDepartmentViewController: UIViewController {
     
     @IBOutlet weak var departmentTableView: UITableView!
     var school: String!
+    var indexPathUserSelected: Int = -1
+    var departments: [Department]! {
+        didSet {
+            if departments == nil {
+                ColorgyAPI.getDepartments(school, success: { (departments) -> Void in
+                    self.departments = departments
+                    print(departments)
+                    }, failure: { () -> Void in
+                        // try again
+                    self.departments = nil
+                })
+            } else {
+                // reload table view
+                departmentTableView.reloadData()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +36,11 @@ class ChooseDepartmentViewController: UIViewController {
         // Do any additional setup after loading the view.
         departmentTableView.delegate = self
         departmentTableView.dataSource = self
-        
-//        print(school)
-        ColorgyAPI.getDepartments("NTUST", success: { () -> Void in
-            print("DE!")
-            }) { () -> Void in
-                
-        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        departments = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,11 +72,38 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
         cell.accessoryType = .None
+        let name = (departments == nil ? "" : departments[indexPath.row].name)
+        cell.textLabel?.text = name
+        
+        // set checkmark
+        if indexPathUserSelected >= 0 {
+            if indexPathUserSelected == indexPath.row {
+                cell.accessoryType = .Checkmark
+            }
+        }
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if departments == nil {
+            return 0
+        } else {
+            return departments.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if indexPathUserSelected >= 0 {
+            let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
+            previousCell?.accessoryType = .None
+        }
+        
+        print(indexPath.row)
+        let thisCell = tableView.cellForRowAtIndexPath(indexPath)
+        thisCell?.accessoryType = .Checkmark
+        
+        indexPathUserSelected = indexPath.row
     }
 }

@@ -19,6 +19,8 @@ class ChooseSchoolViewController: UIViewController {
                     self.schools = schools
                     }) { () -> Void in
                         print("failllll...")
+                        // try again
+                        self.schools = nil
                 }
             } else {
                 // reload data
@@ -96,8 +98,8 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let school = schools?[indexPath.row].name {
-            performSegueWithIdentifier(Storyboard.showDepartmentSegue, sender: school)
+        if let schoolCode = schools?[indexPath.row].code {
+            performSegueWithIdentifier(Storyboard.showDepartmentSegue, sender: schoolCode)
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }

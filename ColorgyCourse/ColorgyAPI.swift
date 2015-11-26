@@ -849,7 +849,7 @@ class ColorgyAPI {
         }
     }
     
-    class func getDepartments(school: String, success: () -> Void, failure: () -> Void) {
+    class func getDepartments(school: String, success: (departments: [Department]) -> Void, failure: () -> Void) {
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
@@ -859,16 +859,20 @@ class ColorgyAPI {
             failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/organizations/\(school).json?access_token=\(accesstoken)"
+                let url = "https://colorgy.io:443/api/v1/organizations/\(school.uppercaseString).json?access_token=\(accesstoken)"
                 if url.isValidURLString {
                     ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
                     afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                         let json = JSON(response)
-                        let dee = Department.generateDepartments(json)
-                        print(dee)
+                        let departments = Department.generateDepartments(json)
+                        print(departments)
+                        success(departments: departments)
                         }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                        
+                        failure()
                     })
+                } else {
+                    print("url is not valid")
+                    print(url)
                 }
             }
         }
