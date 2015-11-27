@@ -24,6 +24,12 @@ class EmailLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // test region
+        if !Release().mode {
+            emailLoginTextField.text = "test-cyu-student-1d1e@test.colorgy.io"
+            passwordLoginTextField.text = "test-cyu-student-1d1e"
+        }
 
         // Do any additional setup after loading the view.
         configureTextFields()
@@ -98,6 +104,9 @@ class EmailLoginViewController: UIViewController {
                 UserSetting.storeLoginResult(result: result)
                 // get me api
                 ColorgyAPI.me({ (result) -> Void in
+                    // check if user has a school or deparment
+                    // log out result here
+                    print(result)
                     // store usr settings
                     // self.statusLabel.text = "setting me api result"
                     UserSetting.storeAPIMeResult(result: result)

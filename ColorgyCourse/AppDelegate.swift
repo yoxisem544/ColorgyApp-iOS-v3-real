@@ -42,12 +42,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Flurry setup
         if Release().mode {
             // setup Flurry
-            Flurry.startSession("CX3C3VH67FHPZFF7S2J5") // replace flurryKey with your own key
+            Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
 //            Flurry.setCrashReportingEnabled(true)       // records app crashing in Flurry
 //            Flurry.logEvent("User Start Application")        // Example of even logging
 //            Flurry.setDebugLogEnabled(false)
         } else {
-//            Flurry.startSession("X6GB6M2ZG455YCBWQS6H") // for dev
+            Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
 //            Flurry.logEvent("User Start Application, for testing")
 //            Flurry.setDebugLogEnabled(true)
         }
@@ -66,21 +66,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.backgroundColor = UIColor.whiteColor()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
-        self.window?.rootViewController = vc
-        self.window?.makeKeyAndVisible()
-//        if !UserSetting.isLogin() {
-//            // dump data
-//            CourseDB.deleteAllCourses()
-//            // need login
-//            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-//            self.window?.rootViewController = vc
-//            self.window?.makeKeyAndVisible()
-//        } else {
-//            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
-//            self.window?.rootViewController = vc
-//            self.window?.makeKeyAndVisible()
-//        }
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
+//        self.window?.rootViewController = vc
+//        self.window?.makeKeyAndVisible()
+        if !UserSetting.isLogin() {
+            // dump data
+            CourseDB.deleteAllCourses()
+            // need login
+            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        } else {
+            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+        }
 
         return true
     }

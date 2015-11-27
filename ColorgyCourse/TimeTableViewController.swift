@@ -138,7 +138,7 @@ class TimeTableViewController: UIViewController {
                         courses.append(course)
                     }
                 }
-                print(courses)
+//                print(courses)
             }
             CourseNotification.registerForCourseNotification()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in

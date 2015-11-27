@@ -11,6 +11,7 @@
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
 		630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158821B998B47008172E9 /* ErrorAlertView.swift */; };
+		630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630DC8A61C0809870060E105 /* SecretKeys.swift */; };
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
@@ -103,6 +104,7 @@
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
+		630DC8A61C0809870060E105 /* SecretKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */,
 				630158821B998B47008172E9 /* ErrorAlertView.swift */,
 				6301587E1B9988B0008172E9 /* FBLoginViewController.swift */,
+				630DC8A61C0809870060E105 /* SecretKeys.swift */,
 				630158801B9988B9008172E9 /* EmailLoginViewController.swift */,
 				63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */,
 				639D45121B9612230053870D /* TestStretchyViewController.swift */,
@@ -535,6 +538,7 @@
 				63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */,
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
+				630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */,
 				63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */,
 				635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */,
 				639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */,

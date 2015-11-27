@@ -317,7 +317,7 @@ class ColorgyAPI {
                             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 // then handle response
-                                print(response)
+//                                print(response)
                                 let json = JSON(response)
                                 let object = CourseRawDataObject(json: json)
                                 // return to main queue

@@ -28,7 +28,7 @@ class CourseNotification {
                 }
             }
             
-            print(UIApplication.sharedApplication().scheduledLocalNotifications)
+//            print(UIApplication.sharedApplication().scheduledLocalNotifications)
         }
     }
     
@@ -67,12 +67,12 @@ class CourseNotification {
                 }
             }
             // prepare to return
-            print("course \(course)")
-            print("needNotifiedCourses \(needNotifiedCourses)")
+//            print("course \(course)")
+//            print("needNotifiedCourses \(needNotifiedCourses)")
             return needNotifiedCourses
         }
-        print("course \(course)")
-        print("needNotifiedCourses \([])")
+//        print("course \(course)")
+//        print("needNotifiedCourses \([])")
         return []
     }
     
@@ -108,7 +108,7 @@ class CourseNotification {
                         component.second = 0
                         calendar.timeZone = NSTimeZone.defaultTimeZone()
                         let dateToFire = calendar.dateFromComponents(component)
-                        print("day: \(day), session: \(session) on component \(component)")
+//                        print("day: \(day), session: \(session) on component \(component)")
                         // set up local notification
                         let localNotification = UILocalNotification()
                         localNotification.timeZone = NSTimeZone.defaultTimeZone()
@@ -118,7 +118,7 @@ class CourseNotification {
                         localNotification.repeatInterval = NSCalendarUnit.WeekOfYear
                         let location = course.locations?[index] ?? ""
                         let message = "\(startTime) 在 \(location) 上 \(course.name)"
-                        print(message)
+//                        print(message)
                         localNotification.alertBody = message
                         localNotification.soundName = "default"
                         
