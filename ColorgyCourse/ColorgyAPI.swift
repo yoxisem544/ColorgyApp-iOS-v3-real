@@ -208,7 +208,7 @@ class ColorgyAPI {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: () -> Void) {
+    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: () -> Void, processing: (processState: String) -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -225,21 +225,34 @@ class ColorgyAPI {
                     if url.isValidURLString {
                         // queue job
                         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                        // indicate user while downloading
+                        processing(processState: "正在下載資料...")
                         // then start job
                         afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background
                             //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-                            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+//                            let qos = Int(qos_class_main().rawValue)
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                
+                                processing(processState: "下載完成，準備處理資料...")
                                 // then handle response
                                 let json = JSON(response)
                                 let courseRawDataArray = CourseRawDataArray(json: json)
                                 var dicts = [[String : AnyObject]]()
                                 // this dic can use to generate [course]
                                 if courseRawDataArray.objects != nil {
-                                    for object in courseRawDataArray.objects! {
+                                    // processing all the data....
+                                    // need indicate here
+                                    var processPercentage = 0.0
+                                    for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
+                                        let process = Double(index)/Double(courseRawDataArray.objects!.count)
+                                        if (process >= processPercentage + 7) {
+                                            processPercentage = process
+                                            processing(processState: "正在處理資料，進度：\(processPercentage)%")
+                                        }
+//                                        processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
                                         dicts.append(object.dictionary)
                                     }
                                     // successfully get a dicts

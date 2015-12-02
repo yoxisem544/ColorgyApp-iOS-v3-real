@@ -152,7 +152,7 @@ class SearchCourseViewController: UIViewController {
                 }
                 self.localCachingObjects = courses
             } else {
-                self.blockAndDownloadCourse()
+                self.updateCourseDataClicked(0)
             }
             self.loadEnrolledCourses()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -193,6 +193,7 @@ class SearchCourseViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(alert, animated: true, completion: nil)
         })
+        // TODO: this is very important ! year2015 term1
         ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
             // ok!
             // save this
@@ -221,6 +222,8 @@ class SearchCourseViewController: UIViewController {
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
                     alert.dismissViewControllerAnimated(true, completion: nil)
                 })
+            }, processing: { (state) -> Void in
+                alert.message = state
         })
     }
     

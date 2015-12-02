@@ -19,13 +19,15 @@ struct OAuthKey {
 }
 
 /// A result from Colorgy OAuth server.
-class ColorgyLoginResult {
+class ColorgyLoginResult : CustomStringConvertible {
     var created_at: Int?
     var scope: String?
     var token_type: String?
     var access_token: String?
     var expires_in: Int?
     var refresh_token: String?
+    
+    var description: String { return "{\n\tcreated_at => \(created_at)\n\tscope => \(scope)\n\ttoken_type => \(token_type)\n\taccess_token => \(access_token)\n\texpires_in => \(expires_in)\n\trefresh_token => \(refresh_token)\n}" }
     
     /// Initialization: Pass in json, then will generate a ColorgyLoginResult
     ///
