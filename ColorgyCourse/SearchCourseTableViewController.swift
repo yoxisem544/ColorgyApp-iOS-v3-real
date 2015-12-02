@@ -14,6 +14,7 @@ class SearchCourseViewController: UIViewController {
     @IBOutlet weak var courseSegementedControl: UISegmentedControl!
     @IBOutlet weak var navigationBar: UINavigationBar!
     var searchControl = UISearchController()
+    var processAlertController: UIAlertController!
     
     // private API
     private var localCachingObjects: [Course]! = [Course]()
@@ -189,9 +190,9 @@ class SearchCourseViewController: UIViewController {
     
     
     private func blockAndDownloadCourse() {
-        let alert = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
+        processAlertController = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.presentViewController(self.processAlertController, animated: true, completion: nil)
         })
         // TODO: this is very important ! year2015 term1
         ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
@@ -201,32 +202,42 @@ class SearchCourseViewController: UIViewController {
             // generate array of dictionary
             //            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
             
-            // dismiss alert
-            alert.message = "下載完成！ 😆"
+            // dismiss processAlertController
+            self.processAlertController.message = "下載完成！ 😆"
             
             // store data
             ServerCourseDB.storeABunchOfCoursesToDB(courses)
             
             let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
             dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                alert.dismissViewControllerAnimated(true, completion: { () -> Void in
+                self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
                     self.loadCourseData()
                 })
             })
             }, failure: { () -> Void in
                 // no data, error
                 // TODO: test while fail to get courses
-                alert.message = "下載課程資料時出錯了 😖"
+                self.processAlertController.message = "下載課程資料時出錯了 😖"
                 
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                    alert.dismissViewControllerAnimated(true, completion: nil)
+                    self.processAlertController.dismissViewControllerAnimated(true, completion: nil)
                 })
             }, processing: { (state) -> Void in
-                alert.message = state
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    print("now on state:\(state)")
+                    print(self.processAlertController.message)
+                    self.processAlertController.message = state
+//                    NSOperationQueue().addOperationWithBlock({ () -> Void in
+//                        self.processAlertController.performSelector("setMessage:", onThread: NSThread.mainThread(), withObject: state, waitUntilDone: false)
+//                    })
+                })
         })
     }
     
+    func setMessage(message: String) {
+        self.processAlertController.message = message
+    }
     // segemented control action
     @IBAction func SegementedControlValueChanged(sender: UISegmentedControl) {
         

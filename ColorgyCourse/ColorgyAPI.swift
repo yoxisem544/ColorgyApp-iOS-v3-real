@@ -233,8 +233,9 @@ class ColorgyAPI {
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background
                             //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-//                            let qos = Int(qos_class_main().rawValue)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+                            
+                            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 
                                 processing(processState: "下載完成，準備處理資料...")
                                 // then handle response
@@ -245,14 +246,10 @@ class ColorgyAPI {
                                 if courseRawDataArray.objects != nil {
                                     // processing all the data....
                                     // need indicate here
-                                    var processPercentage = 0.0
                                     for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
-                                        let process = Double(index)/Double(courseRawDataArray.objects!.count)
-                                        if (process >= processPercentage + 7) {
-                                            processPercentage = process
-                                            processing(processState: "正在處理資料，進度：\(processPercentage)%")
-                                        }
-//                                        processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
+                                        // back to main queue
+                                        processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
+                                        // return to background queue
                                         dicts.append(object.dictionary)
                                     }
                                     // successfully get a dicts
