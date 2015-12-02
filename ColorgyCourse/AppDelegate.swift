@@ -66,9 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.backgroundColor = UIColor.whiteColor()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
-//        self.window?.rootViewController = vc
-//        self.window?.makeKeyAndVisible()
+        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
         if !UserSetting.isLogin() {
             // dump data
             CourseDB.deleteAllCourses()
@@ -83,6 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+    
+    @available(iOS 9.0, *)
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        print("i am now inside performing")
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {

@@ -27,6 +27,7 @@ class FBLoginViewController: UIViewController {
                             // check if user has a school or deparment
                             // log out result here
                             print(result)
+                            print(result.isUserRegisteredTheirSchool())
                             // store usr settings
 //                            self.statusLabel.text = "setting me api result"
                             UserSetting.storeAPIMeResult(result: result)
