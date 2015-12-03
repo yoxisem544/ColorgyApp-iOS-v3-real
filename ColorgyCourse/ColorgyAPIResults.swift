@@ -95,7 +95,8 @@ class ColorgyAPIMeResult : CustomStringConvertible {
             }
             if self.possible_organization_code == nil {
                 // user must have a possible org code to use this
-                return nil
+                // this can be nil
+//                return nil
             } else {
                 if self.organization == nil {
                     // if user is not authorized, use the possible one.

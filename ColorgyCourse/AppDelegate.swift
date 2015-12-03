@@ -69,20 +69,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
-        if !UserSetting.isLogin() {
-            // dump data
-            CourseDB.deleteAllCourses()
-            // need login
-            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        } else {
-            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        }
-        print(UserSetting.UserRefreshToken())
-        print(UserSetting.UserName())
+//        if !UserSetting.isLogin() {
+//            // dump data
+//            CourseDB.deleteAllCourses()
+//            // need login
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
+//        } else {
+//            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
+//        }
         return true
     }
     
@@ -103,9 +101,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserSetting.storePushNotificationDeviceToken(deviceToken)
         // update token
         ColorgyAPI.PUTdeviceToken(success: { () -> Void in
-            
+            print("niti OK")
         }) { () -> Void in
-            
+            print("noti fail")
         }
     }
 

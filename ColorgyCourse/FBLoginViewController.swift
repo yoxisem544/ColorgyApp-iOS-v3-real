@@ -27,6 +27,7 @@ class FBLoginViewController: UIViewController {
                         ColorgyAPI.me({ (result) -> Void in
                             // check if user has a school or deparment
                             // log out result here
+                            print(result)
                             if result.isUserRegisteredTheirSchool() {
                                 // store usr settings
     //                            self.statusLabel.text = "setting me api result"

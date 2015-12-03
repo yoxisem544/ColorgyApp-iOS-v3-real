@@ -29,6 +29,7 @@ class ChooseDepartmentViewController: UIViewController {
             }
         }
     }
+    var choosedDepartment: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,58 @@ class ChooseDepartmentViewController: UIViewController {
     
     @IBAction func backButtonClicked() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func finishChoosingAndReadyToPATCHUserInfo() {
+        if school != nil && choosedDepartment != nil {
+            ColorgyAPI.PATCHUserInfo(school, department: choosedDepartment, year: "2014", success: { () -> Void in
+                // login if user patch the info
+                ColorgyAPI.me({ (result) -> Void in
+                    // check if user has a school or deparment
+                    // log out result here
+                    if result.isUserRegisteredTheirSchool() {
+                        // store usr settings
+                        //                            self.statusLabel.text = "setting me api result"
+                        UserSetting.storeAPIMeResult(result: result)
+                        //                            self.statusLabel.text = "generateAndStoreDeviceUUID"
+                        UserSetting.generateAndStoreDeviceUUID()
+                        // set state refresh can use
+                        ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
+                        
+                        // get period data
+                        ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
+                            if let periodDataObjects = periodDataObjects {
+                                UserSetting.storePeriodsData(periodDataObjects)
+                                if Release().mode {
+                                    Flurry.logEvent("v3.0: User login using FB")
+                                }
+                                // ready to change view
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+                                self.presentViewController(vc, animated: true, completion: nil)
+                                UserSetting.changeLoginStateSuccessfully()
+                            } else {
+                                // fail to get period data
+                                let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
+                        })
+                    } else {
+                        // user need to fill in their school and their department
+                        // show the register view
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
+                        self.presentViewController(vc, animated: true, completion: nil)
+                    }
+                    }, failure: { () -> Void in
+                        //                                self.statusLabel.text = "fail get me api"
+                        let alert = ErrorAlertView.alertUserWithError("讀取個人資料錯誤，請重新登入。如果你是第一次登入，請至Colorgy網頁填寫你的學校！如果有不清楚的地方請到粉專詢問！")
+                        self.presentViewController(alert, animated: true, completion: nil)
+                })
+                }, failure: { () -> Void in
+                    // show something
+            })
+        }
     }
 
     /*
@@ -103,6 +156,8 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         print(indexPath.row)
         let thisCell = tableView.cellForRowAtIndexPath(indexPath)
         thisCell?.accessoryType = .Checkmark
+        
+        choosedDepartment = departments[indexPath.row].code
         
         indexPathUserSelected = indexPath.row
     }

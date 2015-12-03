@@ -1923,6 +1923,9 @@
                                         <state key="normal" title="完成">
                                             <color key="titleColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="finishChoosingAndReadyToPATCHUserInfo" destination="lY1-wj-Zpl" eventType="touchUpInside" id="bO8-jR-9KP"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>

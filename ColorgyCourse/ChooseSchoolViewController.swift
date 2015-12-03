@@ -17,17 +17,18 @@ class ChooseSchoolViewController: UIViewController {
             if schools == nil {
                 ColorgyAPI.getSchools({ (schools) -> Void in
                     self.schools = schools
-                    }) { () -> Void in
+                    }, failure: { () -> Void in
                         print("failllll...")
                         // try again
                         self.schools = nil
-                }
+                })
             } else {
                 // reload data
                 self.schoolTableView.reloadData()
             }
         }
     }
+    
     
     @IBAction func test() {
         ColorgyAPI.getSchools({ (schools) -> Void in

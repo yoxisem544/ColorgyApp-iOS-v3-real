@@ -37,6 +37,7 @@ class TimeTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         if Release().mode {
             Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
         } else {
