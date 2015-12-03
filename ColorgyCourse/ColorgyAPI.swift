@@ -248,9 +248,13 @@ class ColorgyAPI {
                                     // need indicate here
                                     for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
                                         // back to main queue
-                                        processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
+                                        })
                                         // return to background queue
-                                        dicts.append(object.dictionary)
+                                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                                            dicts.append(object.dictionary)
+                                        })
                                     }
                                     // successfully get a dicts
                                     // generate [cours]
@@ -363,7 +367,7 @@ class ColorgyAPI {
     ///
     /// :param: code: A course code.
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil.
-    class func getStudentsInSpecificCourse(code: String, completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void) {
+    class func getStudentsInSpecificCourse(code: String, success: (userCourseObjects: [UserCourseObject]) -> Void, failure: () -> Void) {
         // server will return an array of user course objects json.
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -371,7 +375,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
-            completionHandler(userCourseObjects: nil)
+            failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
                 let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Bcourse_code%5D=\(code)&&&&&&&&&access_token=\(accesstoken)"
@@ -389,28 +393,31 @@ class ColorgyAPI {
                             // then handle response
                             let json = JSON(response)
                             print(json)
-                            let objects = UserCourseObjectArray(json: json).objects
-                            print(objects)
-                            // return to main queue
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                completionHandler(userCourseObjects: objects)
-                            })
+                            if let objects = UserCourseObjectArray(json: json).objects {
+                                print(objects)
+                                // return to main queue
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    success(userCourseObjects: objects)
+                                })
+                            } else {
+                                failure()
+                            }
                         })
                         }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // then handle response
                             print(ColorgyErrorType.APIFailure.failGetUserCourses)
-                            completionHandler(userCourseObjects: nil)
+                            failure()
                     })
                 } else {
                     print(ColorgyErrorType.invalidURLString)
                     print(url)
-                    completionHandler(userCourseObjects: nil)
+                    failure()
                 }
             } else {
                 print(ColorgyErrorType.APIFailure.failGetUserCourses)
-                completionHandler(userCourseObjects: nil)
+                failure()
             }
         }
     }

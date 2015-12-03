@@ -90,16 +90,21 @@ class DetailCourseViewController: UIViewController {
         let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
        
-            ColorgyAPI.getStudentsInSpecificCourse(self.course.code, completionHandler: { (userCourseObjects) -> Void in
+            ColorgyAPI.getStudentsInSpecificCourse(self.course.code, success: { (userCourseObjects) -> Void in
                 print(userCourseObjects)
-                if let userCourseObjects = userCourseObjects {
-                    self.userCourseObjects = userCourseObjects
-                    print(userCourseObjects)
-                    // set and will auto adjust hieght
-                    self.classmatesView.userCourseObjects = userCourseObjects
-                    // adjust content size height
-                    self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
-                }
+                self.userCourseObjects = userCourseObjects
+                print(userCourseObjects)
+                // set and will auto adjust hieght
+                self.classmatesView.userCourseObjects = userCourseObjects
+                // adjust content size height
+                self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
+                }, failure: { () -> Void in
+                    // retry
+                    print("retry to download course again")
+                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                        self.downloadCourseInfo()
+                    })
             })
         })
     }
