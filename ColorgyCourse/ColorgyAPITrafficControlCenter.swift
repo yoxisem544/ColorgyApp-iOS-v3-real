@@ -99,6 +99,12 @@ class ColorgyAPITrafficControlCenter {
         ud.synchronize()
     }
     
+    class func setRefreshingStateToNotRefreshing() {
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setBool(false, forKey: TrafficKey.IsRefreshingAccessToken)
+        ud.synchronize()
+    }
+    
     /// Refresh access token.
     ///
     /// **Will auto save result if successfully login**

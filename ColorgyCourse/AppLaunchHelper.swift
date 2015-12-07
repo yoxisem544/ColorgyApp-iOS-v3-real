@@ -11,6 +11,9 @@ import Foundation
 class AppLaunchHelper {
     class func startJob() {
         
+        // set refresh state to can refresh
+        ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
+        
         // check needed info
         // device uuid
         let deviceuuid = UserSetting.getDeviceUUID()

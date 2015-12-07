@@ -197,24 +197,31 @@ class SearchCourseViewController: UIViewController {
         })
         // TODO: this is very important ! year2015 term1
         ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
-            // ok!
-            // save this
-            //            UserSetting.storeRawCourseJSON(json)
-            // generate array of dictionary
-            //            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
+                // ok!
+                // save this
+                //            UserSetting.storeRawCourseJSON(json)
+                // generate array of dictionary
+                //            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
+                
+                // dismiss processAlertController
             
-            // dismiss processAlertController
-            self.processAlertController.message = "下載完成！ 😆"
-            
-            // store data
-            ServerCourseDB.storeABunchOfCoursesToDB(courses)
-            
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
-            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    self.loadCourseData()
+                // store data
+                ServerCourseDB.storeABunchOfCoursesToDB(courses)
+                
+                //            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
+                //            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                //                self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                //                    self.loadCourseData()
+                //                })
+                //            })
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.processAlertController.message = "下載完成！ 😆"
+                    self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        self.loadCourseData()
+                    })
                 })
-            })
+            
             }, failure: { () -> Void in
                 // no data, error
                 // TODO: test while fail to get courses

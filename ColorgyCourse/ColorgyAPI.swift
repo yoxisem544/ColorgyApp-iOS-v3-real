@@ -245,32 +245,29 @@ class ColorgyAPI {
                                 let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
                                     processing(processState: state)
                                 })
+                                processing(processState: "正在儲存資料到手機上...")
                                 var dicts = [[String : AnyObject]]()
                                 // this dic can use to generate [course]
                                 if courseRawDataArray.objects != nil {
                                     // processing all the data....
-                                    processing(processState: "正在完成處理...")
-                                    // return to background queue
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
-                                            dicts.append(object.dictionary)
-                                        }
-                                    
-                                        // successfully get a dicts
-                                        // generate [cours]
-                                        let courses = Course.generateCourseArrayWithDictionaries(dicts)
-                                        // return to main queue
-                                        if let courses = courses {
-                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                                success(courses: courses, json: json)
-                                            })
-                                        } else {
-                                            // fail to generate objects
-                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                                failure()
-                                            })
-                                        }
-                                    })
+                                    for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
+                                        dicts.append(object.dictionary)
+                                    }
+                                    // successfully get a dicts
+                                    // generate [cours]
+                                    let courses = Course.generateCourseArrayWithDictionaries(dicts)
+                                    // return to main queue
+                                    if let courses = courses {
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            success(courses: courses, json: json)
+                                        })
+                                    } else {
+                                        // fail to generate objects
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            failure()
+                                        })
+                                    }
                                 } else {
                                     // fail to generate objects
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
