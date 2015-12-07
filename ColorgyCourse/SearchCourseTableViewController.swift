@@ -60,6 +60,7 @@ class SearchCourseViewController: UIViewController {
         searchControl.dimsBackgroundDuringPresentation = false
         // assign to tableview header view
         searchCourseTableView.tableHeaderView = searchControl.searchBar
+        searchControl.searchBar.placeholder = "輸入課名、代碼、老師來搜尋"
         
         // configure tableview
         searchCourseTableView.estimatedRowHeight = searchCourseTableView.rowHeight
@@ -388,9 +389,15 @@ extension SearchCourseViewController : UITableViewDataSource {
         if self.courseSegementedControl.selectedSegmentIndex == 0 {
             if searchControl.active {
                 // searching
-                return self.filteredCourses.count
+                if searchControl.searchBar.text == "" {
+                    return 0
+                } else {
+                    return self.filteredCourses.count
+                }
             } else {
-                return self.localCachingObjects.count
+                // dont show data if not searching
+//                return self.localCachingObjects.count
+                return 0
             }
         } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
             // enrolled course
