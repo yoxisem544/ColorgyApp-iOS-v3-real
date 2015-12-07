@@ -50,7 +50,10 @@ class LocalCachingData {
             if json.isUnknownType {
                 return nil
             }
-            if let objects = CourseRawDataArray(json: json).objects {
+            if let objects = CourseRawDataArray(json: json, process: { (state) -> Void in
+                // this will look like this is the callback problem
+                // maybe you should check if LocalCachingData is still in use.
+            }).objects {
                 if objects.count == 0 {
                     return nil
                 }

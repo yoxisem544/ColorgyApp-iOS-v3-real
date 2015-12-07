@@ -242,36 +242,35 @@ class ColorgyAPI {
                                 processing(processState: "下載完成，準備處理資料...")
                                 // then handle response
                                 let json = JSON(response)
-                                let courseRawDataArray = CourseRawDataArray(json: json)
+                                let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
+                                    processing(processState: state)
+                                })
                                 var dicts = [[String : AnyObject]]()
                                 // this dic can use to generate [course]
                                 if courseRawDataArray.objects != nil {
                                     // processing all the data....
-                                    // need indicate here
-                                    for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
-                                        // back to main queue
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            processing(processState: "正在處理：\(index)/\(courseRawDataArray.objects!.count)筆資料...")
-                                        })
-                                        // return to background queue
-                                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                                    processing(processState: "正在完成處理...")
+                                    // return to background queue
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
                                             dicts.append(object.dictionary)
-                                        })
-                                    }
-                                    // successfully get a dicts
-                                    // generate [cours]
-                                    let courses = Course.generateCourseArrayWithDictionaries(dicts)
-                                    // return to main queue
-                                    if let courses = courses {
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            success(courses: courses, json: json)
-                                        })
-                                    } else {
-                                        // fail to generate objects
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            failure()
-                                        })
-                                    }
+                                        }
+                                    
+                                        // successfully get a dicts
+                                        // generate [cours]
+                                        let courses = Course.generateCourseArrayWithDictionaries(dicts)
+                                        // return to main queue
+                                        if let courses = courses {
+                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                success(courses: courses, json: json)
+                                            })
+                                        } else {
+                                            // fail to generate objects
+                                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                                failure()
+                                            })
+                                        }
+                                    })
                                 } else {
                                     // fail to generate objects
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
