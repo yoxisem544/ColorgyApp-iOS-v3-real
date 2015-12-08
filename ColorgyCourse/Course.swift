@@ -13,7 +13,6 @@ import Foundation
 /// - Must use CourseRawData to create
 ///
 class Course: CustomStringConvertible {
-    
 
     // properties
     // what do we need of a course?
