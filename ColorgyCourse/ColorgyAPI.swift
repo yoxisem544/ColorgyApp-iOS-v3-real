@@ -94,7 +94,7 @@ class ColorgyAPI {
                         let json = JSON(response)
                         var devices = [[String : String]]()
                         
-                        for (index, json) : (String, JSON) in json {
+                        for (_, json) : (String, JSON) in json {
                             if let name = json["name"].string {
                                 if let uuid = json["uuid"].string {
                                     devices.append(["name": name, "uuid": uuid])
@@ -250,7 +250,7 @@ class ColorgyAPI {
                                 // this dic can use to generate [course]
                                 if courseRawDataArray.objects != nil {
                                     // processing all the data....
-                                    for (index, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
+                                    for (_, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
                                         dicts.append(object.dictionary)
                                     }
                                     // successfully get a dicts
@@ -616,7 +616,6 @@ class ColorgyAPI {
     ///
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
     class func getMeCourses(completionHanlder: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
-        let ud = NSUserDefaults.standardUserDefaults()
         if let userId = UserSetting.UserId() {
             let userIdString = String(userId)
             ColorgyAPI.getUserCoursesWithUserId(userIdString, completionHandler: completionHanlder, failure: failure)

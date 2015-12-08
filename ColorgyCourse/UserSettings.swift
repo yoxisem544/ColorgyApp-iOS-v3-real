@@ -152,7 +152,6 @@ class UserSetting {
                 dicts.append(object.dictionary)
             }
             // sort the order
-            var count = 0
             dicts.sortInPlace({ (v1, v2) -> Bool in
                 // TODO: unwrap dictionary string danger
                 let n1 = Int(v1["order"] ?? "")
@@ -165,18 +164,7 @@ class UserSetting {
                     return false
                 }
             })
-//            dicts.sort({ (v1, v2) -> Bool in
-//                // TODO: unwrap dictionary string danger
-//                let n1 = Int(v1["order"] ?? "")
-//                let n2 = Int(v2["order"] ?? "")
-//                print("\(n1), \(n2)")
-//                if ((n1 != nil) && (n2 != nil)) {
-//                    print((n1! > n2!))
-//                    return (n1! > n2!)
-//                } else {
-//                    return false
-//                }
-//            })
+
             let ud = NSUserDefaults.standardUserDefaults()
             ud.setObject(dicts, forKey: UserSettingKey.periodsData)
             print(dicts)

@@ -78,7 +78,6 @@ class CourseNotification {
     
     class func setupNotificationWithMessage(course: Course, day: Int, session: Int, index: Int) {
         
-        let ud = NSUserDefaults.standardUserDefaults()
         let periodData = UserSetting.getPeriodData()
         let calendar = NSCalendar.currentCalendar()
         let component = NSDateComponents()
