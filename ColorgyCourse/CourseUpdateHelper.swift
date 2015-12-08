@@ -73,26 +73,27 @@ class CourseUpdateHelper {
                     // loop it
                     for object in userCourseObjects {
                         // cause the downloaded courses only have code, so need to download the complete course data using the code.
-                        ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
+                        ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, success: { (courseRawDataObject) -> Void in
+                            // get into queue, not blocking the main thread.
                             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                                if let courseRawDataObject = courseRawDataObject {
-                                    if let course = Course(rawData: courseRawDataObject) {
-//                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            courses.append(course)
-                                            let b = NSDate()
-                                            print("counter is \(counter)")
-                                            if counter == courses.count {
-                                                success(courses: courses)
-                                            }
-                                            let now = NSDate().timeIntervalSinceDate(b)
-                                            print(now*1000)
-//                                        })
+                                // this part will tranform rawData into Course object.
+                                if let course = Course(rawData: courseRawDataObject) {
+                                    // if course object is created, append it to the array
+                                    courses.append(course)
+                                    let b = NSDate()
+                                    print("counter is \(counter)")
+                                    // if this is the last object to be created, call success callback.
+                                    if counter == courses.count {
+                                        success(courses: courses)
                                     }
-                                } else {
-                                    counter--
+                                    let now = NSDate().timeIntervalSinceDate(b)
+                                    print(now*1000)
                                 }
                             })
+                            }, failure: { () -> Void in
+                                // if fail to get course, decrease one job to be download....
+                                counter--
                         })
                     }
                 }
