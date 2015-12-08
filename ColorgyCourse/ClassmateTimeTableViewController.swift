@@ -142,7 +142,13 @@ class ClassmateTimeTableViewController: UIViewController {
                     }
                 })
             }, failure: { () -> Void in
-                
+                // TODO: show error view or reload view
+                // maybe just reload, delay for 2 second.
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    print("retrying")
+                    self.loadUserImage()
+                })
             })
         }
     }
@@ -152,28 +158,34 @@ class ClassmateTimeTableViewController: UIViewController {
         ColorgyAPI.getUserCoursesWithUserId("\(userCourseObject.user_id)", completionHandler: { (userCourseObjects) -> Void in
             if let userCourseObjects = userCourseObjects {
                 for object in userCourseObjects {
-                    ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
+                    ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, success: { (courseRawDataObject) -> Void in
                         let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                            if let courseRawDataObject = courseRawDataObject {
-                                if let course = Course(rawData: courseRawDataObject) {
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.courses.append(course)
-                                        let b = NSDate()
-                                        if userCourseObjects.count == self.courses.count {
-                                            self.timetable.courses = self.courses
-                                        }
-                                        let now = NSDate().timeIntervalSinceDate(b)
-                                        print(now*1000)
-                                    })
-                                }
+                            if let course = Course(rawData: courseRawDataObject) {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.courses.append(course)
+                                    let b = NSDate()
+                                    if userCourseObjects.count == self.courses.count {
+                                        self.timetable.courses = self.courses
+                                    }
+                                    let now = NSDate().timeIntervalSinceDate(b)
+                                    print(now*1000)
+                                })
                             }
                         })
+                        }, failure: { () -> Void in
+                            // ???
                     })
                 }
             }
             }, failure: { () -> Void in
-
+                // TODO: show error view or reload view
+                // maybe just reload, delay for 2 second.
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    print("retrying")
+                    self.loadUserCourse()
+                })
         })
     }
     
