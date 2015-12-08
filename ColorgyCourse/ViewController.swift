@@ -119,7 +119,6 @@ class ViewController: UIViewController {
         //                UserSetting.storeRawCourseJSON(json)
         //            }
         //        })
-        //        print(LocalCachingData.jsonFormat)
         //        ColorgyAPI.getStudentsInSpecificCourse("a", completionHandler: { (userCourseObjects) -> Void in
         //            print("OK")
         //            print(userCourseObjects)

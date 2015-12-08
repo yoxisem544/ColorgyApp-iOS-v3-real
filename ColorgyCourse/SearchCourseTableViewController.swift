@@ -127,20 +127,6 @@ class SearchCourseViewController: UIViewController {
         }
     }
     
-    func downloadCourseIfNecessary() {
-        // check if user already have course downloaded
-        // TODO: - need async
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            if LocalCachingData.dictionaryArrayFormat != nil {
-                //            LocalCachingData.courseRawDataObjects
-            } else {
-                // block and download
-                self.blockAndDownloadCourse()
-            }
-        })
-    }
-    
     private func loadCourseData() {
         //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
