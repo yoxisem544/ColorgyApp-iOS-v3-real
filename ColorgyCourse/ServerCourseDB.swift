@@ -135,10 +135,11 @@ class ServerCourseDB {
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
+//        let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
         if let courses = courses {
             for course in courses {
-                    
+                let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
+                
                 courseObject.code = course.code
                 courseObject.name = course.name
                 courseObject.lecturer = course.lecturer

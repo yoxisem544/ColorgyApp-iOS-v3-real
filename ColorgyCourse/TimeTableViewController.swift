@@ -67,6 +67,8 @@ class TimeTableViewController: UIViewController {
         ColorgyAPI.checkIfTokenHasExpired(unexpired: { () -> Void in
             // if accesstoken work, update course
             CourseUpdateHelper.updateCourse({ () -> Void in
+                // TODO: what i do here?
+                // here is from CourseDB
                 self.getAndSetDataToTimeTable()
             })
             }, expired: { () -> Void in
@@ -134,6 +136,7 @@ class TimeTableViewController: UIViewController {
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             var courses = [Course]()
             if let objects = CourseDB.getAllStoredCoursesObject() {
+                print(objects.count)
                 for obj in objects {
                     if let course = Course(courseDBManagedObject: obj) {
                         courses.append(course)

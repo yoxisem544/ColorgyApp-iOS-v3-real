@@ -190,9 +190,10 @@ class CourseDB {
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
+//        let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
         if let courses = courses {
             for course in courses {
+                let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
                 courseObject.code = course.code
                 courseObject.name = course.name
                 courseObject.lecturer = course.lecturer
@@ -284,13 +285,13 @@ class CourseDB {
                     
                 }
             }
-            // save
-            // TODO: fuck the nil
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(ColorgyErrorType.DBFailure.saveFail)
-            }
+        }
+        // save
+        // TODO: fuck the nil
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print(ColorgyErrorType.DBFailure.saveFail)
         }
     }
     

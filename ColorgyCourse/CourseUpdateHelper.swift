@@ -44,6 +44,9 @@ class CourseUpdateHelper {
                 CourseDB.deleteAllCourses()
                 // store
                 CourseDB.storeABunchOfCoursesToDB(courses)
+                
+                // check counts
+                print(CourseDB.getAllStoredCoursesObject()?.count)
                 // setup notifications
     //            CourseNotification.registerForCourseNotification()
                 
@@ -85,7 +88,11 @@ class CourseUpdateHelper {
                                     print("counter is \(counter)")
                                     // if this is the last object to be created, call success callback.
                                     if counter == courses.count {
+                                        print("OK!!")
+                                        print(courses)
                                         success(courses: courses)
+                                    } else {
+                                        print("oh! something wrong or course is now at \(courses.count)/\(counter)")
                                     }
                                     let now = NSDate().timeIntervalSinceDate(b)
                                     print(now*1000)

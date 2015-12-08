@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/FBLoginViewController.swift"
-            timestampString = "471238500.673363"
+            filePath = "ColorgyCourse/CourseUpdateHelper.swift"
+            timestampString = "471253902.59445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "FBloginButtonClicked(_:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "updateCourse(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
