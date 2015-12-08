@@ -82,10 +82,11 @@ class TimeTableView: UIView {
             // add these to view
             for ccv in self.courseCellViewsOnTimetable! {
                 self.timetableContentScrollView.addSubview(ccv)
-                ccv.alpha = 0
-                UIView.animateWithDuration(0.4, animations: { () -> Void in
-                    ccv.alpha = 1
-                })
+//                ccv.alpha = 0
+//                UIView.animateWithDuration(0.4, animations: { () -> Void in
+//                    ccv.alpha = 1
+//                })
+                ccv.alpha = 1
             }
         }
     }
