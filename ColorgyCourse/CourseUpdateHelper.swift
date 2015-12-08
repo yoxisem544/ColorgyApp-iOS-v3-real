@@ -60,16 +60,20 @@ class CourseUpdateHelper {
     
     class func downloadCourse(success: (courses: [Course]) -> Void, failure: () -> Void) {
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-        //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            // initiate a course array and a counter to check the counts of all downloaded course
             var courses = [Course]()
             var counter = 0
+            // start to get course from server
             ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
+                // if successfully get course.
                 if let userCourseObjects = userCourseObjects {
+                    // get the count of downloaded courses
                     counter = userCourseObjects.count
+                    // loop it
                     for object in userCourseObjects {
+                        // cause the downloaded courses only have code, so need to download the complete course data using the code.
                         ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
-                            //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
                             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
                             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                                 if let courseRawDataObject = courseRawDataObject {

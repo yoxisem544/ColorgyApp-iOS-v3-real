@@ -303,7 +303,7 @@ class ColorgyAPI {
     ///
     /// :param: code: A specific course code.
     /// :returns: courseRawDataObject: A single CourseRawDataObject?, might be nil.
-    class func getCourseRawDataObjectWithCourseCode(code: String, completionHandler: (courseRawDataObject: CourseRawDataObject?) -> Void) {
+    class func getCourseRawDataObjectWithCourseCode(code: String, success: (courseRawDataObject: CourseRawDataObject) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -311,7 +311,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
-            completionHandler(courseRawDataObject: nil)
+            failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
                 if let school = UserSetting.UserPossibleOrganization() {
@@ -334,7 +334,11 @@ class ColorgyAPI {
                                 let object = CourseRawDataObject(json: json)
                                 // return to main queue
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    completionHandler(courseRawDataObject: object)
+                                    if let object = object {
+                                        success(courseRawDataObject: object)
+                                    } else {
+                                        failure()
+                                    }
                                 })
                             })
                             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
@@ -342,19 +346,19 @@ class ColorgyAPI {
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
                                 print("Err \(error)")
-                                completionHandler(courseRawDataObject: nil)
+                                failure()
                         })
                     } else {
                         print(ColorgyErrorType.invalidURLString)
-                        completionHandler(courseRawDataObject: nil)
+                        failure()
                     }
                 } else {
                     print(ColorgyErrorType.noOrganization)
-                    completionHandler(courseRawDataObject: nil)
+                    failure()
                 }
             } else {
                 print(ColorgyErrorType.APIFailure.failGetUserCourses)
-                completionHandler(courseRawDataObject: nil)
+                failure()
             }
         }
     }
