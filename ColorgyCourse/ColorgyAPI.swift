@@ -79,7 +79,7 @@ class ColorgyAPI {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
         } else {
-            if let token = UserSetting.getPushNotificationDeviceToken() {
+            if UserSetting.getPushNotificationDeviceToken() != nil {
                 if let accesstoken = UserSetting.UserAccessToken() {
                     let afManager = AFHTTPSessionManager(baseURL: nil)
                     afManager.requestSerializer = AFJSONRequestSerializer()
@@ -762,8 +762,8 @@ class ColorgyAPI {
             failure()
         } else {
             if let accesstoken = UserSetting.UserAccessToken() {
-                if let deviceUUID = UserSetting.getDeviceUUID() {
-                    if let school = UserSetting.UserPossibleOrganization() {
+                if UserSetting.getDeviceUUID() != nil {
+                    if UserSetting.UserPossibleOrganization() != nil {
                         // get self course data from server
                         ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
                             if let userCourseObjects = userCourseObjects {
