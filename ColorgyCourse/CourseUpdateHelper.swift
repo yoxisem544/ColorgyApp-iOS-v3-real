@@ -44,9 +44,7 @@ class CourseUpdateHelper {
                 CourseDB.deleteAllCourses()
                 // store
                 CourseDB.storeABunchOfCoursesToDB(courses)
-                
-                // check counts
-                print(CourseDB.getAllStoredCoursesObject()?.count)
+    
                 // setup notifications
     //            CourseNotification.registerForCourseNotification()
                 

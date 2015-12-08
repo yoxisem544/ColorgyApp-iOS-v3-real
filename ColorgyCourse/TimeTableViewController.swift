@@ -71,6 +71,12 @@ class TimeTableViewController: UIViewController {
                 // here is from CourseDB
                 self.getAndSetDataToTimeTable()
             })
+            // update push notification device token
+            ColorgyAPI.PUTdeviceToken(success: { () -> Void in
+                print("putting device token")
+                }, failure: { () -> Void in
+                print("fail putting device token")
+            })
             }, expired: { () -> Void in
                 NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
                     ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
