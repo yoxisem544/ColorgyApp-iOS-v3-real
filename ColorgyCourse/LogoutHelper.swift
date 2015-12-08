@@ -18,7 +18,7 @@ class LogoutHelper {
                 // check if device token is stored in server
                 ColorgyAPI.GETdeviceToken(success: { (devices) -> Void in
                     // must return a [] if success
-                    if let deviceToken = UserSetting.getPushNotificationDeviceToken() {
+                    if UserSetting.getPushNotificationDeviceToken() != nil {
                         
                         if devices.count == 0 {
                             // no token stored in server, no need delete

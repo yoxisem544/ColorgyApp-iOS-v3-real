@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var fbAccessTokenTextField: UITextField!
     @IBAction func LoginToFacebook(sender: UIButton) {
-        var login = ColorgyLogin()
         ColorgyLogin.loginToFacebook { (token) -> Void in
             if let token = token {
                 self.fbAccessTokenTextField.text = token
@@ -90,13 +89,13 @@ class ViewController: UIViewController {
         })
     }
     @IBAction func downloadcoursescli(sender: AnyObject) {
-        if let counts = Int(self.coursecounttextfield.text ?? "-") {
-//            ColorgyAPI.getSchoolCourseData(counts, year: 2015, term: 1, success: { (courseRawDataObjects, json) -> Void in
-//                print("ok fetch school course")
-//                }, failure: {
-//                    print("fuck of the fail download course")
-//            })
-        }
+//        if let counts = Int(self.coursecounttextfield.text ?? "-") {
+////            ColorgyAPI.getSchoolCourseData(counts, year: 2015, term: 1, success: { (courseRawDataObjects, json) -> Void in
+////                print("ok fetch school course")
+////                }, failure: {
+////                    print("fuck of the fail download course")
+////            })
+//        }
         
     }
     @IBOutlet weak var coursecounttextfield: UITextField!

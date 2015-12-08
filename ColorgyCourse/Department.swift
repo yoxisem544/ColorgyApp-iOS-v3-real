@@ -67,7 +67,7 @@ class Department : CustomStringConvertible {
                 if key == "departments" {
                     print(json)
                     if json.isArray {
-                        for (key, json) : (String, JSON) in json {
+                        for (_, json) : (String, JSON) in json {
                             if let department = Department(json: json) {
                                 objects.append(department)
                             }

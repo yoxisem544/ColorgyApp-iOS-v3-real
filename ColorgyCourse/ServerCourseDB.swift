@@ -35,7 +35,7 @@ class ServerCourseDB {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-        var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
+        let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
         if let course = course {
             
             courseObject.code = course.code
@@ -55,9 +55,9 @@ class ServerCourseDB {
             //                courseObject.color_of_cell
             
             // prepare
-            var daysRawData = [courseObject.day_1 ,courseObject.day_2 ,courseObject.day_3 ,courseObject.day_4 ,courseObject.day_5 ,courseObject.day_6 ,courseObject.day_7 ,courseObject.day_8 ,courseObject.day_9]
-            var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
-            var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
+//            var daysRawData = [courseObject.day_1 ,courseObject.day_2 ,courseObject.day_3 ,courseObject.day_4 ,courseObject.day_5 ,courseObject.day_6 ,courseObject.day_7 ,courseObject.day_8 ,courseObject.day_9]
+//            var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
+//            var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
             // loop
             //                if (course.days?.count > 0) && (course.periods?.count > 0) {
             //                    println("course.sessionLength \(course.sessionLength)")
@@ -156,9 +156,9 @@ class ServerCourseDB {
                 //                courseObject.color_of_cell
                 
                 // prepare
-                var daysRawData = [courseObject.day_1 ,courseObject.day_2 ,courseObject.day_3 ,courseObject.day_4 ,courseObject.day_5 ,courseObject.day_6 ,courseObject.day_7 ,courseObject.day_8 ,courseObject.day_9]
-                var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
-                var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
+//                var daysRawData = [courseObject.day_1 ,courseObject.day_2 ,courseObject.day_3 ,courseObject.day_4 ,courseObject.day_5 ,courseObject.day_6 ,courseObject.day_7 ,courseObject.day_8 ,courseObject.day_9]
+//                var periodsRawData = [courseObject.period_1 ,courseObject.period_2 ,courseObject.period_3 ,courseObject.period_4 ,courseObject.period_5 ,courseObject.period_6 ,courseObject.period_7 ,courseObject.period_8 ,courseObject.period_9]
+//                var locationsRawData = [courseObject.location_1 ,courseObject.location_2 ,courseObject.location_3 ,courseObject.location_4 ,courseObject.location_5 ,courseObject.location_6 ,courseObject.location_7 ,courseObject.location_8 ,courseObject.location_9]
                 // loop
                 //                if (course.days?.count > 0) && (course.periods?.count > 0) {
                 //                    println("course.sessionLength \(course.sessionLength)")

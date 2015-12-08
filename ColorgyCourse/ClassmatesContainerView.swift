@@ -106,7 +106,7 @@ class ClassmatesContainerView: UIView {
                                 let image = UIImage(data: data)
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     // back to main queue
-                                    var transition = CATransition()
+                                    let transition = CATransition()
                                     transition.duration = 0.4
                                     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
                                     transition.type = kCATransitionFade

@@ -66,7 +66,7 @@ class School: CustomStringConvertible {
         
         if let json = json {
             if json.isArray {
-                for (index, json) : (String, JSON) in json {
+                for (_, json) : (String, JSON) in json {
                     if let school = School(json: json) {
                         objects.append(school)
                     }

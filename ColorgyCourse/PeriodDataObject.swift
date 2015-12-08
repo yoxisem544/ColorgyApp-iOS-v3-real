@@ -84,7 +84,7 @@ class PeriodDataObject: CustomStringConvertible {
         if let json = json {
             if json.isArray {
                 var objects = [PeriodDataObject]()
-                for (index, json) : (String, JSON) in json {
+                for (_, json) : (String, JSON) in json {
                     if let object = PeriodDataObject(json: json) {
                         objects.append(object)
                     }

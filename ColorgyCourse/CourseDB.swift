@@ -297,7 +297,7 @@ class CourseDB {
     // fake data
     class func storeFakeData() {
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-            var courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
+            let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDBManagedObject", inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             // assign data
             courseObject.name = "自動化工程"
             courseObject.lecturer = "蔡明忠"
