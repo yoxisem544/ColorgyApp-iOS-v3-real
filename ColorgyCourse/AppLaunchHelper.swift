@@ -12,7 +12,7 @@ class AppLaunchHelper {
     class func startJob() {
         
         // set refresh state to can refresh
-        ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
+        ColorgyAPITrafficControlCenter.setRefreshingStateToNotRefreshing()
         
         // check needed info
         // device uuid

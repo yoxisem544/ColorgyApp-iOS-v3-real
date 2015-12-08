@@ -75,7 +75,7 @@ class TimeTableViewController: UIViewController {
             ColorgyAPI.PUTdeviceToken(success: { () -> Void in
                 print("putting device token")
                 }, failure: { () -> Void in
-                print("fail putting device token")
+                    print("fail putting device token")
             })
             }, expired: { () -> Void in
                 NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in

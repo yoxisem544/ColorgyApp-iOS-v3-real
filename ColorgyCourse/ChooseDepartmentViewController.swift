@@ -80,6 +80,8 @@ class ChooseDepartmentViewController: UIViewController {
                                 if Release().mode {
                                     Flurry.logEvent("v3.0: User login using FB")
                                 }
+                                // need update course
+                                CourseUpdateHelper.needUpdateCourse()
                                 // ready to change view
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                 let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController

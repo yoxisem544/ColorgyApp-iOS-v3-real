@@ -54,8 +54,10 @@ class CourseUpdateHelper {
                 // return a code block
                 didUpdateCourse()
             }, failure: { () -> Void in
-                
+                print("fail to download course")
             })
+        } else {
+            print("no need to update course")
         }
     }
     

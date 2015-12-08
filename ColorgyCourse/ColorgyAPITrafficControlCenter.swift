@@ -25,6 +25,7 @@ class ColorgyAPITrafficControlCenter {
     class func setRefreshStateToCanRefresh() {
         let ud = NSUserDefaults.standardUserDefaults()
         ud.setBool(true, forKey: TrafficKey.isRefershTokenRefreshable)
+        print("can refresh, not refreshing")
         ud.synchronize()
     }
     
