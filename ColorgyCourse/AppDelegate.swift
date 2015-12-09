@@ -81,6 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         }
+        print(Semester.currentSemesterAndYear())
         return true
     }
     

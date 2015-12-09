@@ -157,7 +157,18 @@ class ClassmateTimeTableViewController: UIViewController {
         self.courses = [Course]()
         ColorgyAPI.getUserCoursesWithUserId("\(userCourseObject.user_id)", completionHandler: { (userCourseObjects) -> Void in
             if let userCourseObjects = userCourseObjects {
+                print(userCourseObjects)
+                // check only the match org, filter the other
+                let organizationCode = UserSetting.UserPossibleOrganization()
+                var filteredUserCourseObjects = [UserCourseObject]()
                 for object in userCourseObjects {
+                    if let code = object.course_organization_code {
+                        if code == organizationCode {
+                            filteredUserCourseObjects.append(object)
+                        }
+                    }
+                }
+                for object in filteredUserCourseObjects {
                     ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, success: { (courseRawDataObject) -> Void in
                         let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
                         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
@@ -165,7 +176,7 @@ class ClassmateTimeTableViewController: UIViewController {
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     self.courses.append(course)
                                     let b = NSDate()
-                                    if userCourseObjects.count == self.courses.count {
+                                    if filteredUserCourseObjects.count == self.courses.count {
                                         self.timetable.courses = self.courses
                                     }
                                     let now = NSDate().timeIntervalSinceDate(b)

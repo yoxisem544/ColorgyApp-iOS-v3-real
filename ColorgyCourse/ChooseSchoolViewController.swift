@@ -85,7 +85,8 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cellIdentifier, forIndexPath: indexPath)
         let name = (schools == nil ? "" : schools[indexPath.row].name)
-        cell.textLabel?.text = "\(name)"
+        let code = (schools == nil ? "" : schools[indexPath.row].code.uppercaseString + " ")
+        cell.textLabel?.text = "\(code)\(name)"
         
         return cell
     }

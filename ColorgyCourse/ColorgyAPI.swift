@@ -210,7 +210,7 @@ class ColorgyAPI {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: () -> Void, processing: (processState: String) -> Void) {
+    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: (failInfo: String?) -> Void, processing: (processState: String) -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -218,7 +218,7 @@ class ColorgyAPI {
         
         if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
-            failure()
+            failure(failInfo: nil)
         } else {
             if let organization = UserSetting.UserPossibleOrganization() {
                 if let accesstoken = UserSetting.UserAccessToken() {
@@ -265,13 +265,13 @@ class ColorgyAPI {
                                     } else {
                                         // fail to generate objects
                                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            failure()
+                                            failure(failInfo: nil)
                                         })
                                     }
                                 } else {
                                     // fail to generate objects
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        failure()
+                                        failure(failInfo: nil)
                                     })
                                 }
                                 
@@ -281,15 +281,17 @@ class ColorgyAPI {
                                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                                 // then handle response
                                 print(ColorgyErrorType.APIFailure.failDownloadCourses)
-                                failure()
+                                print(error.localizedDescription)
+                                print(error)
+                                failure(failInfo: "你的網路不穩定，請確定在網路良好的環境下載哦！")
                         })
                     } else {
                         print(ColorgyErrorType.invalidURLString)
-                        failure()
+                        failure(failInfo: nil)
                     }
                 }
             } else {
-                failure()
+                failure(failInfo: nil)
                 print(ColorgyErrorType.noOrganization)
             }
         }
@@ -615,10 +617,69 @@ class ColorgyAPI {
     /// Get self courses from server.
     ///
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
-    class func getMeCourses(completionHanlder: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
+    class func getMeCourses(completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
         if let userId = UserSetting.UserId() {
             let userIdString = String(userId)
-            ColorgyAPI.getUserCoursesWithUserId(userIdString, completionHandler: completionHanlder, failure: failure)
+            let afManager = AFHTTPSessionManager(baseURL: nil)
+            afManager.requestSerializer = AFJSONRequestSerializer()
+            afManager.responseSerializer = AFJSONResponseSerializer()
+            
+            if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+                print(ColorgyErrorType.TrafficError.stillRefreshing)
+                failure()
+            } else {
+                let user = ColorgyUser()
+                if let user = user {
+                    print("getting user \(userId)'s course")
+                    if let possibleOrganization = user.possibleOrganization {
+                        if let accesstoken = user.accessToken {
+                            let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+                            let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=\(userId)&filter%5Bcourse_organization_code%5D=\(possibleOrganization)&filter%5Byear%5D=\(semester.year)&filter%5Bterm%5D=\(semester.term)&&&&&&&access_token=\(accesstoken)"
+                            
+                            if url.isValidURLString {
+                                // queue job
+                                ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+                                // then start job
+                                afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                                    // job ended
+                                    ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                    // into background
+                                    //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+                                    let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+                                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                                        // then handle response
+                                        // will return a array of courses
+                                        let json = JSON(response)
+                                        let userCourseObjects = UserCourseObjectArray(json: json).objects
+                                        // return to main queue
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            completionHandler(userCourseObjects: userCourseObjects)
+                                        })
+                                    })
+                                    }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                                        // job ended
+                                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                                        // then handle response
+                                        print(ColorgyErrorType.APIFailure.failGetUserCourses)
+                                        failure()
+                                })
+                            } else {
+                                print(ColorgyErrorType.invalidURLString)
+                                failure()
+                            }
+                        } else {
+                            print(ColorgyErrorType.noAccessToken)
+                            failure()
+                        }
+                    } else {
+                        print("user get no possible org")
+                        failure()
+                    }
+                } else {
+                    print(ColorgyErrorType.noSuchUser)
+                    failure()
+                }
+            }
         } else {
             print(ColorgyErrorType.noSuchUser)
             failure()
@@ -645,7 +706,10 @@ class ColorgyAPI {
             if let user = user {
                 print("getting user \(userid)'s course")
                 if let accesstoken = user.accessToken {
-                    let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=\(userid)&&&&&&&&&&access_token=\(accesstoken)"
+                    let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+                    let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=\(userid)&&filter%5Byear%5D=\(semester.year)&filter%5Bterm%5D=\(semester.term)&&&&&&&access_token=\(accesstoken)"
+                    print(url)
+//                    let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=\(userid)&&&&&&&&&&access_token=\(accesstoken)"
                     
                     if url.isValidURLString {
                         // queue job

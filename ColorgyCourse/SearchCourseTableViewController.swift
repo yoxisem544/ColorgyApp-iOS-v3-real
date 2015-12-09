@@ -182,7 +182,8 @@ class SearchCourseViewController: UIViewController {
             self.presentViewController(self.processAlertController, animated: true, completion: nil)
         })
         // TODO: this is very important ! year2015 term1
-        ColorgyAPI.getSchoolCourseData(20000, year: 2015, term: 1, success: { (courses, json) -> Void in
+        let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+        ColorgyAPI.getSchoolCourseData(20000, year: semester.year, term: semester.term, success: { (courses, json) -> Void in
                 // ok!
                 // save this
                 //            UserSetting.storeRawCourseJSON(json)
@@ -208,10 +209,14 @@ class SearchCourseViewController: UIViewController {
                     })
                 })
             
-            }, failure: { () -> Void in
+            }, failure: { (failInfo) -> Void in
                 // no data, error
                 // TODO: test while fail to get courses
-                self.processAlertController.message = "下載課程資料時出錯了 😖"
+                if let failInfo = failInfo {
+                    self.processAlertController.message = failInfo
+                } else {
+                    self.processAlertController.message = "下載課程資料時出錯了 😖"
+                }
                 
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
