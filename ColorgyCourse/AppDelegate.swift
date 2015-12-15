@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
 //            Flurry.logEvent("User Start Application, for testing")
 //            Flurry.setDebugLogEnabled(true)
+            Flurry.logEvent("testing params", withParameters: ["this": "is", "Just": "a test!"], timed: false)
         }
         
         // register for notification

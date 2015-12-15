@@ -143,8 +143,7 @@ extension DetailCourseViewController : ClassmatesContainerViewDelegate {
         print(userCourseObject)
         // Flurry
         if Release().mode {
-            Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo")
-            Flurry.logEvent("v3.0: Profile photo of User: \(userCourseObject.user_id) is tapped.")
+            Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo", withParameters: ["user_id": userCourseObject.user_id])
         }
         self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }

@@ -125,12 +125,12 @@ class FBLoginViewController: UIViewController {
     // MARK: - show/hide buttons
     func showButtons() {
         FBloginButton.hidden = false
-        EmailLoginButton.hidden = false
+//        EmailLoginButton.hidden = false
     }
     
     func hideButtons() {
         FBloginButton.hidden = true
-        EmailLoginButton.hidden = true
+//        EmailLoginButton.hidden = true
     }
 
     // MARK: - Navigation

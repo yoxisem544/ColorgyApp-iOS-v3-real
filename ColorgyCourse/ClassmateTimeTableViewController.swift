@@ -73,8 +73,7 @@ class ClassmateTimeTableViewController: UIViewController {
         super.viewDidAppear(animated)
         // Flurry
         if Release().mode {
-            Flurry.logEvent("v3.0: User Watching Other's Timetable View", timed: true)
-            Flurry.logEvent("v3.0: User: \(userCourseObject.user_id)'s timetable is being watching.", timed: true)
+            Flurry.logEvent("v3.0: User Watching Other's Timetable View", withParameters: ["user_id": userCourseObject.user_id], timed: true)
         }
     }
     
@@ -82,7 +81,6 @@ class ClassmateTimeTableViewController: UIViewController {
         super.viewDidDisappear(animated)
         if Release().mode {
             Flurry.endTimedEvent("v3.0: User Watching Other's Timetable View", withParameters: nil)
-            Flurry.logEvent("v3.0: User: \(userCourseObject.user_id)'s timetable is being watching.", timed: true)
         }
     }
     

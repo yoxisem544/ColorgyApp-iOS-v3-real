@@ -34,7 +34,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eO-BT-e3R">
-                                <rect key="frame" x="176" y="298" width="249" height="44"/>
+                                <rect key="frame" x="176" y="388" width="249" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="JWc-2k-lov"/>
                                     <constraint firstAttribute="width" constant="249" id="tKf-FB-Wcc"/>
@@ -44,8 +44,8 @@
                                     <action selector="FBloginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="fCM-Hd-mmb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-uD-rhN">
-                                <rect key="frame" x="176" y="350" width="249" height="44"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-uD-rhN">
+                                <rect key="frame" x="176" y="440" width="249" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="249" id="Iu6-e7-QVw"/>
                                     <constraint firstAttribute="height" constant="44" id="X2b-Xj-xYQ"/>
@@ -63,12 +63,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5Dl-ks-TA6" secondAttribute="trailing" constant="-16" id="BXv-i2-0zp"/>
-                            <constraint firstItem="2eO-BT-e3R" firstAttribute="top" secondItem="5Dl-ks-TA6" secondAttribute="bottom" constant="16" id="Xx4-qz-BCl"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" constant="0.5" id="bpQ-57-mBb"/>
                             <constraint firstAttribute="centerY" secondItem="5Dl-ks-TA6" secondAttribute="centerY" multiplier="1.1" constant="0.5" id="evb-EX-JfY"/>
                             <constraint firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" id="jVm-0e-T7Q"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="QA1-uD-rhN" secondAttribute="centerX" id="jeJ-X4-82i"/>
                             <constraint firstItem="5Dl-ks-TA6" firstAttribute="top" secondItem="Mtf-RN-KeB" secondAttribute="bottom" constant="16" id="mnM-rA-G21"/>
+                            <constraint firstItem="2eO-BT-e3R" firstAttribute="centerY" secondItem="L7G-jG-sbl" secondAttribute="centerY" multiplier="1.2" constant="50" id="pzH-f2-LFn"/>
                             <constraint firstItem="QA1-uD-rhN" firstAttribute="top" secondItem="2eO-BT-e3R" secondAttribute="bottom" constant="8" id="qOA-N2-AvP"/>
                             <constraint firstItem="5Dl-ks-TA6" firstAttribute="leading" secondItem="L7G-jG-sbl" secondAttribute="leadingMargin" constant="-16" id="ynR-o8-7r9"/>
                         </constraints>
