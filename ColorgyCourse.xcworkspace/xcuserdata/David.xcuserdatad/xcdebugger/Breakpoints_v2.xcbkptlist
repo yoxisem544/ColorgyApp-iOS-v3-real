@@ -67,5 +67,53 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ColorgyCourse/ChooseIntendedTimeViewController.swift"
+            timestampString = "471852642.567129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "finishChoosingAndReadyToPATCHUserInfo()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ColorgyCourse.ChooseIntendedTimeViewController.finishChoosingAndReadyToPATCHUserInfo (ColorgyCourse.ChooseIntendedTimeViewController)() -&gt; ()"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
+                  timestampString = "471852952.409422"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "1718">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ColorgyCourse.ChooseIntendedTimeViewController.(finishChoosingAndReadyToPATCHUserInfo (ColorgyCourse.ChooseIntendedTimeViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
+                  timestampString = "471852952.409743"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

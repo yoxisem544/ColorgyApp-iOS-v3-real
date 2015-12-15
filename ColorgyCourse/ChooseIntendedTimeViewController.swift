@@ -1,47 +1,41 @@
 //
-//  ChooseDepartmentViewController.swift
+//  ChooseIntendedTimeViewController.swift
 //  ColorgyCourse
 //
-//  Created by David on 2015/11/24.
+//  Created by David on 2015/12/15.
 //  Copyright © 2015年 David. All rights reserved.
 //
 
 import UIKit
 
-class ChooseDepartmentViewController: UIViewController {
+class ChooseIntendedTimeViewController: UIViewController {
     
-    @IBOutlet weak var departmentTableView: UITableView!
-    var school: String!
+    @IBOutlet weak var intendedTimeTableView: UITableView?
+    var intendedTimes: [Int]?
     var indexPathUserSelected: Int = -1
-    var departments: [Department]! {
-        didSet {
-            if departments == nil {
-                ColorgyAPI.getDepartments(school, success: { (departments) -> Void in
-                    self.departments = departments
-                    print(departments)
-                    }, failure: { () -> Void in
-                        // try again
-                    self.departments = nil
-                })
-            } else {
-                // reload table view
-                departmentTableView.reloadData()
-            }
-        }
-    }
-    var choosedDepartment: String!
-
+    var choosedIntendedTime: Int?
+    // temp
+    var school: String!
+    var department: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        departmentTableView.delegate = self
-        departmentTableView.dataSource = self
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        departments = nil
+        intendedTimeTableView?.delegate = self
+        intendedTimeTableView?.dataSource = self
+        
+        let now = NSDate()
+        let formatter = NSDateFormatter()
+        //        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+        formatter.dateFormat = "yyyy"
+        // calculate the year
+        let year = Int(formatter.stringFromDate(now)) ?? 1945
+        intendedTimes = [Int]()
+        for y in (year-10)...(year+4) {
+            intendedTimes?.append(y)
+        }
+        intendedTimeTableView?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,27 +44,13 @@ class ChooseDepartmentViewController: UIViewController {
     }
     
     struct Storyboard {
-        static let segueIdentifier = "ChooseDepartmentIdentifer"
-        static let showIntentedTimeSegue = "show intended time"
-    }
-    
-    @IBAction func backButtonClicked() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        if segue.identifier == Storyboard.showIntentedTimeSegue {
-            let destinationVC = segue.destinationViewController as! ChooseIntendedTimeViewController
-            destinationVC.school = self.school
-            destinationVC.department = self.choosedDepartment
-        }
+        static let segueIdentifier = "ChooseIntendedTimeentIdentifer"
     }
     
     @IBAction func finishChoosingAndReadyToPATCHUserInfo() {
-        if school != nil && choosedDepartment != nil {
-            ColorgyAPI.PATCHUserInfo(school, department: choosedDepartment, year: "2014", success: { () -> Void in
+        if school != nil && department != nil && choosedIntendedTime != nil {
+            print("\(school) \(department) \(choosedIntendedTime)")
+            ColorgyAPI.PATCHUserInfo(school, department: department, year: String(choosedIntendedTime!), success: { () -> Void in
                 // login if user patch the info
                 ColorgyAPI.me({ (result) -> Void in
                     // check if user has a school or deparment
@@ -122,24 +102,14 @@ class ChooseDepartmentViewController: UIViewController {
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDelegate {
+extension ChooseIntendedTimeViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
         cell.accessoryType = .None
-        let name = (departments == nil ? "" : departments[indexPath.row].name)
-        cell.textLabel?.text = name
+        let intendedTime = (intendedTimes == nil ? 1945 : intendedTimes![indexPath.row])
+        cell.textLabel?.text = String(intendedTime)
         
         // set checkmark
         if indexPathUserSelected >= 0 {
@@ -152,10 +122,10 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if departments == nil {
-            return 0
+        if intendedTimes != nil {
+            return intendedTimes!.count
         } else {
-            return departments.count
+            return 0
         }
     }
     
@@ -170,13 +140,8 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         let thisCell = tableView.cellForRowAtIndexPath(indexPath)
         thisCell?.accessoryType = .Checkmark
         
-        choosedDepartment = departments[indexPath.row].code
+        choosedIntendedTime = intendedTimes?[indexPath.row]
         
         indexPathUserSelected = indexPath.row
-        
-        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
-        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-            self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
-        })
     }
 }

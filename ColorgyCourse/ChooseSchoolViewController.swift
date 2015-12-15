@@ -101,8 +101,11 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let schoolCode = schools?[indexPath.row].code {
-            performSegueWithIdentifier(Storyboard.showDepartmentSegue, sender: schoolCode)
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
+            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                self.performSegueWithIdentifier(Storyboard.showDepartmentSegue, sender: schoolCode)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            })
         }
     }
 }
