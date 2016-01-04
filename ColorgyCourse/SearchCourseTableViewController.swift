@@ -471,9 +471,16 @@ extension SearchCourseViewController : UITableViewDataSource {
             if createCourseCellView == nil {
                 createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
             }
+            createCourseCellView?.delegate = self
             
             return createCourseCellView!
         }
+    }
+}
+
+extension SearchCourseViewController : CreateCourseTableViewCellDelegate {
+    func didTapOnCreateCourseCell(courseName: String?) {
+        print(courseName)
     }
 }
 

@@ -15,7 +15,11 @@ class CreateCourseTableViewCell: UITableViewCell {
             if courseName == nil {
                 cellTitle.text = "創建哦哦哦哦！"
             } else {
-                cellTitle.text = "創建\"\(courseName!)\"哦哦哦哦！"
+                let title = "創建\"\(courseName!)\"哦哦哦哦！" as NSString
+                let attributedString = NSMutableAttributedString(string: title as String)
+                let attribute = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+                attributedString.addAttributes(attribute, range: title.rangeOfString(courseName!))
+                cellTitle.attributedText = attributedString
             }
         }
     }
@@ -32,10 +36,11 @@ class CreateCourseTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.selectionStyle = .None
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnCreateCourseCellView"))
     }
     
     func tapOnCreateCourseCellView() {
-        
+        delegate?.didTapOnCreateCourseCell(courseName)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -47,5 +52,5 @@ class CreateCourseTableViewCell: UITableViewCell {
 }
 
 protocol CreateCourseTableViewCellDelegate {
-    func didTapOnCreateCourseCell(courseName: String)
+    func didTapOnCreateCourseCell(courseName: String?)
 }
