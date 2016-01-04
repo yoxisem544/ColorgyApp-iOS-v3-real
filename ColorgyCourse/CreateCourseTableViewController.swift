@@ -20,6 +20,9 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         
         createCourseTableView.estimatedRowHeight = UITableViewAutomaticDimension
         createCourseTableView.rowHeight = UITableViewAutomaticDimension
+        
+        createCourseTableView.backgroundColor = UIColor(red:0.980,  green:0.969,  blue:0.961, alpha:1)
+        view.backgroundColor = UIColor(red:0.980,  green:0.969,  blue:0.961, alpha:1)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -48,6 +51,10 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         // Configure the cell...
 
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 88.0
     }
 
 //    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
