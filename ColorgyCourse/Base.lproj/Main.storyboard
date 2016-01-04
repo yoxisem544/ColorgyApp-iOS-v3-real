@@ -1154,15 +1154,6 @@
                                                     <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設計史" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSO-c0-KhF">
-                                                    <rect key="frame" x="20" y="15" width="504" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="24" id="c8R-mV-ZmC"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3BD-1a-Hgi" userLabel="MiddleSeparator">
                                                     <rect key="frame" x="12" y="54" width="572" height="1"/>
                                                     <color key="backgroundColor" red="0.98039215686274506" green="0.96862745098039216" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -1177,8 +1168,18 @@
                                                         <constraint firstAttribute="height" constant="2" id="TAB-q1-kPd"/>
                                                     </constraints>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設計史" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSO-c0-KhF">
+                                                    <rect key="frame" x="20" y="15" width="504" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="c8R-mV-ZmC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Hkz-Wj-i6P" firstAttribute="top" secondItem="3BD-1a-Hgi" secondAttribute="bottom" constant="4" id="0AG-Cp-6lu"/>
                                                 <constraint firstItem="ozw-dS-8Ig" firstAttribute="centerX" secondItem="CBl-OX-Fyb" secondAttribute="centerX" id="2WW-Tt-5va"/>
                                                 <constraint firstItem="CBl-OX-Fyb" firstAttribute="top" secondItem="ozw-dS-8Ig" secondAttribute="bottom" constant="6" id="H5X-jk-kmC"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Yxy-CG-RtM" secondAttribute="trailing" constant="8" id="IMJ-26-gkj"/>
@@ -1228,6 +1229,32 @@
                                             <outlet property="periodImageView" destination="ozw-dS-8Ig" id="VV8-UY-0A8"/>
                                             <outlet property="periodLabel" destination="CBl-OX-Fyb" id="IMi-kd-1IY"/>
                                             <outlet property="sideColorHintView" destination="zx0-jP-ptZ" id="s0T-Ej-dyD"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="createCourseCellIdentifier" rowHeight="44" id="CvQ-wv-yo2" customClass="CreateCourseTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="123" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CvQ-wv-yo2" id="KEt-vF-Gcb">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4t4-Ca-O9Z">
+                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.58823529411764708" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="4t4-Ca-O9Z" secondAttribute="bottom" constant="3" id="5Ig-tE-kLb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4t4-Ca-O9Z" secondAttribute="trailing" id="FeZ-6s-xZT"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="4t4-Ca-O9Z" secondAttribute="leading" id="MfS-IY-suc"/>
+                                                <constraint firstItem="4t4-Ca-O9Z" firstAttribute="top" secondItem="KEt-vF-Gcb" secondAttribute="topMargin" constant="3" id="NLk-IM-85x"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellTitle" destination="4t4-Ca-O9Z" id="XTh-eV-p3K"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
