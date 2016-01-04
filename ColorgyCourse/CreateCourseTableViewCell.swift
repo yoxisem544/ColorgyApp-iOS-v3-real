@@ -17,8 +17,10 @@ class CreateCourseTableViewCell: UITableViewCell {
             } else {
                 let title = "創建\"\(courseName!)\"哦哦哦哦！" as NSString
                 let attributedString = NSMutableAttributedString(string: title as String)
-                let attribute = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-                attributedString.addAttributes(attribute, range: title.rangeOfString(courseName!))
+                let black = [NSForegroundColorAttributeName: UIColor.blackColor()]
+                let white = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+                attributedString.addAttributes(white, range: title.rangeOfString(title as String))
+                attributedString.addAttributes(black, range: title.rangeOfString(courseName!))
                 cellTitle.attributedText = attributedString
             }
         }
