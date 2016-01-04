@@ -50,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            Flurry.logEvent("User Start Application, for testing")
 //            Flurry.setDebugLogEnabled(true)
             Flurry.logEvent("testing params", withParameters: ["this": "is", "Just": "a test!"], timed: false)
+            Flurry.logEvent("testing params2", withParameters: ["This": "is with a capital letter", "Just": "a test!"], timed: false)
+            Flurry.logEvent("testing param3", withParameters: ["This": "is 中文", "Just": "a test!", "中文": "測試"], timed: false)
         }
         
         // register for notification

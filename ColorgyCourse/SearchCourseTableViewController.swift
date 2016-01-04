@@ -254,6 +254,13 @@ class SearchCourseViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.searchControl.searchBar.resignFirstResponder()
+        self.searchControl.dismissViewControllerAnimated(false, completion: nil)
+        print("search will disapper")
+    }
+    
     private struct Storyboard {
         static let courseCellIdentifier = "courseCellIdentifier"
     }

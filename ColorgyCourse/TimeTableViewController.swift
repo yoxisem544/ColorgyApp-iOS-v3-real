@@ -201,7 +201,6 @@ class TimeTableViewController: UIViewController {
             destinationVC.course = sender as! Course
         }
     }
-
 }
 
 extension TimeTableViewController : TimeTableViewDelegate {
