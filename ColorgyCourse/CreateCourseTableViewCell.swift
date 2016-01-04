@@ -31,7 +31,6 @@ class CreateCourseTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("create did layout subviews")
     }
     
     override func awakeFromNib() {
