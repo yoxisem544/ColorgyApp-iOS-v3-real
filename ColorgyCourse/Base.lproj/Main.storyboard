@@ -1286,10 +1286,10 @@
             </objects>
             <point key="canvasLocation" x="1611" y="1147"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Course Table View Controller-->
         <scene sceneID="730-sJ-YLd">
             <objects>
-                <viewController id="CrJ-To-htV" sceneMemberID="viewController">
+                <viewController id="CrJ-To-htV" customClass="CreateCourseTableViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nM9-2f-N4G"/>
                         <viewControllerLayoutGuide type="bottom" id="6on-De-KGi"/>
