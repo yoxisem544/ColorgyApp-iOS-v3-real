@@ -32,6 +32,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     
     struct Storyboard {
         static let nameAndLecturerIdentifier = "nameAndLecturerIdentifier"
+        static let timeAndLocationIdentifier = "time location identifier"
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,11 +47,11 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.nameAndLecturerIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
-
+//        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
+        let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! TimeAndLocationTableViewCell
         // Configure the cell...
 
-        return cell
+        return c
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

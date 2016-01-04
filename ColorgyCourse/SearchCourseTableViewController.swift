@@ -69,6 +69,15 @@ class SearchCourseViewController: UIViewController {
         searchCourseTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         searchCourseTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
         
+        // animation
+//        let transition = CATransition()
+//        transition.type = kCATransitionPush
+//        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        transition.fillMode = kCAFillModeForwards
+//        transition.duration = 0.5
+//        transition.subtype = kCATransitionFromTop
+//        searchCourseTableView.layer.addAnimation(transition, forKey: "UITableViewReloadDataAnimationKey")
+        
         // configure segemented control
         courseSegementedControl.layer.cornerRadius = 0
         
