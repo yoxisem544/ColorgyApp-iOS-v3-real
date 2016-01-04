@@ -9,6 +9,9 @@
 import UIKit
 
 class CreateCourseNameAndLecturerTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var lecturerTextField: UITextField!
 
     override func awakeFromNib() {
         super.awakeFromNib()

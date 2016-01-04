@@ -265,6 +265,13 @@ class SearchCourseViewController: UIViewController {
     private struct Storyboard {
         static let courseCellIdentifier = "courseCellIdentifier"
         static let createCourseCellIdentifier = "createCourseCellIdentifier"
+        static let toCreateCourseSegue = "to create course view"
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Storyboard.toCreateCourseSegue {
+            
+        }
     }
 }
 
@@ -471,6 +478,7 @@ extension SearchCourseViewController : UITableViewDataSource {
             if createCourseCellView == nil {
                 createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
             }
+            createCourseCellView?.courseName = searchControl.searchBar.text
             createCourseCellView?.delegate = self
             
             return createCourseCellView!
@@ -481,6 +489,7 @@ extension SearchCourseViewController : UITableViewDataSource {
 extension SearchCourseViewController : CreateCourseTableViewCellDelegate {
     func didTapOnCreateCourseCell(courseName: String?) {
         print(courseName)
+        performSegueWithIdentifier(Storyboard.toCreateCourseSegue, sender: courseName)
     }
 }
 
