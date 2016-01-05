@@ -12,6 +12,7 @@ protocol TimeAndLocationTableViewCellDelegate {
     func didTapOnTimeView()
     func didTapOnLocationView()
     func shouldUpdateContentAtIndex(index: Int, time: String?, location: String?)
+    func didPressDeleteButtonAtIndex(index: Int)
 }
 
 class TimeAndLocationTableViewCell: UITableViewCell {
@@ -35,7 +36,11 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         }
     }
     
-    
+    @IBAction func deleteButtonClicked() {
+        if cellIndex != nil {
+            delegate?.didPressDeleteButtonAtIndex(cellIndex!)
+        }
+    }
     
     var cellIndex: Int?
     
@@ -50,6 +55,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         locationTextField.addTarget(self, action: "locationTextFieldContentChaning", forControlEvents: .EditingChanged)
         timeLabel.delegate = self
         print("awake")
+        print("this is cell \(cellIndex)")
         
     }
     

@@ -14,14 +14,6 @@ protocol DetectableLabelDelegate {
 
 class DetectableLabel: UILabel {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     var delegate: DetectableLabelDelegate?
     
     override var text: String? {

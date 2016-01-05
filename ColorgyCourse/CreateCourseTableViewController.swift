@@ -24,8 +24,6 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
             dummyDataTime?.append("")
             createCourseTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
             let indexPath = NSIndexPath(forRow: dummyData!.count - 1, inSection: 0)
-            print(indexPath.row)
-            print(indexPath.section)
             createCourseTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
         }
         
@@ -80,7 +78,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         c.cellIndex = indexPath.row
         c.timeLabel?.text = dummyDataTime![indexPath.row]
         c.locationTextField?.text = dummyDataLocation![indexPath.row]
-        print(c.timeLabel?.text)
+        print(c.cellIndex)
 
         return c
     }
@@ -103,5 +101,12 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
     func shouldUpdateContentAtIndex(index: Int, time: String?, location: String?) {
         dummyDataLocation?[index] = location
         dummyDataTime?[index] = time
+    }
+    
+    func didPressDeleteButtonAtIndex(index: Int) {
+        dummyData?.removeAtIndex(index)
+        dummyDataLocation?.removeAtIndex(index)
+        dummyDataTime?.removeAtIndex(index)
+        createCourseTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
     }
 }
