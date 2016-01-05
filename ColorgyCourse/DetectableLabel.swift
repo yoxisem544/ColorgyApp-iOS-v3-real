@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DetectableLabelDelegate {
+    func textChanging(text: String?)
+}
+
 class DetectableLabel: UILabel {
 
     /*
@@ -18,9 +22,11 @@ class DetectableLabel: UILabel {
     }
     */
     
+    var delegate: DetectableLabelDelegate?
+    
     override var text: String? {
         didSet {
-            print("text \(text) is changing")
+            delegate?.textChanging(text)
         }
     }
 

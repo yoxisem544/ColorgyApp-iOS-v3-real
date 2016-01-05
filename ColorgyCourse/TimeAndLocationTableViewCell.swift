@@ -48,6 +48,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnTimeView"))
         locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLocationView"))
         locationTextField.addTarget(self, action: "locationTextFieldContentChaning", forControlEvents: .EditingChanged)
+        timeLabel.delegate = self
         print("awake")
         
     }
@@ -72,4 +73,10 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension TimeAndLocationTableViewCell : DetectableLabelDelegate {
+    func textChanging(text: String?) {
+        print(text)
+    }
 }
