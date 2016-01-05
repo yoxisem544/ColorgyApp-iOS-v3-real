@@ -1313,7 +1313,11 @@
                                 <items>
                                     <navigationItem title="創建課程" id="DoW-gk-hKf">
                                         <barButtonItem key="leftBarButtonItem" image="backButton" id="BnS-G9-qts"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" id="tYp-PA-hmr"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Item" id="tYp-PA-hmr">
+                                            <connections>
+                                                <action selector="createDumpData" destination="CrJ-To-htV" id="fKW-J6-oy8"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1445,7 +1449,7 @@
                                                         <constraint firstAttribute="height" constant="88" id="u0R-zr-6aw"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMA-dF-t13">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMA-dF-t13" customClass="DetectableLabel" customModule="ColorgyCourse" customModuleProvider="target">
                                                     <rect key="frame" x="80" y="45" width="488" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="FB2-Uz-je3"/>
@@ -1488,7 +1492,7 @@
                                             <outlet property="locationBackgroundView" destination="44o-oB-F9n" id="GaM-FG-oAp"/>
                                             <outlet property="locationTextField" destination="RLy-Yl-D55" id="esJ-pM-F3x"/>
                                             <outlet property="timeBackgroundView" destination="vad-YM-WxF" id="nAp-Ym-84d"/>
-                                            <outlet property="timeLabel" destination="QMA-dF-t13" id="563-Wt-yON"/>
+                                            <outlet property="timeLabel" destination="QMA-dF-t13" id="H5k-38-tWg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
