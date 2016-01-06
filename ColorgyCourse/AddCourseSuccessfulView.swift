@@ -37,7 +37,7 @@ class AddCourseSuccessfulView: UIView {
         shapeLayer.fillColor = UIColor.clearColor().CGColor
         shapeLayer.lineWidth = 3.0
         self.layer.addSublayer(shapeLayer)
-        self.backgroundColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.7)
+        self.backgroundColor = ColorgyColor.MainOrange
         
         let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
         pathAnimation.duration = 0.7

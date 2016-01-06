@@ -34,8 +34,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         createCourseTableView.estimatedRowHeight = UITableViewAutomaticDimension
         createCourseTableView.rowHeight = UITableViewAutomaticDimension
         
-        createCourseTableView.backgroundColor = UIColor(red:0.980,  green:0.969,  blue:0.961, alpha:1)
-        view.backgroundColor = UIColor(red:0.980,  green:0.969,  blue:0.961, alpha:1)
+        createCourseTableView.backgroundColor = ColorgyColor.BackgroundColor
+        view.backgroundColor = ColorgyColor.BackgroundColor
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

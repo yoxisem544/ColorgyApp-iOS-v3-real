@@ -42,7 +42,8 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         webView.scalesPageToFit = true
         
         // 
-        navigationBar.tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
+//        navigationBar.tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
+        navigationBar.tintColor = ColorgyColor.MainOrange
         // buttons
         let nextPage = UIBarButtonItem(image: UIImage(named: "forward"), style: UIBarButtonItemStyle.Done, target: self, action: "goForward")
         let previousPage = UIBarButtonItem(image: UIImage(named: "backward"), style: UIBarButtonItemStyle.Done, target: self, action: "goBack")
