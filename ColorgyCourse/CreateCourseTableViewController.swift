@@ -17,7 +17,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     var dummyDataTime: [String?]?
     @IBAction func createDumpData() {
         if dummyData != nil {
-            let cell = createCourseTableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier) as! TimeAndLocationTableViewCell
+//            let cell = createCourseTableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier) as! TimeAndLocationTableViewCell
             let c = TimeAndLocationTableViewCell()
             dummyData!.append(c)
             dummyDataLocation?.append("")
@@ -53,6 +53,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     struct Storyboard {
         static let nameAndLecturerIdentifier = "nameAndLecturerIdentifier"
         static let timeAndLocationIdentifier = "time location identifier"
+        static let newTimeAndLocationIdentifier = "new time and location identifier"
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,24 +64,28 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     // MARK: - Table view data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
         if dummyData != nil {
             return dummyData!.count
         } else {
-            return 0
+            return 10
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
-        let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! TimeAndLocationTableViewCell
+//        let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! TimeAndLocationTableViewCell
         // Configure the cell...
-        c.delegate = self
-        c.cellIndex = indexPath.row
-        c.timeLabel?.text = dummyDataTime![indexPath.row]
-        c.locationTextField?.text = dummyDataLocation![indexPath.row]
-        print(c.cellIndex)
+//        c.delegate = self
+//        c.cellIndex = indexPath.row
+//        c.timeLabel?.text = dummyDataTime![indexPath.row]
+//        c.locationTextField?.text = dummyDataLocation![indexPath.row]
+//        print(c.cellIndex)
+        
+        let a = tableView.dequeueReusableCellWithIdentifier(Storyboard.newTimeAndLocationIdentifier, forIndexPath: indexPath) as! ContinueAddTimeAndLocationTableViewCell
+        return a
 
-        return c
+//        return c
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

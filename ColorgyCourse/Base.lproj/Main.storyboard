@@ -1498,7 +1498,7 @@
                                             <outlet property="timeLabel" destination="QMA-dF-t13" id="H5k-38-tWg"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="new time and location identifier" rowHeight="122" id="8pd-Xa-zNO" customClass="TimeAndLocationTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="new time and location identifier" rowHeight="122" id="8pd-Xa-zNO" customClass="ContinueAddTimeAndLocationTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="238" width="600" height="122"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8pd-Xa-zNO" id="qrO-nN-Xc3">
@@ -1523,6 +1523,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.98039215690000003" green="0.96862745100000003" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="continueAddButton" destination="cBJ-8Y-NZ5" id="95O-TT-eZn"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
