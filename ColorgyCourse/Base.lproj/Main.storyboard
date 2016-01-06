@@ -1515,6 +1515,9 @@
                                                     <state key="normal" title="繼續新增上課時間">
                                                         <color key="titleColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="didTapOnButton" destination="8pd-Xa-zNO" eventType="touchUpInside" id="hHv-VN-ECe"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>

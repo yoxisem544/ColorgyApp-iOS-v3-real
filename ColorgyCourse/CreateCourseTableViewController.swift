@@ -102,6 +102,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         case 2: // footer
             let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.newTimeAndLocationIdentifier, forIndexPath: indexPath) as! ContinueAddTimeAndLocationTableViewCell
             
+            c.delegate = self
+            
             return c
         default:
             return tableView.dequeueReusableCellWithIdentifier(Storyboard.newTimeAndLocationIdentifier, forIndexPath: indexPath) as! ContinueAddTimeAndLocationTableViewCell
@@ -149,5 +151,11 @@ extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableView
     func contentUpdated(courseName: String?, lecturerName: String?) {
         self.courseName = courseName
         self.lecturerName = lecturerName
+    }
+}
+
+extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewCellDelegate {
+    func didTapOnAddButton() {
+        createDumpData()
     }
 }

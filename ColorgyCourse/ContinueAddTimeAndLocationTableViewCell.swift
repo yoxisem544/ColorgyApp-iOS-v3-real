@@ -15,6 +15,9 @@ protocol ContinueAddTimeAndLocationTableViewCellDelegate {
 class ContinueAddTimeAndLocationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var continueAddButton: UIButton!
+    @IBAction func didTapOnButton() {
+        delegate?.didTapOnAddButton()
+    }
     
     var delegate: ContinueAddTimeAndLocationTableViewCellDelegate?
     
