@@ -72,7 +72,7 @@ class SearchCourseCell: UITableViewCell {
     override func layoutSubviews() {
         // configure button border
         self.addCourseButton?.layer.borderWidth = 1.0
-        self.addCourseButton?.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
+        self.addCourseButton?.layer.borderColor = ColorgyColor.MainOrange.CGColor
         self.addCourseButton?.layer.cornerRadius = 4.0
         
         // bottom line 

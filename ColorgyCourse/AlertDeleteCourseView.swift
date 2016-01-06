@@ -51,8 +51,8 @@ class AlertDeleteCourseView: UIView {
         // confrim button
         let confirmButton = UIButton(type: UIButtonType.System) 
         confirmButton.frame = CGRectMake(0, 0, 112, 32)
-        confirmButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1)
-        confirmButton.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
+        confirmButton.tintColor = ColorgyColor.MainOrange
+        confirmButton.layer.borderColor = ColorgyColor.MainOrange.CGColor
         confirmButton.layer.borderWidth = 2.0
         confirmButton.layer.cornerRadius = 2.0
         confirmButton.setTitle("刪除課程", forState: UIControlState.Normal)
@@ -61,8 +61,8 @@ class AlertDeleteCourseView: UIView {
 //        var cancelButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
         let cancelButton = UIButton(type: UIButtonType.System) 
         cancelButton.frame = CGRectMake(0, 0, 112, 32)
-        cancelButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1)
-        cancelButton.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 1).CGColor
+        cancelButton.tintColor = ColorgyColor.MainOrange
+        cancelButton.layer.borderColor = ColorgyColor.MainOrange.CGColor
         cancelButton.layer.borderWidth = 2.0
         cancelButton.layer.cornerRadius = 2.0
         cancelButton.setTitle("保留課程", forState: UIControlState.Normal)
