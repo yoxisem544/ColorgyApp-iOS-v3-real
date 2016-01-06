@@ -1506,10 +1506,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cBJ-8Y-NZ5">
-                                                    <rect key="frame" x="236" y="45" width="128" height="32"/>
+                                                    <rect key="frame" x="220" y="45" width="160" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="i9S-4E-aGj"/>
-                                                        <constraint firstAttribute="width" constant="128" id="mBF-sO-1z2"/>
+                                                        <constraint firstAttribute="width" constant="160" id="mBF-sO-1z2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <state key="normal" title="繼續新增上課時間">
