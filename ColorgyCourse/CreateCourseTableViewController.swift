@@ -87,6 +87,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         case 0: // name and lecturer
             let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.nameAndLecturerIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
             
+            c.delegate = self
+            
             return c
         case 1: // time and location
             let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.timeAndLocationIdentifier, forIndexPath: indexPath) as! TimeAndLocationTableViewCell
@@ -131,7 +133,7 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
         print("yooo")
     }
     
-    func shouldUpdateContentAtIndex(index: Int, time: String?, location: String?) {
+    func contentUpdatedAtIndex(index: Int, time: String?, location: String?) {
         locationContents?[index] = location
         timeContents?[index] = time
     }
@@ -140,5 +142,12 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
         locationContents?.removeAtIndex(index)
         timeContents?.removeAtIndex(index)
         createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
+    }
+}
+
+extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableViewCellDelegate {
+    func contentUpdated(courseName: String?, lecturerName: String?) {
+        self.courseName = courseName
+        self.lecturerName = lecturerName
     }
 }

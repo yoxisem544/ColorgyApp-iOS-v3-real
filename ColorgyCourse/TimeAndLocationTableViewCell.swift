@@ -60,7 +60,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     }
     
     func locationTextFieldContentChaning() {
-        delegate?.shouldUpdateContentAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
     }
     
     func tapOnTimeView() {
