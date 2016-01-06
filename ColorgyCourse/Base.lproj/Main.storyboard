@@ -1452,15 +1452,11 @@
                                                         <constraint firstAttribute="height" constant="88" id="u0R-zr-6aw"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMA-dF-t13" customClass="DetectableLabel" customModule="ColorgyCourse" customModuleProvider="target">
-                                                    <rect key="frame" x="80" y="45" width="488" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="FB2-Uz-je3"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0MT-BX-0Sm">
+                                                    <rect key="frame" x="80" y="46" width="488" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="RLy-Yl-D55" firstAttribute="centerY" secondItem="o5V-dh-1vc" secondAttribute="centerY" id="243-c8-ouT"/>
@@ -1470,12 +1466,12 @@
                                                 <constraint firstItem="jx3-ZF-pNG" firstAttribute="centerY" secondItem="9Is-F8-JOx" secondAttribute="centerY" id="FjS-k2-Kar"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="oPo-2C-s0k" secondAttribute="trailing" constant="8" id="GXq-Fp-m84"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="jx3-ZF-pNG" secondAttribute="trailing" constant="-8" id="HNP-hC-vHE"/>
-                                                <constraint firstItem="QMA-dF-t13" firstAttribute="centerY" secondItem="Mjh-Q4-zbW" secondAttribute="centerY" id="LFL-vC-xLD"/>
+                                                <constraint firstItem="0MT-BX-0Sm" firstAttribute="centerY" secondItem="Mjh-Q4-zbW" secondAttribute="centerY" id="LnG-Ze-0Zf"/>
                                                 <constraint firstItem="44o-oB-F9n" firstAttribute="leading" secondItem="3i2-mM-KhT" secondAttribute="leading" id="OoP-an-93N"/>
-                                                <constraint firstItem="oPo-2C-s0k" firstAttribute="leading" secondItem="QMA-dF-t13" secondAttribute="trailing" constant="8" id="RNF-lM-tS0"/>
                                                 <constraint firstItem="9Is-F8-JOx" firstAttribute="leading" secondItem="3i2-mM-KhT" secondAttribute="leadingMargin" constant="-8" id="RWR-TL-Er8"/>
                                                 <constraint firstItem="RLy-Yl-D55" firstAttribute="leading" secondItem="o5V-dh-1vc" secondAttribute="trailing" constant="32" id="SmD-j7-rob"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Pjr-uN-A1N" secondAttribute="trailing" id="U2I-9S-kkw"/>
+                                                <constraint firstItem="0MT-BX-0Sm" firstAttribute="leading" secondItem="Mjh-Q4-zbW" secondAttribute="trailing" constant="32" id="WdX-LV-4Ww"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="RLy-Yl-D55" secondAttribute="trailing" id="ZMp-nx-kHj"/>
                                                 <constraint firstAttribute="trailing" secondItem="44o-oB-F9n" secondAttribute="trailing" id="ZbR-d5-pCf"/>
                                                 <constraint firstItem="9Is-F8-JOx" firstAttribute="top" secondItem="Pjr-uN-A1N" secondAttribute="bottom" constant="8" id="Zey-1L-ZcT"/>
@@ -1483,7 +1479,7 @@
                                                 <constraint firstItem="jx3-ZF-pNG" firstAttribute="leading" secondItem="3i2-mM-KhT" secondAttribute="leadingMargin" constant="-8" id="fbR-o5-CKa"/>
                                                 <constraint firstItem="oPo-2C-s0k" firstAttribute="centerY" secondItem="Mjh-Q4-zbW" secondAttribute="centerY" id="hUN-WA-z70"/>
                                                 <constraint firstAttribute="trailing" secondItem="vad-YM-WxF" secondAttribute="trailing" id="hoF-71-46E"/>
-                                                <constraint firstItem="QMA-dF-t13" firstAttribute="leading" secondItem="Mjh-Q4-zbW" secondAttribute="trailing" constant="32" id="kAX-cz-cfo"/>
+                                                <constraint firstItem="oPo-2C-s0k" firstAttribute="leading" secondItem="0MT-BX-0Sm" secondAttribute="trailing" constant="8" id="oji-KO-fz9"/>
                                                 <constraint firstItem="o5V-dh-1vc" firstAttribute="leading" secondItem="3i2-mM-KhT" secondAttribute="leadingMargin" constant="8" id="qZo-j3-k8X"/>
                                                 <constraint firstAttribute="topMargin" secondItem="Pjr-uN-A1N" secondAttribute="top" id="qd1-vR-RoQ"/>
                                                 <constraint firstItem="vad-YM-WxF" firstAttribute="leading" secondItem="3i2-mM-KhT" secondAttribute="leading" id="qzN-EV-6i3"/>
@@ -1495,7 +1491,6 @@
                                             <outlet property="locationBackgroundView" destination="44o-oB-F9n" id="GaM-FG-oAp"/>
                                             <outlet property="locationTextField" destination="RLy-Yl-D55" id="esJ-pM-F3x"/>
                                             <outlet property="timeBackgroundView" destination="vad-YM-WxF" id="nAp-Ym-84d"/>
-                                            <outlet property="timeLabel" destination="QMA-dF-t13" id="H5k-38-tWg"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="new time and location identifier" rowHeight="122" id="8pd-Xa-zNO" customClass="ContinueAddTimeAndLocationTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">

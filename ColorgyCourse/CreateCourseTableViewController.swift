@@ -100,7 +100,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
             
             c.delegate = self
             c.cellIndex = indexPath.row
-            c.timeLabel?.text = timeContents![indexPath.row]
+            c.timeTextField?.text = timeContents![indexPath.row]
             c.locationTextField?.text = locationContents![indexPath.row]
             
             return c

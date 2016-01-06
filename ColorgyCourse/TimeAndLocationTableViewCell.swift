@@ -19,20 +19,20 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var timeBackgroundView: UIView!
     @IBOutlet weak var locationBackgroundView: UIView!
-    @IBOutlet weak var timeLabel: DetectableLabel! {
+    @IBOutlet weak var timeTextField: UITextField! {
         didSet {
-            if cellIndex != nil {
-                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
-                print("yoyoyoyo")
-            }
+//            if cellIndex != nil {
+//                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+//                print("yoyoyoyo")
+//            }
         }
     }
     @IBOutlet weak var locationTextField: UITextField! {
         didSet {
-            if cellIndex != nil {
-                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
-                print("yoyoyoyo")
-            }
+//            if cellIndex != nil {
+//                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+//                print("yoyoyoyo")
+//            }
         }
     }
     
@@ -53,14 +53,17 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnTimeView"))
         locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLocationView"))
         locationTextField.addTarget(self, action: "locationTextFieldContentChaning", forControlEvents: .EditingChanged)
-        timeLabel.delegate = self
+        timeTextField.addTarget(self, action: "timeTextFieldContentChanging", forControlEvents: .EditingChanged)
         print("awake")
         print("this is cell \(cellIndex)")
-        
     }
     
     func locationTextFieldContentChaning() {
-        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
+    }
+    
+    func timeTextFieldContentChanging() {
+        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
     }
     
     func tapOnTimeView() {
@@ -69,7 +72,6 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     
     func tapOnLocationView() {
         delegate?.didTapOnLocationView()
-        locationTextField.becomeFirstResponder()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -78,10 +80,4 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-}
-
-extension TimeAndLocationTableViewCell : DetectableLabelDelegate {
-    func textChanging(text: String?) {
-        print(text)
-    }
 }
