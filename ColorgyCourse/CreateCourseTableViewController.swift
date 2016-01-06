@@ -17,7 +17,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     let timeAndLocationSection: Int = 1
     var courseName: String?
     var lecturerName: String?
-    var keyboardAnimatingKey: Bool = false
+
     @IBAction func createDumpData() {
         if locationContents != nil {
             locationContents?.append("")
@@ -57,23 +57,16 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     func keyboardDidShow(notification: NSNotification) {
         if let kbSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
             print(kbSize)
-            keyboardAnimatingKey = true
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
                 self.createCourseTableView.contentInset.bottom = kbSize.height
-                }, completion: { (finished) -> Void in
-                    if finished {
-                        self.keyboardAnimatingKey = false
-                    }
-            })
+                }, completion: nil)
         }
     }
     
     func keyboardDidHide(notification: NSNotification) {
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
             self.createCourseTableView.contentInset = UIEdgeInsetsZero
-            }, completion: { (finised) -> Void in
-                self.keyboardAnimatingKey = false
-        })
+            }, completion: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
