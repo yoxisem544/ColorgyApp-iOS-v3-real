@@ -50,6 +50,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         // keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+        
+        createCourseTableView.keyboardDismissMode = .Interactive
     }
     
     func keyboardDidShow(notification: NSNotification) {
@@ -189,13 +191,5 @@ extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableView
 extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewCellDelegate {
     func didTapOnAddButton() {
         createDumpData()
-    }
-}
-
-extension CreateCourseTableViewController : UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if keyboardAnimatingKey == false {
-//            self.view.endEditing(true)
-        }
     }
 }
