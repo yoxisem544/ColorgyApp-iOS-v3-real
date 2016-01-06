@@ -11,7 +11,7 @@ import UIKit
 protocol TimeAndLocationTableViewCellDelegate {
     func didTapOnTimeView()
     func didTapOnLocationView()
-    func shouldUpdateContentAtIndex(index: Int, time: String?, location: String?)
+    func contentUpdatedAtIndex(index: Int, time: String?, location: String?)
     func didPressDeleteButtonAtIndex(index: Int)
 }
 
@@ -22,7 +22,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: DetectableLabel! {
         didSet {
             if cellIndex != nil {
-                delegate?.shouldUpdateContentAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
                 print("yoyoyoyo")
             }
         }
@@ -30,7 +30,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     @IBOutlet weak var locationTextField: UITextField! {
         didSet {
             if cellIndex != nil {
-                delegate?.shouldUpdateContentAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
+                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
                 print("yoyoyoyo")
             }
         }

@@ -18,6 +18,7 @@ class ContinueAddTimeAndLocationTableViewCell: UITableViewCell {
         continueAddButton.layer.borderColor = ColorgyColor.MainOrange.CGColor
         continueAddButton.layer.borderWidth = 2.0
         continueAddButton.layer.cornerRadius = 2.0
+        self.selectionStyle = .None
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

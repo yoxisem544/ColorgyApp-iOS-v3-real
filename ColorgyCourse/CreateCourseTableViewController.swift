@@ -12,19 +12,21 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     
     @IBOutlet weak var createCourseTableView: UITableView!
     
-    var dummyDataLocation: [String?]?
-    var dummyDataTime: [String?]?
+    var locationContents: [String?]?
+    var timeContents: [String?]?
     let timeAndLocationSection: Int = 1
+    var courseName: String?
+    var lecturerName: String?
     @IBAction func createDumpData() {
-        if dummyDataLocation != nil {
-            dummyDataLocation?.append("")
-            dummyDataTime?.append("")
+        if locationContents != nil {
+            locationContents?.append("")
+            timeContents?.append("")
             createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
-            let indexPath = NSIndexPath(forRow: dummyDataLocation!.count - 1, inSection: timeAndLocationSection)
+            let indexPath = NSIndexPath(forRow: locationContents!.count - 1, inSection: timeAndLocationSection)
             createCourseTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,11 +40,11 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         view.backgroundColor = ColorgyColor.BackgroundColor
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        dummyDataLocation = []
-        dummyDataTime = []
+        locationContents = []
+        timeContents = []
     }
     
     struct Storyboard {
@@ -50,12 +52,12 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         static let timeAndLocationIdentifier = "time location identifier"
         static let newTimeAndLocationIdentifier = "new time and location identifier"
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -67,8 +69,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         case 0: // name and lecturer
             return 1
         case 1: // time and location
-            if dummyDataLocation != nil {
-                return dummyDataLocation!.count
+            if locationContents != nil {
+                return locationContents!.count
             } else {
                 return 10
             }
@@ -80,7 +82,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+        
         switch indexPath.section {
         case 0: // name and lecturer
             let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.nameAndLecturerIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
@@ -91,8 +93,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
             
             c.delegate = self
             c.cellIndex = indexPath.row
-            c.timeLabel?.text = dummyDataTime![indexPath.row]
-            c.locationTextField?.text = dummyDataLocation![indexPath.row]
+            c.timeLabel?.text = timeContents![indexPath.row]
+            c.locationTextField?.text = locationContents![indexPath.row]
             
             return c
         case 2: // footer
@@ -117,7 +119,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
             return 44.0
         }
     }
-
+    
 }
 
 extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate {
@@ -130,13 +132,13 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
     }
     
     func shouldUpdateContentAtIndex(index: Int, time: String?, location: String?) {
-        dummyDataLocation?[index] = location
-        dummyDataTime?[index] = time
+        locationContents?[index] = location
+        timeContents?[index] = time
     }
     
     func didPressDeleteButtonAtIndex(index: Int) {
-        dummyDataLocation?.removeAtIndex(index)
-        dummyDataTime?.removeAtIndex(index)
+        locationContents?.removeAtIndex(index)
+        timeContents?.removeAtIndex(index)
         createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
     }
 }
