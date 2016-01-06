@@ -47,6 +47,11 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         timeContents = []
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.inputView?.reloadInputViews()
+    }
+    
     struct Storyboard {
         static let nameAndLecturerIdentifier = "nameAndLecturerIdentifier"
         static let timeAndLocationIdentifier = "time location identifier"
