@@ -25,6 +25,7 @@ class CreateCourseNameAndLecturerTableViewCell: UITableViewCell {
         self.selectionStyle = .None
         nameTextField.addTarget(self, action: "nameTextFieldEditingChanged", forControlEvents: .EditingChanged)
         lecturerTextField.addTarget(self, action: "nameTextFieldEditingChanged", forControlEvents: .EditingChanged)
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "focusWhileTapOnView:"))
     }
     
     func nameTextFieldEditingChanged() {
@@ -33,6 +34,16 @@ class CreateCourseNameAndLecturerTableViewCell: UITableViewCell {
     
     func lecturerTextFieldEditingChanged() {
         delegate?.contentUpdated(nameTextField.text, lecturerName: lecturerTextField.text)
+    }
+    
+    func focusWhileTapOnView(gesture: UITapGestureRecognizer) {
+        if gesture.locationInView(self).y <= 44 {
+            // name
+            nameTextField.becomeFirstResponder()
+        } else {
+            // lecturer
+            lecturerTextField.becomeFirstResponder()
+        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

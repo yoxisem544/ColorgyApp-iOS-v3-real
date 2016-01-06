@@ -64,13 +64,12 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     }
     
     func tapOnTimeView() {
-        print("on time")
         delegate?.didTapOnTimeView()
     }
     
     func tapOnLocationView() {
-        print("on location")
         delegate?.didTapOnLocationView()
+        locationTextField.becomeFirstResponder()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
