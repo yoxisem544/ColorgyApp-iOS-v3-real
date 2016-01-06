@@ -45,6 +45,20 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         locationContents = []
         timeContents = []
+        
+        // keyboard
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
+    }
+    
+    func keyboardDidShow(notification: NSNotification) {
+        if let kbSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+            print(kbSize)
+        }
+    }
+    
+    func keyboardDidHide(notification: NSNotification) {
+        createCourseTableView.contentInset = UIEdgeInsetsZero
     }
     
     override func viewDidAppear(animated: Bool) {

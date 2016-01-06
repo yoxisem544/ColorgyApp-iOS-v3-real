@@ -19,7 +19,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var timeBackgroundView: UIView!
     @IBOutlet weak var locationBackgroundView: UIView!
-    @IBOutlet weak var timeTextField: UITextField! {
+    @IBOutlet weak var timeTextField: OneWayInputTextField! {
         didSet {
 //            if cellIndex != nil {
 //                delegate?.contentUpdatedAtIndex(cellIndex!, time: timeLabel?.text, location: locationTextField?.text)
@@ -53,10 +53,21 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnTimeView"))
         locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLocationView"))
         locationTextField.addTarget(self, action: "locationTextFieldContentChanging", forControlEvents: .EditingChanged)
+        locationTextField.delegate = self
         timeTextField.addTarget(self, action: "timeTextFieldContentChanging", forControlEvents: .EditingChanged)
+        timeTextField.delegate = self
+//        timeTextField.addGestureRecognizer(UIGestureRecognizer(target: self, action: "gestureRecognizer:"))
+        print(timeTextField.gestureRecognizers)
         print("awake")
         print("this is cell \(cellIndex)")
     }
+    
+//    func gestureRecognizer(gesture: UIGestureRecognizer) {
+//        if gesture.isKindOfClass(UILongPressGestureRecognizer) {
+//            gesture.enabled = false
+//        }
+//        super.addGestureRecognizer(gesture)
+//    }
     
     func locationTextFieldContentChanging() {
         delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
@@ -68,10 +79,12 @@ class TimeAndLocationTableViewCell: UITableViewCell {
     
     func tapOnTimeView() {
         delegate?.didTapOnTimeView()
+        timeTextField.becomeFirstResponder()
     }
     
     func tapOnLocationView() {
         delegate?.didTapOnLocationView()
+        locationTextField.becomeFirstResponder()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -80,4 +93,16 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension TimeAndLocationTableViewCell : UITextFieldDelegate {
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if textField == locationTextField {
+            
+        } else if textField == timeTextField {
+            timeTextField.inputView = CourseTimePickerKeyboardView(frame: UIScreen.mainScreen().bounds)
+            timeTextField.reloadInputViews()
+        }
+        return true
+    }
 }
