@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol ContinueAddTimeAndLocationTableViewCellDelegate {
+    func didTapOnAddButton()
+}
+
 class ContinueAddTimeAndLocationTableViewCell: UITableViewCell {
 
     @IBOutlet weak var continueAddButton: UIButton!
+    
+    var delegate: ContinueAddTimeAndLocationTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
