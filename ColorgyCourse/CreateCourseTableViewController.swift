@@ -164,3 +164,9 @@ extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewC
         createDumpData()
     }
 }
+
+extension CreateCourseTableViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        self.view.endEditing(true)
+    }
+}
