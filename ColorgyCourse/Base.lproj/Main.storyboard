@@ -1491,6 +1491,7 @@
                                             <outlet property="locationBackgroundView" destination="44o-oB-F9n" id="GaM-FG-oAp"/>
                                             <outlet property="locationTextField" destination="RLy-Yl-D55" id="esJ-pM-F3x"/>
                                             <outlet property="timeBackgroundView" destination="vad-YM-WxF" id="nAp-Ym-84d"/>
+                                            <outlet property="timeTextField" destination="0MT-BX-0Sm" id="9an-Mi-JTa"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="new time and location identifier" rowHeight="122" id="8pd-Xa-zNO" customClass="ContinueAddTimeAndLocationTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">

@@ -52,13 +52,13 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         self.selectionStyle = .None
         timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnTimeView"))
         locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLocationView"))
-        locationTextField.addTarget(self, action: "locationTextFieldContentChaning", forControlEvents: .EditingChanged)
+        locationTextField.addTarget(self, action: "locationTextFieldContentChanging", forControlEvents: .EditingChanged)
         timeTextField.addTarget(self, action: "timeTextFieldContentChanging", forControlEvents: .EditingChanged)
         print("awake")
         print("this is cell \(cellIndex)")
     }
     
-    func locationTextFieldContentChaning() {
+    func locationTextFieldContentChanging() {
         delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
     }
     
