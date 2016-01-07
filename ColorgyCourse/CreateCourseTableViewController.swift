@@ -17,8 +17,8 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     let timeAndLocationSection: Int = 1
     var courseName: String?
     var lecturerName: String?
-
-    @IBAction func createDumpData() {
+    
+    @IBAction func createNewTimeAndLocationContent() {
         if locationContents != nil {
             locationContents?.append("")
             timeContents?.append("")
@@ -195,6 +195,6 @@ extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableView
 
 extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewCellDelegate {
     func didTapOnAddButton() {
-        createDumpData()
+        createNewTimeAndLocationContent()
     }
 }
