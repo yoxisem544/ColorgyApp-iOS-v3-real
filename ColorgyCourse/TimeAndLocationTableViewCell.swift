@@ -112,5 +112,7 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
 extension TimeAndLocationTableViewCell : CourseTimePickerKeyboardViewDelegate {
     func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String, withGeneratedText text: String) {
         print(text)
+        timeTextField.text = text
+        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField.text, location: locationTextField.text)
     }
 }
