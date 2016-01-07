@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CourseTimePickerKeyboardViewDelegate {
-    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String, withGeneratedText text: String)
+    func contentUpdated(weekday: String, periods: [Int]?, withGeneratedText text: String)
 }
 
 class CourseTimePickerKeyboardView: UIView {
@@ -132,7 +132,7 @@ extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
                 }
             }
             print("did s \(pickerViewContentPosition)")
-            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], fromStartingPeriod: content![1][pickerViewContentPosition[1]], toEndingPeriod: content![2][pickerViewContentPosition[2]], withGeneratedText: generatePeriodDescriptionStringWithPeriod(pickerViewContentPosition))
+            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], periods: pickerViewContentPosition, withGeneratedText: generatePeriodDescriptionStringWithPeriod(pickerViewContentPosition))
         }
     }
 }

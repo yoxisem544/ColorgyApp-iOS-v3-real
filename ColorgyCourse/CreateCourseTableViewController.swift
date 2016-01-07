@@ -14,6 +14,7 @@ class CreateCourseTableViewController: UIViewController {
     
     var locationContents: [String?]?
     var timeContents: [String?]?
+    var timePeriodsContents: [[Int]?]?
     let timeAndLocationSection: Int = 1
     var courseName: String?
     var lecturerName: String?
@@ -22,6 +23,7 @@ class CreateCourseTableViewController: UIViewController {
         if locationContents != nil {
             locationContents?.append("")
             timeContents?.append("")
+            timePeriodsContents?.append([])
             createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
             let indexPath = NSIndexPath(forRow: locationContents!.count - 1, inSection: timeAndLocationSection)
             createCourseTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
@@ -46,6 +48,7 @@ class CreateCourseTableViewController: UIViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         locationContents = []
         timeContents = []
+        timePeriodsContents = []
         
         createCourseTableView.keyboardDismissMode = .Interactive
     }
@@ -175,9 +178,10 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
         print("yooo")
     }
     
-    func contentUpdatedAtIndex(index: Int, time: String?, location: String?) {
+    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int]?, location: String?) {
         locationContents?[index] = location
-        timeContents?[index] = time
+        timeContents?[index] = periodDescription
+        timePeriodsContents?[index] = periods
     }
     
     func didPressDeleteButtonAtIndex(index: Int) {

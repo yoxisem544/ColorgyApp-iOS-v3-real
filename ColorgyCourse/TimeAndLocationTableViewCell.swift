@@ -11,7 +11,7 @@ import UIKit
 protocol TimeAndLocationTableViewCellDelegate {
     func didTapOnTimeView()
     func didTapOnLocationView()
-    func contentUpdatedAtIndex(index: Int, time: String?, location: String?)
+    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int]?, location: String?)
     func didPressDeleteButtonAtIndex(index: Int)
 }
 
@@ -42,6 +42,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         }
     }
     
+    var periods: [Int]?
     var cellIndex: Int?
     
     var delegate: TimeAndLocationTableViewCellDelegate?
@@ -70,11 +71,11 @@ class TimeAndLocationTableViewCell: UITableViewCell {
 //    }
     
     func locationTextFieldContentChanging() {
-        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
+        delegate?.contentUpdatedAtIndex(cellIndex!, periodDescription: timeTextField.text,periods: periods, location: locationTextField?.text)
     }
     
     func timeTextFieldContentChanging() {
-        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField?.text, location: locationTextField?.text)
+        delegate?.contentUpdatedAtIndex(cellIndex!, periodDescription: timeTextField.text, periods: periods, location: locationTextField?.text)
     }
     
     func tapOnTimeView() {
@@ -96,6 +97,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
 }
 
 extension TimeAndLocationTableViewCell : UITextFieldDelegate {
+    
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         if textField == locationTextField {
             
@@ -110,9 +112,11 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
 }
 
 extension TimeAndLocationTableViewCell : CourseTimePickerKeyboardViewDelegate {
-    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String, withGeneratedText text: String) {
+
+    func contentUpdated(weekday: String, periods: [Int]?, withGeneratedText text: String) {
         print(text)
         timeTextField.text = text
-        delegate?.contentUpdatedAtIndex(cellIndex!, time: timeTextField.text, location: locationTextField.text)
+        self.periods = periods
+        delegate?.contentUpdatedAtIndex(cellIndex!, periodDescription: text, periods: periods, location: locationTextField.text)
     }
 }
