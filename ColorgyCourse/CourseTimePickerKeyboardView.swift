@@ -9,13 +9,13 @@
 import UIKit
 
 protocol CourseTimePickerKeyboardViewDelegate {
-    func contentUpdated(weekday: Int, fromStartingPeriod startingPeriod: Int, toEndingPeriod endingPeriod: Int)
+    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String)
 }
 
 class CourseTimePickerKeyboardView: UIView {
     
     private var pickerView: UIPickerView?
-    private var content: [[Int]]?
+    private var content: [[String]]?
     private var pickerViewContentPosition = [0, 0, 0]
     
     var delegate: CourseTimePickerKeyboardViewDelegate?
@@ -35,7 +35,22 @@ class CourseTimePickerKeyboardView: UIView {
     }
     
     private func initializeContent() {
-        content = [[1,2,3,4,5,6,7], [1,2,3,4,5,6,7], [1,2,3,4,5,6,7,8,9]]
+        // first column is weekdays 1-7
+        // second column is for period
+        // third column is for period
+        let periodData = trimmedPeriodData()
+        let startingPeriods = []
+        print(periodData)
+        content = [["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], periodData, periodData]
+    }
+    
+    private func trimmedPeriodData() -> [String] {
+        let periodData = UserSetting.getPeriodData()
+        var trimmedPeriodData = [String]()
+        for period in periodData {
+            trimmedPeriodData.append(period["code"]!)
+        }
+        return trimmedPeriodData
     }
 
     required init?(coder aDecoder: NSCoder) {
