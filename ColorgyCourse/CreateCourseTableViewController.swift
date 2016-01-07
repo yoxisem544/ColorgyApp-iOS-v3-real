@@ -196,6 +196,11 @@ extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableView
 
 extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewCellDelegate {
     func didTapOnAddButton() {
-        createNewTimeAndLocationContent()
+        if locationContents != nil {
+            if locationContents!.count < 9 {
+                // limit the content length to 9
+                createNewTimeAndLocationContent()
+            }
+        }
     }
 }
