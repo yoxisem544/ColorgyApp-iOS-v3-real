@@ -8,15 +8,22 @@
 
 import UIKit
 
+protocol CourseTimePickerKeyboardViewDelegate {
+    func contentUpdated(weekday: Int, fromStartingPeriod startingPeriod: Int, toEndingPeriod endingPeriod: Int)
+}
+
 class CourseTimePickerKeyboardView: UIView {
     
     private var pickerView: UIPickerView?
     private var content: [[Int]]?
+    private var pickerViewContentPosition = [0, 0, 0]
+    
+    var delegate: CourseTimePickerKeyboardViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame.size.height = 216.0
-        self.backgroundColor = UIColor.greenColor()
+        self.backgroundColor = UIColor.whiteColor()
         
         initializeContent()
         
@@ -27,7 +34,7 @@ class CourseTimePickerKeyboardView: UIView {
         self.addSubview(pickerView!)
     }
     
-    func initializeContent() {
+    private func initializeContent() {
         content = [[1,2,3,4,5,6,7], [1,2,3,4,5,6,7], [1,2,3,4,5,6,7,8,9]]
     }
 
@@ -68,5 +75,10 @@ extension CourseTimePickerKeyboardView : UIPickerViewDataSource {
 }
 
 extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
-    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if content != nil {
+            pickerViewContentPosition[component] = row
+            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], fromStartingPeriod: content![1][pickerViewContentPosition[1]], toEndingPeriod: content![2][pickerViewContentPosition[2]])
+        }
+    }
 }
