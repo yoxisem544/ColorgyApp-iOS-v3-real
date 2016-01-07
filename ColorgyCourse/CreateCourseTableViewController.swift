@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateCourseTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CreateCourseTableViewController: UIViewController {
     
     @IBOutlet weak var createCourseTableView: UITableView!
     
@@ -96,7 +96,9 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+}
+
+extension CreateCourseTableViewController : UITableViewDataSource, UITableViewDelegate {
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -162,7 +164,6 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
             return 44.0
         }
     }
-    
 }
 
 extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate {
