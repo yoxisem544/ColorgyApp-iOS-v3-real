@@ -100,9 +100,17 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
         if textField == locationTextField {
             
         } else if textField == timeTextField {
-            timeTextField.inputView = CourseTimePickerKeyboardView(frame: UIScreen.mainScreen().bounds)
+            let inputView = CourseTimePickerKeyboardView(frame: UIScreen.mainScreen().bounds)
+            inputView.delegate = self
+            timeTextField.inputView = inputView
             timeTextField.reloadInputViews()
         }
         return true
+    }
+}
+
+extension TimeAndLocationTableViewCell : CourseTimePickerKeyboardViewDelegate {
+    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String, withGeneratedText text: String) {
+        print(text)
     }
 }

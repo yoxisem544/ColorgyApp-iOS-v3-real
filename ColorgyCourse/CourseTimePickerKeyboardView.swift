@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CourseTimePickerKeyboardViewDelegate {
-    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String)
+    func contentUpdated(weekday: String, fromStartingPeriod startingPeriod: String, toEndingPeriod endingPeriod: String, withGeneratedText text: String)
 }
 
 class CourseTimePickerKeyboardView: UIView {
@@ -17,6 +17,7 @@ class CourseTimePickerKeyboardView: UIView {
     private var pickerView: UIPickerView?
     private var content: [[String]]?
     private var pickerViewContentPosition = [0, 0, 0]
+    let weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     
     var delegate: CourseTimePickerKeyboardViewDelegate?
 
@@ -38,7 +39,7 @@ class CourseTimePickerKeyboardView: UIView {
         // first column is weekdays 1-7
         // second column is for period
         // third column is for period
-        content = [["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], trimmedPeriodData(), trimmedPeriodDataWithPrefix()]
+        content = [weekdays, trimmedPeriodData(), trimmedPeriodDataWithPrefix()]
     }
     
     private func trimmedPeriodData() -> [String] {
@@ -59,6 +60,20 @@ class CourseTimePickerKeyboardView: UIView {
         return trimmedPeriodData
     }
 
+    private func generatePeriodDescriptionStringWithPeriod(period: [Int]) -> String {
+        // 0 -> weekdays
+        // 1 -> starting period
+        // 2 -> ending period
+        guard content != nil else { return "" }
+        
+        if period[1] == period[2] {
+            // if ending and starting point is the same
+            return "\(weekdays[period[0]]) \(content![1][period[1]])節"
+        } else {
+            return "\(weekdays[period[0]]) \(content![1][period[1]])節 ~ \(content![1][period[2]])節"
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -117,7 +132,7 @@ extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
                 }
             }
             print("did s \(pickerViewContentPosition)")
-            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], fromStartingPeriod: content![1][pickerViewContentPosition[1]], toEndingPeriod: content![2][pickerViewContentPosition[2]])
+            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], fromStartingPeriod: content![1][pickerViewContentPosition[1]], toEndingPeriod: content![2][pickerViewContentPosition[2]], withGeneratedText: generatePeriodDescriptionStringWithPeriod(pickerViewContentPosition))
         }
     }
 }
