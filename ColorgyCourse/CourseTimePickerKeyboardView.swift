@@ -38,10 +38,7 @@ class CourseTimePickerKeyboardView: UIView {
         // first column is weekdays 1-7
         // second column is for period
         // third column is for period
-        let periodData = trimmedPeriodData()
-        let startingPeriods = []
-        print(periodData)
-        content = [["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], periodData, periodData]
+        content = [["Mon","Tue","Wed","Thu","Fri","Sat","Sun"], trimmedPeriodData(), trimmedPeriodDataWithPrefix()]
     }
     
     private func trimmedPeriodData() -> [String] {
@@ -49,6 +46,15 @@ class CourseTimePickerKeyboardView: UIView {
         var trimmedPeriodData = [String]()
         for period in periodData {
             trimmedPeriodData.append(period["code"]!)
+        }
+        return trimmedPeriodData
+    }
+    
+    private func trimmedPeriodDataWithPrefix() -> [String] {
+        let periodData = UserSetting.getPeriodData()
+        var trimmedPeriodData = [String]()
+        for period in periodData {
+            trimmedPeriodData.append("到\(period["code"]!)")
         }
         return trimmedPeriodData
     }
@@ -93,6 +99,24 @@ extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if content != nil {
             pickerViewContentPosition[component] = row
+            // check if the period is not valid
+            // check which column is user selecting
+            if component == 1 {
+                if pickerViewContentPosition[1] > pickerViewContentPosition[2] {
+                    // let ending position equal to starting position
+                    pickerViewContentPosition[2] = pickerViewContentPosition[1]
+                    // animate it
+                    pickerView.selectRow(pickerViewContentPosition[2], inComponent: 2, animated: true)
+                }
+            } else if component == 2 {
+                if pickerViewContentPosition[2] < pickerViewContentPosition[1] {
+                    // let ending position equal to starting position
+                    pickerViewContentPosition[1] = pickerViewContentPosition[2]
+                    // animate it
+                    pickerView.selectRow(pickerViewContentPosition[1], inComponent: 1, animated: true)
+                }
+            }
+            print("did s \(pickerViewContentPosition)")
             delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], fromStartingPeriod: content![1][pickerViewContentPosition[1]], toEndingPeriod: content![2][pickerViewContentPosition[2]])
         }
     }
