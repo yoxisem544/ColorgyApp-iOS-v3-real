@@ -47,11 +47,22 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
         locationContents = []
         timeContents = []
         
+        createCourseTableView.keyboardDismissMode = .Interactive
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        unregisterNotification()
+    }
+    
+    func registerNotification() {
         // keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidHide:", name: UIKeyboardDidHideNotification, object: nil)
-        
-        createCourseTableView.keyboardDismissMode = .Interactive
+    }
+    
+    func unregisterNotification() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func keyboardDidShow(notification: NSNotification) {
@@ -72,6 +83,7 @@ class CreateCourseTableViewController: UIViewController, UITableViewDataSource, 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.inputView?.reloadInputViews()
+        registerNotification()
     }
     
     struct Storyboard {

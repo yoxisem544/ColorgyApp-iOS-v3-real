@@ -12,8 +12,11 @@ class CourseTimePickerKeyboardView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.frame.size.height = 120.0
+        self.frame.size.height = 216.0
         self.backgroundColor = UIColor.greenColor()
+        let p = UIPickerView()
+        print(p.frame)
+        self.addSubview(p)
     }
 
     required init?(coder aDecoder: NSCoder) {
