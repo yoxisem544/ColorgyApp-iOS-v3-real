@@ -46,11 +46,19 @@ class CreateCourseTableViewController: UIViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        initializeContents()
+        
+        createCourseTableView.keyboardDismissMode = .Interactive
+    }
+    
+    func initializeContents() {
         locationContents = []
         timeContents = []
         timePeriodsContents = []
         
-        createCourseTableView.keyboardDismissMode = .Interactive
+        locationContents?.append("")
+        timeContents?.append("")
+        timePeriodsContents?.append([])
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -141,6 +149,11 @@ extension CreateCourseTableViewController : UITableViewDataSource, UITableViewDe
             c.cellIndex = indexPath.row
             c.timeTextField?.text = timeContents![indexPath.row]
             c.locationTextField?.text = locationContents![indexPath.row]
+            
+            // check if there is only 1 cell left in this section
+            if timeContents!.count == 1 {
+                c.hideDeleteButton()
+            }
             
             return c
         case 2: // footer

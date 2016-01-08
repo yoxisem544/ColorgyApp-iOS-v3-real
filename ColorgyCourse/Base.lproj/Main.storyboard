@@ -1488,6 +1488,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.98039215690000003" green="0.96862745100000003" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <outlet property="deleteButton" destination="Pjr-uN-A1N" id="qaO-pm-Mlp"/>
                                             <outlet property="locationBackgroundView" destination="44o-oB-F9n" id="GaM-FG-oAp"/>
                                             <outlet property="locationTextField" destination="RLy-Yl-D55" id="esJ-pM-F3x"/>
                                             <outlet property="timeBackgroundView" destination="vad-YM-WxF" id="nAp-Ym-84d"/>

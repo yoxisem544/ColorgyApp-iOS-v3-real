@@ -131,7 +131,7 @@ extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
                     pickerView.selectRow(pickerViewContentPosition[1], inComponent: 1, animated: true)
                 }
             }
-            print("did s \(pickerViewContentPosition)")
+
             delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], periods: pickerViewContentPosition, withGeneratedText: generatePeriodDescriptionStringWithPeriod(pickerViewContentPosition))
         }
     }

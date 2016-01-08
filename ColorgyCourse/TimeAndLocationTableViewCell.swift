@@ -36,6 +36,12 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    func hideDeleteButton() {
+        deleteButton.hidden = true
+    }
+    
     @IBAction func deleteButtonClicked() {
         if cellIndex != nil {
             delegate?.didPressDeleteButtonAtIndex(cellIndex!)
