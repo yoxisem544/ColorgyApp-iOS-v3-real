@@ -204,7 +204,6 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
     func didPressDeleteButtonAtIndex(index: Int) {
         locationContents?.removeAtIndex(index)
         timeContents?.removeAtIndex(index)
-        timePeriodsContents?.removeAtIndex(index)
         createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
     }
 }

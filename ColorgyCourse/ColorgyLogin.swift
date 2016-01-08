@@ -55,6 +55,7 @@ class ColorgyLogin {
         login.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if error != nil {
                 print(ColorgyErrorType.failToLoginFB)
+                print(error.localizedDescription)
                 handler(token: nil)
             } else if result.isCancelled {
                 print(ColorgyErrorType.canceledFBLogin)

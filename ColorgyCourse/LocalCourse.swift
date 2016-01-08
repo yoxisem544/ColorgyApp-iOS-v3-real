@@ -63,6 +63,7 @@ class LocalCourse : CustomStringConvertible {
     convenience init?(name: String?, lecturer: String?, timePeriodsContents: [[Int]]?, locationContents: [String?]?) {
         
         // create a day, period, locatoin array here
+        print(timePeriodsContents)
         guard timePeriodsContents != nil else { return nil }
         guard locationContents != nil else { return nil }
         // content must be the same length
@@ -71,6 +72,7 @@ class LocalCourse : CustomStringConvertible {
         var days: [Int] = []
         var periods: [Int] = []
         var locations: [String] = []
+        
         // check if this course doesnt have time and location
         print(timePeriodsContents)
         if timePeriodsContents! != [[]] {
