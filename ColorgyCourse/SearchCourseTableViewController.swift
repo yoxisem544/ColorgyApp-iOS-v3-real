@@ -427,16 +427,21 @@ extension SearchCourseViewController : UISearchResultsUpdating {
 // MARK: - UITableViewDataSource
 extension SearchCourseViewController : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if searchControl.searchBar.text == "" {
-            return 1
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            if searchControl.searchBar.text == "" {
+                return 1
+            } else {
+                return 2
+            }
         } else {
             return 2
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            if self.courseSegementedControl.selectedSegmentIndex == 0 {
+        
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            if section == 0 {
                 if searchControl.active {
                     // searching
                     if searchControl.searchBar.text == "" {
@@ -446,19 +451,46 @@ extension SearchCourseViewController : UITableViewDataSource {
                     }
                 } else {
                     // dont show data if not searching
-    //                return self.localCachingObjects.count
+                    //                return self.localCachingObjects.count
                     return 0
                 }
-            } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
-                // enrolled course
-                return self.enrolledCourses.count
             } else {
-                return 0
+                return 1
             }
         } else {
-            // create course section
-            return 1
+            if section == 0 {
+                // server
+                return self.enrolledCourses.count
+            } else {
+                // local
+                return self.enrolledLocalCourse.count
+            }
         }
+        
+//        if section == 0 {
+//            if self.courseSegementedControl.selectedSegmentIndex == 0 {
+//                if searchControl.active {
+//                    // searching
+//                    if searchControl.searchBar.text == "" {
+//                        return 0
+//                    } else {
+//                        return self.filteredCourses.count
+//                    }
+//                } else {
+//                    // dont show data if not searching
+//    //                return self.localCachingObjects.count
+//                    return 0
+//                }
+//            } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
+//                // enrolled course
+//                return self.enrolledCourses.count
+//            } else {
+//                return 0
+//            }
+//        } else {
+//            // create course section
+//            return 1
+//        }
     }
     
     
@@ -511,11 +543,19 @@ extension SearchCourseViewController : UITableViewDataSource {
         } else {
            // viewing enrolled courses
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
+            print(enrolledCourses.count)
+            print(indexPath.row)
             
-            cell.course = enrolledCourses[indexPath.row]
-            cell.delegate = self
-            cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-            cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+            if indexPath.section == 0 {
+                cell.course = enrolledCourses[indexPath.row]
+                cell.delegate = self
+                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+            } else {
+                cell.localCourse = enrolledLocalCourse[indexPath.row]
+                cell.delegate = self
+                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+            }
             
             return cell
         }

@@ -143,6 +143,20 @@ class LocalCourse : CustomStringConvertible {
         }
     }
     
+    var periodsString: String {
+        get {
+            let weekdays = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            var temp = ""
+            if (days?.count != 0) && (periods?.count != 0) && days != nil && periods != nil {
+                for index in 0..<periods!.count {
+                    // cause day is 1~7
+                    temp += weekdays[days![index]] + "\(periods![index])"
+                }
+            }
+            return temp
+        }
+    }
+    
     var sessionLength: Int {
         get {
             if let count = locations?.count {

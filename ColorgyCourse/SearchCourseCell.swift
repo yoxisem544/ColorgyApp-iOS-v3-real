@@ -45,6 +45,12 @@ class SearchCourseCell: UITableViewCell {
         }
     }
     
+    var localCourse: LocalCourse! {
+        didSet {
+            updateUI()
+        }
+    }
+    
     var delegate: SearchCourseCellDelegate!
     
     // private
@@ -63,10 +69,17 @@ class SearchCourseCell: UITableViewCell {
     }
     
     private func updateUI() {
-        courseTitleLabel?.text = course.name
-        lecturerNameLabel?.text = course.lecturer
-        periodLabel?.text = course.periodsString
-        locationLabel?.text = course.general_code
+        if course != nil {
+            courseTitleLabel?.text = course.name
+            lecturerNameLabel?.text = course.lecturer
+            periodLabel?.text = course.periodsString
+            locationLabel?.text = course.general_code
+        } else if localCourse != nil {
+            courseTitleLabel?.text = localCourse.name
+            lecturerNameLabel?.text = localCourse.lecturer
+            periodLabel?.text = localCourse.periodsString
+            locationLabel?.text = localCourse.general_code
+        }
     }
 
     override func layoutSubviews() {
