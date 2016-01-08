@@ -24,6 +24,7 @@ class CourseCellView: UIView {
 
     // public API
     var courseInfo: Course!
+    var localCourseInfo: LocalCourse!
     var index: Int! {
         didSet {
             updateUI()
@@ -40,6 +41,9 @@ class CourseCellView: UIView {
         if courseInfo != nil {
             courseTitleLabel?.text = courseInfo?.name
             courseLocationLabel?.text = courseInfo?.locations?[index]
+        } else if courseInfo != nil {
+            courseTitleLabel?.text = localCourseInfo?.name
+            courseLocationLabel?.text = localCourseInfo?.locations?[index]
         }
     }
     

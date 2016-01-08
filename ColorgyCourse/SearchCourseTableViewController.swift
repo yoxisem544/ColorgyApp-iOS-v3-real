@@ -83,7 +83,6 @@ class SearchCourseViewController: UIViewController {
         courseSegementedControl.layer.cornerRadius = 0
         
         // tableview and search problem
-        print(self.definesPresentationContext)
         self.definesPresentationContext = true
         
         // configure navigation controller
@@ -543,8 +542,6 @@ extension SearchCourseViewController : UITableViewDataSource {
         } else {
            // viewing enrolled courses
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
-            print(enrolledCourses.count)
-            print(indexPath.row)
             
             if indexPath.section == 0 {
                 cell.course = enrolledCourses[indexPath.row]

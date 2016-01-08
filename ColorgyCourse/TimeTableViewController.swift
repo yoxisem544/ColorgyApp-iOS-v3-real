@@ -141,6 +141,7 @@ class TimeTableViewController: UIViewController {
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             var courses = [Course]()
+            // server
             if let objects = CourseDB.getAllStoredCoursesObject() {
                 print(objects.count)
                 for obj in objects {
@@ -150,9 +151,19 @@ class TimeTableViewController: UIViewController {
                 }
 //                print(courses)
             }
+            // local 
+            var localCourses = [LocalCourse]()
+            if let objects = LocalCourseDB.getAllStoredCoursesObject() {
+                for o in objects {
+                    if let localc = LocalCourse(localCourseDBManagedObject: o) {
+                        localCourses.append(localc)
+                    }
+                }
+            }
             CourseNotification.registerForCourseNotification()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.timetableView.courses = courses
+                self.timetableView.localCourse = localCourses
             })
         })
     }

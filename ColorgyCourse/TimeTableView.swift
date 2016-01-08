@@ -31,6 +31,13 @@ class TimeTableView: UIView {
         }
     }
     
+    var localCourse: [LocalCourse]? {
+        didSet {
+            deleteCourseCellView()
+            setupLocalCourseCellView()
+        }
+    }
+    
     let cellColors = [
         UIColor(red:0.973,  green:0.588,  blue:0.502, alpha:1),
         UIColor(red:0.961,  green:0.651,  blue:0.137, alpha:1),
@@ -91,6 +98,35 @@ class TimeTableView: UIView {
         }
     }
     
+    // local course
+    private var localCourseCellViewsOnTimetable: [CourseCellView]?
+    private func setupLocalCourseCellView() {
+        // init container
+        self.localCourseCellViewsOnTimetable = [CourseCellView]()
+        if let courses = self.localCourse {
+            for course in courses.enumerate() {
+                // generate cell
+                let views = generateCourseCellViewWithLocalCourse(course.element)
+                // add subview
+                for view in views {
+                    self.localCourseCellViewsOnTimetable?.append(view)
+                    // change color
+                    view.backgroundColor = cellColors[course.index%cellColors.count]
+                }
+            }
+            // after getting course cell view
+            // add these to view
+            for ccv in self.localCourseCellViewsOnTimetable! {
+                self.timetableContentScrollView.addSubview(ccv)
+                //                ccv.alpha = 0
+                //                UIView.animateWithDuration(0.4, animations: { () -> Void in
+                //                    ccv.alpha = 1
+                //                })
+                ccv.alpha = 1
+            }
+        }
+    }
+    
     private func generateCourseCellViewWithCourse(course: Course) -> [CourseCellView] {
         if let days = course.days {
             // check length
@@ -104,6 +140,30 @@ class TimeTableView: UIView {
                     let view = courseCellViewOn(day: day, period: period)
                     // assign content and index to this view
                     view.courseInfo = course
+                    view.index = dayOfCourse.index
+                    // its delegate
+                    view.delegate = self
+                    views.append(view)
+                }
+                return views
+            }
+        }
+        return []
+    }
+    
+    private func generateCourseCellViewWithLocalCourse(localCourse: LocalCourse) -> [CourseCellView] {
+        if let days = localCourse.days {
+            // check length
+            if localCourse.days?.count == localCourse.periods?.count {
+                // init array
+                var views = [CourseCellView]()
+                for dayOfCourse: (index: Int, element: Int) in days.enumerate() {
+                    // get periods and day, loop through
+                    let day = localCourse.days![dayOfCourse.index]
+                    let period = localCourse.periods![dayOfCourse.index]
+                    let view = courseCellViewOn(day: day, period: period)
+                    // assign content and index to this view
+                    view.localCourseInfo = localCourse
                     view.index = dayOfCourse.index
                     // its delegate
                     view.delegate = self
@@ -129,6 +189,15 @@ class TimeTableView: UIView {
         if self.courseCellViewsOnTimetable != nil {
             // 有東西
             for cellView in self.courseCellViewsOnTimetable! {
+                cellView.removeFromSuperview()
+            }
+        }
+    }
+    
+    private func deleteLocalCourseCellView() {
+        if self.localCourseCellViewsOnTimetable != nil {
+            // 有東西
+            for cellView in self.localCourseCellViewsOnTimetable! {
                 cellView.removeFromSuperview()
             }
         }
