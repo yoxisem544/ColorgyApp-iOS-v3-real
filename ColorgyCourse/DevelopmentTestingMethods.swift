@@ -35,10 +35,10 @@ class DevelopmentTestingMethods {
     class func logCoursesSessionLength() {
         if !Release().mode {
             var failCounter = 0
-            if let ob = CourseDB.getAllStoredCoursesObject() {
+            if let ob = ServerCourseDB.getAllStoredCoursesObject() {
                 var cs = [Course]()
                 for o in ob {
-                    if let c = Course(courseDBManagedObject: o) {
+                    if let c = Course(courseDataFromServerDBManagedObject: o) {
                         cs.append(c)
                     }
                 }
@@ -52,9 +52,22 @@ class DevelopmentTestingMethods {
                         failCounter++
                     }
                 }
+                print(cs.count)
                 print(failCounter)
                 print(failCounter)
             }
+        }
+    }
+    
+    class func changeSchool(school: String) {
+        if !Release().mode {
+            ColorgyAPI.PATCHUserInfo(school, department: "000", year: "2012", success: { () -> Void in
+                print("to \(school)")
+                print("to \(school)")
+                }, failure: { () -> Void in
+                    print("fail")
+                    print("to \(school)")
+            })
         }
     }
 }

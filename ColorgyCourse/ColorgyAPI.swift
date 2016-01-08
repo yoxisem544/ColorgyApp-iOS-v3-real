@@ -231,6 +231,9 @@ class ColorgyAPI {
                         processing(processState: "正在下載資料...")
                         // then start job
                         afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                            // check header
+//                            print(task.response)  
+                            
                             // job ended
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             // into background

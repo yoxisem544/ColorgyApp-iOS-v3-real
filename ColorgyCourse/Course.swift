@@ -129,6 +129,8 @@ class Course: CustomStringConvertible {
                     }
                     if let location = locationsRawData[index] {
                         locations?.append(location)
+                    } else {
+                        locations?.append("")
                     }
                 }
             }
@@ -226,6 +228,8 @@ class Course: CustomStringConvertible {
                     // so i make this inside to prevent generating "" string
                     if let location = locationsRawData[index]  as? String {
                         locations?.append(location)
+                    } else {
+                        locations?.append("")
                     }
                 }
             }
@@ -279,6 +283,8 @@ class Course: CustomStringConvertible {
 
                     if let location = locationsRawData[index] {
                         locations?.append(location)
+                    } else {
+                        locations?.append("")
                     }
                 }
             }
@@ -332,6 +338,8 @@ class Course: CustomStringConvertible {
                     
                     if let location = locationsRawData[index] {
                         locations?.append(location)
+                    } else {
+                        locations?.append("")
                     }
                 }
             }

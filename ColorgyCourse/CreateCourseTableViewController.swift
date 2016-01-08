@@ -23,6 +23,8 @@ class CreateCourseTableViewController: UIViewController {
         let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
         print(lc)
         print(CourseNotification.checkNeedNotifiedLocalCourse(lc!))
+        LocalCourseDB.storeLocalCourseToDB(lc)
+        print(LocalCourseDB.getAllStoredCoursesObject())
     }
     
     func createNewTimeAndLocationContent() {
