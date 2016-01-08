@@ -19,7 +19,15 @@ class CourseTimePickerKeyboardView: UIView {
     private var pickerViewContentPosition = [0, 0, 0]
     private let weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
     
-    var keyboardInitialState: [Int]?
+    var keyboardInitialState: [Int]? {
+        didSet {
+            if keyboardInitialState != nil {
+                pickerView?.selectRow(keyboardInitialState![0], inComponent: 0, animated: false)
+                pickerView?.selectRow(keyboardInitialState![1], inComponent: 1, animated: false)
+                pickerView?.selectRow(keyboardInitialState![2], inComponent: 2, animated: false)
+            }
+        }
+    }
     
     var delegate: CourseTimePickerKeyboardViewDelegate?
 
