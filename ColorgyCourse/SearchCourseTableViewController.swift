@@ -159,26 +159,25 @@ class SearchCourseViewController: UIViewController {
             } else {
                 self.updateCourseDataClicked(0)
             }
+            // load enroll courses
             self.loadEnrolledCourses()
+            self.loadEnrolledLocalCourses()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.searchCourseTableView.reloadData()
             })
         })
-        
-        // local course
-        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            if let courseObjects = LocalCourseDB.getAllStoredCoursesObject() {
-                var courses = [LocalCourse]()
-                for courseObject in courseObjects {
-                    print(courseObject.description)
-                    if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
-                        courses.append(c)
-                    }
+    }
+    
+    private func loadEnrolledLocalCourses() {
+        if let courseObjects = LocalCourseDB.getAllStoredCoursesObject() {
+            var courses = [LocalCourse]()
+            for courseObject in courseObjects {
+                if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
+                    courses.append(c)
                 }
-                print(courses)
-                print("")
             }
-        })
+            self.enrolledLocalCourse = courses
+        }
     }
     
     private func loadEnrolledCourses() {
@@ -479,10 +478,12 @@ extension SearchCourseViewController : UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
-            
-            if self.courseSegementedControl.selectedSegmentIndex == 0 {
+        
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            // searching
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
+
                 if searchControl.active {
                     // searching
                     cell.course = filteredCourses[indexPath.row]
@@ -495,24 +496,28 @@ extension SearchCourseViewController : UITableViewDataSource {
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
                     cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
                 }
-            } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
-                cell.course = enrolledCourses[indexPath.row]
-                cell.delegate = self
-                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                
+                return cell
+            } else {
+                // create course section
+                if createCourseCellView == nil {
+                    createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
+                }
+                createCourseCellView?.courseName = searchControl.searchBar.text
+                createCourseCellView?.delegate = self
+                
+                return createCourseCellView!
             }
+        } else {
+           // viewing enrolled courses
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
             
+            cell.course = enrolledCourses[indexPath.row]
+            cell.delegate = self
+            cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+            cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
             
             return cell
-        } else {
-            // create course section
-            if createCourseCellView == nil {
-                createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
-            }
-            createCourseCellView?.courseName = searchControl.searchBar.text
-            createCourseCellView?.delegate = self
-            
-            return createCourseCellView!
         }
     }
 }
