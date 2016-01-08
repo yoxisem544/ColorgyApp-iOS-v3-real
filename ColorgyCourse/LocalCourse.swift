@@ -82,8 +82,11 @@ class LocalCourse : CustomStringConvertible {
                 // check the period spacing between two points
                 // type: [day], [period], [location]
                 for index in 0...(timePeriods[2] - timePeriods[1]) {
-                    days.append(timePeriods[0])
-                    periods.append(timePeriods[1] + index)
+                    // cause the starting point is [0, 0, 0]
+                    // so must +1 to match the data type, which starting from 1.
+                    // ex. day is 1~7
+                    days.append(timePeriods[0] + 1)
+                    periods.append(timePeriods[1] + index + 1)
                     // if no location string, pass in ""
                     locations.append(locationContents![timePeriodsIndex] ?? "")
                 }
@@ -91,6 +94,53 @@ class LocalCourse : CustomStringConvertible {
         }
         
         self.init(code: nil, name: name, year: nil, term: nil, lecturer: lecturer, credits: nil, _type: nil, days: days, periods: periods, locations: locations, general_code: nil)
+    }
+    
+    convenience init?(localCourseDBManagedObject: LocalCourseDBManagedObject?) {
+        if let lcObject = localCourseDBManagedObject {
+            var code: String? = lcObject.code
+            var name: String? = lcObject.name
+            var year: Int? = Int(lcObject.year)
+            var term: Int? = Int(lcObject.term)
+            var lecturer: String? = lcObject.lecturer
+            var credits: Int? = Int(lcObject.credits)
+            var _type: String? = lcObject.type
+//            var days: [Int]? = lcObject.days
+//            var periods: [Int]? = lcObject.periods
+//            var locations: [String] = lcObject.locations
+            var general_code: String? = lcObject.general_code
+            
+            var days = [Int]()
+            var periods = [Int]()
+            var locations = [String]()
+            // prepare data...
+            var daysRawData = [lcObject.day_1 ,lcObject.day_2 ,lcObject.day_3 ,lcObject.day_4 ,lcObject.day_5 ,lcObject.day_6 ,lcObject.day_7 ,lcObject.day_8 ,lcObject.day_9]
+            var periodsRawData = [lcObject.period_1 ,lcObject.period_2 ,lcObject.period_3 ,lcObject.period_4 ,lcObject.period_5 ,lcObject.period_6 ,lcObject.period_7 ,lcObject.period_8 ,lcObject.period_9]
+            var locationsRawData = [lcObject.location_1 ,lcObject.location_2 ,lcObject.location_3 ,lcObject.location_4 ,lcObject.location_5 ,lcObject.location_6 ,lcObject.location_7 ,lcObject.location_8 ,lcObject.location_9]
+            // loop
+            for index in 0..<9 {
+                let day = Int(daysRawData[index])
+                // day must not be 0
+                if day != 0 {
+                    days.append(day)
+                    
+                    let period = Int(periodsRawData[index])
+                    periods.append(period)
+                    
+                    if let location = locationsRawData[index] {
+                        locations.append(location)
+                    } else {
+                        locations.append("")
+                    }
+                }
+            }
+            
+            guard name != nil else { return nil }
+            
+            self.init(code: code , name: name, year: year , term: term , lecturer: lecturer , credits: credits , _type: _type , days: days , periods: periods , locations: locations , general_code: general_code )
+        } else {
+            return nil
+        }
     }
     
     var sessionLength: Int {

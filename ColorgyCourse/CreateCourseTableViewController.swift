@@ -22,6 +22,7 @@ class CreateCourseTableViewController: UIViewController {
     @IBAction func testLocalCourse() {
         let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
         print(lc)
+//        LocalCourseDB.deleteAllCourses()
         print(CourseNotification.checkNeedNotifiedLocalCourse(lc!))
         LocalCourseDB.storeLocalCourseToDB(lc)
         print(LocalCourseDB.getAllStoredCoursesObject())
@@ -199,6 +200,7 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
         locationContents?[index] = location
         timeContents?[index] = periodDescription
         timePeriodsContents?[index] = periods
+        print(periods)
     }
     
     func didPressDeleteButtonAtIndex(index: Int) {

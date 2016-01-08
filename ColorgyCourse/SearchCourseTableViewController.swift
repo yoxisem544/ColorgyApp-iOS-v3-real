@@ -21,6 +21,7 @@ class SearchCourseViewController: UIViewController {
     private var localCachingObjects: [Course]! = [Course]()
     private var filteredCourses: [Course]! = [Course]()
     private var enrolledCourses: [Course]! = [Course]()
+    private var enrolledLocalCourse: [LocalCourse]! = [LocalCourse]()
     
     private let cellColors = [
         UIColor(red:0.973,  green:0.588,  blue:0.502, alpha:1),
@@ -144,6 +145,8 @@ class SearchCourseViewController: UIViewController {
     private func loadCourseData() {
         //        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+        
+        // server course
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             if let courseObjects = ServerCourseDB.getAllStoredCoursesObject() {
                 var courses = [Course]()
@@ -160,6 +163,21 @@ class SearchCourseViewController: UIViewController {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.searchCourseTableView.reloadData()
             })
+        })
+        
+        // local course
+        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+            if let courseObjects = LocalCourseDB.getAllStoredCoursesObject() {
+                var courses = [LocalCourse]()
+                for courseObject in courseObjects {
+                    print(courseObject.description)
+                    if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
+                        courses.append(c)
+                    }
+                }
+                print(courses)
+                print("")
+            }
         })
     }
     

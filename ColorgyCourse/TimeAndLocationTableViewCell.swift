@@ -147,6 +147,7 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
         } else if textField == timeTextField {
             let inputView = CourseTimePickerKeyboardView(frame: UIScreen.mainScreen().bounds)
             inputView.delegate = self
+            print(periods)
             inputView.keyboardInitialState = periods
             timeTextField.inputView = inputView
             timeTextField.reloadInputViews()
