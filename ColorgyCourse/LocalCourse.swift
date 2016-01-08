@@ -79,7 +79,7 @@ class LocalCourse : CustomStringConvertible {
                 guard timePeriods.count == 3 else { return nil }
                 // check the period spacing between two points
                 // type: [day], [period], [location]
-                for index in 0...(timePeriods[1] - timePeriods[2]) {
+                for index in 0...(timePeriods[2] - timePeriods[1]) {
                     days.append(timePeriods[0])
                     periods.append(timePeriods[1] + index)
                     // if no location string, pass in ""
