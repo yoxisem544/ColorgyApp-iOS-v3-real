@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !Release().mode {
             
             DevelopmentTestingMethods.enrollAllCoursesInDB()
+            DevelopmentTestingMethods.logCoursesSessionLength()
         }
         return true
     }

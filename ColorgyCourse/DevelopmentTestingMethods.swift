@@ -31,4 +31,30 @@ class DevelopmentTestingMethods {
             }
         }
     }
+    
+    class func logCoursesSessionLength() {
+        if !Release().mode {
+            var failCounter = 0
+            if let ob = CourseDB.getAllStoredCoursesObject() {
+                var cs = [Course]()
+                for o in ob {
+                    if let c = Course(courseDBManagedObject: o) {
+                        cs.append(c)
+                    }
+                }
+                for c in cs {
+//                    print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
+//                    print("day == location ? \(c.days?.count == c.locations?.count)")
+//                    print("period == location ? \(c.periods?.count == c.locations?.count)")
+//                    print("day == period ? \(c.days?.count == c.periods?.count)")
+                    if !(c.days?.count == c.locations?.count) && (c.periods?.count == c.locations?.count) && (c.days?.count == c.periods?.count) {
+                        print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
+                        failCounter++
+                    }
+                }
+                print(failCounter)
+                print(failCounter)
+            }
+        }
+    }
 }
