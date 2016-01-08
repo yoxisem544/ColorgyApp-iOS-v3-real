@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CourseTimePickerKeyboardViewDelegate {
-    func contentUpdated(weekday: String, periods: [Int]?, withGeneratedText text: String)
+    func contentUpdated(weekday: String, periods: [Int], withGeneratedText text: String)
 }
 
 class CourseTimePickerKeyboardView: UIView {

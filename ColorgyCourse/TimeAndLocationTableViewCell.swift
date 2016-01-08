@@ -11,7 +11,7 @@ import UIKit
 protocol TimeAndLocationTableViewCellDelegate {
     func didTapOnTimeView()
     func didTapOnLocationView()
-    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int]?, location: String?)
+    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int], location: String?)
     func didPressDeleteButtonAtIndex(index: Int)
 }
 
@@ -48,7 +48,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         }
     }
     
-    var periods: [Int]?
+    var periods: [Int] = [0, 0, 0]
     var cellIndex: Int?
     
     var delegate: TimeAndLocationTableViewCellDelegate?
@@ -119,7 +119,7 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
 
 extension TimeAndLocationTableViewCell : CourseTimePickerKeyboardViewDelegate {
 
-    func contentUpdated(weekday: String, periods: [Int]?, withGeneratedText text: String) {
+    func contentUpdated(weekday: String, periods: [Int], withGeneratedText text: String) {
         print(text)
         timeTextField.text = text
         self.periods = periods

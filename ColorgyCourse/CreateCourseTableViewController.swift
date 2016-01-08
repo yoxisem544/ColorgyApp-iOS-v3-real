@@ -14,7 +14,7 @@ class CreateCourseTableViewController: UIViewController {
     
     var locationContents: [String?]?
     var timeContents: [String?]?
-    var timePeriodsContents: [[Int]?]?
+    var timePeriodsContents: [[Int]]?
     let timeAndLocationSection: Int = 1
     var courseName: String?
     var lecturerName: String?
@@ -191,7 +191,7 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
         print("yooo")
     }
     
-    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int]?, location: String?) {
+    func contentUpdatedAtIndex(index: Int, periodDescription: String?, periods: [Int], location: String?) {
         locationContents?[index] = location
         timeContents?[index] = periodDescription
         timePeriodsContents?[index] = periods
