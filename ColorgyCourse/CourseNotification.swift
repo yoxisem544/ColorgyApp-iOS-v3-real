@@ -76,6 +76,50 @@ class CourseNotification {
         return []
     }
     
+    class func checkNeedNotifiedLlocalCourse(course: LocalCourse) -> [(day: Int, period: Int, index: Int)] {
+        if course.sessionLength > 0 {
+            // if course if more then one period per week
+            var needNotifiedCourses: [(day: Int, period: Int, index: Int)] = []
+            if let days = course.days {
+                // loop thorugh days inside course
+                if let periods = course.periods {
+                    for sajk in days.enumerate() {
+                        sajk.element
+                    }
+                    for dayOfCourse in days.enumerate() {
+                        // check every index of course
+                        let currentCourse = (day: dayOfCourse.element, period: periods[dayOfCourse.index])
+                        // loop through all course and check
+                        // rules: check day first, then check if previous session has same course
+                        var needNotify = true
+                        for indexLoop in 0..<periods.count {
+                            let checkPointCourse = (day: days[indexLoop], period: periods[indexLoop])
+                            // check if is the same day
+                            if currentCourse.day == checkPointCourse.day {
+                                // then check previous one
+                                if checkPointCourse.period == (currentCourse.period - 1) {
+                                    // if pervious one is same, then make then mark to false.
+                                    needNotify = false
+                                }
+                            }
+                        }
+                        // check if need to append this current course index
+                        if needNotify {
+                            needNotifiedCourses.append((day: currentCourse.day, period: currentCourse.period, index: dayOfCourse.index))
+                        }
+                    }
+                }
+            }
+            // prepare to return
+            //            print("course \(course)")
+            //            print("needNotifiedCourses \(needNotifiedCourses)")
+            return needNotifiedCourses
+        }
+        //        print("course \(course)")
+        //        print("needNotifiedCourses \([])")
+        return []
+    }
+    
     class func setupNotificationWithMessage(course: Course, day: Int, session: Int, index: Int) {
         
         let periodData = UserSetting.getPeriodData()

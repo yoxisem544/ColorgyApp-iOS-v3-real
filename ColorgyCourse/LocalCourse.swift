@@ -90,4 +90,13 @@ class LocalCourse : CustomStringConvertible {
         
         self.init(code: nil, name: name, year: nil, term: nil, lecturer: lecturer, credits: nil, _type: nil, days: days, periods: periods, locations: locations, general_code: nil)
     }
+    
+    var sessionLength: Int {
+        get {
+            if let count = locations?.count {
+                return count
+            }
+            return 0
+        }
+    }
 }
