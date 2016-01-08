@@ -76,7 +76,7 @@ class CourseNotification {
         return []
     }
     
-    class func checkNeedNotifiedLlocalCourse(course: LocalCourse) -> [(day: Int, period: Int, index: Int)] {
+    class func checkNeedNotifiedLocalCourse(course: LocalCourse) -> [(day: Int, period: Int, index: Int)] {
         if course.sessionLength > 0 {
             // if course if more then one period per week
             var needNotifiedCourses: [(day: Int, period: Int, index: Int)] = []

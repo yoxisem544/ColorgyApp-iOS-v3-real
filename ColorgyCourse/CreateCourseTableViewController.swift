@@ -22,6 +22,7 @@ class CreateCourseTableViewController: UIViewController {
     @IBAction func testLocalCourse() {
         let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
         print(lc)
+        print(CourseNotification.checkNeedNotifiedLocalCourse(lc!))
     }
     
     func createNewTimeAndLocationContent() {
