@@ -1315,7 +1315,7 @@
                                         <barButtonItem key="leftBarButtonItem" image="backButton" id="BnS-G9-qts"/>
                                         <barButtonItem key="rightBarButtonItem" title="Item" id="tYp-PA-hmr">
                                             <connections>
-                                                <action selector="createDumpData" destination="CrJ-To-htV" id="fKW-J6-oy8"/>
+                                                <action selector="testLocalCourse" destination="CrJ-To-htV" id="fYM-xK-ea9"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

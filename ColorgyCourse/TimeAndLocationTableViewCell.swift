@@ -48,7 +48,11 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         }
     }
     
-    var periods: [Int] = [0, 0, 0]
+    var periods: [Int] = [0, 0, 0] {
+        didSet {
+            timeTextField?.text = generatePeriodDescriptionStringWithPeriod(periods)
+        }
+    }
     var cellIndex: Int?
     
     var delegate: TimeAndLocationTableViewCellDelegate?
@@ -93,6 +97,39 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         delegate?.didTapOnLocationView()
         locationTextField.becomeFirstResponder()
     }
+    
+    private func generatePeriodDescriptionStringWithPeriod(period: [Int]) -> String {
+        // 0 -> weekdays
+        // 1 -> starting period
+        // 2 -> ending period
+        let weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+        let content = [weekdays, trimmedPeriodData(), trimmedPeriodDataWithPrefix()]
+        
+        if period[1] == period[2] {
+            // if ending and starting point is the same
+            return "\(weekdays[period[0]]) \(content[1][period[1]])節"
+        } else {
+            return "\(weekdays[period[0]]) \(content[1][period[1]])節 ~ \(content[1][period[2]])節"
+        }
+    }
+    
+    private func trimmedPeriodData() -> [String] {
+        let periodData = UserSetting.getPeriodData()
+        var trimmedPeriodData = [String]()
+        for period in periodData {
+            trimmedPeriodData.append(period["code"]!)
+        }
+        return trimmedPeriodData
+    }
+    
+    private func trimmedPeriodDataWithPrefix() -> [String] {
+        let periodData = UserSetting.getPeriodData()
+        var trimmedPeriodData = [String]()
+        for period in periodData {
+            trimmedPeriodData.append("到\(period["code"]!)")
+        }
+        return trimmedPeriodData
+    }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -119,10 +156,8 @@ extension TimeAndLocationTableViewCell : UITextFieldDelegate {
 
 extension TimeAndLocationTableViewCell : CourseTimePickerKeyboardViewDelegate {
 
-    func contentUpdated(weekday: String, periods: [Int], withGeneratedText text: String) {
-        print(text)
-        timeTextField.text = text
+    func contentUpdated(weekday: String, periods: [Int]) {
         self.periods = periods
-        delegate?.contentUpdatedAtIndex(cellIndex!, periodDescription: text, periods: periods, location: locationTextField.text)
+        delegate?.contentUpdatedAtIndex(cellIndex!, periodDescription: timeTextField.text, periods: periods, location: locationTextField.text)
     }
 }

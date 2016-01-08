@@ -19,11 +19,16 @@ class CreateCourseTableViewController: UIViewController {
     var courseName: String?
     var lecturerName: String?
     
-    @IBAction func createNewTimeAndLocationContent() {
+    @IBAction func testLocalCourse() {
+        let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
+        print(lc)
+    }
+    
+    func createNewTimeAndLocationContent() {
         if locationContents != nil {
             locationContents?.append("")
             timeContents?.append("")
-            timePeriodsContents?.append([])
+            timePeriodsContents?.append([0, 0, 0])
             createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
             let indexPath = NSIndexPath(forRow: locationContents!.count - 1, inSection: timeAndLocationSection)
             createCourseTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
@@ -58,7 +63,7 @@ class CreateCourseTableViewController: UIViewController {
         
         locationContents?.append("")
         timeContents?.append("")
-        timePeriodsContents?.append([])
+        timePeriodsContents?.append([0, 0, 0])
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -149,11 +154,7 @@ extension CreateCourseTableViewController : UITableViewDataSource, UITableViewDe
             c.cellIndex = indexPath.row
             c.timeTextField?.text = timeContents![indexPath.row]
             c.locationTextField?.text = locationContents![indexPath.row]
-            
-            // check if there is only 1 cell left in this section
-            if timeContents!.count == 1 {
-                c.hideDeleteButton()
-            }
+            c.periods = timePeriodsContents![indexPath.row]
             
             return c
         case 2: // footer

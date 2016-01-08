@@ -71,16 +71,20 @@ class LocalCourse : CustomStringConvertible {
         var days: [Int] = []
         var periods: [Int] = []
         var locations: [String] = []
-        // loop the time content
-        for (timePeriodsIndex, timePeriods) : (Int, [Int]) in timePeriodsContents!.enumerate() {
-            guard timePeriods.count == 3 else { return nil }
-            // check the period spacing between two points
-            // type: [day], [period], [location]
-            for index in 0...(timePeriods[1] - timePeriods[2]) {
-                days.append(timePeriods[0])
-                periods.append(timePeriods[1] + index)
-                // if no location string, pass in ""
-                locations.append(locationContents![timePeriodsIndex] ?? "")
+        // check if this course doesnt have time and location
+        print(timePeriodsContents)
+        if timePeriodsContents! != [[]] {
+            // loop the time content
+            for (timePeriodsIndex, timePeriods) : (Int, [Int]) in timePeriodsContents!.enumerate() {
+                guard timePeriods.count == 3 else { return nil }
+                // check the period spacing between two points
+                // type: [day], [period], [location]
+                for index in 0...(timePeriods[1] - timePeriods[2]) {
+                    days.append(timePeriods[0])
+                    periods.append(timePeriods[1] + index)
+                    // if no location string, pass in ""
+                    locations.append(locationContents![timePeriodsIndex] ?? "")
+                }
             }
         }
         
