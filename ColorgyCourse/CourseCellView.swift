@@ -41,7 +41,8 @@ class CourseCellView: UIView {
         if courseInfo != nil {
             courseTitleLabel?.text = courseInfo?.name
             courseLocationLabel?.text = courseInfo?.locations?[index]
-        } else if courseInfo != nil {
+        } else if localCourseInfo != nil {
+            print(localCourseInfo)
             courseTitleLabel?.text = localCourseInfo?.name
             courseLocationLabel?.text = localCourseInfo?.locations?[index]
         }
