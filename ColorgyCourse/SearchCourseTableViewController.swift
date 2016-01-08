@@ -81,6 +81,10 @@ class SearchCourseViewController: UIViewController {
         // configure segemented control
         courseSegementedControl.layer.cornerRadius = 0
         
+        // tableview and search problem
+        print(self.definesPresentationContext)
+        self.definesPresentationContext = true
+        
         // configure navigation controller
         
         
