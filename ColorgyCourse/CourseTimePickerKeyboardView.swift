@@ -22,6 +22,9 @@ class CourseTimePickerKeyboardView: UIView {
     var keyboardInitialState: [Int]? {
         didSet {
             if keyboardInitialState != nil {
+                // pass the state to this state
+                pickerViewContentPosition = keyboardInitialState!
+                // select the rows
                 pickerView?.selectRow(keyboardInitialState![0], inComponent: 0, animated: false)
                 pickerView?.selectRow(keyboardInitialState![1], inComponent: 1, animated: false)
                 pickerView?.selectRow(keyboardInitialState![2], inComponent: 2, animated: false)
