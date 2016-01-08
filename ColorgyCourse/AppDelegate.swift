@@ -86,8 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !Release().mode {
             
-            print(Semester.currentSemesterAndYear())
-            LocalCourseDB.getAllStoredCoursesObject()
+            DevelopmentTestingMethods.enrollAllCoursesInDB()
         }
         return true
     }

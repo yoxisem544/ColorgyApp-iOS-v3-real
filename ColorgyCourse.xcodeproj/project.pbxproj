@@ -22,6 +22,7 @@
 		6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2171C3BAD1200812934 /* DetectableLabel.swift */; };
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
+		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -126,6 +127,7 @@
 		6311D2171C3BAD1200812934 /* DetectableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectableLabel.swift; sourceTree = "<group>"; };
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
+		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
+				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				63F718691C3D17B800870C5F /* OneWayInputTextField.swift */,
@@ -661,6 +664,7 @@
 				638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */,
 				63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */,
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
+				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
 				6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */,
