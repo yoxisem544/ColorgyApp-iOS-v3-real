@@ -106,4 +106,14 @@ class DevelopmentTestingMethods {
             })
         }
     }
+    
+    class func testGetDepartment(school: String) {
+        if !Release().mode {
+            ColorgyAPI.getDepartments(school, success: { (departments) -> Void in
+                print(departments)
+                }, failure: { () -> Void in
+                    
+            })
+        }
+    }
 }
