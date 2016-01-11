@@ -245,11 +245,15 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: TimeTableViewDelegate {
-    func timeTableView(userDidTapOnCell cell: CourseCellView) {
+    func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {
         print(cell.courseInfo.name)
     }
     
     func timeTableViewDidScroll(scrollView: UIScrollView) {
+        
+    }
+    
+    func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
         
     }
 }

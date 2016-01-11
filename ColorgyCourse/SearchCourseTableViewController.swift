@@ -465,31 +465,6 @@ extension SearchCourseViewController : UITableViewDataSource {
                 return self.enrolledLocalCourse.count
             }
         }
-        
-//        if section == 0 {
-//            if self.courseSegementedControl.selectedSegmentIndex == 0 {
-//                if searchControl.active {
-//                    // searching
-//                    if searchControl.searchBar.text == "" {
-//                        return 0
-//                    } else {
-//                        return self.filteredCourses.count
-//                    }
-//                } else {
-//                    // dont show data if not searching
-//    //                return self.localCachingObjects.count
-//                    return 0
-//                }
-//            } else if self.courseSegementedControl.selectedSegmentIndex == 1 {
-//                // enrolled course
-//                return self.enrolledCourses.count
-//            } else {
-//                return 0
-//            }
-//        } else {
-//            // create course section
-//            return 1
-//        }
     }
     
     
@@ -556,6 +531,16 @@ extension SearchCourseViewController : UITableViewDataSource {
             
             return cell
         }
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if self.courseSegementedControl.selectedSegmentIndex == 1 {
+            if section == 1 {
+                // this section is for local course
+                return "自訂課程"
+            }
+        }
+        return nil
     }
 }
 

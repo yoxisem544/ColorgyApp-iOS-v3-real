@@ -9,7 +9,8 @@
 import UIKit
 
 protocol TimeTableViewDelegate {
-    func timeTableView(userDidTapOnCell cell: CourseCellView)
+    func timeTableView(userDidTapOnCourseCell cell: CourseCellView)
+    func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView)
     func timeTableViewDidScroll(scrollView: UIScrollView)
 }
 
@@ -352,6 +353,10 @@ extension TimeTableView: UIScrollViewDelegate {
 
 extension TimeTableView: CourseCellViewDelegate {
     func tapOnCourseCell(courseCellView: CourseCellView) {
-        delegate?.timeTableView(userDidTapOnCell: courseCellView)
+        delegate?.timeTableView(userDidTapOnCourseCell: courseCellView)
+    }
+    
+    func tapOnLocalCourseCell(localCourseCellView: CourseCellView) {
+        delegate?.timeTableView(userDidTapOnLocalCourseCell: localCourseCellView)
     }
 }

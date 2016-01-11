@@ -104,7 +104,11 @@ extension TestStretchyViewController : TimeTableViewDelegate {
         
     }
     
-    func timeTableView(userDidTapOnCell cell: CourseCellView) {
+    func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {
+        
+    }
+    
+    func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
         
     }
 }

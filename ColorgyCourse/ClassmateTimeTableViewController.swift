@@ -252,9 +252,13 @@ extension ClassmateTimeTableViewController : TimeTableViewDelegate {
         shiftHeader(scrollView)
     }
     
-    func timeTableView(userDidTapOnCell cell: CourseCellView) {
+    func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {
         if let course = cell.courseInfo {
             self.performSegueWithIdentifier("Show Detail Course", sender: course)
         }
+    }
+    
+    func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
+        
     }
 }

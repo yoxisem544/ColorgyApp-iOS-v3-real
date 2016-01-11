@@ -10,6 +10,7 @@ import UIKit
 
 protocol CourseCellViewDelegate {
     func tapOnCourseCell(courseCellView: CourseCellView)
+    func tapOnLocalCourseCell(localCourseCellView: CourseCellView)
 }
 
 class CourseCellView: UIView {
@@ -89,7 +90,11 @@ class CourseCellView: UIView {
     
     func tap(gesture: UITapGestureRecognizer) {
         if let view = gesture.view as? CourseCellView {
-            delegate?.tapOnCourseCell(view)
+            if courseInfo != nil {
+                delegate?.tapOnCourseCell(view)
+            } else if localCourseInfo != nil {
+                delegate?.tapOnLocalCourseCell(view)
+            }
         }
     }
 

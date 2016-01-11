@@ -23,13 +23,14 @@ Flurry.startSession(SecretKey.FlurryDevelopmentKey)
 
 然後按下`cmd+R`就可以執行了。
 
+## how to use it
+
 
 ## Utilities
 功能性
 
+## Controller
 
 ## Model
 
 ## View
-
-## Controller

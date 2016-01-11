@@ -103,38 +103,6 @@ class TimeTableViewController: UIViewController {
                     // not good network, dont update
                 })
         })
-        
-//        
-//        NetwrokQualityDetector.isNetworkStableToUse(stable: { () -> Void in
-//            ColorgyAPI.checkIfTokenHasExpired(unexpired: { () -> Void in
-//                // if accesstoken work, update course
-//                CourseUpdateHelper.updateCourse()
-//            }, expired: { () -> Void in
-//                ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
-//                    // if user get a new token
-//                    // load data again
-//                    self.getAndSetDataToTimeTable()
-//                    println(UserSetting.UserAccessToken())
-//                    }, failure: { () -> Void in
-//                        if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
-//                            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
-//                            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-//                                let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
-//                                let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
-//                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-//                                    self.presentViewController(vc, animated: true, completion: nil)
-//                                })
-//                                alert.addAction(ok)
-//                                self.presentViewController(alert, animated: true, completion: nil)
-//                            })
-//                        }
-//                    })
-//                })
-//            }) { () -> Void in
-//                // if accesstoken not work, do nothing
-////                CourseUpdateHelper.updateCourse()
-//        }
     }
     
     private func getAndSetDataToTimeTable() {
@@ -167,41 +135,6 @@ class TimeTableViewController: UIViewController {
             })
         })
     }
-    
-//    private func downloadAndRefreshTable() {
-//        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-////        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-//        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-//            self.courses = [Course]()
-//            ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
-//                if let userCourseObjects = userCourseObjects {
-//                    for object in userCourseObjects {
-//                        ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, completionHandler: { (courseRawDataObject) -> Void in
-////                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-//                            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-//                            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-//                                if let courseRawDataObject = courseRawDataObject {
-//                                    if let course = Course(rawData: courseRawDataObject) {
-//                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                            self.courses.append(course)
-//                                            let b = NSDate()
-//                                            if userCourseObjects.count == self.courses.count {
-//                                                self.timetableView.courses = self.courses
-//                                            }
-//                                            let now = NSDate().timeIntervalSinceDate(b)
-//                                            print(now*1000)
-//                                        })
-//                                    }
-//                                }
-//                            })
-//                        })
-//                    }
-//                }
-//            }, failure: { () -> Void in
-//                
-//            })
-//        })
-//    }
 
     // MARK: - Navigation
 
@@ -215,7 +148,12 @@ class TimeTableViewController: UIViewController {
 }
 
 extension TimeTableViewController : TimeTableViewDelegate {
-    func timeTableView(userDidTapOnCell cell: CourseCellView) {
+    
+    func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
+        
+    }
+    
+    func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {
         if Release().mode {
             Flurry.logEvent("v3.0: User Tap on Course on Their Timetable")
         }
@@ -225,4 +163,6 @@ extension TimeTableViewController : TimeTableViewDelegate {
     func timeTableViewDidScroll(scrollView: UIScrollView) {
         
     }
+    
+    
 }
