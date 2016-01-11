@@ -70,4 +70,22 @@ class DevelopmentTestingMethods {
             })
         }
     }
+    
+    class func testSchoolPeriods() {
+        if !Release().mode {
+            // get schools
+            ColorgyAPI.getSchools({ (schools) -> Void in
+                print(schools)
+                for s in schools {
+                    ColorgyAPI.getSchoolPeriodDataWithSchool(s.code, completionHandler: { (periodDataObjects) -> Void in
+                        print(periodDataObjects)
+                    })
+                }
+                print("")
+                // loop period data
+                }, failure: { () -> Void in
+                    
+            })
+        }
+    }
 }
