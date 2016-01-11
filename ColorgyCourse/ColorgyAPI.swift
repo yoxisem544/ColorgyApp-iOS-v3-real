@@ -843,58 +843,56 @@ class ColorgyAPI {
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                if let user_id = UserSetting.UserId() {
-                    if let school = UserSetting.UserPossibleOrganization() {
-                        let uuid = "\(user_id)-\(year)-\(term)-\(school.uppercaseString)-\(courseCode)"
-                        let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
-                        
-                        let params = ["user_courses":
-                            [
-                                "course_code": courseCode,
-                                "course_organization_code": school.uppercaseString,
-                                "year": year,
-                                "term": term
-                            ]
-                        ]
-                        
-                        print(url)
-                        print(params)
-                        
-                        if url.isValidURLString {
-                            // queue job
-                            ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                            afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                                // job ended
-                                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                                success()
-                                }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                                    // job ended
-                                    ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                                    print(task)
-                                    failure()
-                            })
-                        } else {
-                            print("url invalid")
-                            failure()
-                        }
-                    } else {
-                        print("no school")
-                        failure()
-                    }
-                } else {
-                    print("no user id")
-                    failure()
-                }
-            } else {
-                print(ColorgyErrorType.noAccessToken)
-                failure()
-            }
+            return
         }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        guard let user_id = UserSetting.UserId() else {
+            print("no user id")
+            failure()
+            return
+        }
+        guard let school = UserSetting.UserPossibleOrganization() else {
+            print("no school")
+            failure()
+            return
+        }
+        let uuid = "\(user_id)-\(year)-\(term)-\(school.uppercaseString)-\(courseCode)"
+        let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
+        let params = ["user_courses":
+            [
+                "course_code": courseCode,
+                "course_organization_code": school.uppercaseString,
+                "year": year,
+                "term": term
+            ]
+        ]
+        print(url)
+        print(params)
+        guard url.isValidURLString else {
+            print("url invalid")
+            failure()
+            return
+        }
+        
+        // queue job
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            // job ended
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            success()
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                // job ended
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                print(task)
+                failure()
+        })
     }
     // DELETE class
     class func DELETECourseToServer(courseCode: String, success: (courseCode: String) -> Void, failure: () -> Void) {
