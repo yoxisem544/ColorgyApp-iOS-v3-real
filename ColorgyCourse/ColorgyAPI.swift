@@ -975,33 +975,60 @@ class ColorgyAPI {
     
     
     class func getSchools(success: (schools: [School]) -> Void, failure: () -> Void) {
+        
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/organizations.json?access_token=\(accesstoken)"
-                if url.isValidURLString {
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        let json = JSON(response)
-                        success(schools: School.generateSchoolsWithJSON(json))
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            failure()
-                    })
-                } else {
-                    print("url not valid")
-                }
-            } else {
-                print("no token")
-            }
+            return
         }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/organizations.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            let json = JSON(response)
+            success(schools: School.generateSchoolsWithJSON(json))
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                failure()
+        })
+        
+//        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+//            print(ColorgyErrorType.TrafficError.stillRefreshing)
+//            failure()
+//        } else {
+//            if let accesstoken = UserSetting.UserAccessToken() {
+//                let url = "https://colorgy.io:443/api/v1/organizations.json?access_token=\(accesstoken)"
+//                if url.isValidURLString {
+//                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+//                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+//                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+//                        let json = JSON(response)
+//                        success(schools: School.generateSchoolsWithJSON(json))
+//                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+//                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+//                            failure()
+//                    })
+//                } else {
+//                    print("url not valid")
+//                }
+//            } else {
+//                print("no token")
+//            }
+//        }
     }
     
     class func getDepartments(school: String, success: (departments: [Department]) -> Void, failure: () -> Void) {
