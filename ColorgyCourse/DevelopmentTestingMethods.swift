@@ -82,6 +82,7 @@ class DevelopmentTestingMethods {
                         if let periodDataObjects = periodDataObjects {
                             if periodDataObjects.count > 0 {
                                 print("\(s.name) has time.")
+                                print(periodDataObjects)
                                 let time = periodDataObjects[0].time
                                 if time != "" {
                                     validSchool.append(s.name)

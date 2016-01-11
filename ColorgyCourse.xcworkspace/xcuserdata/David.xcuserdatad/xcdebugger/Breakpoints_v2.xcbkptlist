@@ -58,12 +58,12 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "474178721.165612"
+                  timestampString = "474179359.653429"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "1718">
+                  offsetFromSymbolStart = "1432">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -73,12 +73,12 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "474178721.166787"
+                  timestampString = "474179359.653608"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "55"
                   endingLineNumber = "55"
-                  offsetFromSymbolStart = "12">
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>

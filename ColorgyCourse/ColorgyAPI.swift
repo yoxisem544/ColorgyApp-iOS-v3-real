@@ -159,38 +159,45 @@ class ColorgyAPI {
     /// Delete a uuid and push notification token set.
     /// Always call this in background worker.
     class func DELETEdeviceTokenAndPushNotificationPareUsingUUID(uuid: String?, success: () -> Void, failure: () -> Void) {
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                if let uuid = uuid {
-                    let afManager = AFHTTPSessionManager(baseURL: nil)
-                    afManager.requestSerializer = AFJSONRequestSerializer()
-                    afManager.responseSerializer = AFJSONResponseSerializer()
-                    
-                    print(uuid)
-                    let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
-                    // queue job
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        success()
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            // job ended
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            failure()
-                    })
-                } else {
-                    print("no need delete uuid token pare")
-                    success()
-                }
-            } else {
-                print("no access token")
-                failure()
-            }
+            return
         }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        guard let uuid = uuid else {
+            print("no need delete uuid token pare")
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        print(uuid)
+        // queue job
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            // job ended
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            success()
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                // job ended
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                failure()
+        })
     }
     
     // MARK: - check if token expired
@@ -221,7 +228,6 @@ class ColorgyAPI {
             failure(failInfo: nil)
             return
         }
-        
         guard let organization = UserSetting.UserPossibleOrganization() else {
             failure(failInfo: nil)
             print(ColorgyErrorType.noOrganization)
