@@ -34,7 +34,7 @@ class TimeTableView: UIView {
     
     var localCourse: [LocalCourse]? {
         didSet {
-            deleteCourseCellView()
+            deleteLocalCourseCellView()
             setupLocalCourseCellView()
         }
     }
