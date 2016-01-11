@@ -216,88 +216,93 @@ class ColorgyAPI {
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure(failInfo: nil)
-        } else {
-            if let organization = UserSetting.UserPossibleOrganization() {
-                if let accesstoken = UserSetting.UserAccessToken() {
-                    let coursesCount = count ?? 20000
-                    let url = "https://colorgy.io:443/api/v1/\(organization.lowercaseString)/courses.json?per_page=\(String(coursesCount))&&&filter%5Byear%5D=\(year)&filter%5Bterm%5D=\(term)&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&access_token=\(accesstoken)"
-                    if url.isValidURLString {
-                        // queue job
-                        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                        // indicate user while downloading
-                        processing(processState: "正在下載資料...")
-                        // then start job
-                        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                            // check header
-//                            print(task.response)  
-                            
-                            // job ended
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            // into background
-                            //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-                            
-                            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                                
-                                processing(processState: "下載完成，準備處理資料...")
-                                // then handle response
-                                let json = JSON(response)
-                                let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
-                                    processing(processState: state)
-                                })
-                                processing(processState: "正在儲存資料到手機上...")
-                                var dicts = [[String : AnyObject]]()
-                                // this dic can use to generate [course]
-                                if courseRawDataArray.objects != nil {
-                                    // processing all the data....
-                                    for (_, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
-                                        dicts.append(object.dictionary)
-                                    }
-                                    // successfully get a dicts
-                                    // generate [cours]
-                                    let courses = Course.generateCourseArrayWithDictionaries(dicts)
-                                    // return to main queue
-                                    if let courses = courses {
-                                        
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            success(courses: courses, json: json)
-                                        })
-                                    } else {
-                                        // fail to generate objects
-                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                            failure(failInfo: nil)
-                                        })
-                                    }
-                                } else {
-                                    // fail to generate objects
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        failure(failInfo: nil)
-                                    })
-                                }
-                                
-                            })
-                            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                                // job ended
-                                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                                // then handle response
-                                print(ColorgyErrorType.APIFailure.failDownloadCourses)
-                                print(error.localizedDescription)
-                                print(error)
-                                failure(failInfo: "你的網路不穩定，請確定在網路良好的環境下載哦！")
+            return
+        }
+        
+        guard let organization = UserSetting.UserPossibleOrganization() else {
+            failure(failInfo: nil)
+            print(ColorgyErrorType.noOrganization)
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            failure(failInfo: nil)
+            print(ColorgyErrorType.noAccessToken)
+            return
+        }
+        let coursesCount = count ?? 20000
+        let url = "https://colorgy.io:443/api/v1/\(organization.lowercaseString)/courses.json?per_page=\(String(coursesCount))&&&filter%5Byear%5D=\(year)&filter%5Bterm%5D=\(term)&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure(failInfo: nil)
+            return
+        }
+        
+        // queue job
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        // indicate user while downloading
+        processing(processState: "正在下載資料...")
+        // then start job
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            // check header
+            //                            print(task.response)
+            
+            // job ended
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            // into background
+            //                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+            
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                
+                processing(processState: "下載完成，準備處理資料...")
+                // then handle response
+                let json = JSON(response)
+                let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
+                    processing(processState: state)
+                })
+                processing(processState: "正在儲存資料到手機上...")
+                var dicts = [[String : AnyObject]]()
+                // this dic can use to generate [course]
+                if courseRawDataArray.objects != nil {
+                    // processing all the data....
+                    for (_, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
+                        dicts.append(object.dictionary)
+                    }
+                    // successfully get a dicts
+                    // generate [cours]
+                    let courses = Course.generateCourseArrayWithDictionaries(dicts)
+                    // return to main queue
+                    if let courses = courses {
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            success(courses: courses, json: json)
                         })
                     } else {
-                        print(ColorgyErrorType.invalidURLString)
-                        failure(failInfo: nil)
+                        // fail to generate objects
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            failure(failInfo: nil)
+                        })
                     }
+                } else {
+                    // fail to generate objects
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        failure(failInfo: nil)
+                    })
                 }
-            } else {
-                failure(failInfo: nil)
-                print(ColorgyErrorType.noOrganization)
-            }
-        }
+                
+            })
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                // job ended
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                // then handle response
+                print(ColorgyErrorType.APIFailure.failDownloadCourses)
+                print(error.localizedDescription)
+                print(error)
+                failure(failInfo: "你的網路不穩定，請確定在網路良好的環境下載哦！")
+        })
     }
     
     // course API
