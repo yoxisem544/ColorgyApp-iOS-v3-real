@@ -519,7 +519,7 @@ class ColorgyAPI {
                                 // then handle response
                                 let json = JSON(response)
                                 let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
-                                UserSetting.storePeriodsData(resultObjects)
+//                                UserSetting.storePeriodsData(resultObjects)
                                 // return to main queue
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     completionHandler(periodDataObjects: resultObjects)

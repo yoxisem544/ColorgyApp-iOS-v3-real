@@ -73,12 +73,29 @@ class DevelopmentTestingMethods {
     
     class func testSchoolPeriods() {
         if !Release().mode {
+            var invalidSchool = [String]()
+            var validSchool = [String]()
             // get schools
             ColorgyAPI.getSchools({ (schools) -> Void in
-                print(schools)
                 for s in schools {
                     ColorgyAPI.getSchoolPeriodDataWithSchool(s.code, completionHandler: { (periodDataObjects) -> Void in
-                        print(periodDataObjects)
+                        if let periodDataObjects = periodDataObjects {
+                            if periodDataObjects.count > 0 {
+                                print("\(s.name) has time.")
+                                let time = periodDataObjects[0].time
+                                if time != "" {
+                                    validSchool.append(s.name)
+                                } else {
+                                    invalidSchool.append(s.name)
+                                }
+                            } else {
+                                invalidSchool.append(s.name)
+                            }
+                        } else {
+                            invalidSchool.append(s.name)
+                        }
+                        print("有時間的：\(validSchool)")
+                        print("沒時間的：\(invalidSchool)")
                     })
                 }
                 print("")
