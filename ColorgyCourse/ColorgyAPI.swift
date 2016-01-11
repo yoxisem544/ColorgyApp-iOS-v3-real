@@ -650,57 +650,56 @@ class ColorgyAPI {
         
         print("getting me API")
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
-                
-                if url.isValidURLString {
-                    // queue job
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    // then start job
-                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        // into background
-                        //                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                            // then handle response
-                            print("me API successfully get")
-                            // will pass in a json, then generate a result
-                            let json = JSON(response)
-                            print("ME get!")
-                            if let result = ColorgyAPIMeResult(json: json) {
-                                // return to main queue
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    completionHandler(result: result)
-                                })
-                            } else {
-                                // return to main queue
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    failure()
-                                })
-                            }
-                        })
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            // job ended
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            // then handle response
-                            print("fail to get me API")
-                            failure()
-                    })
-                } else {
-                    print(ColorgyErrorType.invalidURLString)
-                    failure()
-                }
-            } else {
-                failure()
-            }
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
         }
         
+        // queue job
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        // then start job
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            // job ended
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            // into background
+            //                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                // then handle response
+                print("me API successfully get")
+                // will pass in a json, then generate a result
+                let json = JSON(response)
+                print("ME get!")
+                if let result = ColorgyAPIMeResult(json: json) {
+                    // return to main queue
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completionHandler(result: result)
+                    })
+                } else {
+                    // return to main queue
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        failure()
+                    })
+                }
+            })
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                // job ended
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                // then handle response
+                print("fail to get me API")
+                failure()
+        })
     }
     
     // get me courses
