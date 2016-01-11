@@ -19,12 +19,18 @@ class CourseDetailView: UIView {
     
     var course: Course? {
         didSet {
-            expandViewAndInsertPeriodAndLocation()
+            if course != nil {
+                loadCourseData()
+                expandViewAndInsertPeriodAndLocation()
+            }
         }
     }
     var localCourse: LocalCourse? {
         didSet {
-            expandViewAndInsertPeriodAndLocation()
+            if localCourse != nil {
+                loadLocalCourseData()
+                expandViewAndInsertPeriodAndLocation()
+            }
         }
     }
     
@@ -136,6 +142,20 @@ class CourseDetailView: UIView {
         self.frame.size.height = 90 + 45 * 3
     }
     
+    func loadCourseData() {
+        headerTitleLabel?.text = course?.name
+        lecturerTitleLabel?.text = course?.lecturer
+        codeTitleLabel?.text = course?.general_code
+        creditsTitleLabel?.text = (course?.credits != nil ? "\(course?.credits)" : "0")
+    }
+    
+    func loadLocalCourseData() {
+        headerTitleLabel?.text = localCourse?.name
+        lecturerTitleLabel?.text = localCourse?.lecturer
+        codeTitleLabel?.text = "自訂課程"
+        creditsTitleLabel?.text = "自訂課程"
+    }
+    
     func expandViewAndInsertPeriodAndLocation() {
         // check count
         if course != nil  {
@@ -161,8 +181,10 @@ class CourseDetailView: UIView {
                         self.addSubview(containerView)
                     }
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
+                    self.frame.size.height = classmatesView!.frame.maxY
                 } else {
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
+                    self.frame.size.height = classmatesView!.frame.maxY
                 }
             }
         } else if localCourse != nil {
@@ -188,8 +210,10 @@ class CourseDetailView: UIView {
                         self.addSubview(containerView)
                     }
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
+                    self.frame.size.height = classmatesView!.frame.maxY
                 } else {
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
+                    self.frame.size.height = classmatesView!.frame.maxY
                 }
             }
         }

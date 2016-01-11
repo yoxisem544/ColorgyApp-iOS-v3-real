@@ -33,21 +33,22 @@ class DetailCourseViewController: UIViewController {
     
     // classamtes view
     var classmatesView: ClassmatesContainerView!
+    var courseDetailView: CourseDetailView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var headerViews = NSBundle.mainBundle().loadNibNamed("CourseDetailHeaderView", owner: self, options: nil)
-        let headerView = headerViews[0] as! CourseDetailHeaderView
-        headerView.frame = CGRectMake(0, 0, self.view.frame.width, 330)
-        headerView.autoresizingMask = self.view.autoresizingMask
-//        headerView.translatesAutoresizingMaskIntoConstraints()
-        headerView.translatesAutoresizingMaskIntoConstraints = true
-
-        // set content
-        headerView.course = course
+//        var headerViews = NSBundle.mainBundle().loadNibNamed("CourseDetailHeaderView", owner: self, options: nil)
+//        let headerView = headerViews[0] as! CourseDetailHeaderView
+//        headerView.frame = CGRectMake(0, 0, self.view.frame.width, 330)
+//        headerView.autoresizingMask = self.view.autoresizingMask
+////        headerView.translatesAutoresizingMaskIntoConstraints()
+//        headerView.translatesAutoresizingMaskIntoConstraints = true
+//
+//        // set content
+//        headerView.course = course
         
         //
         self.automaticallyAdjustsScrollViewInsets = false
@@ -61,19 +62,21 @@ class DetailCourseViewController: UIViewController {
 //        self.contentScrollView.contentInset.bottom = 49
         
         // test
+        courseDetailView = CourseDetailView()
+        courseDetailView.course = course
+        courseDetailView.layer.borderWidth = 3.0
+        courseDetailView.layer.borderColor = UIColor.greenColor().CGColor
+        self.contentScrollView.addSubview(courseDetailView)
+        
+        // test
         classmatesView = ClassmatesContainerView()
-        classmatesView.frame.origin.y = 330
+        classmatesView.frame.origin.y = courseDetailView.frame.height
         classmatesView.backgroundColor = UIColor.whiteColor()
         classmatesView.delegate = self
         classmatesView.peoplePerRow = 4
         self.contentScrollView.addSubview(classmatesView)
         
-        // test
-        var yo = CourseDetailView()
-        yo.fakeData()
-        yo.course = course
-        yo.expandViewAndInsertPeriodAndLocation()
-        self.contentScrollView.addSubview(yo)
+        
         
         downloadCourseInfo()
     }
@@ -104,7 +107,7 @@ class DetailCourseViewController: UIViewController {
                 // set and will auto adjust hieght
                 self.classmatesView.userCourseObjects = userCourseObjects
                 // adjust content size height
-                self.contentScrollView.contentSize.height = 330 + self.classmatesView.bounds.size.height
+                self.contentScrollView.contentSize.height = self.courseDetailView.frame.height + self.classmatesView.bounds.size.height
                 }, failure: { () -> Void in
                     // retry
                     print("retry to download course again")
