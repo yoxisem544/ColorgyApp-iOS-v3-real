@@ -1042,40 +1042,43 @@ class ColorgyAPI {
         })
     }
     class func PATCHUserInfo(organization: String, department: String, year: String, success: () -> Void, failure: () -> Void) {
+        
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
-                if url.isValidURLString {
-                    let params = ["user":
-                        [
-                            "unconfirmed_organization_code": organization,
-                            "unconfirmed_department_code": department,
-                            "unconfirmed_started_year": year
-                        ]
-                    ]
-                    
-                    afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        print("PATCH OK")
-                        print(response)
-                        success()
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            print("fail to patch")
-                            failure()
-                    })
-                    
-                } else {
-                    print("PATCH url not vaild")
-                }
-            } else {
-                print("PATCH no accesstoken")
-            }
+            return
         }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        let params = ["user":
+            [
+                "unconfirmed_organization_code": organization,
+                "unconfirmed_department_code": department,
+                "unconfirmed_started_year": year
+            ]
+        ]
+        
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            print("PATCH OK")
+            print(response)
+            success()
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("fail to patch")
+                failure()
+        })
     }
 }
