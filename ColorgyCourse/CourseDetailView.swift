@@ -40,13 +40,6 @@ class CourseDetailView: UIView {
         super.init(frame: frame)
     }
     
-    func fakeData() {
-        headerTitleLabel?.text = "kjdsuyuy"
-        lecturerTitleLabel?.text = "ijdsjkdsjk"
-        codeTitleLabel?.text = "iudasidsjk"
-        creditsTitleLabel?.text = "i87cuj3"
-    }
-    
     convenience init() {
         self.init(frame: UIScreen.mainScreen().bounds)
         // title 90 pt height
@@ -146,7 +139,7 @@ class CourseDetailView: UIView {
         headerTitleLabel?.text = course?.name
         lecturerTitleLabel?.text = course?.lecturer
         codeTitleLabel?.text = course?.general_code
-        creditsTitleLabel?.text = (course?.credits != nil ? "\(course?.credits)" : "0")
+        creditsTitleLabel?.text = (course?.credits != nil ? "\(course!.credits!)" : "0") + " 學分"
     }
     
     func loadLocalCourseData() {
