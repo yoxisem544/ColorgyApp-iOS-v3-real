@@ -71,6 +71,8 @@ class DetailCourseViewController: UIViewController {
         // test
         var yo = CourseDetailView()
         yo.fakeData()
+        yo.course = course
+        yo.expandViewAndInsertPeriodAndLocation()
         self.contentScrollView.addSubview(yo)
         
         downloadCourseInfo()

@@ -17,6 +17,17 @@ class CourseDetailView: UIView {
     var codeTitleLabel: UILabel?
     var creditsTitleLabel: UILabel?
     
+    var course: Course? {
+        didSet {
+            expandViewAndInsertPeriodAndLocation()
+        }
+    }
+    var localCourse: LocalCourse? {
+        didSet {
+            expandViewAndInsertPeriodAndLocation()
+        }
+    }
+    
     var classmatesView: UIView?
 
     override init(frame: CGRect) {
@@ -117,7 +128,7 @@ class CourseDetailView: UIView {
         classmatesLabel.text = "我的同學"
         classmatesView?.addSubview(iconView)
         classmatesView?.addSubview(classmatesLabel)
-        classmatesView?.frame.origin.y = 90 + 45 * 3 + 8
+        classmatesView?.frame.origin.y = 90 + 45 * 3 + 16
         classmatesView?.backgroundColor = UIColor.whiteColor()
         self.addSubview(classmatesView!)
         
@@ -127,7 +138,61 @@ class CourseDetailView: UIView {
     
     func expandViewAndInsertPeriodAndLocation() {
         // check count
-        
+        if course != nil  {
+            if let days = course?.days {
+                if days.count > 0 {
+                    for index in 0..<days.count {
+                        let containerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+                        containerView.backgroundColor = UIColor.whiteColor()
+                        let iconView = UIImageView(frame: CGRectMake(0, 0, 14, 14))
+                        iconView.image = UIImage(named: "periodIcon")
+                        iconView.frame.origin.x = 32
+                        iconView.center.y = containerView.bounds.midY
+                        let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
+                        periodLocationLabel.frame.size.height = 14
+                        periodLocationLabel.text = "kjadskj"
+                        periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
+                        periodLocationLabel.textColor = UIColor(red:0.592,  green:0.592,  blue:0.592, alpha:1)
+                        periodLocationLabel.frame.origin.x = iconView.frame.maxX + 8
+                        periodLocationLabel.center.y = iconView.center.y
+                        containerView.addSubview(iconView)
+                        containerView.addSubview(periodLocationLabel)
+                        containerView.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(index) * 45
+                        self.addSubview(containerView)
+                    }
+                    classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
+                } else {
+                    classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
+                }
+            }
+        } else if localCourse != nil {
+            if let days = localCourse?.days {
+                if days.count > 0 {
+                    for index in 0..<days.count {
+                        let containerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+                        containerView.backgroundColor = UIColor.whiteColor()
+                        let iconView = UIImageView(frame: CGRectMake(0, 0, 14, 14))
+                        iconView.image = UIImage(named: "periodIcon")
+                        iconView.frame.origin.x = 32
+                        iconView.center.y = containerView.bounds.midY
+                        let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
+                        periodLocationLabel.frame.size.height = 14
+                        periodLocationLabel.text = "kjadskj"
+                        periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
+                        periodLocationLabel.textColor = UIColor(red:0.592,  green:0.592,  blue:0.592, alpha:1)
+                        periodLocationLabel.frame.origin.x = iconView.frame.maxX + 8
+                        periodLocationLabel.center.y = iconView.center.y
+                        containerView.addSubview(iconView)
+                        containerView.addSubview(periodLocationLabel)
+                        containerView.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(index) * 45
+                        self.addSubview(containerView)
+                    }
+                    classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
+                } else {
+                    classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
+                }
+            }
+        }
         // move classmates view
     }
 
