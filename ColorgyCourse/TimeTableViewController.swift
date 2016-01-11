@@ -157,6 +157,7 @@ class TimeTableViewController: UIViewController {
 extension TimeTableViewController : TimeTableViewDelegate {
     
     func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
+        print(cell.localCourseInfo)
         self.performSegueWithIdentifier("Timetable Show Detail Info", sender: cell.localCourseInfo)
     }
     
