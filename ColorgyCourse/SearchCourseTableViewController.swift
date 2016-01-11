@@ -363,6 +363,11 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
                 
         })
     }
+    
+    func searchCourseCell(didTapDeleteLocalCourseButton loaclCourse: LocalCourse, cell: SearchCourseCell) {
+        // do something
+        // need reload here
+    }
 }
 
 // MARK: - UISearchResultsUpdating

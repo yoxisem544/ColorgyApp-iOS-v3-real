@@ -38,6 +38,7 @@
 		638D64F91C045F1F00EACEC0 /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D64F81C045F1F00EACEC0 /* Department.swift */; };
 		638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */; };
 		638E16591B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */; };
+		639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639AD58C1C4393DC002F70DD /* CourseDetailView.swift */; };
 		639D45091B95E5E00053870D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45081B95E5E00053870D /* 2.jpg */; };
 		639D450B1B95E5F60053870D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D450A1B95E5F60053870D /* 3.jpg */; };
 		639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D450E1B95FA680053870D /* CourseCommentCell.swift */; };
@@ -145,6 +146,7 @@
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
 		638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseUpdateHelper.swift; sourceTree = "<group>"; };
 		638E165A1B9EBAF400F6CEC2 /* ColorgyCourse_v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v3.xcdatamodel; sourceTree = "<group>"; };
+		639AD58C1C4393DC002F70DD /* CourseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailView.swift; sourceTree = "<group>"; };
 		639D45081B95E5E00053870D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		639D450A1B95E5F60053870D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		639D450E1B95FA680053870D /* CourseCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentCell.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				639AD58C1C4393DC002F70DD /* CourseDetailView.swift */,
 				6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */,
 				63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */,
 				63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */,
@@ -683,6 +686,7 @@
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
+				639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */,
 				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,
 				638D64F91C045F1F00EACEC0 /* Department.swift in Sources */,
 			);

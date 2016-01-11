@@ -11,6 +11,7 @@ import UIKit
 protocol SearchCourseCellDelegate {
     func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell)
     func searchCourseCell(didTapAddCourseButton course: Course, cell: SearchCourseCell)
+    func searchCourseCell(didTapDeleteLocalCourseButton loaclCourse: LocalCourse, cell: SearchCourseCell)
 }
 
 class SearchCourseCell: UITableViewCell {
@@ -31,10 +32,14 @@ class SearchCourseCell: UITableViewCell {
     @IBOutlet weak var bottomSeparatorLineView: UIView!
     
     @IBAction func AddButtonClicked(sender: AnyObject) {
-        if hasEnrolledState {
-            delegate?.searchCourseCell(didTapDeleteCourseButton: course, cell: self)
-        } else {
-            delegate?.searchCourseCell(didTapAddCourseButton: course, cell: self)
+        if course != nil {
+            if hasEnrolledState {
+                delegate?.searchCourseCell(didTapDeleteCourseButton: course, cell: self)
+            } else {
+                delegate?.searchCourseCell(didTapAddCourseButton: course, cell: self)
+            }
+        } else if localCourse != nil {
+            delegate?.searchCourseCell(didTapDeleteLocalCourseButton: localCourse, cell: self)
         }
     }
     
@@ -78,7 +83,8 @@ class SearchCourseCell: UITableViewCell {
             courseTitleLabel?.text = localCourse.name
             lecturerNameLabel?.text = localCourse.lecturer
             periodLabel?.text = localCourse.periodsString
-            locationLabel?.text = localCourse.general_code
+            locationLabel?.text = "自訂課程"
+            addCourseButton.setTitle("刪除", forState: UIControlState.Normal)
         }
     }
 

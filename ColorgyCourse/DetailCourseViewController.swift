@@ -56,7 +56,7 @@ class DetailCourseViewController: UIViewController {
         self.contentScrollView = UIScrollView(frame: CGRectMake(0, navHeight, self.view.frame.width, self.view.frame.height - navHeight - tabBarHeight))
         self.contentScrollView.backgroundColor = UIColor(red: 250/255.0, green: 247/255.0, blue: 245/255.0, alpha: 1)
         self.view.addSubview(self.contentScrollView)
-        self.contentScrollView.addSubview(headerView)
+//        self.contentScrollView.addSubview(headerView)
         self.contentScrollView.contentSize = self.view.bounds.size
 //        self.contentScrollView.contentInset.bottom = 49
         
@@ -67,6 +67,11 @@ class DetailCourseViewController: UIViewController {
         classmatesView.delegate = self
         classmatesView.peoplePerRow = 4
         self.contentScrollView.addSubview(classmatesView)
+        
+        // test
+        var yo = CourseDetailView()
+        yo.fakeData()
+        self.contentScrollView.addSubview(yo)
         
         downloadCourseInfo()
     }
