@@ -142,7 +142,14 @@ class TimeTableViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Timetable Show Detail Info" {
             let destinationVC = segue.destinationViewController as! DetailCourseViewController
-            destinationVC.course = sender as! Course
+            if sender != nil {
+                if sender!.isKindOfClass(Course) {
+                    destinationVC.course = sender as! Course
+                } else if sender!.isKindOfClass(LocalCourse) {
+                    destinationVC.localCourse = sender as! LocalCourse
+                }
+            }
+            
         }
     }
 }
@@ -150,7 +157,7 @@ class TimeTableViewController: UIViewController {
 extension TimeTableViewController : TimeTableViewDelegate {
     
     func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
-        
+        self.performSegueWithIdentifier("Timetable Show Detail Info", sender: cell.localCourseInfo)
     }
     
     func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {

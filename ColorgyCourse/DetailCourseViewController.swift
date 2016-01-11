@@ -18,8 +18,15 @@ class DetailCourseViewController: UIViewController {
         }
     }
     
+    var localCourse: LocalCourse! {
+        didSet {
+            updateUI()
+        }
+    }
+    
     private func updateUI() {
-        detailNavigationItem?.title = course.name
+        detailNavigationItem?.title = course?.name
+        detailNavigationItem?.title = localCourse?.name
     }
     
     // containers
@@ -64,6 +71,7 @@ class DetailCourseViewController: UIViewController {
         // test
         courseDetailView = CourseDetailView()
         courseDetailView.course = course
+        courseDetailView.localCourse = localCourse
         self.contentScrollView.addSubview(courseDetailView)
         
         // test
@@ -95,26 +103,32 @@ class DetailCourseViewController: UIViewController {
     }
     
     private func downloadCourseInfo() {
-        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-       
-            ColorgyAPI.getStudentsInSpecificCourse(self.course.code, success: { (userCourseObjects) -> Void in
-                print(userCourseObjects)
-                self.userCourseObjects = userCourseObjects
-                print(userCourseObjects)
-                // set and will auto adjust hieght
-                self.classmatesView.userCourseObjects = userCourseObjects
-                // adjust content size height
-                self.contentScrollView.contentSize.height = self.courseDetailView.frame.height + self.classmatesView.bounds.size.height
-                }, failure: { () -> Void in
-                    // retry
-                    print("retry to download course again")
-                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
-                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                        self.downloadCourseInfo()
-                    })
+        if course != nil {
+            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+           
+                ColorgyAPI.getStudentsInSpecificCourse(self.course.code, success: { (userCourseObjects) -> Void in
+                    print(userCourseObjects)
+                    self.userCourseObjects = userCourseObjects
+                    print(userCourseObjects)
+                    // set and will auto adjust hieght
+                    self.classmatesView.userCourseObjects = userCourseObjects
+                    // adjust content size height
+                    self.contentScrollView.contentSize.height = self.courseDetailView.frame.height + self.classmatesView.bounds.size.height
+                    }, failure: { () -> Void in
+                        // retry
+                        print("retry to download course again")
+                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                            self.downloadCourseInfo()
+                        })
+                })
             })
-        })
+        } else if localCourse != nil {
+            self.contentScrollView.contentSize.height = self.courseDetailView.frame.height
+            self.courseDetailView.classmatesView?.hidden = true
+            self.classmatesView.hidden = true
+        }
     }
     
     override func viewDidLayoutSubviews() {
