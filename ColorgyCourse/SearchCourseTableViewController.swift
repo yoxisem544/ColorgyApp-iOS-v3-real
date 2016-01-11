@@ -519,11 +519,13 @@ extension SearchCourseViewController : UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
             
             if indexPath.section == 0 {
+                cell.localCourse = nil
                 cell.course = enrolledCourses[indexPath.row]
                 cell.delegate = self
                 cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
                 cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
             } else {
+                cell.course = nil
                 cell.localCourse = enrolledLocalCourse[indexPath.row]
                 cell.delegate = self
                 cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
