@@ -576,63 +576,64 @@ class ColorgyAPI {
     /// :returns: result: ColorgyAPIMeResult?, you can store it.
     /// :returns: error: An error if you got one, then handle it.
     class func getUserInfo(user_id user_id: Int, success: (result: ColorgyAPIUserResult) -> Void, failure: () -> Void) {
+        
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
         print("getting user \(user_id) API")
         
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
             print(ColorgyErrorType.TrafficError.stillRefreshing)
             failure()
-        } else {
-            if let accesstoken = UserSetting.UserAccessToken() {
-                let url = "https://colorgy.io:443/api/v1/users/\(user_id).json?access_token=\(accesstoken)"
-                
-                if url.isValidURLString {
-                    // queue job
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    // then start job
-                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        // into background
-                        //                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
-                        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                            // then handle response
-                            print("me API successfully get")
-                            // will pass in a json, then generate a result
-                            let json = JSON(response)
-                            print("user \(user_id) get!")
-                            if let result = ColorgyAPIUserResult(json: json) {
-                                // return to main queue
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    // ok
-                                    success(result: result)
-                                })
-                            } else {
-                                // return to main queue
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    failure()
-                                })
-                            }
-                        })
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            // job ended
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            // then handle response
-                            print("fail to get user \(user_id) API")
-                            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/users/\(user_id).json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        // queue job
+        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+        // then start job
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            // job ended
+            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+            // into background
+            //                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                // then handle response
+                print("me API successfully get")
+                // will pass in a json, then generate a result
+                let json = JSON(response)
+                print("user \(user_id) get!")
+                if let result = ColorgyAPIUserResult(json: json) {
+                    // return to main queue
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        // ok
+                        success(result: result)
                     })
                 } else {
-                    print(ColorgyErrorType.invalidURLString)
-                    failure()
+                    // return to main queue
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        failure()
+                    })
                 }
-            } else {
+            })
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                // job ended
+                ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+                // then handle response
+                print("fail to get user \(user_id) API")
                 failure()
-            }
-        }
+        })
     }
     
     // MARK: - User API
