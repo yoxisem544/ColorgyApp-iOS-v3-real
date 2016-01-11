@@ -158,6 +158,7 @@ class CourseDetailView: UIView {
     
     func getPeriodTime() -> [(code: String, time: String)] {
         let periodsData = UserSetting.getPeriodData()
+        print(periodsData)
         var tempData = [(code: String, time: String)]()
         for p in periodsData {
             if let timeString = p["time"] {
@@ -194,7 +195,8 @@ class CourseDetailView: UIView {
                         iconView.center.y = containerView.bounds.midY
                         let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
                         periodLocationLabel.frame.size.height = 14
-                        let period = course?.periods?[index] ?? 0
+                        print(course?.periods)
+                        let period = (course?.periods?[index] ?? 0) - 1
                         let location = course?.locations?[index] ?? ""
                         periodLocationLabel.text = "\(weekdays[(days[index] - 1)]) \(periodTimeDatas[period].code) \(periodTimeDatas[period].time) (\(location))"
                         periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
@@ -227,7 +229,7 @@ class CourseDetailView: UIView {
                         iconView.center.y = containerView.bounds.midY
                         let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
                         periodLocationLabel.frame.size.height = 14
-                        let period = localCourse?.periods?[index] ?? 0
+                        let period = (localCourse?.periods?[index] ?? 0) - 1
                         let location = localCourse?.locations?[index] ?? ""
                         periodLocationLabel.text = "\(weekdays[(days[index] - 1)]) \(periodTimeDatas[period].code) \(periodTimeDatas[period].time) (\(location))"
                         periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
