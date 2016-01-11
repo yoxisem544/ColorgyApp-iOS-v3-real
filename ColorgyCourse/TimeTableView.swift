@@ -238,19 +238,37 @@ class TimeTableView: UIView {
         super.init(frame: frame)
         
         let periods = UserSetting.getPeriodData()
+        print(periods)
         
         // first configure session side bar view
         let sessionSideBarView = UIView(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight * CGFloat(periods.count)))
         for period in periods.enumerate() {
-            let periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight))
+            let periodLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight/2))
             periodLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
             periodLabel.text = period.element["code"]
             periodLabel.textAlignment = NSTextAlignment.Center
             periodLabel.font = UIFont(name: "STHeitiTC-Medium", size: 15)
-            let baseOffset = courseContainerHeight / 2
+//            let baseOffset = courseContainerHeight / 2
+            let baseOffset: CGFloat = 0.0
             periodLabel.center.x = sessionSideBarView.bounds.midX
-            periodLabel.center.y = baseOffset + CGFloat(period.index) * courseContainerHeight
+            periodLabel.frame.origin.y = baseOffset + CGFloat(period.index) * courseContainerHeight
             sessionSideBarView.addSubview(periodLabel)
+            // time label
+            let timeLabel = UILabel(frame: CGRectMake(0, 0, sessionSideBarWidth, courseContainerHeight/2))
+            timeLabel.textColor = UIColor(red:0.847, green:0.847, blue:0.847, alpha:1)
+            let timeText = period.element["time"]
+            if let timeText = timeText {
+                let splitedTexts = timeText.characters.split("-").map(String.init)
+                if splitedTexts.count > 0 {
+                    timeLabel.text = splitedTexts[0]
+                }
+            }
+//            timeLabel.text = period.element["time"]
+            timeLabel.textAlignment = .Center
+            timeLabel.font = UIFont(name: "STHeitiTC-Medium", size: 12)
+            timeLabel.center.x = periodLabel.bounds.midX
+            timeLabel.frame.origin.y = periodLabel.frame.maxY
+            sessionSideBarView.addSubview(timeLabel)
         }
         // after we generate content of session side bar scroll view, we are going to add it
         var w = sessionSideBarWidth

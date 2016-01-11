@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !Release().mode {
             
 //            DevelopmentTestingMethods.enrollAllCoursesInDB()
-//            DevelopmentTestingMethods.changeSchool("NTU")
+            DevelopmentTestingMethods.changeSchool("NTUST")
 //            DevelopmentTestingMethods.logCoursesSessionLength()
         }
         return true
