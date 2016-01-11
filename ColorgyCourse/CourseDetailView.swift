@@ -156,11 +156,36 @@ class CourseDetailView: UIView {
         creditsTitleLabel?.text = "自訂課程"
     }
     
+    func getPeriodTime() -> [(code: String, time: String)] {
+        let periodsData = UserSetting.getPeriodData()
+        print(periodsData)
+        var tempData = [(code: String, time: String)]()
+        for p in periodsData {
+            if let timeString = p["time"] {
+                let splitStrings = timeString.characters.split("-").map(String.init)
+                if splitStrings.count > 0 {
+                    if let code = p["code"] {
+                        tempData.append((code, splitStrings[0]))
+                    } else {
+                        tempData.append(("", ""))
+                    }
+                } else {
+                    tempData.append(("", ""))
+                }
+            } else {
+                tempData.append(("", ""))
+            }
+        }
+        return tempData
+    }
+    
     func expandViewAndInsertPeriodAndLocation() {
         // check count
         if course != nil  {
             if let days = course?.days {
                 if days.count > 0 {
+                    let weekdays = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+                    let periodTimeDatas = getPeriodTime()
                     for index in 0..<days.count {
                         let containerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
                         containerView.backgroundColor = UIColor.whiteColor()
@@ -170,7 +195,9 @@ class CourseDetailView: UIView {
                         iconView.center.y = containerView.bounds.midY
                         let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
                         periodLocationLabel.frame.size.height = 14
-                        periodLocationLabel.text = "kjadskj"
+                        let period = course?.periods?[index] ?? 0
+                        let location = course?.locations?[index] ?? ""
+                        periodLocationLabel.text = "\(weekdays[(days[index] - 1)]) \(periodTimeDatas[period].code) \(periodTimeDatas[period].time) (\(location))"
                         periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
                         periodLocationLabel.textColor = UIColor(red:0.592,  green:0.592,  blue:0.592, alpha:1)
                         periodLocationLabel.frame.origin.x = iconView.frame.maxX + 8
@@ -190,6 +217,8 @@ class CourseDetailView: UIView {
         } else if localCourse != nil {
             if let days = localCourse?.days {
                 if days.count > 0 {
+                    let weekdays = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+                    let periodTimeDatas = getPeriodTime()
                     for index in 0..<days.count {
                         let containerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
                         containerView.backgroundColor = UIColor.whiteColor()
@@ -199,7 +228,9 @@ class CourseDetailView: UIView {
                         iconView.center.y = containerView.bounds.midY
                         let periodLocationLabel = UILabel(frame: UIScreen.mainScreen().bounds)
                         periodLocationLabel.frame.size.height = 14
-                        periodLocationLabel.text = "kjadskj"
+                        let period = course?.periods?[index] ?? 0
+                        let location = course?.locations?[index] ?? ""
+                        periodLocationLabel.text = "\(weekdays[(days[index] - 1)]) \(periodTimeDatas[period].code) \(periodTimeDatas[period].time) (\(location))"
                         periodLocationLabel.font = UIFont(name: "STHeitiTC-Medium", size: 14)
                         periodLocationLabel.textColor = UIColor(red:0.592,  green:0.592,  blue:0.592, alpha:1)
                         periodLocationLabel.frame.origin.x = iconView.frame.maxX + 8

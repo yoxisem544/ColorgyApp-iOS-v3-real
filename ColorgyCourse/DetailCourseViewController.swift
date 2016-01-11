@@ -64,8 +64,6 @@ class DetailCourseViewController: UIViewController {
         // test
         courseDetailView = CourseDetailView()
         courseDetailView.course = course
-        courseDetailView.layer.borderWidth = 3.0
-        courseDetailView.layer.borderColor = UIColor.greenColor().CGColor
         self.contentScrollView.addSubview(courseDetailView)
         
         // test
