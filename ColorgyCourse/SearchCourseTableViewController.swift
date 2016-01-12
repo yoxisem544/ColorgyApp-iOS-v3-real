@@ -583,6 +583,7 @@ extension SearchCourseViewController : UITableViewDataSource {
     }
 }
 
+// MARK: - CreateCourseTableViewCellDelegate
 extension SearchCourseViewController : CreateCourseTableViewCellDelegate {
     func didTapOnCreateCourseCell(courseName: String?) {
         print(courseName)
@@ -590,10 +591,12 @@ extension SearchCourseViewController : CreateCourseTableViewCellDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension SearchCourseViewController : UITableViewDelegate {
     
 }
 
+// MARK: - CreateCourseTableViewControllerDelegate
 extension SearchCourseViewController : CreateCourseTableViewControllerDelegate {
     func createCourseTableViewControllerDidCreateLocalCourse() {
         loadEnrolledLocalCourses()

@@ -248,6 +248,7 @@ extension CreateCourseTableViewController : UITableViewDataSource, UITableViewDe
     }
 }
 
+// MARK: - TimeAndLocationTableViewCellDelegate
 extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate {
     func didTapOnLocationView() {
         print("yo")
@@ -272,6 +273,7 @@ extension CreateCourseTableViewController : TimeAndLocationTableViewCellDelegate
     }
 }
 
+// MARK: - CreateCourseNameAndLecturerTableViewCellDelegate
 extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableViewCellDelegate {
     func contentUpdated(courseName: String?, lecturerName: String?) {
         self.courseName = courseName
@@ -279,6 +281,7 @@ extension CreateCourseTableViewController : CreateCourseNameAndLecturerTableView
     }
 }
 
+// MARK: - ContinueAddTimeAndLocationTableViewCellDelegate
 extension CreateCourseTableViewController : ContinueAddTimeAndLocationTableViewCellDelegate {
     func didTapOnAddButton() {
         if locationContents != nil {
