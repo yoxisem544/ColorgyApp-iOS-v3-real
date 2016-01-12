@@ -327,10 +327,9 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, localCourse: LocalCourse, cell: SearchCourseCell) {
         print("didTapDeleteCourseAlertDeleteCourseView:localCourse:")
         LocalCourseDB.deleteLocalCourseOnDB(localCourse)
-        do {
-            let index = enrolledLocalCourse
-        } catch {
-            
+        if let index = enrolledLocalCourse.indexOf(localCourse) {
+            enrolledLocalCourse.removeAtIndex(index)
+            searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.Fade)
         }
         
         alertDeleteCourseView.hideView(0.4)
