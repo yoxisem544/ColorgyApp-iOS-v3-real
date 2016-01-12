@@ -76,7 +76,7 @@ class SearchCourseCell: UITableViewCell {
     private func updateUI() {
         if course != nil {
             courseTitleLabel?.text = course.name
-            lecturerNameLabel?.text = course.lecturer
+            lecturerNameLabel?.text = (course.lecturer != nil ? course.lecturer : " ")
             periodLabel?.text = course.periodsString
             locationLabel?.text = course.general_code
         } else if localCourse != nil {

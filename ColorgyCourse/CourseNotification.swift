@@ -30,6 +30,24 @@ class CourseNotification {
             
 //            print(UIApplication.sharedApplication().scheduledLocalNotifications)
         }
+        // then register new one
+        if let objects = LocalCourseDB.getAllStoredCoursesObject() {
+            var courses = [LocalCourse]()
+            for object in objects {
+                if let course = LocalCourse(localCourseDBManagedObject: object) {
+                    courses.append(course)
+                }
+            }
+            // get out all course stored in db
+            for course in courses {
+                let needNotifiedCourses = checkNeedNotifiedLocalCourse(course)
+                for needNotifiedCourse in needNotifiedCourses {
+                    setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
+                }
+            }
+            
+//                        print(UIApplication.sharedApplication().scheduledLocalNotifications)
+        }
     }
     
     class func checkNeedNotifiedCourse(course: Course) -> [(day: Int, period: Int, index: Int)] {
@@ -162,6 +180,61 @@ class CourseNotification {
                         let location = course.locations?[index] ?? ""
                         let message = "\(startTime) 在 \(location) 上 \(course.name)"
 //                        print(message)
+                        localNotification.alertBody = message
+                        localNotification.soundName = "default"
+                        
+                        let currentBadgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber
+                        localNotification.applicationIconBadgeNumber = currentBadgeCount + 1
+                        
+                        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+                    }
+                }
+            }
+        }
+    }
+    
+    class func setupNotificationWithMessage(localCourse: LocalCourse, day: Int, session: Int, index: Int) {
+        
+        let periodData = UserSetting.getPeriodData()
+        let calendar = NSCalendar.currentCalendar()
+        let component = NSDateComponents()
+        component.year = 2014
+        component.month = 12
+        component.day = day
+        var time: String?
+        for period in periodData {
+            if period["order"] == "\(session)" {
+                time = period["time"]
+            }
+        }
+        if let time = time {
+            if let startTime = time.componentsSeparatedByString("-").first {
+                // if get start time
+                // if there is no first time component, set string to -, then convertion will fail.
+                if let startTimeHour = Int(startTime.componentsSeparatedByString(":").first ?? "-") {
+                    if let startTimeMinute = Int(startTime.componentsSeparatedByString(":").last ?? "-") {
+                        component.hour = startTimeHour
+                        component.minute = startTimeMinute - 10
+                        if (startTimeMinute - 10) < 0 {
+                            // less then 10 mins
+                            component.hour = startTimeHour - 1
+                            component.minute = (startTimeMinute - 10) + 60
+                        }
+                        // got hour and minute
+                        component.second = 0
+                        calendar.timeZone = NSTimeZone.defaultTimeZone()
+                        let dateToFire = calendar.dateFromComponents(component)
+                        //                        print("day: \(day), session: \(session) on component \(component)")
+                        // set up local notification
+                        let localNotification = UILocalNotification()
+                        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+                        localNotification.fireDate = dateToFire
+                        //                        localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
+                        // TODO: week???
+                        localNotification.repeatInterval = NSCalendarUnit.WeekOfYear
+                        let location = localCourse.locations?[index] ?? ""
+                        let message = "\(startTime) 在 \(location) 上 \(localCourse.name)"
+                        print(message)
                         localNotification.alertBody = message
                         localNotification.soundName = "default"
                         
