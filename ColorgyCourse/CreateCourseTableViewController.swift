@@ -62,6 +62,19 @@ class CreateCourseTableViewController: UIViewController {
     }
     
     func confirmCreateLocalCourse(lc: LocalCourse) {
+        
+        let school = UserSetting.UserPossibleOrganization() ?? "no school"
+        let semester = Semester.currentSemesterAndYear() as (year: Int, term: Int)
+        let userId = UserSetting.UserId() ?? -1
+        let department = UserSetting.UserPossibleDepartment() ?? "no department"
+        
+        let params = ["course_name": lc.name, "course_lecturer": lc.lecturer ?? "", "school": school, "department": department, "year": semester.year, "term": semester.term, "user_id": userId]
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Created A Local Course", withParameters: params as [NSObject : AnyObject])
+        } else {
+            Flurry.logEvent("v3.0: User Created A Local Course", withParameters: params as [NSObject : AnyObject])
+        }
+        
         LocalCourseDB.storeLocalCourseToDB(lc)
         popBackToSearchView()
     }

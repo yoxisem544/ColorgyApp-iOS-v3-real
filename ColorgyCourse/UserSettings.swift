@@ -81,6 +81,14 @@ class UserSetting {
         return nil
     }
     
+    class func UserPossibleDepartment() -> String? {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let userPossibleDepartment = ud.objectForKey(UserSettingKey.userPossibleDepartment) as? String {
+            return userPossibleDepartment
+        }
+        return nil
+    }
+    
     class func UserAccessToken() -> String? {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userAccessToken = ud.objectForKey(UserSettingKey.userAccessToken) as? String {
