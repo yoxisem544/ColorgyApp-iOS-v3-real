@@ -9,6 +9,9 @@
 import Foundation
 
 class Semester {
+    /// this method will return (year, term) of this semester according to the time
+    ///
+    ///
     class func currentSemesterAndYear() -> (Int, Int) {
         
         let now = NSDate()

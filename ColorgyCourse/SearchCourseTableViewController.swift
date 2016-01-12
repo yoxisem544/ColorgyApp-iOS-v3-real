@@ -310,7 +310,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
         print("didTapDeleteCourseAlertDeleteCourseView")
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
             CourseDB.deleteCourseWithCourseCode(course.code)
-            alertDeleteCourseView.hideView(0.8)
+            alertDeleteCourseView.hideView(0.4)
             // successfully delete course
             // change state
             cell.hasEnrolledState = false
@@ -323,9 +323,23 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
                 alertDeleteCourseView.hideView(0.4)
         }
     }
+    
+    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, localCourse: LocalCourse, cell: SearchCourseCell) {
+        print("didTapDeleteCourseAlertDeleteCourseView:localCourse:")
+        LocalCourseDB.deleteLocalCourseOnDB(localCourse)
+        do {
+            let index = enrolledLocalCourse
+        } catch {
+            
+        }
+        
+        alertDeleteCourseView.hideView(0.4)
+    }
+    
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
         print("didTapPreserveCourseAlertDeleteCourseView")
     }
+    
     func alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
         print("didTapOnBackgroundAlertDeleteCourseView")
     }
@@ -364,9 +378,15 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         })
     }
     
-    func searchCourseCell(didTapDeleteLocalCourseButton loaclCourse: LocalCourse, cell: SearchCourseCell) {
+    func searchCourseCell(didTapDeleteLocalCourseButton localCourse: LocalCourse, cell: SearchCourseCell) {
         // do something
         // need reload here
+        // alert user first
+        let alertV = AlertDeleteCourseView()
+        alertV.delegate = self
+        alertV.localCourse = localCourse
+        alertV.cellView = cell
+        self.tabBarController?.view.addSubview(alertV)
     }
 }
 

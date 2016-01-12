@@ -57,6 +57,26 @@ class LocalCourseDB {
         
     }
     
+    class func deleteLocalCourseOnDB(localCourse: LocalCourse?) {
+        
+        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+
+        guard let localCourse = localCourse else { return }
+        guard let localCoursesInDB = LocalCourseDB.getAllStoredCoursesObject() else { return }
+        
+        for lc in localCoursesInDB {
+            if lc.general_code == localCourse.general_code {
+                managedObjectContext.deleteObject(lc)
+            }
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print(ColorgyErrorType.DBFailure.saveFail)
+        }
+    }
+    
     class func storeLocalCourseToDB(localCourse: LocalCourse?) {
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! LocalCourseDBManagedObject

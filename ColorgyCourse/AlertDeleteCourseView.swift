@@ -10,6 +10,7 @@ import UIKit
 
 protocol AlertDeleteCourseViewDelegate {
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell)
+    func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, localCourse: LocalCourse, cell: SearchCourseCell)
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView)
     func alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView)
 }
@@ -25,6 +26,7 @@ class AlertDeleteCourseView: UIView {
     */
     
     var course: Course!
+    var localCourse: LocalCourse!
     var cellView: SearchCourseCell!
     
     var delegate: AlertDeleteCourseViewDelegate!
@@ -94,7 +96,11 @@ class AlertDeleteCourseView: UIView {
     }
     
     func deleteC() {
-        delegate?.alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView: self, course: course, cell: cellView)
+        if course != nil {
+            delegate?.alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView: self, course: course, cell: cellView)
+        } else if localCourse != nil {
+            delegate?.alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView: self, localCourse: localCourse, cell: cellView)
+        }
     }
     
     func preserveC() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LocalCourse : CustomStringConvertible {
+class LocalCourse : NSObject {
     
     // properties
     // what do we need of a course?
@@ -36,7 +36,7 @@ class LocalCourse : CustomStringConvertible {
     /// general code of this course, might be nil
     var general_code: String?
     
-    var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
+    override var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
     
     init?(code: String?, name: String?, year: Int?, term: Int?, lecturer: String?, credits: Int?, _type: String?, days: [Int]?, periods: [Int]?, locations: [String]?, general_code: String?) {
         // optional part
@@ -51,11 +51,12 @@ class LocalCourse : CustomStringConvertible {
         // required part
         self.code = ""
         self.name = ""
-        self.year = Int()
-        self.term = Int()
+        self.year = 0
+        self.term = 0
         // just need course name, lecturer, time, day and location.
         // day, time and location is optional
         // but course name is required.
+        super.init()
         guard name != nil else { return nil }
         self.name = name!
     }
@@ -68,6 +69,8 @@ class LocalCourse : CustomStringConvertible {
         guard locationContents != nil else { return nil }
         // content must be the same length
         guard timePeriodsContents!.count == locationContents!.count else { return nil }
+        guard let school = UserSetting.UserPossibleOrganization() else { return nil }
+        guard let userId = UserSetting.UserId() else { return nil }
         
         var days: [Int] = []
         var periods: [Int] = []
@@ -93,7 +96,12 @@ class LocalCourse : CustomStringConvertible {
             }
         }
         
-        self.init(code: nil, name: name, year: nil, term: nil, lecturer: lecturer, credits: nil, _type: nil, days: days, periods: periods, locations: locations, general_code: nil)
+        // generate uuid for local course
+        let uuid = NSUUID().UUIDString
+        let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+        let general_code = "\(userId)-\(school.lowercaseString)-\(semester.year)-\(semester.term)-\(uuid)"
+        
+        self.init(code: nil, name: name, year: nil, term: nil, lecturer: lecturer, credits: nil, _type: nil, days: days, periods: periods, locations: locations, general_code: general_code)
     }
     
     convenience init?(localCourseDBManagedObject: LocalCourseDBManagedObject?) {

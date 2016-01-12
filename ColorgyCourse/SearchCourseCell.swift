@@ -11,7 +11,7 @@ import UIKit
 protocol SearchCourseCellDelegate {
     func searchCourseCell(didTapDeleteCourseButton course: Course, cell: SearchCourseCell)
     func searchCourseCell(didTapAddCourseButton course: Course, cell: SearchCourseCell)
-    func searchCourseCell(didTapDeleteLocalCourseButton loaclCourse: LocalCourse, cell: SearchCourseCell)
+    func searchCourseCell(didTapDeleteLocalCourseButton localCourse: LocalCourse, cell: SearchCourseCell)
 }
 
 class SearchCourseCell: UITableViewCell {
