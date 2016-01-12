@@ -176,6 +176,9 @@ class SearchCourseViewController: UIViewController {
                 }
             }
             self.enrolledLocalCourse = courses
+            if courseSegementedControl.selectedSegmentIndex == 1 {
+                searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.None)
+            }
         }
     }
     
@@ -299,7 +302,8 @@ class SearchCourseViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Storyboard.toCreateCourseSegue {
-            
+            let vc = segue.destinationViewController as! CreateCourseTableViewController
+            vc.delegate = self
         }
     }
 }
@@ -585,5 +589,11 @@ extension SearchCourseViewController : CreateCourseTableViewCellDelegate {
 
 extension SearchCourseViewController : UITableViewDelegate {
     
+}
+
+extension SearchCourseViewController : CreateCourseTableViewControllerDelegate {
+    func createCourseTableViewControllerDidCreateLocalCourse() {
+        loadEnrolledLocalCourses()
+    }
 }
 

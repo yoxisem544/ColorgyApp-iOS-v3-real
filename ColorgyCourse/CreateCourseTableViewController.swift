@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CreateCourseTableViewControllerDelegate {
+    func createCourseTableViewControllerDidCreateLocalCourse()
+}
+
 class CreateCourseTableViewController: UIViewController {
     
     @IBOutlet weak var createCourseTableView: UITableView!
@@ -18,6 +22,8 @@ class CreateCourseTableViewController: UIViewController {
     let timeAndLocationSection: Int = 1
     var courseName: String?
     var lecturerName: String?
+    
+    var delegate: CreateCourseTableViewControllerDelegate?
     
     @IBAction func testLocalCourse() {
         let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
@@ -51,6 +57,7 @@ class CreateCourseTableViewController: UIViewController {
     }
     
     @IBAction func popBackToSearchView() {
+        delegate?.createCourseTableViewControllerDidCreateLocalCourse()
         self.navigationController?.popViewControllerAnimated(true)
     }
     
