@@ -304,6 +304,9 @@ class SearchCourseViewController: UIViewController {
         if segue.identifier == Storyboard.toCreateCourseSegue {
             let vc = segue.destinationViewController as! CreateCourseTableViewController
             vc.delegate = self
+            if let courseName = sender as? String {
+                vc.courseName = courseName
+            }
         }
     }
 }

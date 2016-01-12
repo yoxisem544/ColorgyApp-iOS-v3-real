@@ -208,6 +208,7 @@ extension CreateCourseTableViewController : UITableViewDataSource, UITableViewDe
         case 0: // name and lecturer
             let c = tableView.dequeueReusableCellWithIdentifier(Storyboard.nameAndLecturerIdentifier, forIndexPath: indexPath) as! CreateCourseNameAndLecturerTableViewCell
             
+            c.nameTextField.text = courseName
             c.delegate = self
             
             return c
