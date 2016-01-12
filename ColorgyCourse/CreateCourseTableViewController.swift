@@ -28,6 +28,59 @@ class CreateCourseTableViewController: UIViewController {
         print(LocalCourseDB.getAllStoredCoursesObject())
     }
     
+    @IBAction func createLocalCourseClicked() {
+        if let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents) {
+            if let periods = lc.periods {
+                print(periods.count)
+                if periods.count >= 9 {
+                    alertCreating("小提醒", error: "課程最多只能有9節的時間，多的時間將不會存下來喔！如果還是想要建立課程的話，請按建立！", confirmBlock: { () -> Void in
+                        self.confirmCreateLocalCourse(lc)
+                    })
+                } else {
+                    confirmCreateLocalCourse(lc)
+                }
+            } else {
+                confirmCreateLocalCourse(lc)
+            }
+        } else {
+            if courseName == nil || courseName == "" {
+                // no name of course
+                alertError("資料有問題", error: "建立課程需要最少輸入課程的名稱！")
+            }
+        }
+    }
+    
+    @IBAction func popBackToSearchView() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func confirmCreateLocalCourse(lc: LocalCourse) {
+        LocalCourseDB.storeLocalCourseToDB(lc)
+        popBackToSearchView()
+    }
+    
+    func alertCreating(title: String?, error: String?, confirmBlock: () -> Void) {
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let ok = UIAlertAction(title: "建立", style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in
+            confirmBlock()
+        }
+        let cancel = UIAlertAction(title: "重新輸入", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
+    func alertError(title: String?, error: String?) {
+        let alert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        let ok = UIAlertAction(title: "知道了", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(ok)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
     func createNewTimeAndLocationContent() {
         if locationContents != nil {
             locationContents?.append("")

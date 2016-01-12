@@ -38,6 +38,10 @@ class LocalCourse : NSObject {
     
     override var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
     
+    enum LocalCourseError: ErrorType {
+        case CourseHasNoName
+    }
+    
     init?(code: String?, name: String?, year: Int?, term: Int?, lecturer: String?, credits: Int?, _type: String?, days: [Int]?, periods: [Int]?, locations: [String]?, general_code: String?) {
         // optional part
         self.days = days

@@ -311,6 +311,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
             CourseDB.deleteCourseWithCourseCode(course.code)
             alertDeleteCourseView.hideView(0.4)
+            alertDeleteCourseView.removeFromSuperview()
             // successfully delete course
             // change state
             cell.hasEnrolledState = false
@@ -321,6 +322,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             }
             }) { () -> Void in
                 alertDeleteCourseView.hideView(0.4)
+                alertDeleteCourseView.removeFromSuperview()
         }
     }
     
@@ -333,14 +335,17 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
         }
         
         alertDeleteCourseView.hideView(0.4)
+        alertDeleteCourseView.removeFromSuperview()
     }
     
     func alertDeleteCourseView(didTapPreserveCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
         print("didTapPreserveCourseAlertDeleteCourseView")
+        alertDeleteCourseView.removeFromSuperview()
     }
     
     func alertDeleteCourseView(didTapOnBackgroundAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView) {
         print("didTapOnBackgroundAlertDeleteCourseView")
+        alertDeleteCourseView.removeFromSuperview()
     }
     
     
@@ -363,7 +368,8 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         print("didtapadd")
         print("\(course)")
         print("didtapadd")
-        ColorgyAPI.PUTCourseToServer(course.code, year: 2015, term: 1, success: { () -> Void in
+        let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+        ColorgyAPI.PUTCourseToServer(course.code, year: semester.year, term: semester.term, success: { () -> Void in
             self.animateSuccessfullyAddCourseView()
             CourseDB.storeCourseToDB(course)
             CourseUpdateHelper.needUpdateCourse()

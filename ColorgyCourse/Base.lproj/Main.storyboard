@@ -1312,10 +1312,14 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="創建課程" id="DoW-gk-hKf">
-                                        <barButtonItem key="leftBarButtonItem" image="backButton" id="BnS-G9-qts"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" id="tYp-PA-hmr">
+                                        <barButtonItem key="leftBarButtonItem" image="backButton" id="BnS-G9-qts">
                                             <connections>
-                                                <action selector="testLocalCourse" destination="CrJ-To-htV" id="fYM-xK-ea9"/>
+                                                <action selector="popBackToSearchView" destination="CrJ-To-htV" id="9iS-ic-88Y"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="建立" id="tYp-PA-hmr">
+                                            <connections>
+                                                <action selector="createLocalCourseClicked" destination="CrJ-To-htV" id="4wf-iM-j44"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
