@@ -45,13 +45,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            Flurry.setCrashReportingEnabled(true)       // records app crashing in Flurry
 //            Flurry.logEvent("User Start Application")        // Example of even logging
 //            Flurry.setDebugLogEnabled(false)
+            let id = UserSetting.UserId() ?? -1
+            let school = UserSetting.UserPossibleOrganization() ?? "no school"
+            let name = UserSetting.UserName() ?? "no name"
+            let params = ["user_id": id, "user_name": name, "school": school]
+            Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
         } else {
             Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
 //            Flurry.logEvent("User Start Application, for testing")
 //            Flurry.setDebugLogEnabled(true)
-            Flurry.logEvent("testing params", withParameters: ["this": "is", "Just": "a test!"], timed: false)
-            Flurry.logEvent("testing params2", withParameters: ["This": "is with a capital letter", "Just": "a test!"], timed: false)
-            Flurry.logEvent("testing param3", withParameters: ["This": "is 中文", "Just": "a test!", "中文": "測試"], timed: false)
+            let id = UserSetting.UserId() ?? -1
+            let school = UserSetting.UserPossibleOrganization() ?? "no school"
+            let name = UserSetting.UserName() ?? "no name"
+            let params = ["user_id": id, "user_name": name, "school": school]
+            Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
         }
         
         // register for notification
@@ -91,6 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            DevelopmentTestingMethods.logCoursesSessionLength()
 //            DevelopmentTestingMethods.testSchoolPeriods()
 //            DevelopmentTestingMethods.testGetDepartment("NTUST")
+//            DevelopmentTestingMethods.tryGettingCoreData()
         }
         return true
     }

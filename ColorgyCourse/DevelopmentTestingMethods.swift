@@ -116,4 +116,20 @@ class DevelopmentTestingMethods {
             })
         }
     }
+    
+    class func tryGettingCoreData() {
+        var tryCounter = 0
+        let lc = LocalCourse(name: "iadsjj", lecturer: "kjsdjk", timePeriodsContents: [], locationContents: [])
+        print(lc)
+        print([[]].count)
+        while tryCounter <= 10000 {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                LocalCourseDB.storeLocalCourseToDB(lc)
+                LocalCourseDB.deleteAllCourses()
+            })
+            tryCounter++
+        }
+        print("pass the test")
+        print("")
+    }
 }

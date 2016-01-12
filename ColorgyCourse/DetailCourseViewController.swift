@@ -25,8 +25,11 @@ class DetailCourseViewController: UIViewController {
     }
     
     private func updateUI() {
-        detailNavigationItem?.title = course?.name
-        detailNavigationItem?.title = localCourse?.name
+        if course != nil {
+            detailNavigationItem?.title = course?.name
+        } else if localCourse != nil {
+            detailNavigationItem?.title = localCourse?.name
+        }
     }
     
     // containers
