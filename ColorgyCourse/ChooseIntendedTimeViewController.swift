@@ -12,11 +12,13 @@ class ChooseIntendedTimeViewController: UIViewController {
     
     @IBOutlet weak var intendedTimeTableView: UITableView?
     var intendedTimes: [Int]?
+    let intendedInfos = ["大六", "大五", "大四", "大三", "大二", "大一"]
     var indexPathUserSelected: Int = -1
     var choosedIntendedTime: Int?
     // temp
     var school: String!
     var department: String!
+    var currentYear: Int = 1945
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +27,10 @@ class ChooseIntendedTimeViewController: UIViewController {
         intendedTimeTableView?.delegate = self
         intendedTimeTableView?.dataSource = self
         
-        let now = NSDate()
-        let formatter = NSDateFormatter()
-        //        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
-        formatter.dateFormat = "yyyy"
-        // calculate the year
-        let year = Int(formatter.stringFromDate(now)) ?? 1945
+        let s = Semester.currentSemesterAndYear()
+        currentYear = s.0
         intendedTimes = [Int]()
-        for y in (year-10)...(year+4) {
+        for y in (currentYear-5)...(currentYear) {
             intendedTimes?.append(y)
         }
         intendedTimeTableView?.reloadData()
@@ -109,7 +107,8 @@ extension ChooseIntendedTimeViewController : UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
         cell.accessoryType = .None
         let intendedTime = (intendedTimes == nil ? 1945 : intendedTimes![indexPath.row])
-        cell.textLabel?.text = String(intendedTime)
+        // check year and term
+        cell.textLabel?.text = String(intendedTime) + intendedInfos[indexPath.row]
         
         // set checkmark
         if indexPathUserSelected >= 0 {

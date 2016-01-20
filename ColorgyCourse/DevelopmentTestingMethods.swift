@@ -16,6 +16,19 @@ class DevelopmentTestingMethods {
         }
     }
     
+    class func test() {
+        ColorgyLogin.loginToFacebook { (token) -> Void in
+            print(token)
+            if let token = token {
+                ColorgyLogin.loginToColorgyWithToken(token, handler: { (response, error) -> Void in
+                    if let res = response {
+                        
+                    }
+                })
+            }
+        }
+    }
+    
     class func enrollAllCoursesInDB() {
         if !Release().mode {
             if let objects = ServerCourseDB.getAllStoredCoursesObject() {

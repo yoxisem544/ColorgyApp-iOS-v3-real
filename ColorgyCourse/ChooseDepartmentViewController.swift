@@ -21,7 +21,7 @@ class ChooseDepartmentViewController: UIViewController {
                     print(departments)
                     }, failure: { () -> Void in
                         // try again
-                    self.departments = nil
+                        self.departments = nil
                 })
             } else {
                 // reload table view
@@ -30,10 +30,10 @@ class ChooseDepartmentViewController: UIViewController {
         }
     }
     var choosedDepartment: String!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         departmentTableView.delegate = self
         departmentTableView.dataSource = self
@@ -43,7 +43,7 @@ class ChooseDepartmentViewController: UIViewController {
         super.viewDidAppear(animated)
         departments = nil
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -52,6 +52,7 @@ class ChooseDepartmentViewController: UIViewController {
     struct Storyboard {
         static let segueIdentifier = "ChooseDepartmentIdentifer"
         static let showIntentedTimeSegue = "show intended time"
+        static let cantFindDepIdentifier = "cant find dep identifier"
     }
     
     @IBAction func backButtonClicked() {
@@ -121,62 +122,74 @@ class ChooseDepartmentViewController: UIViewController {
             })
         }
     }
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
 
 extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
-        cell.accessoryType = .None
-        let name = (departments == nil ? "" : departments[indexPath.row].name)
-        cell.textLabel?.text = name
-        
-        // set checkmark
-        if indexPathUserSelected >= 0 {
-            if indexPathUserSelected == indexPath.row {
-                cell.accessoryType = .Checkmark
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cantFindDepIdentifier, forIndexPath: indexPath)
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
+            cell.accessoryType = .None
+            let name = (departments == nil ? "" : departments[indexPath.row - 1].name)
+            cell.textLabel?.text = name
+            
+            // set checkmark
+            if indexPathUserSelected >= 0 {
+                if indexPathUserSelected == indexPath.row {
+                    cell.accessoryType = .Checkmark
+                }
             }
+            
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if departments == nil {
-            return 0
+            return 1
         } else {
-            return departments.count
+            return departments.count + 1
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if indexPathUserSelected >= 0 {
-            let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
-            previousCell?.accessoryType = .None
+        if indexPath.row == 0 {
+            print("dep need implement perform fro segue")
+        } else {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            if indexPathUserSelected >= 0 {
+                let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
+                previousCell?.accessoryType = .None
+            }
+            
+            print(indexPath.row)
+            let thisCell = tableView.cellForRowAtIndexPath(indexPath)
+            thisCell?.accessoryType = .Checkmark
+            
+            if departments != nil {
+                choosedDepartment = departments[indexPath.row - 1].code
+            }
+            
+            indexPathUserSelected = indexPath.row
+            
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
+            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
+            })
         }
-        
-        print(indexPath.row)
-        let thisCell = tableView.cellForRowAtIndexPath(indexPath)
-        thisCell?.accessoryType = .Checkmark
-        
-        choosedDepartment = departments[indexPath.row].code
-        
-        indexPathUserSelected = indexPath.row
-        
-        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
-        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-            self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
-        })
     }
 }

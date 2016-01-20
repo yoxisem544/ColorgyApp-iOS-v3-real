@@ -51,8 +51,7 @@ class ColorgyLogin {
     /// :returns: token: A access token from Facebook.
     class func loginToFacebook(handler: (token: String?) -> Void) {
         let login = FBSDKLoginManager()
-        let permissions = ["email"]
-        login.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
+        login.logInWithReadPermissions(["email"], handler: { (result, error) -> Void in
             if error != nil {
                 print(ColorgyErrorType.failToLoginFB)
                 print(error.localizedDescription)
