@@ -170,6 +170,14 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
                 })
             }
         }
+        
+        // deactive search bar
+        deactiveSearchBar()
+        
+    }
+    
+    func deactiveSearchBar() {
+        searchControl.active = false
     }
 }
 

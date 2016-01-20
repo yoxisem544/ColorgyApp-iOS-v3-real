@@ -11,6 +11,12 @@ import UIKit
 class ChooseDepartmentViewController: UIViewController {
     
     @IBOutlet weak var departmentTableView: UITableView!
+    
+    var searchControl = UISearchController()
+    
+    var filteredDepartments: [Department] = []
+    var filteredIndexPathUserSelected = -1
+    
     var school: String!
     var indexPathUserSelected: Int = -1
     var departments: [Department]! {
@@ -37,6 +43,14 @@ class ChooseDepartmentViewController: UIViewController {
         // Do any additional setup after loading the view.
         departmentTableView.delegate = self
         departmentTableView.dataSource = self
+        
+        searchControl = UISearchController(searchResultsController: nil)
+        searchControl.searchResultsUpdater = self
+        searchControl.searchBar.sizeToFit()
+        searchControl.dimsBackgroundDuringPresentation = false
+        
+        departmentTableView.tableHeaderView = searchControl.searchBar
+        searchControl.searchBar.placeholder = "搜尋系所"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -137,59 +151,170 @@ class ChooseDepartmentViewController: UIViewController {
 
 extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cantFindDepIdentifier, forIndexPath: indexPath)
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
-            cell.accessoryType = .None
-            let name = (departments == nil ? "" : departments[indexPath.row - 1].name)
-            cell.textLabel?.text = name
-            
-            // set checkmark
-            if indexPathUserSelected >= 0 {
-                if indexPathUserSelected == indexPath.row {
-                    cell.accessoryType = .Checkmark
+        if !searchControl.active {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cantFindDepIdentifier, forIndexPath: indexPath)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
+                cell.accessoryType = .None
+                let name = (departments == nil ? "" : departments[indexPath.row - 1].name)
+                cell.textLabel?.text = name
+                
+                // set checkmark
+                if indexPathUserSelected >= 0 {
+                    if indexPathUserSelected == indexPath.row {
+                        cell.accessoryType = .Checkmark
+                    }
                 }
+                
+                return cell
             }
-            
-            return cell
+        } else {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.cantFindDepIdentifier, forIndexPath: indexPath)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.segueIdentifier, forIndexPath: indexPath)
+                cell.accessoryType = .None
+                let name = filteredDepartments[indexPath.row - 1].name
+                cell.textLabel?.text = name
+                
+                // set checkmark
+                if indexPathUserSelected >= 0 {
+                    if indexPathUserSelected == indexPath.row {
+                        cell.accessoryType = .Checkmark
+                    }
+                }
+                
+                return cell
+            }
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if departments == nil {
-            return 1
+        
+        if !searchControl.active {
+            if departments == nil {
+                return 1
+            } else {
+                return departments.count + 1
+            }
         } else {
-            return departments.count + 1
+            if searchControl.searchBar.text == "" {
+                return 0
+            } else {
+                print("returning number of rows")
+                return filteredDepartments.count + 1
+            }
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
-            print("dep need implement perform fro segue")
+        if !searchControl.active {
+            if indexPath.row == 0 {
+                print("dep need implement perform fro segue")
+            } else {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                if indexPathUserSelected >= 0 {
+                    let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
+                    previousCell?.accessoryType = .None
+                }
+                
+                print(indexPath.row)
+                let thisCell = tableView.cellForRowAtIndexPath(indexPath)
+                thisCell?.accessoryType = .Checkmark
+                
+                if departments != nil {
+                    choosedDepartment = departments[indexPath.row - 1].code
+                }
+                
+                indexPathUserSelected = indexPath.row
+                
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
+                })
+            }
         } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            if indexPathUserSelected >= 0 {
-                let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
-                previousCell?.accessoryType = .None
+            if indexPath.row == 0 {
+                print("dep need implement perform fro segue")
+            } else {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                if indexPathUserSelected >= 0 {
+                    let previousCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: indexPathUserSelected, inSection: 0))
+                    previousCell?.accessoryType = .None
+                }
+                
+                print(indexPath.row)
+                let thisCell = tableView.cellForRowAtIndexPath(indexPath)
+                thisCell?.accessoryType = .Checkmark
+                
+                choosedDepartment = filteredDepartments[indexPath.row - 1].code
+//                if departments != nil {
+//                    choosedDepartment = departments[indexPath.row - 1].code
+//                }
+                
+                indexPathUserSelected = indexPath.row
+                
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
+                })
             }
-            
-            print(indexPath.row)
-            let thisCell = tableView.cellForRowAtIndexPath(indexPath)
-            thisCell?.accessoryType = .Checkmark
-            
-            if departments != nil {
-                choosedDepartment = departments[indexPath.row - 1].code
-            }
-            
-            indexPathUserSelected = indexPath.row
-            
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.4))
-            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: nil)
+        }
+        
+        deactiveSearchBar()
+    }
+    
+    func deactiveSearchBar() {
+        searchControl.active = false
+    }
+}
+
+extension ChooseDepartmentViewController : UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if searchController.active {
+            filterContentForSearchText(searchController.searchBar.text!)
+        } else {
+            departmentTableView.reloadData()
+        }
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        
+        filteredDepartments = []
+        
+        indexPathUserSelected = -1
+        filteredIndexPathUserSelected = -1
+        
+        guard departments != nil else { return }
+        
+        if searchText != "" {
+            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                
+                for d in self.departments {
+                    var isMatch = false
+                    if d.name.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch) != nil {
+                        isMatch = true
+                    }
+
+                    if isMatch {
+                        self.filteredDepartments.append(d)
+                    }
+                }
+                // after filtering, return to main queue
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    print(self.filteredDepartments)
+                    self.departmentTableView.reloadData()
+                    print("reload after filtering")
+                })
             })
+        } else {
+            departmentTableView.reloadData()
         }
     }
 }
