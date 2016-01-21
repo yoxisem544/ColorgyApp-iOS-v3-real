@@ -301,8 +301,12 @@ class ColorgyAPI {
                     }
                 } else {
                     // fail to generate objects
+                    // no course data
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        failure(failInfo: nil)
+                        let semester = Semester.currentSemesterAndYear() as (year: Int, term: Int)
+                        failure(failInfo: "你的學校還沒有這個學期(\(semester.year)-\(semester.term))的課程資料喔！我們已經將您的學校記錄下來了，請等待資料更新！")
+                        let params = ["user_id": "\(UserSetting.UserId())", "organization": "\(UserSetting.UserPossibleOrganization())", "department": "\(UserSetting.UserPossibleDepartment())", "year": semester.year, "term": semester.term]
+                        Flurry.logEvent("v3.0: Organization Course Data Missing", withParameters: params as [NSObject : AnyObject])
                     })
                 }
                 

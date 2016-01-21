@@ -237,8 +237,11 @@ class SearchCourseViewController: UIViewController {
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.processAlertController.message = "下載完成！ 😆"
-                    self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        self.loadCourseData()
+                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2))
+                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                        self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                            self.loadCourseData()
+                        })
                     })
                 })
             
@@ -248,10 +251,10 @@ class SearchCourseViewController: UIViewController {
                 if let failInfo = failInfo {
                     self.processAlertController.message = failInfo
                 } else {
-                    self.processAlertController.message = "下載課程資料時出錯了 😖"
+                    self.processAlertController.message = "下載課程資料時出錯了 😖，請檢查網路是否暢通！"
                 }
                 
-                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2))
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
                     self.processAlertController.dismissViewControllerAnimated(true, completion: nil)
                 })
