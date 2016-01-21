@@ -108,7 +108,7 @@ extension ChooseIntendedTimeViewController : UITableViewDelegate, UITableViewDat
         cell.accessoryType = .None
         let intendedTime = (intendedTimes == nil ? 1945 : intendedTimes![indexPath.row])
         // check year and term
-        cell.textLabel?.text = String(intendedTime) + intendedInfos[indexPath.row]
+        cell.textLabel?.text = String(intendedTime) + " " + String(intendedTime - 1911) + "年度 " + intendedInfos[indexPath.row]
         
         // set checkmark
         if indexPathUserSelected >= 0 {

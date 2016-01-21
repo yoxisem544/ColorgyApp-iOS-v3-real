@@ -28,15 +28,25 @@ class PersonalSettingsTableViewController: UITableViewController {
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == Storyboard.privacySegueIdentifier {
+            
+        }
     }
-    */
+    
+    struct Storyboard {
+        static let privacySegueIdentifier = "privacy segue"
+    }
+    
+    func goToPrivacyControl() {
+        performSegueWithIdentifier(Storyboard.privacySegueIdentifier, sender: nil)
+    }
     
     func goToFanPage() {
         let alert = UIAlertController(title: "你正準備離開ColorgyTable", message: "你現在要前往我們的粉絲專頁！\n如果喜歡這個App，請幫我們按讚加油打氣！", preferredStyle: UIAlertControllerStyle.Alert)
@@ -108,8 +118,14 @@ class PersonalSettingsTableViewController: UITableViewController {
 extension PersonalSettingsTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            goToFanPage()
+            
         } else if indexPath.section == 1 {
+            
+        } else if indexPath.section == 2 {
+            goToPrivacyControl()
+        } else if indexPath.section == 3 {
+            goToFanPage()
+        } else if indexPath.section == 4 {
             alertLogout()
         }
     }
