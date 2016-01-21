@@ -20,11 +20,14 @@ class ServerCourseDB {
             for courseObject in coursesInDB {
                 managedObjectContext.deleteObject(courseObject)
             }
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(ColorgyErrorType.DBFailure.saveFail)
-            }
+            
+            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
+                }
+            })
         } catch {
             print(ColorgyErrorType.DBFailure.fetchFail)
         }
@@ -123,11 +126,13 @@ class ServerCourseDB {
             }
             
                 // save
-            do {
-                try managedObjectContext.save()
-            } catch {
-               print(ColorgyErrorType.DBFailure.saveFail)
-            }
+            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
+                }
+            })
         }
     }
     
@@ -225,11 +230,13 @@ class ServerCourseDB {
                 }
             }
             // save
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(ColorgyErrorType.DBFailure.saveFail)
-            }
+            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
+                }
+            })
         }
         
     }
