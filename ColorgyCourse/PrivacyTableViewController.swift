@@ -24,6 +24,8 @@ class PrivacyTableViewController: UITableViewController {
         publicTimeTableSwitch.addTarget(self, action: "publicTimeTableSwitchValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
         publicTimeTableSwitch.enabled = false
         publicTimeTableSwitch.on = false
+        
+        navigationItem.title = "隱私設定"
     }
     
     override func viewDidAppear(animated: Bool) {
