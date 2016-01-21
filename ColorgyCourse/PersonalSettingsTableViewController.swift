@@ -117,6 +117,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 
 extension PersonalSettingsTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 0 {
             
         } else if indexPath.section == 1 {

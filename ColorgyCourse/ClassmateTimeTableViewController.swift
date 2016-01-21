@@ -140,7 +140,6 @@ class ClassmateTimeTableViewController: UIViewController {
                     }
                 })
             }, failure: { () -> Void in
-                // TODO: show error view or reload view
                 // maybe just reload, delay for 2 second.
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
@@ -153,49 +152,62 @@ class ClassmateTimeTableViewController: UIViewController {
     
     func loadUserCourse() {
         self.courses = [Course]()
-        ColorgyAPI.getUserCoursesWithUserId("\(userCourseObject.user_id)", completionHandler: { (userCourseObjects) -> Void in
-            if let userCourseObjects = userCourseObjects {
-                print(userCourseObjects)
-                // check only the match org, filter the other
-                let organizationCode = UserSetting.UserPossibleOrganization()
-                var filteredUserCourseObjects = [UserCourseObject]()
-                for object in userCourseObjects {
-                    if let code = object.course_organization_code {
-                        if code == organizationCode {
-                            filteredUserCourseObjects.append(object)
+        // check privacy setting
+        ColorgyAPI.GetUserPrivacySetting(userId: userCourseObject.user_id, success: { (isTimeTablePublic) -> Void in
+            if isTimeTablePublic {
+                ColorgyAPI.getUserCoursesWithUserId("\(self.userCourseObject.user_id)", completionHandler: { (userCourseObjects) -> Void in
+                    if let userCourseObjects = userCourseObjects {
+                        print(userCourseObjects)
+                        // check only the match org, filter the other
+                        let organizationCode = UserSetting.UserPossibleOrganization()
+                        var filteredUserCourseObjects = [UserCourseObject]()
+                        for object in userCourseObjects {
+                            if let code = object.course_organization_code {
+                                if code == organizationCode {
+                                    filteredUserCourseObjects.append(object)
+                                }
+                            }
+                        }
+                        for object in filteredUserCourseObjects {
+                            ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, success: { (courseRawDataObject) -> Void in
+                                let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+                                dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                                    if let course = Course(rawData: courseRawDataObject) {
+                                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            self.courses.append(course)
+                                            let b = NSDate()
+                                            if filteredUserCourseObjects.count == self.courses.count {
+                                                self.timetable.courses = self.courses
+                                            }
+                                            let now = NSDate().timeIntervalSinceDate(b)
+                                            print(now*1000)
+                                        })
+                                    }
+                                })
+                                }, failure: { () -> Void in
+                                    // TODO: ???
+                            })
                         }
                     }
-                }
-                for object in filteredUserCourseObjects {
-                    ColorgyAPI.getCourseRawDataObjectWithCourseCode(object.course_code, success: { (courseRawDataObject) -> Void in
-                        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-                        dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                            if let course = Course(rawData: courseRawDataObject) {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.courses.append(course)
-                                    let b = NSDate()
-                                    if filteredUserCourseObjects.count == self.courses.count {
-                                        self.timetable.courses = self.courses
-                                    }
-                                    let now = NSDate().timeIntervalSinceDate(b)
-                                    print(now*1000)
-                                })
-                            }
+                    }, failure: { () -> Void in
+                        // maybe just reload, delay for 2 second.
+                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                            print("retrying")
+                            self.loadUserCourse()
                         })
-                        }, failure: { () -> Void in
-                            // ???
-                    })
-                }
+                })
+            } else {
+                // TODO: handle privacy setting
             }
             }, failure: { () -> Void in
-                // TODO: show error view or reload view
-                // maybe just reload, delay for 2 second.
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
                     print("retrying")
                     self.loadUserCourse()
                 })
         })
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -248,7 +260,6 @@ extension ClassmateTimeTableViewController : UIScrollViewDelegate {
 
 extension ClassmateTimeTableViewController : TimeTableViewDelegate {
     func timeTableViewDidScroll(scrollView: UIScrollView) {
-        print(scrollView.contentOffset.x)
         shiftHeader(scrollView)
     }
     

@@ -1082,7 +1082,7 @@ class ColorgyAPI {
         })
     }
     
-    class func GETMEPrivacySetting(success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
+    class func GETMEPrivacySetting(success success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -1123,7 +1123,7 @@ class ColorgyAPI {
         })
     }
     
-    class func GetUserPrivacySetting(userId: Int, success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
+    class func GetUserPrivacySetting(userId userId: Int,  success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -1169,7 +1169,7 @@ class ColorgyAPI {
         })
     }
     
-    class func PATCHMEPrivacySetting(on: Bool, success: () -> Void, failure: () -> Void) {
+    class func PATCHMEPrivacySetting(trunIt on: Bool, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
