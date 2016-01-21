@@ -31,8 +31,6 @@ class CourseDB {
         } catch {
             print(ColorgyErrorType.DBFailure.fetchFail)
         }
-        
-        
     }
     // delete specific course using code: String
     /// You can delete a course with a specific course code.

@@ -29,12 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // every time open the app, download new data
         CourseUpdateHelper.needUpdateCourse()
 
-        
-//        UIApplication.sharedApplication().unregisterForRemoteNotifications()
-//        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
-//        UIApplication.sharedApplication().registerForRemoteNotifications()
-//        println(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
-//        println()
         // crashlytics
         Fabric.with([Crashlytics.self()])
         
@@ -42,9 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if Release().mode {
             // setup Flurry
             Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
-//            Flurry.setCrashReportingEnabled(true)       // records app crashing in Flurry
-//            Flurry.logEvent("User Start Application")        // Example of even logging
-//            Flurry.setDebugLogEnabled(false)
             let id = UserSetting.UserId() ?? -1
             let school = UserSetting.UserPossibleOrganization() ?? "no school"
             let name = UserSetting.UserName() ?? "no name"
@@ -52,8 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
         } else {
             Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
-//            Flurry.logEvent("User Start Application, for testing")
-//            Flurry.setDebugLogEnabled(true)
             let id = UserSetting.UserId() ?? -1
             let school = UserSetting.UserPossibleOrganization() ?? "no school"
             let name = UserSetting.UserName() ?? "no name"
@@ -92,19 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if !Release().mode {
-            
-//            DevelopmentTestingMethods.enrollAllCoursesInDB()
-//            DevelopmentTestingMethods.changeSchool("NTUST")
-//            DevelopmentTestingMethods.logCoursesSessionLength()
-//            DevelopmentTestingMethods.testSchoolPeriods()
-//            DevelopmentTestingMethods.testGetDepartment("NTUST")
-//            DevelopmentTestingMethods.tryGettingCoreData()
-//            DevelopmentTestingMethods.test()
-            ColorgyAPI.PATCHUserInfo("NAA", department: "000", year: "2012", success: { () -> Void in
-                print("")
-                }, failure: { () -> Void in
-                print("")
-            })
+            // for dev
         }
         return true
     }

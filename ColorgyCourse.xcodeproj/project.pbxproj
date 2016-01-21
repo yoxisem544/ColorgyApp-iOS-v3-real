@@ -280,6 +280,7 @@
 		63C2B9851C155A57007740DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */,
 				632E0A711C508D240063B941 /* NotificationTableViewController.swift */,
 				632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */,
 				63FBCC461B9346D900B3084F /* ViewController.swift */,
@@ -304,6 +305,14 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */,
+				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
+				632E0A6F1C4FBA510063B941 /* PrivacyTableViewCell.swift */,
+				63F718691C3D17B800870C5F /* OneWayInputTextField.swift */,
+				635B5BC71C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift */,
+				6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */,
+				6311D2111C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift */,
+				6311D20F1C3A4B2A00812934 /* CreateCourseTableViewCell.swift */,
 				639AD58C1C4393DC002F70DD /* CourseDetailView.swift */,
 				6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */,
 				63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */,
@@ -324,6 +333,7 @@
 		63C2B9871C155AE3007740DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
 				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
 				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
 				630DC8A61C0809870060E105 /* SecretKeys.swift */,
@@ -367,19 +377,9 @@
 		63FBCC0D1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXGroup;
 			children = (
-				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
-				632E0A6F1C4FBA510063B941 /* PrivacyTableViewCell.swift */,
-				63F718691C3D17B800870C5F /* OneWayInputTextField.swift */,
-				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
-				635B5BC71C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift */,
-				6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */,
-				6311D2111C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift */,
-				6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */,
-				63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */,
-				6311D20F1C3A4B2A00812934 /* CreateCourseTableViewCell.swift */,
 				63C2B9871C155AE3007740DB /* Utilities */,
 				63C2B9841C155A39007740DB /* Models */,
 				63C2B9861C155A6D007740DB /* Views */,

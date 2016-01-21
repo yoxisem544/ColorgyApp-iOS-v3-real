@@ -313,8 +313,17 @@ class ColorgyAPI {
                 // then handle response
                 print(ColorgyErrorType.APIFailure.failDownloadCourses)
                 print(error.localizedDescription)
-                print(error)
-                failure(failInfo: "你的網路不穩定，請確定在網路良好的環境下載哦！")
+                print((task?.response as? NSHTTPURLResponse)?.statusCode)
+                if let statusCode = (task?.response as? NSHTTPURLResponse)?.statusCode {
+                    if statusCode == 404 {
+                        failure(failInfo: "我們沒有 \(organization) 課程內容！，錯誤代碼: \(error.localizedDescription)")
+                    }
+                    let params = ["user_id": "\(UserSetting.UserId())", "error_class": "ColorgyAPI.swift", "error_function": "getSchoolCourseData:", "error_description": error.localizedDescription]
+                    Flurry.logEvent("v3.0: App Encounter Error Logging", withParameters: params)
+                    Flurry.logError("ColorgyAPI.swift -> getSchoolCourseData:", message: "fail to get \(organization) course data", error: error)
+                } else {
+                    failure(failInfo: "你的網路不穩定，請確定在網路良好的環境下載哦！")
+                }
         })
     }
     
