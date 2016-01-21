@@ -298,6 +298,7 @@ class SearchCourseViewController: UIViewController {
         static let courseCellIdentifier = "courseCellIdentifier"
         static let createCourseCellIdentifier = "createCourseCellIdentifier"
         static let toCreateCourseSegue = "to create course view"
+        static let showCourseDetailViewSegueIdentifier = "show course detail segue"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -306,6 +307,11 @@ class SearchCourseViewController: UIViewController {
             vc.delegate = self
             if let courseName = sender as? String {
                 vc.courseName = courseName
+            }
+        } else if segue.identifier == Storyboard.showCourseDetailViewSegueIdentifier {
+            let vc = segue.destinationViewController as! DetailCourseViewController
+            if let course = sender as? Course {
+                vc.course = course
             }
         }
     }
@@ -569,6 +575,22 @@ extension SearchCourseViewController : UITableViewDataSource {
             }
             
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if self.courseSegementedControl.selectedSegmentIndex == 0 {
+            if indexPath.section == 0 {
+                print(indexPath)
+                print(filteredCourses[indexPath.row].code)
+                performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: filteredCourses[indexPath.row])
+            }
+        } else {
+            if indexPath.section == 0 {
+                print(indexPath)
+                print(enrolledCourses[indexPath.row].code)
+                performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: enrolledCourses[indexPath.row])
+            }
         }
     }
     

@@ -1544,6 +1544,7 @@
                         <outlet property="navigationBar" destination="rUg-Zg-qqt" id="3NW-iC-UW5"/>
                         <outlet property="searchCourseTableView" destination="2yZ-SG-Vhb" id="Apr-cb-FkH"/>
                         <segue destination="CrJ-To-htV" kind="show" identifier="to create course view" id="bZC-VV-3tR"/>
+                        <segue destination="N5z-L9-5a0" kind="show" identifier="show course detail segue" id="sYP-VR-PPv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJS-B4-VoS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2453,6 +2454,6 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iw3-Wa-rtI"/>
+        <segue reference="sYP-VR-PPv"/>
     </inferredMetricsTieBreakers>
 </document>
