@@ -1081,4 +1081,95 @@ class ColorgyAPI {
                 failure()
         })
     }
+    
+    class func GETMEPrivacySetting(success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me/user_table_settings.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            let json = JSON(response)
+            var isTimeTablePublic = false
+            if json.isArray {
+                if let visibility = json[0]["courses_table_visibility"].bool {
+                    isTimeTablePublic = visibility
+                }
+            } else {
+                if let visibility = json["courses_table_visibility"].bool {
+                    isTimeTablePublic = visibility
+                }
+            }
+            success(isTimeTablePublic: isTimeTablePublic)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure()
+        })
+    }
+    
+    class func GetUserPrivacySetting(userId: Int, success: (isTimeTablePublic: Bool) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        guard userId > 0 else {
+            print("user id must larger then 0")
+            failure()
+            return
+        }
+        let url = "https://colorgy.io/api/v1/user_table_settings/\(userId).json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            let json = JSON(response)
+            var isTimeTablePublic = false
+            if json.isArray {
+                if let visibility = json[0]["courses_table_visibility"].bool {
+                    isTimeTablePublic = visibility
+                }
+            } else {
+                if let visibility = json["courses_table_visibility"].bool {
+                    isTimeTablePublic = visibility
+                }
+            }
+            success(isTimeTablePublic: isTimeTablePublic)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure()
+        })
+    }
+    
+    class func PATCHMEPrivacySetting() {
+        
+    }
 }
