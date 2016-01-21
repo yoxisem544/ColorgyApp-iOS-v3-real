@@ -183,6 +183,17 @@ class UserSetting {
         }
     }
     
+    class func storeFakePeriodsData() {
+        var dicts = [[String : String]]()
+        for i in 1...16 {
+            dicts.append(["code": "\(i)", "_type": "fake_period_data", "id": "\(i)", "order": "\(i)", "time":""])
+        }
+        let ud = NSUserDefaults.standardUserDefaults()
+        ud.setObject(dicts, forKey: UserSettingKey.periodsData)
+        print(dicts)
+        ud.synchronize()
+    }
+    
     class func getPeriodData() -> [[String : String]] {
         let ud = NSUserDefaults.standardUserDefaults()
         let dicts: AnyObject? = ud.objectForKey(UserSettingKey.periodsData)

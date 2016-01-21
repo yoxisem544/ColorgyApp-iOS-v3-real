@@ -312,6 +312,8 @@ class SearchCourseViewController: UIViewController {
             let vc = segue.destinationViewController as! DetailCourseViewController
             if let course = sender as? Course {
                 vc.course = course
+            } else if let localCourse = sender as? LocalCourse {
+                vc.localCourse = localCourse
             }
         }
     }
@@ -581,15 +583,13 @@ extension SearchCourseViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if self.courseSegementedControl.selectedSegmentIndex == 0 {
             if indexPath.section == 0 {
-                print(indexPath)
-                print(filteredCourses[indexPath.row].code)
                 performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: filteredCourses[indexPath.row])
             }
         } else {
             if indexPath.section == 0 {
-                print(indexPath)
-                print(enrolledCourses[indexPath.row].code)
                 performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: enrolledCourses[indexPath.row])
+            } else {
+                performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: enrolledLocalCourse[indexPath.row])
             }
         }
     }
