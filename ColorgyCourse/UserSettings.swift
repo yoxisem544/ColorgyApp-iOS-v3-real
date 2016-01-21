@@ -42,6 +42,7 @@ struct UserSettingKey {
     static let deviceUUID = "pushNotificationDeviceUUID"
     // other settings: user's notification time setting
     static let courseNotificationTime = "courseNotificationTime for local notitfication"
+    static let isCourseNotificationOn = "isCourseNotificationOn for local notitfication"
 }
 
 class UserSetting {
@@ -243,6 +244,21 @@ class UserSetting {
         NSUserDefaults.standardUserDefaults().setInteger(time, forKey: UserSettingKey.courseNotificationTime)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
+    
+    class func isCourseNotificationOn() -> Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey(UserSettingKey.isCourseNotificationOn)
+    }
+    
+    class func setCourseNotification(turnIt on: Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(on, forKey: UserSettingKey.isCourseNotificationOn)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func registerCourseNotification() {
+        UserSetting.setCourseNotificationTime(time: 10)
+        UserSetting.setCourseNotification(turnIt: true)
+    }
+    
     
     // MARK: - save user settings
     // store at first time login

@@ -42,8 +42,11 @@ class PersonalSettingsTableViewController: UITableViewController {
     
     struct Storyboard {
         static let privacySegueIdentifier = "privacy segue"
+        static let notificationTimeSegueIdentifier = "to notification time segue"
     }
-    
+    func goToNotificationTimeControl() {
+        performSegueWithIdentifier(Storyboard.notificationTimeSegueIdentifier, sender: nil)
+    }
     func goToPrivacyControl() {
         performSegueWithIdentifier(Storyboard.privacySegueIdentifier, sender: nil)
     }
@@ -121,7 +124,7 @@ extension PersonalSettingsTableViewController {
         if indexPath.section == 0 {
             
         } else if indexPath.section == 1 {
-            
+            goToNotificationTimeControl()
         } else if indexPath.section == 2 {
             goToPrivacyControl()
         } else if indexPath.section == 3 {
