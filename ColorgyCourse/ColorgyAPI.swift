@@ -1169,7 +1169,43 @@ class ColorgyAPI {
         })
     }
     
-    class func PATCHMEPrivacySetting() {
+    class func PATCHMEPrivacySetting(on: Bool, success: () -> Void, failure: () -> Void) {
         
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        guard let userId = UserSetting.UserId() else {
+            print(ColorgyErrorType.noSuchUser)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me/user_table_settings/\(userId).json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        let params = [
+            "user_table_settings": [
+                "courses_table_visibility": on
+            ]
+        ]
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            success()
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure()
+        })
     }
 }
