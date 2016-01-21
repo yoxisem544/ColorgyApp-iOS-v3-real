@@ -40,6 +40,8 @@ struct UserSettingKey {
     // push notification
     static let pushNotificationDeviceToken = "pushNotificationDeviceToken"
     static let deviceUUID = "pushNotificationDeviceUUID"
+    // other settings: user's notification time setting
+    static let courseNotificationTime = "courseNotificationTime for local notitfication"
 }
 
 class UserSetting {
@@ -230,6 +232,16 @@ class UserSetting {
             return dicts
         }
         return nil
+    }
+    
+    // MARK: user course notification time
+    class func getCourseNotificationTime() -> Int {
+        return NSUserDefaults.standardUserDefaults().integerForKey(UserSettingKey.courseNotificationTime)
+    }
+    
+    class func setCourseNotificationTime(time time: Int) {
+        NSUserDefaults.standardUserDefaults().setInteger(time, forKey: UserSettingKey.courseNotificationTime)
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     // MARK: - save user settings
