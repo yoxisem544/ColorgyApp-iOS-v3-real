@@ -78,6 +78,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                     UserSetting.deleteAllUserSettings()
                     ServerCourseDB.deleteAllCourses()
                     CourseDB.deleteAllCourses()
+                    LocalCourseDB.deleteAllCourses()
                     // Flurry
                     if Release().mode {
                         Flurry.logEvent("v3.0: User Logout App")

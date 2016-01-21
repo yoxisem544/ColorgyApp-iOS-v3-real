@@ -51,24 +51,26 @@ class ColorgyLogin {
     /// :returns: token: A access token from Facebook.
     class func loginToFacebook(handler: (token: String?) -> Void) {
         let login = FBSDKLoginManager()
-        login.logInWithReadPermissions(["email"], handler: { (result, error) -> Void in
-            if error != nil {
-                print(ColorgyErrorType.failToLoginFB)
-                print(error.localizedDescription)
-                handler(token: nil)
-            } else if result.isCancelled {
-                print(ColorgyErrorType.canceledFBLogin)
-                handler(token: nil)
-            } else {
-                print("logged in")
-                if let token = result.token.tokenString {
-                    print(token)
-                    handler(token: token)
-                } else {
+        FBSDKLoginManager.renewSystemCredentials { (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
+            login.logInWithReadPermissions(["email"], handler: { (result, error) -> Void in
+                if error != nil {
+                    print(ColorgyErrorType.failToLoginFB)
+                    print(error.localizedDescription)
                     handler(token: nil)
+                } else if result.isCancelled {
+                    print(ColorgyErrorType.canceledFBLogin)
+                    handler(token: nil)
+                } else {
+                    print("logged in")
+                    if let token = result.token.tokenString {
+                        print(token)
+                        handler(token: token)
+                    } else {
+                        handler(token: nil)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     
     // connect to colorgy with fb token
@@ -82,6 +84,7 @@ class ColorgyLogin {
         // configure AFNetworking
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.requestSerializer.cachePolicy = .ReloadIgnoringLocalAndRemoteCacheData
         afManager.responseSerializer = AFJSONResponseSerializer()
         
         print("prepare to login to colorgy")

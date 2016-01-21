@@ -100,10 +100,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            DevelopmentTestingMethods.testGetDepartment("NTUST")
 //            DevelopmentTestingMethods.tryGettingCoreData()
 //            DevelopmentTestingMethods.test()
-            ColorgyAPI.PATCHUserInfo("NTU", department: "000", year: "2012", success: { () -> Void in
-                
+            ColorgyAPI.PATCHUserInfo("NAA", department: "000", year: "2012", success: { () -> Void in
+                print("")
                 }, failure: { () -> Void in
-                    
+                print("")
             })
         }
         return true
