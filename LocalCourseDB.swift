@@ -24,7 +24,7 @@ class LocalCourseDB {
                 managedObjectContext.deleteObject(courseObject)
             }
             
-            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+            dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
                 do {
                     try managedObjectContext.save()
                 } catch {
@@ -73,7 +73,7 @@ class LocalCourseDB {
             }
         }
         
-        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
             do {
                 try managedObjectContext.save()
             } catch {
@@ -156,7 +156,7 @@ class LocalCourseDB {
             }
             
             // save
-            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+            dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
                 do {
                     try managedObjectContext.save()
                 } catch {

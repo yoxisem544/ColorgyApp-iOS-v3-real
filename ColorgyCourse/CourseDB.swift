@@ -23,7 +23,7 @@ class CourseDB {
             for courseObject in coursesInDB {
                 managedObjectContext.deleteObject(courseObject)
             }
-            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+            dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
                 do {
                     try managedObjectContext.save()
                 } catch {
@@ -44,7 +44,7 @@ class CourseDB {
                 if courseObject.code == code {
                     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
                     managedObjectContext.deleteObject(courseObject)
-                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                    dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
                         do {
                             try managedObjectContext.save()
                         } catch {
@@ -182,7 +182,7 @@ class CourseDB {
             
             // save
             // TODO: fuck the nil
-            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+            dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
                 do {
                     try managedObjectContext.save()
                 } catch {
@@ -294,7 +294,7 @@ class CourseDB {
         }
         // save
         // TODO: fuck the nil
-        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
             do {
                 try managedObjectContext.save()
             } catch {
@@ -316,7 +316,7 @@ class CourseDB {
         courseObject.credits = 3
         
         // save
-        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
             do {
                 try managedObjectContext.save()
             } catch {
