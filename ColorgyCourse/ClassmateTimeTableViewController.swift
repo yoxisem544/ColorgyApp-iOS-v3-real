@@ -21,6 +21,8 @@ class ClassmateTimeTableViewController: UIViewController {
     
     // private API
     private var courses: [Course]!
+    
+    var retryCounter = 20
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,11 +143,14 @@ class ClassmateTimeTableViewController: UIViewController {
                 })
             }, failure: { () -> Void in
                 // maybe just reload, delay for 2 second.
-                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
-                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                    print("retrying")
-                    self.loadUserImage()
-                })
+                if self.retryCounter > 0 {
+                    self.retryCounter -= 1
+                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                        print("retrying")
+                        self.loadUserImage()
+                    })
+                }
             })
         }
     }
@@ -201,11 +206,14 @@ class ClassmateTimeTableViewController: UIViewController {
                 // TODO: handle privacy setting
             }
             }, failure: { () -> Void in
-                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
-                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                    print("retrying")
-                    self.loadUserCourse()
-                })
+                if self.retryCounter > 0 {
+                    self.retryCounter -= 1
+                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                    dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                        print("retrying")
+                        self.loadUserCourse()
+                    })
+                }
         })
         
     }

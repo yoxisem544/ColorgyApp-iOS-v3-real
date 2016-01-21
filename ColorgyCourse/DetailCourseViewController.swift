@@ -45,6 +45,8 @@ class DetailCourseViewController: UIViewController {
     var classmatesView: ClassmatesContainerView!
     var courseDetailView: CourseDetailView!
     
+    var retryCounter = 10
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,11 +122,14 @@ class DetailCourseViewController: UIViewController {
                     self.contentScrollView.contentSize.height = self.courseDetailView.frame.height + self.classmatesView.bounds.size.height
                     }, failure: { () -> Void in
                         // retry
-                        print("retry to download course again")
-                        let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
-                        dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                            self.downloadCourseInfo()
-                        })
+                        if self.retryCounter > 0 {
+                            print("retry to download course again")
+                            self.retryCounter -= 1
+                            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 2.0))
+                            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                                self.downloadCourseInfo()
+                            })
+                        }
                 })
             })
         } else if localCourse != nil {
