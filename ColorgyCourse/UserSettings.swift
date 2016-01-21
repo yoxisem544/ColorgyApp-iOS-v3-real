@@ -311,6 +311,8 @@ class UserSetting {
         // put it to background worker
 //        self.setNeedDeletePushNotitficationDeviceToken()
         ud.removeObjectForKey(UserSettingKey.deviceUUID)
+        // course notification time
+        ud.removeObjectForKey(UserSettingKey.courseNotificationTime)
         ud.synchronize()
     }
     // 2. refresh token expired logout

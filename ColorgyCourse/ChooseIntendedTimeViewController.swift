@@ -76,6 +76,7 @@ class ChooseIntendedTimeViewController: UIViewController {
                                 let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
                                 self.presentViewController(vc, animated: true, completion: nil)
                                 UserSetting.changeLoginStateSuccessfully()
+                                UserSetting.setCourseNotificationTime(time: 10)
                             } else {
                                 // fail to get period data
                                 let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
