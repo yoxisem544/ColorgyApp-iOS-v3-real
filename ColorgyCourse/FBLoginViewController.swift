@@ -54,9 +54,21 @@ class FBLoginViewController: UIViewController {
                                         UserSetting.registerCourseNotification()
                                     } else {
                                         // fail to get period data
-                                        let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
-                                        self.presentViewController(alert, animated: true, completion: nil)
-                                        self.showButtons()
+//                                        let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
+//                                        self.presentViewController(alert, animated: true, completion: nil)
+//                                        self.showButtons()
+                                        UserSetting.storeFakePeriodsData()
+                                        if Release().mode {
+                                            Flurry.logEvent("v3.0: User login using FB, but has no period data")
+                                        }
+                                        // need update course
+                                        CourseUpdateHelper.needUpdateCourse()
+                                        // ready to change view
+                                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                        let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+                                        self.presentViewController(vc, animated: true, completion: nil)
+                                        UserSetting.changeLoginStateSuccessfully()
+                                        UserSetting.registerCourseNotification()
                                     }
                                 })
                             } else {
