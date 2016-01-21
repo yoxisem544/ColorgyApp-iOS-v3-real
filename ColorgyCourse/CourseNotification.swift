@@ -46,9 +46,10 @@ class CourseNotification {
                         setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
                     }
                 }
-                
-    //                        print(UIApplication.sharedApplication().scheduledLocalNotifications)
             }
+            
+            print(UIApplication.sharedApplication().scheduledLocalNotifications)
+            print("")
         }
     }
     
@@ -160,12 +161,15 @@ class CourseNotification {
                 // if there is no first time component, set string to -, then convertion will fail.
                 if let startTimeHour = Int(startTime.componentsSeparatedByString(":").first ?? "-") {
                     if let startTimeMinute = Int(startTime.componentsSeparatedByString(":").last ?? "-") {
-                        component.hour = startTimeHour
-                        component.minute = startTimeMinute - 10
-                        if (startTimeMinute - 10) < 0 {
+                        let notificationTime = UserSetting.getCourseNotificationTime()
+                        let notitficationHour = notificationTime / 60
+                        let notificationMinute = notificationTime % 60
+                        component.hour = startTimeHour - notitficationHour
+                        component.minute = startTimeMinute - notificationMinute
+                        if (startTimeMinute - notificationMinute) < 0 {
                             // less then 10 mins
-                            component.hour = startTimeHour - 1
-                            component.minute = (startTimeMinute - 10) + 60
+                            component.hour = startTimeHour - notitficationHour - 1
+                            component.minute = (startTimeMinute - notificationMinute) + 60
                         }
                         // got hour and minute
                         component.second = 0
@@ -215,12 +219,15 @@ class CourseNotification {
                 // if there is no first time component, set string to -, then convertion will fail.
                 if let startTimeHour = Int(startTime.componentsSeparatedByString(":").first ?? "-") {
                     if let startTimeMinute = Int(startTime.componentsSeparatedByString(":").last ?? "-") {
-                        component.hour = startTimeHour
-                        component.minute = startTimeMinute - 10
-                        if (startTimeMinute - 10) < 0 {
+                        let notificationTime = UserSetting.getCourseNotificationTime()
+                        let notitficationHour = notificationTime / 60
+                        let notificationMinute = notificationTime % 60
+                        component.hour = startTimeHour - notitficationHour
+                        component.minute = startTimeMinute - notificationMinute
+                        if (startTimeMinute - notificationMinute) < 0 {
                             // less then 10 mins
-                            component.hour = startTimeHour - 1
-                            component.minute = (startTimeMinute - 10) + 60
+                            component.hour = startTimeHour - notitficationHour - 1
+                            component.minute = (startTimeMinute - notificationMinute) + 60
                         }
                         // got hour and minute
                         component.second = 0

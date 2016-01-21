@@ -21,6 +21,13 @@ class NotificationTableViewController: UITableViewController {
                 UserSetting.setCourseNotificationTime(time: time)
                 self.view.endEditing(true)
                 courseNotificationLabel.text = "課前通知： \(time) 分鐘"
+                if !courseNotificationSwitch.on {
+                    // if its not on, turn it on
+                    courseNotificationSwitch.setOn(true, animated: true)
+                    UserSetting.setCourseNotification(turnIt: true)
+                    print(UserSetting.isCourseNotificationOn())
+                }
+                CourseNotification.registerForCourseNotification()
             } else {
                 showAlert("你設定的時間已經開始上課囉！！")
             }
@@ -58,6 +65,8 @@ class NotificationTableViewController: UITableViewController {
         courseNotificationSwitch.addTarget(self, action: "courseNotificationSwitchValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
         tableView.keyboardDismissMode = .OnDrag
+        
+        navigationItem.title = "提醒設定"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,6 +77,9 @@ class NotificationTableViewController: UITableViewController {
     
     func courseNotificationSwitchValueChanged(s: UISwitch) {
         UserSetting.setCourseNotification(turnIt: s.on)
+        if s.on {
+            CourseNotification.registerForCourseNotification()
+        }
     }
     
 
