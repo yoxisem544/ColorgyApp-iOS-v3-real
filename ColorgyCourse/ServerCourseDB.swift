@@ -233,21 +233,29 @@ class ServerCourseDB {
         }
     }
     
-    class func getAllStoredCoursesObject(complete: (courseDataFromServerDBManagedObjects: [CourseDataFromServerDBManagedObject]?) -> Void) {
+    class func getAllStoredCoursesObject(complete complete: (courseDataFromServerDBManagedObjects: [CourseDataFromServerDBManagedObject]?) -> Void) {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
+        let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+        
         do {
             let coursesInDB: [CourseDataFromServerDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
             if coursesInDB.count == 0 {
                 // return nil if element in array is zero.
-                complete(courseDataFromServerDBManagedObjects: nil)
+                dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                    complete(courseDataFromServerDBManagedObjects: nil)
+                })
             } else {
-                complete(courseDataFromServerDBManagedObjects: coursesInDB)
+                dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                    complete(courseDataFromServerDBManagedObjects: coursesInDB)
+                })
             }
         } catch {
             print(ColorgyErrorType.DBFailure.fetchFail)
-            complete(courseDataFromServerDBManagedObjects: nil)
+            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                complete(courseDataFromServerDBManagedObjects: nil)
+            })
         }
     }
 }

@@ -147,22 +147,24 @@ class SearchCourseViewController: UIViewController {
         
         // server course
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            if let courseObjects = ServerCourseDB.getAllStoredCoursesObject() {
-                var courses = [Course]()
-                for courseObject in courseObjects {
-                    if let course = Course(courseDataFromServerDBManagedObject: courseObject) {
-                        courses.append(course)
+            ServerCourseDB.getAllStoredCoursesObject(complete: { (courseDataFromServerDBManagedObjects) -> Void in
+                if let courseObjects = courseDataFromServerDBManagedObjects {
+                    var courses = [Course]()
+                    for courseObject in courseObjects {
+                        if let course = Course(courseDataFromServerDBManagedObject: courseObject) {
+                            courses.append(course)
+                        }
                     }
+                    self.localCachingObjects = courses
+                } else {
+                    self.updateCourseDataClicked(0)
                 }
-                self.localCachingObjects = courses
-            } else {
-                self.updateCourseDataClicked(0)
-            }
-            // load enroll courses
-            self.loadEnrolledCourses()
-            self.loadEnrolledLocalCourses()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.searchCourseTableView.reloadData()
+                // load enroll courses
+                self.loadEnrolledCourses()
+                self.loadEnrolledLocalCourses()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.searchCourseTableView.reloadData()
+                })
             })
         })
     }
