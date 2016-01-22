@@ -17,7 +17,7 @@ class LocalCourseDB {
     /// This method will delete all courses stored in data base.
     class func deleteAllCourses() {
         
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let fetchRequest = NSFetchRequest(entityName: entityName)
             do {
@@ -63,7 +63,7 @@ class LocalCourseDB {
     }
     
     class func getAllStoredCoursesObject(complete complete: (localCourseDBManagedObjects: [LocalCourseDBManagedObject]?) -> Void) {
-        let queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+        let queue = HelloThisIsASerialQueue
         dispatch_sync(queue) { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -85,9 +85,9 @@ class LocalCourseDB {
     
     class func deleteLocalCourseOnDB(localCourse: LocalCourse?) {
         
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-
+            
             guard let localCourse = localCourse else { return }
             guard let localCoursesInDB = LocalCourseDB.getAllStoredCoursesObject() else { return }
             
@@ -96,7 +96,7 @@ class LocalCourseDB {
                     managedObjectContext.deleteObject(lc)
                 }
             }
-        
+            
             do {
                 try managedObjectContext.save()
             } catch {
@@ -106,7 +106,7 @@ class LocalCourseDB {
     }
     
     class func storeLocalCourseToDB(localCourse: LocalCourse?) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! LocalCourseDBManagedObject
             if let localCourse = localCourse {
@@ -180,7 +180,7 @@ class LocalCourseDB {
                 }
                 
                 // save
-            
+                
                 do {
                     try managedObjectContext.save()
                 } catch {

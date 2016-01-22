@@ -16,7 +16,7 @@ class CourseDB {
     // delete all
     /// This method will delete all courses stored in data base.
     class func deleteAllCourses() {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let fetchRequest = NSFetchRequest(entityName: entityName)
             do {
@@ -40,7 +40,7 @@ class CourseDB {
     ///
     /// :param: code: a specific course code
     class func deleteCourseWithCourseCode(code: String) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
                 if let courseObjects = courseDBManagedObjects {
                     for courseObject in courseObjects {
@@ -88,7 +88,7 @@ class CourseDB {
     }
     
     class func getAllStoredCoursesObject(complete complete: (courseDBManagedObjects: [CourseDBManagedObject]?) -> Void) {
-        let queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+        let queue = HelloThisIsASerialQueue
         dispatch_sync(queue) { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -118,7 +118,7 @@ class CourseDB {
     
     /// store a course to DB
     class func storeCourseToDB(course: Course?) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
@@ -229,7 +229,7 @@ class CourseDB {
     
     /// store a course to DB
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             //        let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
@@ -319,7 +319,7 @@ class CourseDB {
     
     // fake data
     class func storeFakeData() {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             // assign data
@@ -331,7 +331,7 @@ class CourseDB {
             courseObject.credits = 3
             
             // save
-        
+            
             do {
                 try managedObjectContext.save()
             } catch {

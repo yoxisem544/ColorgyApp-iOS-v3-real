@@ -571,16 +571,18 @@ extension SearchCourseViewController : UITableViewDataSource {
                     cell.course = filteredCourses[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                        cell.hasEnrolledState = ifEnrolled
-                    })
+                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+//                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+//                        cell.hasEnrolledState = ifEnrolled
+//                    })
                 } else {
                     cell.course = localCachingObjects[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                        cell.hasEnrolledState = ifEnrolled
-                    })
+                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+//                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+//                        cell.hasEnrolledState = ifEnrolled
+//                    })
                 }
                 
                 return cell
@@ -603,9 +605,10 @@ extension SearchCourseViewController : UITableViewDataSource {
                 cell.course = enrolledCourses[indexPath.row]
                 cell.delegate = self
                 cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                    cell.hasEnrolledState = ifEnrolled
-                })
+                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+//                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+//                    cell.hasEnrolledState = ifEnrolled
+//                })
             } else {
                 cell.course = nil
                 cell.localCourse = enrolledLocalCourse[indexPath.row]

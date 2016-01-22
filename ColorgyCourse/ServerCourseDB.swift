@@ -12,9 +12,9 @@ import CoreData
 class ServerCourseDB {
     /// This method will delete all courses stored in data base.
     class func deleteAllCourses() {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-                let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
+            let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
             do {
                 let coursesInDB = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
                 // nothing wrong
@@ -35,10 +35,10 @@ class ServerCourseDB {
     
     /// store a course to DB
     class func storeCourseToDB(course: Course?) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        
+            
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
             if let course = course {
                 
@@ -56,7 +56,7 @@ class ServerCourseDB {
                 }
                 
                 courseObject.general_code = course.general_code
-
+                
                 if (course.days?.count > 0) && (course.periods?.count > 0) {
                     if course.days?.count >= 1 && course.periods?.count >= 1 {
                         courseObject.day_1 = Int32(course.days![1 - 1])
@@ -105,9 +105,9 @@ class ServerCourseDB {
                     }
                     
                 }
-            
+                
                 // save
-            
+                
                 do {
                     try managedObjectContext.save()
                 } catch {
@@ -119,7 +119,7 @@ class ServerCourseDB {
     
     /// store a course to DB
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
-        dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
+        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             if let courses = courses {
@@ -140,7 +140,7 @@ class ServerCourseDB {
                     }
                     
                     courseObject.general_code = course.general_code
-
+                    
                     if (course.days?.count > 0) && (course.periods?.count > 0) {
                         if course.days?.count >= 1 && course.periods?.count >= 1 {
                             courseObject.day_1 = Int32(course.days![1 - 1])
@@ -191,7 +191,7 @@ class ServerCourseDB {
                     }
                 }
                 // save
-            
+                
                 do {
                     try managedObjectContext.save()
                 } catch {
@@ -209,9 +209,9 @@ class ServerCourseDB {
     class func getAllStoredCoursesObject() -> [CourseDataFromServerDBManagedObject]? {
         // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
         let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-            let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
+        let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
         do {
-          let coursesInDB: [CourseDataFromServerDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
+            let coursesInDB: [CourseDataFromServerDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
             if coursesInDB.count == 0 {
                 // return nil if element in array is zero.
                 return nil

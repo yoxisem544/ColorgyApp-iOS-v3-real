@@ -58,12 +58,12 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "475144327.10499"
+                  timestampString = "475145586.295724"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "51"
                   endingLineNumber = "51"
-                  offsetFromSymbolStart = "1722">
+                  offsetFromSymbolStart = "1432">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -73,12 +73,12 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "475144327.105383"
+                  timestampString = "475145586.296127"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -160,22 +160,6 @@
             startingLineNumber = "22"
             endingLineNumber = "22"
             landmarkName = "test()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/CourseNotification.swift"
-            timestampString = "475144512.67238"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "registerForCourseNotification()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

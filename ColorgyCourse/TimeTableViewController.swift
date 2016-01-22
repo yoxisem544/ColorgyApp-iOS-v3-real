@@ -124,7 +124,7 @@ class TimeTableViewController: UIViewController {
                                 courses.append(course)
                             }
                         }
-                        //                print(courses)
+                        print(courses)
                     }
                 })
             })
@@ -138,6 +138,7 @@ class TimeTableViewController: UIViewController {
                                 localCourses.append(localc)
                             }
                         }
+                        print(localCourses)
                     }
                 })
             })
