@@ -64,9 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.backgroundColor = UIColor.whiteColor()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
-        self.window?.rootViewController = vc
-        self.window?.makeKeyAndVisible()
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
+//        self.window?.rootViewController = vc
+//        self.window?.makeKeyAndVisible()
         if !UserSetting.isLogin() {
             // dump data
             CourseDB.deleteAllCourses()
