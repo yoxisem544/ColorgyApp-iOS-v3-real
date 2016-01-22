@@ -33,24 +33,25 @@ class CourseNotification {
         //            print(UIApplication.sharedApplication().scheduledLocalNotifications)
                 }
                 // then register new one
-                if let objects = LocalCourseDB.getAllStoredCoursesObject() {
-                    var courses = [LocalCourse]()
-                    for object in objects {
-                        if let course = LocalCourse(localCourseDBManagedObject: object) {
-                            courses.append(course)
+                LocalCourseDB.getAllStoredCoursesObject(complete: { (localCourseDBManagedObjects) -> Void in
+                    if let objects = localCourseDBManagedObjects {
+                        var courses = [LocalCourse]()
+                        for object in objects {
+                            if let course = LocalCourse(localCourseDBManagedObject: object) {
+                                courses.append(course)
+                            }
+                        }
+                        // get out all course stored in db
+                        for course in courses {
+                            let needNotifiedCourses = checkNeedNotifiedLocalCourse(course)
+                            for needNotifiedCourse in needNotifiedCourses {
+                                setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
+                            }
                         }
                     }
-                    // get out all course stored in db
-                    for course in courses {
-                        let needNotifiedCourses = checkNeedNotifiedLocalCourse(course)
-                        for needNotifiedCourse in needNotifiedCourses {
-                            setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
-                        }
-                    }
-                }
-                
-                print(UIApplication.sharedApplication().scheduledLocalNotifications)
-                print("")
+                    print(UIApplication.sharedApplication().scheduledLocalNotifications)
+                    print("")
+                })
             })
         }
     }

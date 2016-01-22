@@ -170,16 +170,20 @@ class SearchCourseViewController: UIViewController {
     }
     
     private func loadEnrolledLocalCourses() {
-        if let courseObjects = LocalCourseDB.getAllStoredCoursesObject() {
-            var courses = [LocalCourse]()
-            for courseObject in courseObjects {
-                if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
-                    courses.append(c)
+        LocalCourseDB.getAllStoredCoursesObject { (localCourseDBManagedObjects) -> Void in
+            if let courseObjects = localCourseDBManagedObjects {
+                var courses = [LocalCourse]()
+                for courseObject in courseObjects {
+                    if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
+                        courses.append(c)
+                    }
                 }
-            }
-            self.enrolledLocalCourse = courses
-            if courseSegementedControl.selectedSegmentIndex == 1 {
-                searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.None)
+                self.enrolledLocalCourse = courses
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if self.courseSegementedControl.selectedSegmentIndex == 1 {
+                        self.searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.None)
+                    }
+                })
             }
         }
     }
@@ -541,12 +545,16 @@ extension SearchCourseViewController : UITableViewDataSource {
                     // find if match
                     if let code = course.code {
                         if code == courseCode {
-                            complete(ifEnrolled: true)
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                complete(ifEnrolled: true)
+                            })
                         }
                     }
                 }
             }
-            complete(ifEnrolled: false)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                complete(ifEnrolled: false)
+            })
         }
     }
     
@@ -563,12 +571,16 @@ extension SearchCourseViewController : UITableViewDataSource {
                     cell.course = filteredCourses[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                        cell.hasEnrolledState = ifEnrolled
+                    })
                 } else {
                     cell.course = localCachingObjects[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                        cell.hasEnrolledState = ifEnrolled
+                    })
                 }
                 
                 return cell
@@ -591,7 +603,9 @@ extension SearchCourseViewController : UITableViewDataSource {
                 cell.course = enrolledCourses[indexPath.row]
                 cell.delegate = self
                 cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                    cell.hasEnrolledState = ifEnrolled
+                })
             } else {
                 cell.course = nil
                 cell.localCourse = enrolledLocalCourse[indexPath.row]

@@ -62,7 +62,7 @@ class LocalCourseDB {
         
     }
     
-    class func getAllStoredCoursesObject(complete: (localCourseDBManagedObjects: [LocalCourseDBManagedObject]?) -> Void) {
+    class func getAllStoredCoursesObject(complete complete: (localCourseDBManagedObjects: [LocalCourseDBManagedObject]?) -> Void) {
         let queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
         dispatch_sync(queue) { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.

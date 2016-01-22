@@ -116,26 +116,30 @@ class TimeTableViewController: UIViewController {
             var localCourses = [LocalCourse]()
             dispatch_group_async(group, dispatch_get_global_queue(qos, 0), { () -> Void in
                 // server
-                if let objects = CourseDB.getAllStoredCoursesObject() {
-                    print(objects.count)
-                    for obj in objects {
-                        if let course = Course(courseDBManagedObject: obj) {
-                            courses.append(course)
+                CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
+                    if let objects = courseDBManagedObjects {
+                        print(objects.count)
+                        for obj in objects {
+                            if let course = Course(courseDBManagedObject: obj) {
+                                courses.append(course)
+                            }
                         }
+                        //                print(courses)
                     }
-                    //                print(courses)
-                }
+                })
             })
             
             dispatch_group_async(group, dispatch_get_global_queue(qos, 0), { () -> Void in
                 // local
-                if let objects = LocalCourseDB.getAllStoredCoursesObject() {
-                    for o in objects {
-                        if let localc = LocalCourse(localCourseDBManagedObject: o) {
-                            localCourses.append(localc)
+                LocalCourseDB.getAllStoredCoursesObject(complete: { (localCourseDBManagedObjects) -> Void in
+                    if let objects = localCourseDBManagedObjects {
+                        for o in objects {
+                            if let localc = LocalCourse(localCourseDBManagedObject: o) {
+                                localCourses.append(localc)
+                            }
                         }
                     }
-                }
+                })
             })
             
             dispatch_group_notify(group, dispatch_get_global_queue(qos, 0), { () -> Void in
