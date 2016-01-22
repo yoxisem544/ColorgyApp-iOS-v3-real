@@ -47,8 +47,13 @@ class ReportFormView: UIScrollView {
         headerTitleLabel.text = headerTitleText
         headerTitleLabel.textColor = UIColor.whiteColor()
         headerTitleLabel.textAlignment = .Center
+        let headerImageView = UIImageView(frame: CGRectMake(0, 0, 21, 21))
+        headerImageView.image = UIImage(named: "Speaker")
+        headerImageView.frame.origin.x = 16
+        headerImageView.center.y = headerView.center.y
         // add subview
         headerView.addSubview(headerTitleLabel)
+        headerView.addSubview(headerImageView)
         
         // configure check list view
         checkListView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
@@ -146,6 +151,9 @@ class ReportFormView: UIScrollView {
         
         // view background
         self.backgroundColor = ColorgyColor.BackgroundColor
+        
+        // expand scroll view content
+        self.contentSize = CGSize(width: self.frame.width, height: footerView.frame.maxY)
     }
     
     override init(frame: CGRect) {

@@ -44,9 +44,17 @@ class PersonalSettingsTableViewController: UITableViewController {
         static let privacySegueIdentifier = "privacy segue"
         static let notificationTimeSegueIdentifier = "to notification time segue"
     }
+    
+    func goToReportControl() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("report view controller") as! ReportViewController
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
     func goToNotificationTimeControl() {
         performSegueWithIdentifier(Storyboard.notificationTimeSegueIdentifier, sender: nil)
     }
+    
     func goToPrivacyControl() {
         performSegueWithIdentifier(Storyboard.privacySegueIdentifier, sender: nil)
     }
@@ -123,7 +131,7 @@ extension PersonalSettingsTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.section == 0 {
-            
+            goToReportControl()
         } else if indexPath.section == 1 {
             goToNotificationTimeControl()
         } else if indexPath.section == 2 {
