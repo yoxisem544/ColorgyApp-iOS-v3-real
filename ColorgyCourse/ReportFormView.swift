@@ -24,7 +24,7 @@ class ReportFormView: UIScrollView {
     private var headerView: UIView!
     
     private var checkListView: UIView!
-    private var checkListTextField: OneWayInputTextField!
+    private var checkListTextField: OneWayInputReportTextField!
     private var checkListContents: [String?] = []
     
     private var problemDescriptionView: UIView!
@@ -33,7 +33,7 @@ class ReportFormView: UIScrollView {
     private var emailView: UIView!
     
     private var footerView: UIView!
-    private var fuckDeveloperTextField: OneWayInputTextField!
+    private var fuckDeveloperTextField: OneWayInputReportTextField!
     private var fuckContents: [String?] = []
     
     // need first part, second part, third part, header
@@ -62,7 +62,7 @@ class ReportFormView: UIScrollView {
         let checkListTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         checkListTitleLabel.text = checkListTitleLabelText
         // text field
-        checkListTextField = OneWayInputTextField(frame: checkListTitleLabel.frame)
+        checkListTextField = OneWayInputReportTextField(frame: checkListTitleLabel.frame)
         checkListTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
         checkListTextField.layer.borderWidth = 1.0
         checkListTextField.layer.cornerRadius = 2
@@ -119,7 +119,7 @@ class ReportFormView: UIScrollView {
         let footerTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         footerTitleLabel.text = footerTitleLabelText
         // insert check list
-        fuckDeveloperTextField = OneWayInputTextField(frame: footerTitleLabel.frame)
+        fuckDeveloperTextField = OneWayInputReportTextField(frame: footerTitleLabel.frame)
         fuckDeveloperTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
         fuckDeveloperTextField.layer.borderWidth = 1.0
         fuckDeveloperTextField.layer.cornerRadius = 2

@@ -106,7 +106,6 @@ class ViewController: UIViewController {
         //        print(self.user)
         //        CourseDB.storeFakeData()
         //        CourseDB.storeFakeData()
-        //        CourseDB.getAllStoredCoursesObject()
         //        CourseDB.deleteCourseWithCourseCode("1041-AC5007701")
         //        ColorgyAPI.getStudentsInSpecificCourse("1041-AC5007701", completionHandler: { (userCourseObjects) -> Void in
         //            if let objs = userCourseObjects {

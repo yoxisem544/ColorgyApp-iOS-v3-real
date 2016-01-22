@@ -1,14 +1,14 @@
 //
-//  OneWayInputTextField.swift
+//  OneWayInputReportTextField.swift
 //  ColorgyCourse
 //
-//  Created by David on 2016/1/6.
+//  Created by David on 2016/1/22.
 //  Copyright © 2016年 David. All rights reserved.
 //
 
 import UIKit
 
-class OneWayInputTextField: UITextField {
+class OneWayInputReportTextField: UITextField {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -17,7 +17,6 @@ class OneWayInputTextField: UITextField {
         // Drawing code
     }
     */
-    
     override func addGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.isKindOfClass(UILongPressGestureRecognizer) {
             gestureRecognizer.enabled = false
@@ -33,8 +32,24 @@ class OneWayInputTextField: UITextField {
         return super.canPerformAction(action, withSender: sender)
     }
     
+    override func textRectForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, 10, 10)
+    }
+    
+    override func editingRectForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, 10, 10)
+    }
+    
     override func caretRectForPosition(position: UITextPosition) -> CGRect {
         return CGRectZero
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
 }

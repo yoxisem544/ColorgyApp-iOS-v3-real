@@ -185,16 +185,18 @@ class SearchCourseViewController: UIViewController {
     }
     
     private func loadEnrolledCourses() {
-        // enrolled courses
-        if let courseObjects = CourseDB.getAllStoredCoursesObject() {
-            var courses = [Course]()
-            for object in courseObjects {
-                if let course = Course(courseDBManagedObject: object) {
-                    courses.append(course)
+        CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
+            // enrolled courses
+            if let courseObjects = courseDBManagedObjects {
+                var courses = [Course]()
+                for object in courseObjects {
+                    if let course = Course(courseDBManagedObject: object) {
+                        courses.append(course)
+                    }
                 }
+                self.enrolledCourses = courses
             }
-            self.enrolledCourses = courses
-        }
+        })
     }
     
     @IBAction func updateCourseDataClicked(sender: AnyObject) {
@@ -530,6 +532,22 @@ extension SearchCourseViewController : UITableViewDataSource {
             }
         }
         return false
+    }
+    
+    func checkIfEnrolled(courseCode: String, complete: (ifEnrolled: Bool) -> Void) {
+        CourseDB.getAllStoredCoursesObject { (courseDBManagedObjects) -> Void in
+            if let courses = courseDBManagedObjects {
+                for course in courses {
+                    // find if match
+                    if let code = course.code {
+                        if code == courseCode {
+                            complete(ifEnrolled: true)
+                        }
+                    }
+                }
+            }
+            complete(ifEnrolled: false)
+        }
     }
     
     

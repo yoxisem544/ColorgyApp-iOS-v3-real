@@ -41,21 +41,23 @@ class CourseDB {
     /// :param: code: a specific course code
     class func deleteCourseWithCourseCode(code: String) {
         dispatch_sync(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0) , { () -> Void in
-            if let courseObjects = CourseDB.getAllStoredCoursesObject() {
-                for courseObject in courseObjects {
-                    if courseObject.code == code {
-                        let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-                        managedObjectContext.deleteObject(courseObject)
-                        
-                        do {
-                            try managedObjectContext.save()
-                        } catch {
-                            print(ColorgyErrorType.DBFailure.saveFail)
+            CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
+                if let courseObjects = courseDBManagedObjects {
+                    for courseObject in courseObjects {
+                        if courseObject.code == code {
+                            let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+                            managedObjectContext.deleteObject(courseObject)
+                            
+                            do {
+                                try managedObjectContext.save()
+                            } catch {
+                                print(ColorgyErrorType.DBFailure.saveFail)
+                            }
+                            
                         }
-                       
                     }
                 }
-            }
+            })
         })
     }
     
@@ -85,23 +87,31 @@ class CourseDB {
         
     }
     
-    class func getAllStoredCoursesObject(complete: (courseDBManagedObjects: [CourseDBManagedObject]?) -> Void) {
+    class func getAllStoredCoursesObject(complete complete: (courseDBManagedObjects: [CourseDBManagedObject]?) -> Void) {
         let queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
         dispatch_sync(queue) { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let fetchRequest = NSFetchRequest(entityName: entityName)
+            let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+            
             do {
                 let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
                 if coursesInDB.count == 0 {
                     // return nil if element in array is zero.
-                    complete(courseDBManagedObjects: nil)
+                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                        complete(courseDBManagedObjects: nil)
+                    })
                 } else {
-                    complete(courseDBManagedObjects: coursesInDB)
+                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                        complete(courseDBManagedObjects: coursesInDB)
+                    })
                 }
             } catch {
                 print(ColorgyErrorType.DBFailure.fetchFail)
-                complete(courseDBManagedObjects: nil)
+                dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                    complete(courseDBManagedObjects: nil)
+                })
             }
         }
     }

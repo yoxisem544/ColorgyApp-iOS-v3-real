@@ -108,31 +108,44 @@ class TimeTableViewController: UIViewController {
     private func getAndSetDataToTimeTable() {
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-            var courses = [Course]()
+            // create group queue
+            let group = dispatch_group_create()
             // server
-            if let objects = CourseDB.getAllStoredCoursesObject() {
-                print(objects.count)
-                for obj in objects {
-                    if let course = Course(courseDBManagedObject: obj) {
-                        courses.append(course)
-                    }
-                }
-//                print(courses)
-            }
-            // local 
+            var courses = [Course]()
+            // local
             var localCourses = [LocalCourse]()
-            if let objects = LocalCourseDB.getAllStoredCoursesObject() {
-                for o in objects {
-                    if let localc = LocalCourse(localCourseDBManagedObject: o) {
-                        localCourses.append(localc)
+            dispatch_group_async(group, dispatch_get_global_queue(qos, 0), { () -> Void in
+                // server
+                if let objects = CourseDB.getAllStoredCoursesObject() {
+                    print(objects.count)
+                    for obj in objects {
+                        if let course = Course(courseDBManagedObject: obj) {
+                            courses.append(course)
+                        }
+                    }
+                    //                print(courses)
+                }
+            })
+            
+            dispatch_group_async(group, dispatch_get_global_queue(qos, 0), { () -> Void in
+                // local
+                if let objects = LocalCourseDB.getAllStoredCoursesObject() {
+                    for o in objects {
+                        if let localc = LocalCourse(localCourseDBManagedObject: o) {
+                            localCourses.append(localc)
+                        }
                     }
                 }
-            }
-            CourseNotification.registerForCourseNotification()
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.timetableView.courses = courses
-                self.timetableView.localCourse = localCourses
             })
+            
+            dispatch_group_notify(group, dispatch_get_global_queue(qos, 0), { () -> Void in
+                CourseNotification.registerForCourseNotification()
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.timetableView.courses = courses
+                    self.timetableView.localCourse = localCourses
+                })
+            })
+            print("")
         })
     }
 

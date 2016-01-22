@@ -31,7 +31,6 @@ class CreateCourseTableViewController: UIViewController {
 //        LocalCourseDB.deleteAllCourses()
         print(CourseNotification.checkNeedNotifiedLocalCourse(lc!))
         LocalCourseDB.storeLocalCourseToDB(lc)
-        print(LocalCourseDB.getAllStoredCoursesObject())
     }
     
     @IBAction func createLocalCourseClicked() {
