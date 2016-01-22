@@ -33,8 +33,24 @@ class OneWayInputTextField: UITextField {
         return super.canPerformAction(action, withSender: sender)
     }
     
+    override func textRectForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, 10, 10)
+    }
+    
+    override func editingRectForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, 10, 10)
+    }
+    
     override func caretRectForPosition(position: UITextPosition) -> CGRect {
         return CGRectZero
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
 }

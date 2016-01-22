@@ -50,9 +50,10 @@ class ReportFormView: UIScrollView {
         let checkListTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
         checkListTitleLabel.text = checkListTitleLabelText
         // text field
-        let checkListTextField = OneWayInputTextField()
-        checkListTextField.frame.size.height = 44
-        checkListTextField.frame.size.width = checkListTitleLabel.frame.width
+        let checkListTextField = OneWayInputTextField(frame: checkListTitleLabel.frame)
+        checkListTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
+        checkListTextField.layer.borderWidth = 1.0
+        checkListTextField.layer.cornerRadius = 2
         checkListTextField.placeholder = "請選擇遇到的問題..."
         // arrange view
         checkListTitleLabel.center.x = checkListView.center.x
@@ -86,10 +87,8 @@ class ReportFormView: UIScrollView {
         let emailTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
         emailTitleLabel.text = emailTitleLabelText
         // text field
-        let emailTextField = UITextField(frame: emailTitleLabel.frame)
+        let emailTextField = ReportFormTextField(frame: emailTitleLabel.frame)
         emailTextField.placeholder = "請填常用的email..."
-        emailTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
-        emailTextField.layer.borderWidth = 1
         // arrange view
         emailTitleLabel.center.x = emailView.center.x
         emailTextField.center.x = emailTitleLabel.center.x

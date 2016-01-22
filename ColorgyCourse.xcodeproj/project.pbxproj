@@ -59,6 +59,7 @@
 		63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */; };
 		63BDC9F31C51CBE3001A84D3 /* TestFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */; };
 		63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */; };
+		63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */; };
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63C2B9831C116331007740DB /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B9821C116331007740DB /* Semester.swift */; };
 		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
@@ -183,6 +184,7 @@
 		63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormView.swift; sourceTree = "<group>"; };
 		63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFormViewController.swift; sourceTree = "<group>"; };
 		63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormKeyboard.swift; sourceTree = "<group>"; };
+		63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormTextField.swift; sourceTree = "<group>"; };
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63C2B9821C116331007740DB /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
 		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */,
 				63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */,
 				63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */,
 				63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */,
@@ -758,6 +761,7 @@
 				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
 				632E0A701C4FBA510063B941 /* PrivacyTableViewCell.swift in Sources */,
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
+				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
 				6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */,
