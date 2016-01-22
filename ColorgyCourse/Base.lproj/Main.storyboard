@@ -491,6 +491,7 @@
                                     <constraint firstAttribute="height" constant="64" id="4Gg-lv-zzz"/>
                                 </constraints>
                                 <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="問題回報" id="rP6-XG-lhF">
                                         <barButtonItem key="leftBarButtonItem" image="closeButton" id="Wzl-2Y-Y8j">
@@ -674,13 +675,13 @@
             </objects>
             <point key="canvasLocation" x="-2056" y="2977"/>
         </scene>
-        <!--我的資料-->
+        <!--更多-->
         <scene sceneID="Bee-mh-vef">
             <objects>
                 <navigationController id="bWU-kc-GY7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我的資料" image="personalInfo" id="UMR-gA-O99">
+                    <tabBarItem key="tabBarItem" title="更多" image="moreInfo" id="UMR-gA-O99">
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="personalInfoSelected"/>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="moreInfoHighlight"/>
                         </userDefinedRuntimeAttributes>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8p5-a1-8vY">
@@ -700,7 +701,7 @@
             </objects>
             <point key="canvasLocation" x="-1228" y="1540"/>
         </scene>
-        <!--我的資料-->
+        <!--更多-->
         <scene sceneID="oLu-7s-daD">
             <objects>
                 <tableViewController id="avk-OX-1Z1" customClass="PersonalSettingsTableViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
@@ -883,7 +884,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="5RY-Zw-3CZ"/>
-                    <navigationItem key="navigationItem" title="我的資料" id="U01-r9-f4j"/>
+                    <navigationItem key="navigationItem" title="更多" id="U01-r9-f4j"/>
                     <connections>
                         <segue destination="7sh-Ij-8ti" kind="show" identifier="privacy segue" id="Ran-0P-NT0"/>
                         <segue destination="zmr-X3-hl0" kind="show" identifier="to notification time segue" id="eRj-fc-U6g"/>
@@ -2490,9 +2491,9 @@
         <image name="lecturerIcon" width="13" height="13"/>
         <image name="mail" width="26" height="23"/>
         <image name="mailLarge" width="55" height="47"/>
+        <image name="moreInfo" width="24" height="23"/>
+        <image name="moreInfoHighlight" width="24" height="23"/>
         <image name="periodIcon" width="14" height="14"/>
-        <image name="personalInfo" width="23" height="24"/>
-        <image name="personalInfoSelected" width="23" height="23"/>
         <image name="starEmpty" width="10" height="10"/>
         <image name="tableViewNext" width="9" height="13"/>
         <image name="tableviewNextGray" width="9" height="13"/>

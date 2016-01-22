@@ -111,6 +111,8 @@ class ColorgyLogin {
             
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(ColorgyErrorType.failToLoginColorgy)
+                print(error.localizedDescription)
+                print(task?.response)
                 handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
         })
     }

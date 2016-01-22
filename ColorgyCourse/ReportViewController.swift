@@ -13,7 +13,7 @@ class ReportViewController: UIViewController {
     var reportView: ReportFormView!
     
     @IBAction func closeButtonClicked() {
-        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func sendButtonClicked() {
@@ -38,6 +38,47 @@ class ReportViewController: UIViewController {
         super.viewDidAppear(animated)
         
         registerKeyboardNotification()
+        testFunction()
+    }
+    
+    func testFunction() {
+        let q = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+        
+        func heyHelloA() {
+            dispatch_sync(q) { () -> Void in
+                print("a")
+            }
+        }
+        
+        func heyHelloB() {
+            dispatch_sync(q) { () -> Void in
+                print("b")
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloA()
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloB()
+        }
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloA()
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloB()
+        }
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloA()
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            heyHelloB()
+        }
+        
+        print("yo")
     }
     
     func registerKeyboardNotification() {
