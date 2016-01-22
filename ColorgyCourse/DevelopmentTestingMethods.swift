@@ -31,44 +31,44 @@ class DevelopmentTestingMethods {
     
     class func enrollAllCoursesInDB() {
         if !Release().mode {
-            if let objects = ServerCourseDB.getAllStoredCoursesObject() {
-                // get courses
-                // tranfrom into course
-                var courses = [Course]()
-                for o in objects {
-                    if let c = Course(courseDataFromServerDBManagedObject: o) {
-                        courses.append(c)
+            ServerCourseDB.getAllStoredCoursesObject(complete: { (courseDataFromServerDBManagedObjects) -> Void in
+                if let objects = courseDataFromServerDBManagedObjects {
+                    // get courses
+                    // tranfrom into course
+                    var courses = [Course]()
+                    for o in objects {
+                        if let c = Course(courseDataFromServerDBManagedObject: o) {
+                            courses.append(c)
+                        }
                     }
+                    CourseDB.storeABunchOfCoursesToDB(courses)
                 }
-                CourseDB.storeABunchOfCoursesToDB(courses)
-            }
+            })
         }
     }
     
     class func logCoursesSessionLength() {
         if !Release().mode {
             var failCounter = 0
-            if let ob = ServerCourseDB.getAllStoredCoursesObject() {
-                var cs = [Course]()
-                for o in ob {
-                    if let c = Course(courseDataFromServerDBManagedObject: o) {
-                        cs.append(c)
+            ServerCourseDB.getAllStoredCoursesObject(complete: { (courseDataFromServerDBManagedObjects) -> Void in
+                if let ob = courseDataFromServerDBManagedObjects {
+                    var cs = [Course]()
+                    for o in ob {
+                        if let c = Course(courseDataFromServerDBManagedObject: o) {
+                            cs.append(c)
+                        }
                     }
-                }
-                for c in cs {
-//                    print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
-//                    print("day == location ? \(c.days?.count == c.locations?.count)")
-//                    print("period == location ? \(c.periods?.count == c.locations?.count)")
-//                    print("day == period ? \(c.days?.count == c.periods?.count)")
-                    if !(c.days?.count == c.locations?.count) && (c.periods?.count == c.locations?.count) && (c.days?.count == c.periods?.count) {
-                        print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
-                        failCounter++
+                    for c in cs {
+                        if !(c.days?.count == c.locations?.count) && (c.periods?.count == c.locations?.count) && (c.days?.count == c.periods?.count) {
+                            print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
+                            failCounter++
+                        }
                     }
+                    print(cs.count)
+                    print(failCounter)
+                    print(failCounter)
                 }
-                print(cs.count)
-                print(failCounter)
-                print(failCounter)
-            }
+            })
         }
     }
     
