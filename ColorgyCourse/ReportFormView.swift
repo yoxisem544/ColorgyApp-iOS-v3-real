@@ -9,32 +9,39 @@
 import UIKit
 
 class ReportFormView: UIScrollView {
-
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
-        // Drawing code
+    // Drawing code
     }
     */
+    
+    let titleHeight: CGFloat = 42
+    let bottomPadding: CGFloat = 12
     
     private var headerView: UIView!
     
     private var checkListView: UIView!
+    private var checkListTextField: OneWayInputTextField!
+    private var checkListContents: [String?] = []
     
     private var problemDescriptionView: UIView!
-    private let problemDescriptionTextViewGap: CGFloat = 8
+    private let problemDescriptionTextViewGap: CGFloat = 0
     
     private var emailView: UIView!
     
     private var footerView: UIView!
+    private var fuckDeveloperTextField: OneWayInputTextField!
+    private var fuckContents: [String?] = []
     
     // need first part, second part, third part, header
-    init(headerTitleText: String?, checkListTitleLabelText: String?, problemDescriptionLabelText: String?, emailTitleLabelText: String?, footerTitleLabelText: String?) {
+    init(headerTitleText: String?, checkListTitleLabelText: String?, checkListContents: [String?], problemDescriptionLabelText: String?, emailTitleLabelText: String?, fuckContents: [String?], footerTitleLabelText: String?) {
         super.init(frame: UIScreen.mainScreen().bounds)
         
         // configure header view
-        headerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+        headerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight))
         headerView.backgroundColor = ColorgyColor.waterBlue
         let headerTitleLabel = UILabel(frame: headerView.frame)
         headerTitleLabel.text = headerTitleText
@@ -44,17 +51,19 @@ class ReportFormView: UIScrollView {
         headerView.addSubview(headerTitleLabel)
         
         // configure check list view
-        checkListView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44 * 2 + problemDescriptionTextViewGap))
+        checkListView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
         checkListView.backgroundColor = UIColor.whiteColor()
         let checkListTitleLabelPadding: CGFloat = 16
-        let checkListTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
+        let checkListTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         checkListTitleLabel.text = checkListTitleLabelText
         // text field
-        let checkListTextField = OneWayInputTextField(frame: checkListTitleLabel.frame)
+        checkListTextField = OneWayInputTextField(frame: checkListTitleLabel.frame)
         checkListTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
         checkListTextField.layer.borderWidth = 1.0
         checkListTextField.layer.cornerRadius = 2
         checkListTextField.placeholder = "請選擇遇到的問題..."
+        checkListTextField.delegate = self
+        self.checkListContents = checkListContents
         // arrange view
         checkListTitleLabel.center.x = checkListView.center.x
         checkListTextField.center.x = checkListTitleLabel.center.x
@@ -67,14 +76,17 @@ class ReportFormView: UIScrollView {
         let problemDescriptionViewHeight: CGFloat = 160
         problemDescriptionView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, problemDescriptionViewHeight))
         problemDescriptionView.backgroundColor = UIColor.whiteColor()
-        let problemDescriptionLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
+        let problemDescriptionLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         problemDescriptionLabel.text = problemDescriptionLabelText
         // content text view
         let problemDescriptionTextView = UITextView(frame: CGRectMake(0, 0, problemDescriptionLabel.frame.width, problemDescriptionView.frame.height - problemDescriptionLabel.frame.height - 16))
+        problemDescriptionTextView.layer.cornerRadius = 2.0
+        problemDescriptionTextView.layer.borderWidth = 1.0
+        problemDescriptionTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
         // arrange
         problemDescriptionTextView.frame.origin.y = problemDescriptionLabel.bounds.maxY + problemDescriptionTextViewGap
-        problemDescriptionTextView.backgroundColor = UIColor.redColor()
-        problemDescriptionLabel.backgroundColor = UIColor.greenColor()
+        //        problemDescriptionTextView.backgroundColor = UIColor.redColor()
+        //        problemDescriptionLabel.backgroundColor = UIColor.greenColor()
         problemDescriptionTextView.center.x = problemDescriptionView.center.x
         problemDescriptionLabel.center.x = problemDescriptionView.center.x
         // add to subview
@@ -82,9 +94,9 @@ class ReportFormView: UIScrollView {
         problemDescriptionView.addSubview(problemDescriptionTextView)
         
         // configure email view
-        emailView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44 * 2 + problemDescriptionTextViewGap * 2))
+        emailView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
         emailView.backgroundColor = UIColor.whiteColor()
-        let emailTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
+        let emailTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         emailTitleLabel.text = emailTitleLabelText
         // text field
         let emailTextField = ReportFormTextField(frame: emailTitleLabel.frame)
@@ -97,15 +109,25 @@ class ReportFormView: UIScrollView {
         emailView.addSubview(emailTextField)
         
         // configure footer view
-        footerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44 * 2))
+        footerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
         footerView.backgroundColor = UIColor.whiteColor()
-        let footerTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, 44))
+        let footerTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * checkListTitleLabelPadding, titleHeight))
         footerTitleLabel.text = footerTitleLabelText
         // insert check list
+        fuckDeveloperTextField = OneWayInputTextField(frame: footerTitleLabel.frame)
+        fuckDeveloperTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
+        fuckDeveloperTextField.layer.borderWidth = 1.0
+        fuckDeveloperTextField.layer.cornerRadius = 2
+        fuckDeveloperTextField.placeholder = "安安幾歲給虧嗎？"
+        fuckDeveloperTextField.delegate = self
+        self.fuckContents = fuckContents
         // arrange view
         footerTitleLabel.center.x = footerView.center.x
+        fuckDeveloperTextField.center.x = footerTitleLabel.center.x
+        fuckDeveloperTextField.frame.origin.y = footerTitleLabel.frame.maxY
         // add subview
         footerView.addSubview(footerTitleLabel)
+        footerView.addSubview(fuckDeveloperTextField)
         
         
         // arrange views
@@ -129,9 +151,38 @@ class ReportFormView: UIScrollView {
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+}
 
+extension ReportFormView : UITextFieldDelegate {
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        if textField == checkListTextField {
+            let keyboard = ReportFormKeyboard(contents: checkListContents)
+            keyboard.delegate = self
+            textField.inputView = keyboard
+            textField.reloadInputViews()
+        } else if textField == fuckDeveloperTextField {
+            let keyboard = ReportFormKeyboard(contents: fuckContents)
+            keyboard.delegate = self
+            textField.inputView = keyboard
+            textField.reloadInputViews()
+        }
+        
+        return true
+    }
+}
+
+extension ReportFormView : ReportFormKeyboardDelegate {
+    func reportFormKeyboard(contentUpdate text: String?) {
+        if checkListTextField.isFirstResponder() {
+            checkListTextField.text = text
+        } else if fuckDeveloperTextField.isFirstResponder() {
+            fuckDeveloperTextField.text = text
+        }
+    }
 }

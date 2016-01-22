@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ReportFormKeyboardDelegate {
-    
+    func reportFormKeyboard(contentUpdate text: String?)
 }
 
 class ReportFormKeyboard: UIView {
@@ -35,9 +35,13 @@ class ReportFormKeyboard: UIView {
         // initialize contents
         self.contents = contents
         
+        print(self.contents)
+        print(contents)
         pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.center = self.center
+        
+        self.addSubview(pickerView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -64,5 +68,6 @@ extension ReportFormKeyboard : UIPickerViewDataSource {
 extension ReportFormKeyboard : UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(contents[row])
+        delegate?.reportFormKeyboard(contentUpdate: contents[row])
     }
 }

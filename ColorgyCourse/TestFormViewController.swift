@@ -14,7 +14,9 @@ class TestFormViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let sss = ReportFormView(headerTitleText: "e04", checkListTitleLabelText: "這個是CHECKLIST", problemDescriptionLabelText: "這邊要寫問題", emailTitleLabelText: "email!!!!", footerTitleLabelText: "footer title")
+        let reportProblem: [String?] = ["沒有我的學校", "沒有我的系所", "找不到我的課", "課程資訊錯誤", "其他"]
+        let fuckContent: [String?] = ["鞭打工程師", "幫工程師加油"]
+        let sss = ReportFormView(headerTitleText: "dkskjds", checkListTitleLabelText: "dsjkdkjsdkj", checkListContents: reportProblem, problemDescriptionLabelText: "sdkjiu298", emailTitleLabelText: "ds89sd89", fuckContents: fuckContent, footerTitleLabelText: "98ds98d")
         self.view.addSubview(sss)
     }
 
