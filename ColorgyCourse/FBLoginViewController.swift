@@ -86,9 +86,15 @@ class FBLoginViewController: UIViewController {
                         })
                     } else {
 //                        self.statusLabel.text = "login colorgy fail, \(error)"
-                        let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，請重新登入。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。🚀😎")
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        self.showButtons()
+						if let code = error as? Int {
+							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，錯誤代碼：\(code)。請給我們一點時間修復！造成您的不便我們深感抱歉！😖")
+							self.presentViewController(alert, animated: true, completion: nil)
+							self.showButtons()
+						} else {
+							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，請重新登入。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。🚀😎")
+							self.presentViewController(alert, animated: true, completion: nil)
+							self.showButtons()
+						}
                     }
                 })
             } else {

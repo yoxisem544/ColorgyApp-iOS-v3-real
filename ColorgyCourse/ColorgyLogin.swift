@@ -113,7 +113,15 @@ class ColorgyLogin {
                 print(ColorgyErrorType.failToLoginColorgy)
                 print(error.localizedDescription)
                 print(task?.response)
-                handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
+				if let c = (task?.response as? NSHTTPURLResponse)?.statusCode {
+					if c == 500 {
+						handler(response: nil, error: 500)
+					} else {
+						handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
+					}
+				} else {
+					handler(response: nil, error: ColorgyErrorType.failToLoginColorgy)
+				}
         })
     }
     

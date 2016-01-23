@@ -8,6 +8,11 @@
 
 import UIKit
 
+/// This text field is for ReportForm
+///
+/// This TextField implement init(frame:)
+///
+/// So you can not use it on storyboard
 class OneWayInputReportTextField: UITextField {
 
     /*
@@ -17,6 +22,8 @@ class OneWayInputReportTextField: UITextField {
         // Drawing code
     }
     */
+	
+	// disable long press gesture
     override func addGestureRecognizer(gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.isKindOfClass(UILongPressGestureRecognizer) {
             gestureRecognizer.enabled = false
@@ -24,18 +31,21 @@ class OneWayInputReportTextField: UITextField {
         super.addGestureRecognizer(gestureRecognizer)
         return
     }
-    
+	
+	// disable pop menu actions
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
         if (action == "paste:" || action == "copy:" || action == "select:" || action == "selectAll:") {
             return false
         }
         return super.canPerformAction(action, withSender: sender)
     }
-    
+	
+	// this is for textfield inset
     override func textRectForBounds(bounds: CGRect) -> CGRect {
         return CGRectInset(bounds, 10, 10)
     }
-    
+	
+	// this is for textfield inset
     override func editingRectForBounds(bounds: CGRect) -> CGRect {
         return CGRectInset(bounds, 10, 10)
     }

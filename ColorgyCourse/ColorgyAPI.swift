@@ -16,61 +16,69 @@ class ColorgyAPI {
     // MARK: - push notification device token
     // push notification device token
     class func PUTdeviceToken(success success: () -> Void, failure: () -> Void) {
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
-            print(ColorgyErrorType.TrafficError.stillRefreshing)
-            failure()
-        } else {
-            if let token = UserSetting.getPushNotificationDeviceToken() {
-                if let accesstoken = UserSetting.UserAccessToken() {
-                    let afManager = AFHTTPSessionManager(baseURL: nil)
-                    afManager.requestSerializer = AFJSONRequestSerializer()
-                    afManager.responseSerializer = AFJSONResponseSerializer()
-                    
-                    // need uuid, device name, device type, device token
-                    let params = [
-                        "user_device": [
-                            "type": "ios",
-                            "name": UIDevice.currentDevice().name,
-                            "device_id": "\(token)"
-                        ]
-                    ]
-                    
-                    var uuid = UserSetting.getDeviceUUID()
-                    if uuid == nil {
-                        UserSetting.generateAndStoreDeviceUUID()
-                        uuid = UserSetting.getDeviceUUID()
-                    }
-                    
-                    print(params)
-                    
-                    if let uuid = uuid {
-                        let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
-                        print(uuid)
-                        print(params)
-                        print(accesstoken)
-                        // queue job
-                        ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                        afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        print("Success")
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        success()
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                        print("fail \(error)")
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        failure()
-                        })
-                    } else {
-                        failure()
-                    }
-                } else {
-                    failure()
-                }
-            } else {
-                failure()
-            }
-        }
+		
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		guard let token = UserSetting.getPushNotificationDeviceToken() else {
+			failure()
+			return
+		}
+		guard let accesstoken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		// need uuid, device name, device type, device token
+		let params = [
+			"user_device": [
+				"type": "ios",
+				"name": UIDevice.currentDevice().name,
+				"device_id": "\(token)"
+			]
+		]
+		
+		var uuid = UserSetting.getDeviceUUID()
+		if uuid == nil {
+			UserSetting.generateAndStoreDeviceUUID()
+			uuid = UserSetting.getDeviceUUID()
+		}
+		
+		print(params)
+		
+		guard let uuid = uuid {
+			failure()
+			return
+		}
+		
+		if let uuid = uuid {
+			let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
+			print(uuid)
+			print(params)
+			print(accesstoken)
+			// queue job
+			ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+			afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+				print("Success")
+				// job ended
+				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+				success()
+				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+					print("fail \(error)")
+					// job ended
+					ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+					failure()
+				})
+		} else {
+			failure()
+		}
+
     }
     
     /// Get all the token stored in server
