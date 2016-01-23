@@ -91,6 +91,24 @@ class SearchCourseViewController: UIViewController {
         //        UserSetting.deleteLocalCourseDataDictionaries()
         //        UserSetting.deleteLocalCourseDataCaching()
         
+//        // check if need to refresh
+//        checkToken()
+//        
+//        // load course data
+//        loadCourseData()
+//        
+//        // configure successful add course view
+//        configureSuccessfullyAddCourseView()
+//        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        // Flurry
+        if Release().mode {
+            Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
+        }
+        
         // check if need to refresh
         checkToken()
         
@@ -100,14 +118,6 @@ class SearchCourseViewController: UIViewController {
         // configure successful add course view
         configureSuccessfullyAddCourseView()
         
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        // Flurry
-        if Release().mode {
-            Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
-        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -540,11 +550,13 @@ extension SearchCourseViewController : UITableViewDataSource {
     
     func checkIfEnrolled(courseCode: String, complete: (ifEnrolled: Bool) -> Void) {
         CourseDB.getAllStoredCoursesObject { (courseDBManagedObjects) -> Void in
+            var isMatch = false
             if let courses = courseDBManagedObjects {
                 for course in courses {
                     // find if match
                     if let code = course.code {
                         if code == courseCode {
+                            isMatch = true
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 complete(ifEnrolled: true)
                             })
@@ -552,9 +564,11 @@ extension SearchCourseViewController : UITableViewDataSource {
                     }
                 }
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                complete(ifEnrolled: false)
-            })
+            if !isMatch {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    complete(ifEnrolled: false)
+                })
+            }
         }
     }
     
@@ -571,18 +585,18 @@ extension SearchCourseViewController : UITableViewDataSource {
                     cell.course = filteredCourses[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-//                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-//                        cell.hasEnrolledState = ifEnrolled
-//                    })
+//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                        cell.hasEnrolledState = ifEnrolled
+                    })
                 } else {
                     cell.course = localCachingObjects[indexPath.row]
                     cell.delegate = self
                     cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-//                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-//                        cell.hasEnrolledState = ifEnrolled
-//                    })
+//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                        cell.hasEnrolledState = ifEnrolled
+                    })
                 }
                 
                 return cell
@@ -605,10 +619,11 @@ extension SearchCourseViewController : UITableViewDataSource {
                 cell.course = enrolledCourses[indexPath.row]
                 cell.delegate = self
                 cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-//                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-//                    cell.hasEnrolledState = ifEnrolled
-//                })
+//                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+                    print(ifEnrolled)
+                    cell.hasEnrolledState = ifEnrolled
+                })
             } else {
                 cell.course = nil
                 cell.localCourse = enrolledLocalCourse[indexPath.row]
