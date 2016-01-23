@@ -16,7 +16,8 @@ class CourseDB {
     // delete all
     /// This method will delete all courses stored in data base.
     class func deleteAllCourses() {
-        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
+        let main_queue = dispatch_get_main_queue()
+        dispatch_async(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let fetchRequest = NSFetchRequest(entityName: entityName)
             do {
@@ -24,12 +25,13 @@ class CourseDB {
                 for courseObject in coursesInDB {
                     managedObjectContext.deleteObject(courseObject)
                 }
-                
-                do {
-                    try managedObjectContext.save()
-                } catch {
-                    print(ColorgyErrorType.DBFailure.saveFail)
-                }
+                dispatch_sync(main_queue, { () -> Void in
+                    do {
+                        try managedObjectContext.save()
+                    } catch {
+                        print(ColorgyErrorType.DBFailure.saveFail)
+                    }
+                })
             } catch {
                 print(ColorgyErrorType.DBFailure.fetchFail)
             }
@@ -40,7 +42,8 @@ class CourseDB {
     ///
     /// :param: code: a specific course code
     class func deleteCourseWithCourseCode(code: String) {
-        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
+        let main_queue = dispatch_get_main_queue()
+        dispatch_async(HelloThisIsASerialQueue , { () -> Void in
             CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
                 if let courseObjects = courseDBManagedObjects {
                     for courseObject in courseObjects {
@@ -48,12 +51,13 @@ class CourseDB {
                             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
                             managedObjectContext.deleteObject(courseObject)
                             
-                            do {
-                                try managedObjectContext.save()
-                            } catch {
-                                print(ColorgyErrorType.DBFailure.saveFail)
-                            }
-                            
+                            dispatch_sync(main_queue, { () -> Void in
+                                do {
+                                    try managedObjectContext.save()
+                                } catch {
+                                    print(ColorgyErrorType.DBFailure.saveFail)
+                                }
+                            })
                         }
                     }
                 }
@@ -88,8 +92,9 @@ class CourseDB {
     }
     
     class func getAllStoredCoursesObject(complete complete: (courseDBManagedObjects: [CourseDBManagedObject]?) -> Void) {
+        let main_queue = dispatch_get_main_queue()
         let queue = HelloThisIsASerialQueue
-        dispatch_sync(queue) { () -> Void in
+        dispatch_async(queue) { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let fetchRequest = NSFetchRequest(entityName: entityName)
@@ -99,17 +104,17 @@ class CourseDB {
                 let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
                 if coursesInDB.count == 0 {
                     // return nil if element in array is zero.
-                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                    dispatch_async(main_queue, { () -> Void in
                         complete(courseDBManagedObjects: nil)
                     })
                 } else {
-                    dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                    dispatch_async(main_queue, { () -> Void in
                         complete(courseDBManagedObjects: coursesInDB)
                     })
                 }
             } catch {
                 print(ColorgyErrorType.DBFailure.fetchFail)
-                dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+                dispatch_async(main_queue, { () -> Void in
                     complete(courseDBManagedObjects: nil)
                 })
             }
@@ -118,7 +123,8 @@ class CourseDB {
     
     /// store a course to DB
     class func storeCourseToDB(course: Course?) {
-        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
+        let main_queue = dispatch_get_main_queue()
+        dispatch_async(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
@@ -217,19 +223,21 @@ class CourseDB {
                 
                 // save
                 // TODO: fuck the nil
-                
-                do {
-                    try managedObjectContext.save()
-                } catch {
-                    print(ColorgyErrorType.DBFailure.saveFail)
-                }
+                dispatch_sync(main_queue, { () -> Void in
+                    do {
+                        try managedObjectContext.save()
+                    } catch {
+                        print(ColorgyErrorType.DBFailure.saveFail)
+                    }
+                })
             }
         })
     }
     
     /// store a course to DB
     class func storeABunchOfCoursesToDB(courses: [Course]?) {
-        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
+        let main_queue = dispatch_get_main_queue()
+        dispatch_async(HelloThisIsASerialQueue , { () -> Void in
             // TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             //        let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
@@ -309,17 +317,20 @@ class CourseDB {
             }
             // save
             // TODO: fuck the nil
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(ColorgyErrorType.DBFailure.saveFail)
-            }
+            dispatch_sync(main_queue, { () -> Void in
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
+                }
+            })
         })
     }
     
     // fake data
     class func storeFakeData() {
-        dispatch_sync(HelloThisIsASerialQueue , { () -> Void in
+        let main_queue = dispatch_get_main_queue()
+        dispatch_async(HelloThisIsASerialQueue , { () -> Void in
             let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
             let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
             // assign data
@@ -331,12 +342,13 @@ class CourseDB {
             courseObject.credits = 3
             
             // save
-            
-            do {
-                try managedObjectContext.save()
-            } catch {
-                print(ColorgyErrorType.DBFailure.saveFail)
-            }
+            dispatch_sync(main_queue, { () -> Void in
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(ColorgyErrorType.DBFailure.saveFail)
+                }
+            })
         })
     }
     

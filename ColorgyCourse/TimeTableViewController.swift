@@ -124,7 +124,7 @@ class TimeTableViewController: UIViewController {
                                 courses.append(course)
                             }
                         }
-                        print(courses)
+//                        print(courses)
                     }
                 })
             })
@@ -138,7 +138,7 @@ class TimeTableViewController: UIViewController {
                                 localCourses.append(localc)
                             }
                         }
-                        print(localCourses)
+//                        print(localCourses)
                     }
                 })
             })
@@ -146,6 +146,8 @@ class TimeTableViewController: UIViewController {
             dispatch_group_notify(group, dispatch_get_global_queue(qos, 0), { () -> Void in
                 CourseNotification.registerForCourseNotification()
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    print(self.timetableView.courses?.count)
+                    print(self.timetableView.localCourse?.count)
                     self.timetableView.courses = courses
                     self.timetableView.localCourse = localCourses
                 })
