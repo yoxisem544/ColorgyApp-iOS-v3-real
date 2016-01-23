@@ -250,17 +250,17 @@ class ServerCourseDB {
             let coursesInDB: [CourseDataFromServerDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
             if coursesInDB.count == 0 {
                 // return nil if element in array is zero.
-                dispatch_async(main_queue, { () -> Void in
+                dispatch_sync(main_queue, { () -> Void in
                     complete(courseDataFromServerDBManagedObjects: nil)
                 })
             } else {
-                dispatch_async(main_queue, { () -> Void in
+                dispatch_sync(main_queue, { () -> Void in
                     complete(courseDataFromServerDBManagedObjects: coursesInDB)
                 })
             }
         } catch {
             print(ColorgyErrorType.DBFailure.fetchFail)
-            dispatch_async(main_queue, { () -> Void in
+            dispatch_sync(main_queue, { () -> Void in
                 complete(courseDataFromServerDBManagedObjects: nil)
             })
         }

@@ -55,7 +55,6 @@
 		63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC041B94BA7A0077580D /* testViewController.swift */; };
 		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
 		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
-		63BDC9E91C50F0C1001A84D3 /* ColorgyCourseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9E81C50F0C1001A84D3 /* ColorgyCourseUITests.swift */; };
 		63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */; };
 		63BDC9F31C51CBE3001A84D3 /* TestFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */; };
 		63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */; };
@@ -111,13 +110,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		63BDC9EB1C50F0C1001A84D3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63FBCC031B9345B800B3084F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 63FBCC0A1B9345B800B3084F;
-			remoteInfo = ColorgyCourse;
-		};
 		63FBCC241B9345B800B3084F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63FBCC031B9345B800B3084F /* Project object */;
@@ -181,7 +173,6 @@
 		63ABBC041B94BA7A0077580D /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailHeaderView.xib; sourceTree = "<group>"; };
 		63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailHeaderView.swift; sourceTree = "<group>"; };
-		63BDC9E61C50F0C1001A84D3 /* ColorgyCourseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColorgyCourseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63BDC9E81C50F0C1001A84D3 /* ColorgyCourseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorgyCourseUITests.swift; sourceTree = "<group>"; };
 		63BDC9EA1C50F0C1001A84D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormView.swift; sourceTree = "<group>"; };
@@ -247,13 +238,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		63BDC9E31C50F0C1001A84D3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		63FBCC081B9345B800B3084F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -416,7 +400,6 @@
 			children = (
 				63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */,
 				63FBCC231B9345B800B3084F /* ColorgyCourseTests.xctest */,
-				63BDC9E61C50F0C1001A84D3 /* ColorgyCourseUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -501,24 +484,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		63BDC9E51C50F0C1001A84D3 /* ColorgyCourseUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 63BDC9ED1C50F0C1001A84D3 /* Build configuration list for PBXNativeTarget "ColorgyCourseUITests" */;
-			buildPhases = (
-				63BDC9E21C50F0C1001A84D3 /* Sources */,
-				63BDC9E31C50F0C1001A84D3 /* Frameworks */,
-				63BDC9E41C50F0C1001A84D3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				63BDC9EC1C50F0C1001A84D3 /* PBXTargetDependency */,
-			);
-			name = ColorgyCourseUITests;
-			productName = ColorgyCourseUITests;
-			productReference = 63BDC9E61C50F0C1001A84D3 /* ColorgyCourseUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		63FBCC0A1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63FBCC2D1B9345B800B3084F /* Build configuration list for PBXNativeTarget "ColorgyCourse" */;
@@ -569,10 +534,6 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = David;
 				TargetAttributes = {
-					63BDC9E51C50F0C1001A84D3 = {
-						CreatedOnToolsVersion = 7.2;
-						TestTargetID = 63FBCC0A1B9345B800B3084F;
-					};
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 55V6ERRQ79;
@@ -598,19 +559,11 @@
 			targets = (
 				63FBCC0A1B9345B800B3084F /* ColorgyCourse */,
 				63FBCC221B9345B800B3084F /* ColorgyCourseTests */,
-				63BDC9E51C50F0C1001A84D3 /* ColorgyCourseUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		63BDC9E41C50F0C1001A84D3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		63FBCC091B9345B800B3084F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -697,14 +650,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		63BDC9E21C50F0C1001A84D3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				63BDC9E91C50F0C1001A84D3 /* ColorgyCourseUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		63FBCC071B9345B800B3084F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -810,11 +755,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		63BDC9EC1C50F0C1001A84D3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 63FBCC0A1B9345B800B3084F /* ColorgyCourse */;
-			targetProxy = 63BDC9EB1C50F0C1001A84D3 /* PBXContainerItemProxy */;
-		};
 		63FBCC251B9345B800B3084F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 63FBCC0A1B9345B800B3084F /* ColorgyCourse */;
@@ -842,34 +782,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		63BDC9EE1C50F0C1001A84D3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = ColorgyCourseUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = misk.ColorgyCourseUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = ColorgyCourse;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		63BDC9EF1C50F0C1001A84D3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = ColorgyCourseUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = misk.ColorgyCourseUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = ColorgyCourse;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 		63FBCC2B1B9345B800B3084F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1047,14 +959,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		63BDC9ED1C50F0C1001A84D3 /* Build configuration list for PBXNativeTarget "ColorgyCourseUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				63BDC9EE1C50F0C1001A84D3 /* Debug */,
-				63BDC9EF1C50F0C1001A84D3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		63FBCC061B9345B800B3084F /* Build configuration list for PBXProject "ColorgyCourse" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

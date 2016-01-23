@@ -104,17 +104,17 @@ class CourseDB {
                 let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
                 if coursesInDB.count == 0 {
                     // return nil if element in array is zero.
-                    dispatch_async(main_queue, { () -> Void in
+                    dispatch_sync(main_queue, { () -> Void in
                         complete(courseDBManagedObjects: nil)
                     })
                 } else {
-                    dispatch_async(main_queue, { () -> Void in
+                    dispatch_sync(main_queue, { () -> Void in
                         complete(courseDBManagedObjects: coursesInDB)
                     })
                 }
             } catch {
                 print(ColorgyErrorType.DBFailure.fetchFail)
-                dispatch_async(main_queue, { () -> Void in
+                dispatch_sync(main_queue, { () -> Void in
                     complete(courseDBManagedObjects: nil)
                 })
             }
