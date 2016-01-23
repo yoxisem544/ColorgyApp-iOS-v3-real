@@ -51,12 +51,7 @@ class ColorgyAPI {
 		}
 		
 		print(params)
-		
-		guard let uuid = uuid {
-			failure()
-			return
-		}
-		
+
 		if let uuid = uuid {
 			let url = "https://colorgy.io:443/api/v1/me/devices/\(uuid).json?access_token=\(accesstoken)"
 			print(uuid)
@@ -83,48 +78,50 @@ class ColorgyAPI {
     
     /// Get all the token stored in server
     class func GETdeviceToken(success success: (devices: [[String : String]]) -> Void, failure: () -> Void) {
-        if ColorgyAPITrafficControlCenter.isTokenRefreshing() {
-            print(ColorgyErrorType.TrafficError.stillRefreshing)
-            failure()
-        } else {
-            if UserSetting.getPushNotificationDeviceToken() != nil {
-                if let accesstoken = UserSetting.UserAccessToken() {
-                    let afManager = AFHTTPSessionManager(baseURL: nil)
-                    afManager.requestSerializer = AFJSONRequestSerializer()
-                    afManager.responseSerializer = AFJSONResponseSerializer()
-                    
-                    // queue job
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    let url = "https://colorgy.io:443/api/v1/me/devices.json?access_token=\(accesstoken)"
-                    afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        let json = JSON(response)
-                        var devices = [[String : String]]()
-                        
-                        for (_, json) : (String, JSON) in json {
-                            if let name = json["name"].string {
-                                if let uuid = json["uuid"].string {
-                                    devices.append(["name": name, "uuid": uuid])
-                                }
-                            }
-                        }
-                        
-                        success(devices: devices)
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            // job ended
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            print(error)
-                            failure()
-                    })
-                } else {
-                    failure()
-                }
-            } else {
-                // no device token
-                failure()
-            }
-        }
+		
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		guard UserSetting.getPushNotificationDeviceToken() != nil else {
+			failure()
+			return
+		}
+		guard let accesstoken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		// queue job
+		ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+		let url = "https://colorgy.io:443/api/v1/me/devices.json?access_token=\(accesstoken)"
+		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			// job ended
+			ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+			let json = JSON(response)
+			var devices = [[String : String]]()
+			
+			for (_, json) : (String, JSON) in json {
+				if let name = json["name"].string {
+					if let uuid = json["uuid"].string {
+						devices.append(["name": name, "uuid": uuid])
+					}
+				}
+			}
+			
+			success(devices: devices)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				// job ended
+				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+				print(error)
+				failure()
+		})
+
     }
     
     /// Delete a uuid and push notification token set.
