@@ -8,4 +8,4 @@
 
 import Foundation
 
-let HelloThisIsASerialQueue = dispatch_queue_create("this.is.a.serial.queue", DISPATCH_QUEUE_SERIAL)
+let SERIAL_QUEUE = dispatch_queue_create("this.is.a.serial.queue", DISPATCH_QUEUE_SERIAL)

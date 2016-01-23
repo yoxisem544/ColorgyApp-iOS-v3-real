@@ -56,12 +56,11 @@
 		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
 		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
 		63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */; };
-		63BDC9F31C51CBE3001A84D3 /* TestFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */; };
 		63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */; };
 		63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */; };
 		63BDC9F91C5200EC001A84D3 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */; };
 		63BDC9FB1C521FE3001A84D3 /* OneWayInputReportTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9FA1C521FE3001A84D3 /* OneWayInputReportTextField.swift */; };
-		63BDC9FD1C5225F4001A84D3 /* HelloQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9FC1C5225F4001A84D3 /* HelloQueue.swift */; };
+		63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */; };
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63C2B9831C116331007740DB /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B9821C116331007740DB /* Semester.swift */; };
 		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
@@ -176,12 +175,11 @@
 		63BDC9E81C50F0C1001A84D3 /* ColorgyCourseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorgyCourseUITests.swift; sourceTree = "<group>"; };
 		63BDC9EA1C50F0C1001A84D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormView.swift; sourceTree = "<group>"; };
-		63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestFormViewController.swift; sourceTree = "<group>"; };
 		63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormKeyboard.swift; sourceTree = "<group>"; };
 		63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormTextField.swift; sourceTree = "<group>"; };
 		63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		63BDC9FA1C521FE3001A84D3 /* OneWayInputReportTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneWayInputReportTextField.swift; sourceTree = "<group>"; };
-		63BDC9FC1C5225F4001A84D3 /* HelloQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloQueue.swift; sourceTree = "<group>"; };
+		63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialQueue.swift; sourceTree = "<group>"; };
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63C2B9821C116331007740DB /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
 		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
@@ -407,11 +405,10 @@
 		63FBCC0D1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXGroup;
 			children = (
-				63BDC9FC1C5225F4001A84D3 /* HelloQueue.swift */,
+				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
-				63BDC9F21C51CBE3001A84D3 /* TestFormViewController.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
 				63C2B9871C155AE3007740DB /* Utilities */,
 				63C2B9841C155A39007740DB /* Models */,
@@ -686,7 +683,7 @@
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				6311D2101C3A4B2A00812934 /* CreateCourseTableViewCell.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
-				63BDC9FD1C5225F4001A84D3 /* HelloQueue.swift in Sources */,
+				63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */,
 				632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */,
 				638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */,
 				63FBCC711B934D3000B3084F /* Reachability.m in Sources */,
@@ -694,7 +691,6 @@
 				634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
-				63BDC9F31C51CBE3001A84D3 /* TestFormViewController.swift in Sources */,
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
