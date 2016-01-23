@@ -69,16 +69,7 @@ class SearchCourseViewController: UIViewController {
         searchCourseTableView.rowHeight = UITableViewAutomaticDimension
         searchCourseTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         searchCourseTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
-        
-        // animation
-//        let transition = CATransition()
-//        transition.type = kCATransitionPush
-//        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-//        transition.fillMode = kCAFillModeForwards
-//        transition.duration = 0.5
-//        transition.subtype = kCATransitionFromTop
-//        searchCourseTableView.layer.addAnimation(transition, forKey: "UITableViewReloadDataAnimationKey")
-        
+
         // configure segemented control
         courseSegementedControl.layer.cornerRadius = 0
         
@@ -86,20 +77,6 @@ class SearchCourseViewController: UIViewController {
         self.definesPresentationContext = true
         
         // configure navigation controller
-        
-        
-        //        UserSetting.deleteLocalCourseDataDictionaries()
-        //        UserSetting.deleteLocalCourseDataCaching()
-        
-//        // check if need to refresh
-//        checkToken()
-//        
-//        // load course data
-//        loadCourseData()
-//        
-//        // configure successful add course view
-//        configureSuccessfullyAddCourseView()
-//        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -232,26 +209,14 @@ class SearchCourseViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(self.processAlertController, animated: true, completion: nil)
         })
-        // TODO: this is very important ! year2015 term1
+
         let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
         ColorgyAPI.getSchoolCourseData(20000, year: semester.year, term: semester.term, success: { (courses, json) -> Void in
                 // ok!
                 // save this
-                //            UserSetting.storeRawCourseJSON(json)
-                // generate array of dictionary
-                //            UserSetting.storeLocalCourseDataDictionaries(courseRawDataDictionary)
-                
-                // dismiss processAlertController
             
                 // store data
                 ServerCourseDB.storeABunchOfCoursesToDB(courses)
-                
-                //            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
-                //            dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                //                self.processAlertController.dismissViewControllerAnimated(true, completion: { () -> Void in
-                //                    self.loadCourseData()
-                //                })
-                //            })
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.processAlertController.message = "下載完成！ 😆"
@@ -281,9 +246,6 @@ class SearchCourseViewController: UIViewController {
                     print("now on state:\(state)")
                     print(self.processAlertController.message)
                     self.processAlertController.message = state
-//                    NSOperationQueue().addOperationWithBlock({ () -> Void in
-//                        self.processAlertController.performSelector("setMessage:", onThread: NSThread.mainThread(), withObject: state, waitUntilDone: false)
-//                    })
                 })
         })
     }

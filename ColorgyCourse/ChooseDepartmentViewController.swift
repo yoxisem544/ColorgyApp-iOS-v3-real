@@ -136,17 +136,6 @@ class ChooseDepartmentViewController: UIViewController {
             })
         }
     }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
 
 extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDelegate {
@@ -253,9 +242,6 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
                 thisCell?.accessoryType = .Checkmark
                 
                 choosedDepartment = filteredDepartments[indexPath.row - 1].code
-//                if departments != nil {
-//                    choosedDepartment = departments[indexPath.row - 1].code
-//                }
                 
                 indexPathUserSelected = indexPath.row
                 
