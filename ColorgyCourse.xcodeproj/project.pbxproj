@@ -24,7 +24,6 @@
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
-		632E0A701C4FBA510063B941 /* PrivacyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6F1C4FBA510063B941 /* PrivacyTableViewCell.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
@@ -139,7 +138,6 @@
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
-		632E0A6F1C4FBA510063B941 /* PrivacyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewCell.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
@@ -260,15 +258,240 @@
 		6311D20E1C3A417000812934 /* Core data */ = {
 			isa = PBXGroup;
 			children = (
+				63B5FB0A1C53344900C45CF2 /* Local Course Data Base */,
+				63B5FB0B1C53345600C45CF2 /* Course Data Base */,
+				63B5FB0C1C53346000C45CF2 /* Server Course Data Base */,
+			);
+			name = "Core data";
+			sourceTree = "<group>";
+		};
+		63B5FB051C5333D200C45CF2 /* For Course */ = {
+			isa = PBXGroup;
+			children = (
+				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
+				638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */,
+			);
+			name = "For Course";
+			sourceTree = "<group>";
+		};
+		63B5FB061C5333E200C45CF2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
+				63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		63B5FB071C5333FD00C45CF2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC331B9346D800B3084F /* StringExtension.swift */,
+				63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		63B5FB081C53341300C45CF2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				63E776641B9720C800B15AF0 /* LogoutHelper.swift */,
+				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		63B5FB091C53342100C45CF2 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				630DC8A61C0809870060E105 /* SecretKeys.swift */,
+				63FBCC721B935C0100B3084F /* Mode.swift */,
+				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
+			);
+			name = Setup;
+			sourceTree = "<group>";
+		};
+		63B5FB0A1C53344900C45CF2 /* Local Course Data Base */ = {
+			isa = PBXGroup;
+			children = (
 				6311D2081C3A2F5A00812934 /* LocalCourseDB.swift */,
 				6311D20C1C3A303F00812934 /* LocalCourseDBManagedObject.swift */,
+			);
+			name = "Local Course Data Base";
+			sourceTree = "<group>";
+		};
+		63B5FB0B1C53345600C45CF2 /* Course Data Base */ = {
+			isa = PBXGroup;
+			children = (
 				63FBCC3D1B9346D800B3084F /* CourseDB.swift */,
 				63FBCC431B9346D800B3084F /* CourseDBManagedObject.swift */,
 				63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */,
 				6348F87F1B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift */,
+			);
+			name = "Course Data Base";
+			sourceTree = "<group>";
+		};
+		63B5FB0C1C53346000C45CF2 /* Server Course Data Base */ = {
+			isa = PBXGroup;
+			children = (
 				63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */,
 			);
-			name = "Core data";
+			name = "Server Course Data Base";
+			sourceTree = "<group>";
+		};
+		63B5FB0D1C53347500C45CF2 /* For New Registers */ = {
+			isa = PBXGroup;
+			children = (
+				638D64F81C045F1F00EACEC0 /* Department.swift */,
+				631746701C04110400F612B9 /* School.swift */,
+			);
+			name = "For New Registers";
+			sourceTree = "<group>";
+		};
+		63B5FB0E1C5334BD00C45CF2 /* Courses For Local Usage */ = {
+			isa = PBXGroup;
+			children = (
+				6311D20A1C3A2FA200812934 /* LocalCourse.swift */,
+				63FBCC3E1B9346D800B3084F /* Course.swift */,
+			);
+			name = "Courses For Local Usage";
+			sourceTree = "<group>";
+		};
+		63B5FB0F1C5334DD00C45CF2 /* For Login */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC371B9346D800B3084F /* PeriodDataObject.swift */,
+				63FBCC341B9346D800B3084F /* ColorgyUser.swift */,
+				63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */,
+			);
+			name = "For Login";
+			sourceTree = "<group>";
+		};
+		63B5FB101C5334E900C45CF2 /* Parsed Server Data using JSON */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */,
+				63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */,
+				63FBCC411B9346D800B3084F /* UserCourseObject.swift */,
+				63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */,
+			);
+			name = "Parsed Server Data using JSON";
+			sourceTree = "<group>";
+		};
+		63B5FB111C53351C00C45CF2 /* Report View */ = {
+			isa = PBXGroup;
+			children = (
+				63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */,
+				63BDC9FA1C521FE3001A84D3 /* OneWayInputReportTextField.swift */,
+				63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */,
+				63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */,
+			);
+			name = "Report View";
+			sourceTree = "<group>";
+		};
+		63B5FB121C53357600C45CF2 /* Creating Local Course */ = {
+			isa = PBXGroup;
+			children = (
+				63F718691C3D17B800870C5F /* OneWayInputTextField.swift */,
+				6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */,
+				63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */,
+				635B5BC71C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift */,
+				6311D2111C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift */,
+			);
+			name = "Creating Local Course";
+			sourceTree = "<group>";
+		};
+		63B5FB131C5335A000C45CF2 /* Time Table */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC481B9346D900B3084F /* TimeTableView.swift */,
+				63FBCC491B9346D900B3084F /* CourseCellView.swift */,
+			);
+			name = "Time Table";
+			sourceTree = "<group>";
+		};
+		63B5FB141C5335B200C45CF2 /* Course Detail VIew */ = {
+			isa = PBXGroup;
+			children = (
+				639AD58C1C4393DC002F70DD /* CourseDetailView.swift */,
+				6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */,
+				63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */,
+				63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */,
+			);
+			name = "Course Detail VIew";
+			sourceTree = "<group>";
+		};
+		63B5FB151C53360300C45CF2 /* Search Course View */ = {
+			isa = PBXGroup;
+			children = (
+				6311D20F1C3A4B2A00812934 /* CreateCourseTableViewCell.swift */,
+				63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */,
+			);
+			name = "Search Course View";
+			sourceTree = "<group>";
+		};
+		63B5FB161C53364D00C45CF2 /* Classmate's Detail View */ = {
+			isa = PBXGroup;
+			children = (
+				636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */,
+			);
+			name = "Classmate's Detail View";
+			sourceTree = "<group>";
+		};
+		63B5FB171C53366600C45CF2 /* Alert views */ = {
+			isa = PBXGroup;
+			children = (
+				63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */,
+				63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */,
+				63FBCC471B9346D900B3084F /* PopView.swift */,
+				630158821B998B47008172E9 /* ErrorAlertView.swift */,
+			);
+			name = "Alert views";
+			sourceTree = "<group>";
+		};
+		63B5FB181C53388800C45CF2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */,
+				6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */,
+				634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */,
+				6301587E1B9988B0008172E9 /* FBLoginViewController.swift */,
+				630158801B9988B9008172E9 /* EmailLoginViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		63B5FB191C53389000C45CF2 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				63ABBC041B94BA7A0077580D /* testViewController.swift */,
+				639D45121B9612230053870D /* TestStretchyViewController.swift */,
+				63FBCC461B9346D900B3084F /* ViewController.swift */,
+				63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		63B5FB1A1C5338AA00C45CF2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				632E0A711C508D240063B941 /* NotificationTableViewController.swift */,
+				632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */,
+				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		63B5FB1B1C5338D800C45CF2 /* About Course */ = {
+			isa = PBXGroup;
+			children = (
+				6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */,
+				6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */,
+				6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */,
+				6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */,
+				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
+			);
+			name = "About Course";
 			sourceTree = "<group>";
 		};
 		63BDC9E71C50F0C1001A84D3 /* ColorgyCourseUITests */ = {
@@ -285,17 +508,10 @@
 			children = (
 				6311D20E1C3A417000812934 /* Core data */,
 				63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */,
-				6311D20A1C3A2FA200812934 /* LocalCourse.swift */,
-				63FBCC371B9346D800B3084F /* PeriodDataObject.swift */,
-				63FBCC341B9346D800B3084F /* ColorgyUser.swift */,
-				63FBCC451B9346D800B3084F /* ColorgyLoginResult.swift */,
-				638D64F81C045F1F00EACEC0 /* Department.swift */,
-				631746701C04110400F612B9 /* School.swift */,
-				63FBCC3F1B9346D800B3084F /* CourseRawDataObject.swift */,
-				63FBCC401B9346D800B3084F /* CourseRawDataArray.swift */,
-				63FBCC411B9346D800B3084F /* UserCourseObject.swift */,
-				63FBCC421B9346D800B3084F /* UserCourseObjectArray.swift */,
-				63FBCC3E1B9346D800B3084F /* Course.swift */,
+				63B5FB0E1C5334BD00C45CF2 /* Courses For Local Usage */,
+				63B5FB0F1C5334DD00C45CF2 /* For Login */,
+				63B5FB0D1C53347500C45CF2 /* For New Registers */,
+				63B5FB101C5334E900C45CF2 /* Parsed Server Data using JSON */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -303,24 +519,12 @@
 		63C2B9851C155A57007740DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */,
-				632E0A711C508D240063B941 /* NotificationTableViewController.swift */,
-				632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */,
-				63FBCC461B9346D900B3084F /* ViewController.swift */,
-				634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */,
-				6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */,
-				634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */,
+				63B5FB1B1C5338D800C45CF2 /* About Course */,
+				63B5FB1A1C5338AA00C45CF2 /* Settings */,
+				63B5FB191C53389000C45CF2 /* Test */,
+				63B5FB181C53388800C45CF2 /* Login */,
 				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
-				636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */,
-				6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */,
-				6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */,
-				6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */,
-				6301587E1B9988B0008172E9 /* FBLoginViewController.swift */,
-				630158801B9988B9008172E9 /* EmailLoginViewController.swift */,
-				63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */,
-				639D45121B9612230053870D /* TestStretchyViewController.swift */,
 				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
-				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -328,31 +532,15 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				63BDC9FA1C521FE3001A84D3 /* OneWayInputReportTextField.swift */,
-				63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */,
-				63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */,
-				63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */,
-				63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */,
+				63B5FB111C53351C00C45CF2 /* Report View */,
+				63B5FB121C53357600C45CF2 /* Creating Local Course */,
 				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
-				632E0A6F1C4FBA510063B941 /* PrivacyTableViewCell.swift */,
-				63F718691C3D17B800870C5F /* OneWayInputTextField.swift */,
-				635B5BC71C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift */,
-				6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */,
-				6311D2111C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift */,
-				6311D20F1C3A4B2A00812934 /* CreateCourseTableViewCell.swift */,
-				639AD58C1C4393DC002F70DD /* CourseDetailView.swift */,
-				6348F87B1B9A0902005E4D37 /* ClassmatesContainerView.swift */,
-				63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */,
-				63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */,
-				63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */,
+				63B5FB151C53360300C45CF2 /* Search Course View */,
+				63B5FB171C53366600C45CF2 /* Alert views */,
 				639D450E1B95FA680053870D /* CourseCommentCell.swift */,
-				63FBCC471B9346D900B3084F /* PopView.swift */,
-				63FBCC481B9346D900B3084F /* TimeTableView.swift */,
-				63FBCC491B9346D900B3084F /* CourseCellView.swift */,
-				63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */,
-				63ABBC001B94B15C0077580D /* CourseDetailInformationView.swift */,
-				636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */,
-				630158821B998B47008172E9 /* ErrorAlertView.swift */,
+				63B5FB131C5335A000C45CF2 /* Time Table */,
+				63B5FB141C5335B200C45CF2 /* Course Detail VIew */,
+				63B5FB161C53364D00C45CF2 /* Classmate's Detail View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -360,22 +548,17 @@
 		63C2B9871C155AE3007740DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				63B5FB091C53342100C45CF2 /* Setup */,
+				63B5FB081C53341300C45CF2 /* Login */,
+				63B5FB071C5333FD00C45CF2 /* Extensions */,
+				63B5FB061C5333E200C45CF2 /* Network */,
+				63B5FB051C5333D200C45CF2 /* For Course */,
 				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
-				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
-				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
-				630DC8A61C0809870060E105 /* SecretKeys.swift */,
-				63E776641B9720C800B15AF0 /* LogoutHelper.swift */,
-				638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */,
+				63C2B9821C116331007740DB /* Semester.swift */,
 				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
-				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
-				63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */,
-				63FBCC331B9346D800B3084F /* StringExtension.swift */,
 				63FBCC351B9346D800B3084F /* UserSettings.swift */,
-				63FBCC721B935C0100B3084F /* Mode.swift */,
 				63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */,
-				63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */,
 				63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */,
-				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -414,9 +597,7 @@
 				63C2B9841C155A39007740DB /* Models */,
 				63C2B9861C155A6D007740DB /* Views */,
 				63C2B9851C155A57007740DB /* Controllers */,
-				63ABBC041B94BA7A0077580D /* testViewController.swift */,
 				63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */,
-				63C2B9821C116331007740DB /* Semester.swift */,
 				63FBCC1A1B9345B800B3084F /* Images.xcassets */,
 				63FBCC1C1B9345B800B3084F /* LaunchScreen.xib */,
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
@@ -712,7 +893,6 @@
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
 				63BDC9F91C5200EC001A84D3 /* ReportViewController.swift in Sources */,
 				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
-				632E0A701C4FBA510063B941 /* PrivacyTableViewCell.swift in Sources */,
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
 				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
