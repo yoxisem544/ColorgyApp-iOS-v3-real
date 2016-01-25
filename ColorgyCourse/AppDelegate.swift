@@ -87,6 +87,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                }, failure: { () -> Void in
 //                print("")
 //            })
+			ColorgyLogin.loginToColorgyWithUsername(username: "test-yuntech-student-ca62@test.colorgy.io", password: "test-yuntech-student-ca62", success: { (result) -> Void in
+				print(result.access_token)
+				print(result.access_token)
+				}, failure: { () -> Void in
+					
+			})
         }
         return true
     }
