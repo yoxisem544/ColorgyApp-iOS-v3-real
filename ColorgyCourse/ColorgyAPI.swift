@@ -700,6 +700,7 @@ class ColorgyAPI {
                 let json = JSON(response)
                 print("ME get!")
                 if let result = ColorgyAPIMeResult(json: json) {
+					print(result)
                     // return to main queue
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         completionHandler(result: result)

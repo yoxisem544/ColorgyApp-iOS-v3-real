@@ -30,6 +30,9 @@ struct UserSettingKey {
     // new key for unauthorized users
     static let userPossibleOrganization = "userPossibleOrganization"
     static let userPossibleDepartment = "userPossibleDepartment"
+	// new key for emails
+	static let userEmail = "user email"
+	static let userFBEmail = "user fbemail"
     // guide keu
     static let isGuideShownToUser = "isGuideShownToUser"
     // local course caching data 
@@ -107,6 +110,23 @@ class UserSetting {
         }
         return nil
     }
+	
+	// MARK: - email
+	class func UserEmail() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let email = ud.objectForKey(UserSettingKey.userEmail) as? String {
+			return email
+		}
+		return nil
+	}
+	
+	class func UserFBEmail() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let fbemail = ud.objectForKey(UserSettingKey.userFBEmail) as? String {
+			return fbemail
+		}
+		return nil
+	}
     
     // MARK: - push notification
     class func storePushNotificationDeviceToken(token: NSData) {
@@ -297,6 +317,9 @@ class UserSetting {
         ud.setObject(result.organization, forKey: UserSettingKey.userOrganization)
         ud.setObject(result.possible_department_code, forKey: UserSettingKey.userPossibleDepartment)
         ud.setObject(result.possible_organization_code, forKey: UserSettingKey.userPossibleOrganization)
+		// emails
+		ud.setObject(result.email, forKey: UserSettingKey.userEmail)
+		ud.setObject(result.fbemail, forKey: UserSettingKey.userFBEmail)
         ud.synchronize()
     }
     
@@ -324,6 +347,9 @@ class UserSetting {
         ud.removeObjectForKey(UserSettingKey.userAvatarUrl)
         ud.removeObjectForKey(UserSettingKey.userCoverPhotoUrl)
         ud.removeObjectForKey(UserSettingKey.userType)
+		// emails
+		ud.removeObjectForKey(UserSettingKey.userEmail)
+		ud.removeObjectForKey(UserSettingKey.userFBEmail)
         // new key for unauthorized users
         ud.removeObjectForKey(UserSettingKey.userPossibleOrganization)
         ud.removeObjectForKey(UserSettingKey.userPossibleDepartment)
@@ -363,6 +389,9 @@ class UserSetting {
         ud.removeObjectForKey(UserSettingKey.userAvatarUrl)
         ud.removeObjectForKey(UserSettingKey.userCoverPhotoUrl)
         ud.removeObjectForKey(UserSettingKey.userType)
+		// emails
+		ud.removeObjectForKey(UserSettingKey.userEmail)
+		ud.removeObjectForKey(UserSettingKey.userFBEmail)
         // new key for unauthorized users
         ud.removeObjectForKey(UserSettingKey.userPossibleOrganization)
         ud.removeObjectForKey(UserSettingKey.userPossibleDepartment)
