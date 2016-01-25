@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E3D74F41C560071002812F4 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74EF1C560071002812F4 /* LoadingView.m */; };
+		4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F11C560071002812F4 /* NSString+Email.m */; };
+		4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F31C560071002812F4 /* OpeningViewController.m */; };
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
 		630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158821B998B47008172E9 /* ErrorAlertView.swift */; };
-		630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630DC8A61C0809870060E105 /* SecretKeys.swift */; };
 		6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2081C3A2F5A00812934 /* LocalCourseDB.swift */; };
 		6311D20B1C3A2FA200812934 /* LocalCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D20A1C3A2FA200812934 /* LocalCourse.swift */; };
 		6311D20D1C3A303F00812934 /* LocalCourseDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D20C1C3A303F00812934 /* LocalCourseDBManagedObject.swift */; };
@@ -121,10 +123,15 @@
 		130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.release.xcconfig"; sourceTree = "<group>"; };
 		2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColorgyCourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E3D74EE1C560071002812F4 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = ColorgyCourse/LoadingView.h; sourceTree = "<group>"; };
+		4E3D74EF1C560071002812F4 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = ColorgyCourse/LoadingView.m; sourceTree = "<group>"; };
+		4E3D74F01C560071002812F4 /* NSString+Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Email.h"; path = "ColorgyCourse/NSString+Email.h"; sourceTree = "<group>"; };
+		4E3D74F11C560071002812F4 /* NSString+Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Email.m"; path = "ColorgyCourse/NSString+Email.m"; sourceTree = "<group>"; };
+		4E3D74F21C560071002812F4 /* OpeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpeningViewController.h; path = ColorgyCourse/OpeningViewController.h; sourceTree = "<group>"; };
+		4E3D74F31C560071002812F4 /* OpeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpeningViewController.m; path = ColorgyCourse/OpeningViewController.m; sourceTree = "<group>"; };
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
-		630DC8A61C0809870060E105 /* SecretKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
 		6311D2071C3A2D1600812934 /* ColorgyCourse_v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v4.xcdatamodel; sourceTree = "<group>"; };
 		6311D2081C3A2F5A00812934 /* LocalCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalCourseDB.swift; path = ../LocalCourseDB.swift; sourceTree = "<group>"; };
 		6311D20A1C3A2FA200812934 /* LocalCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCourse.swift; sourceTree = "<group>"; };
@@ -304,7 +311,6 @@
 		63B5FB091C53342100C45CF2 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				630DC8A61C0809870060E105 /* SecretKeys.swift */,
 				63FBCC721B935C0100B3084F /* Mode.swift */,
 				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
 			);
@@ -566,6 +572,12 @@
 		63FBCC021B9345B800B3084F = {
 			isa = PBXGroup;
 			children = (
+				4E3D74EE1C560071002812F4 /* LoadingView.h */,
+				4E3D74EF1C560071002812F4 /* LoadingView.m */,
+				4E3D74F01C560071002812F4 /* NSString+Email.h */,
+				4E3D74F11C560071002812F4 /* NSString+Email.m */,
+				4E3D74F21C560071002812F4 /* OpeningViewController.h */,
+				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
 				63FBCC691B93470700B3084F /* Header.h */,
 				63FBCC0D1B9345B800B3084F /* ColorgyCourse */,
 				63FBCC261B9345B800B3084F /* ColorgyCourseTests */,
@@ -836,10 +848,10 @@
 				63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */,
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
-				630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */,
 				63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */,
 				6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */,
 				63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */,
+				4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */,
 				63F7186A1C3D17B800870C5F /* OneWayInputTextField.swift in Sources */,
 				635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */,
 				639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */,
@@ -856,6 +868,7 @@
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
 				6311D20D1C3A303F00812934 /* LocalCourseDBManagedObject.swift in Sources */,
 				630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */,
+				4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */,
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */,
@@ -877,6 +890,7 @@
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
 				63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */,
+				4E3D74F41C560071002812F4 /* LoadingView.m in Sources */,
 				6311D20B1C3A2FA200812934 /* LocalCourse.swift in Sources */,
 				63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,

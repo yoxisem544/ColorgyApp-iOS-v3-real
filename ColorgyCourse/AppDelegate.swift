@@ -35,14 +35,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Flurry setup
         if Release().mode {
             // setup Flurry
-            Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
+            // Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
             let id = UserSetting.UserId() ?? -1
             let school = UserSetting.UserPossibleOrganization() ?? "no school"
             let name = UserSetting.UserName() ?? "no name"
             let params = ["user_id": id, "user_name": name, "school": school]
             Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
         } else {
-            Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
+            // Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
             let id = UserSetting.UserId() ?? -1
             let school = UserSetting.UserPossibleOrganization() ?? "no school"
             let name = UserSetting.UserName() ?? "no name"
