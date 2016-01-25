@@ -46,7 +46,9 @@ class ReportViewController: UIViewController {
         reportView.frame.origin.y = 64
         self.view.addSubview(reportView)
         
-        reportView.keyboardDismissMode = .Interactive
+        reportView.keyboardDismissMode = .OnDrag
+		
+		reportView.formDelegate = self
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,4 +77,13 @@ class ReportViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
+}
+
+extension ReportViewController : ReportFormViewDelegate {
+	func reportFormViewContentUpdate(problemType: String?, problemDescription: String?, email: String?, lastQuestion: String?) {
+		print("problemType \(problemType)")
+		print("problemDescription \(problemDescription)")
+		print("email \(email)")
+		print("lastQuestion \(lastQuestion)")
+	}
 }

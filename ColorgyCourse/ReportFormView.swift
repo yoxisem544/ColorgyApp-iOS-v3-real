@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ReportFormViewDelegate {
+	func reportFormViewContentUpdate(problemType: String?, problemDescription: String?, email: String?, lastQuestion: String?)
+}
+
 /// This is a view for Reporting Colorgy
 class ReportFormView: UIScrollView {
 	
@@ -18,6 +22,8 @@ class ReportFormView: UIScrollView {
 	// Drawing code
 	}
 	*/
+	
+	var formDelegate: ReportFormViewDelegate?
 	
 	// each height of title, fix to 42pt
 	private let titleHeight: CGFloat = 42
@@ -35,8 +41,10 @@ class ReportFormView: UIScrollView {
 	
 	private var problemDescriptionView: UIView!
 	private let problemDescriptionTextViewGap: CGFloat = 0
+	private var problemDescriptionTextView: UITextView!
 	
 	private var emailView: UIView!
+	private var emailTextField: ReportFormTextField!
 	
 	private var footerView: UIView!
 	private var fuckDeveloperTextField: OneWayInputReportTextField!
@@ -94,7 +102,7 @@ class ReportFormView: UIScrollView {
 		let problemDescriptionLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * problemPickerTitleLabelPadding, titleHeight))
 		problemDescriptionLabel.text = problemDescriptionLabelText
 		// content text view
-		let problemDescriptionTextView = UITextView(frame: CGRectMake(0, 0, problemDescriptionLabel.frame.width, problemDescriptionView.frame.height - problemDescriptionLabel.frame.height - 16))
+		problemDescriptionTextView = UITextView(frame: CGRectMake(0, 0, problemDescriptionLabel.frame.width, problemDescriptionView.frame.height - problemDescriptionLabel.frame.height - 16))
 		problemDescriptionTextView.layer.cornerRadius = 2.0
 		problemDescriptionTextView.layer.borderWidth = 1.0
 		problemDescriptionTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -107,6 +115,7 @@ class ReportFormView: UIScrollView {
 		// add to subview
 		problemDescriptionView.addSubview(problemDescriptionLabel)
 		problemDescriptionView.addSubview(problemDescriptionTextView)
+		problemDescriptionTextView.delegate = self
 		
 		// configure email view
 		emailView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
@@ -114,7 +123,7 @@ class ReportFormView: UIScrollView {
 		let emailTitleLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width - 2 * problemPickerTitleLabelPadding, titleHeight))
 		emailTitleLabel.text = emailTitleLabelText
 		// text field
-		let emailTextField = ReportFormTextField(frame: emailTitleLabel.frame)
+		emailTextField = ReportFormTextField(frame: emailTitleLabel.frame)
 		emailTextField.placeholder = "請填常用的email..."
 		// arrange view
 		emailTitleLabel.center.x = emailView.center.x
@@ -122,6 +131,7 @@ class ReportFormView: UIScrollView {
 		emailTextField.frame.origin.y = emailTitleLabel.frame.maxY + problemDescriptionTextViewGap
 		emailView.addSubview(emailTitleLabel)
 		emailView.addSubview(emailTextField)
+		emailTextField.addTarget(self, action: "emailTextFieldValueChanged:", forControlEvents: UIControlEvents.EditingChanged)
 		
 		// configure footer view
 		footerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
@@ -166,6 +176,10 @@ class ReportFormView: UIScrollView {
 		self.contentSize = CGSize(width: self.frame.width, height: footerView.frame.maxY)
 	}
 	
+	internal func emailTextFieldValueChanged(textField: UITextField) {
+		formDelegate?.reportFormViewContentUpdate(problemPickerTextField.text, problemDescription: problemDescriptionTextView.text, email: emailTextField.text, lastQuestion: fuckDeveloperTextField.text)
+	}
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 	}
@@ -199,8 +213,19 @@ extension ReportFormView : ReportFormKeyboardDelegate {
 	func reportFormKeyboard(contentUpdate text: String?) {
 		if problemPickerTextField.isFirstResponder() {
 			problemPickerTextField.text = text
+			formDelegate?.reportFormViewContentUpdate(problemPickerTextField.text, problemDescription: problemDescriptionTextView.text, email: emailTextField.text, lastQuestion: fuckDeveloperTextField.text)
 		} else if fuckDeveloperTextField.isFirstResponder() {
 			fuckDeveloperTextField.text = text
+			formDelegate?.reportFormViewContentUpdate(problemPickerTextField.text, problemDescription: problemDescriptionTextView.text, email: emailTextField.text, lastQuestion: fuckDeveloperTextField.text)
+		}
+	}
+}
+
+extension ReportFormView : UITextViewDelegate {
+	func textViewDidChange(textView: UITextView) {
+		if textView == problemDescriptionTextView {
+			print((textView.text))
+			formDelegate?.reportFormViewContentUpdate(problemPickerTextField.text, problemDescription: problemDescriptionTextView.text, email: emailTextField.text, lastQuestion: fuckDeveloperTextField.text)
 		}
 	}
 }
