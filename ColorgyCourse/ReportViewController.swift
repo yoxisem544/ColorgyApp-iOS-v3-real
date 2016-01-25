@@ -11,7 +11,16 @@ import UIKit
 class ReportViewController: UIViewController {
     
     var reportView: ReportFormView!
-    
+	
+	var headerTitle: String! = "謝謝大大水水們的回報，我們會更努力的！"
+	var reportProblemTitle: String! = "遇到的問題（必填）"
+	var reportProblem: [String?]!
+	var problemDescription: String! = "問題描述（選填）"
+	
+	var finalQuestionTitle: String! = "最後（選填）"
+    var fuckContent: [String?]!
+	
+	
     @IBAction func closeButtonClicked() {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -24,9 +33,15 @@ class ReportViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let reportProblem: [String?] = ["沒有我的學校", "沒有我的系所", "找不到我的課", "課程資訊錯誤", "其他"]
-        let fuckContent: [String?] = ["鞭打工程師", "幫工程師加油"]
-        reportView = ReportFormView(headerTitleText: "dkskjds", problemPickerTitleLabelText: "dsjkdkjsdkj", problemPickerContents: reportProblem, problemDescriptionLabelText: "sdkjiu298", emailTitleLabelText: "ds89sd89", fuckContents: fuckContent, footerTitleLabelText: "98ds98d")
+		if reportProblem == nil {
+			reportProblem = ["沒有我的學校", "沒有我的系所", "找不到我的課", "課程資訊錯誤", "其他"]
+		}
+		
+		if fuckContent == nil {
+			fuckContent = ["鞭打工程師", "幫工程師加油"]
+		}
+		
+        reportView = ReportFormView(headerTitleText: headerTitle, problemPickerTitleLabelText: reportProblemTitle, problemPickerContents: reportProblem, problemDescriptionLabelText: problemDescription, emailTitleLabelText: "常用信箱", fuckContents: fuckContent, footerTitleLabelText: finalQuestionTitle)
         reportView.frame.size.height -= 64
         reportView.frame.origin.y = 64
         self.view.addSubview(reportView)

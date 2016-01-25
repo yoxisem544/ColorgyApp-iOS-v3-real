@@ -50,6 +50,9 @@ class ReportFormView: UIScrollView {
 		headerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight))
 		headerView.backgroundColor = ColorgyColor.waterBlue
 		let headerTitleLabel = UILabel(frame: headerView.frame)
+		headerTitleLabel.frame.size.width -= 50
+		headerTitleLabel.minimumScaleFactor = 0.6
+		headerTitleLabel.adjustsFontSizeToFitWidth = true
 		headerTitleLabel.text = headerTitleText
 		headerTitleLabel.textColor = UIColor.whiteColor()
 		headerTitleLabel.textAlignment = .Center
@@ -57,6 +60,7 @@ class ReportFormView: UIScrollView {
 		headerImageView.image = UIImage(named: "Speaker")
 		headerImageView.frame.origin.x = 16
 		headerImageView.center.y = headerView.center.y
+		headerTitleLabel.frame.origin.x = headerImageView.frame.maxX + 8
 		// add subview
 		headerView.addSubview(headerTitleLabel)
 		headerView.addSubview(headerImageView)

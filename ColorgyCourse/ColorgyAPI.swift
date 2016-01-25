@@ -1227,4 +1227,50 @@ class ColorgyAPI {
                 failure()
         })
     }
+	
+	class func POSTUserFeedBack(userEmail: String, feedbackType: String, feedbackDescription: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		guard let accesstoken = UserSetting.UserAccessToken() else {
+			print(ColorgyErrorType.noAccessToken)
+			failure()
+			return
+		}
+		let url = "https://colorgy.io:443/api/v1/me/user_app_feedbacks.json?access_token=\(accesstoken)"
+		guard url.isValidURLString else {
+			print(ColorgyErrorType.invalidURLString)
+			failure()
+			return
+		}
+		
+		let osVersion = NSProcessInfo.processInfo().operatingSystemVersion
+		let appVersion = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
+		let params = ["user_app_feedbacks":
+			[
+				"user_email": userEmail,
+				"type": feedbackType,
+				"description": feedbackDescription,
+				"device_type": "ios",
+				"device_manufacturer": "Apple",
+				"device_os_verison": "\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)",
+				"app_verison": appVersion ?? "unknown version"
+			]
+		]
+		
+		afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
 }

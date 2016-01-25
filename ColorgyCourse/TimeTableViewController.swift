@@ -32,6 +32,11 @@ class TimeTableViewController: UIViewController {
         timetableView = TimeTableView(frame: CGRectMake(0, navHeight, self.view.frame.width, self.view.frame.height - navHeight - tabBarHeight))
         self.view.addSubview(timetableView)
         timetableView.delegate = self
+		
+		print(NSProcessInfo.processInfo().operatingSystemVersion)
+		print(NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"])
+		print(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String])
+		print("")
     }
     
     override func viewDidAppear(animated: Bool) {
