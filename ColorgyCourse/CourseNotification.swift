@@ -19,16 +19,20 @@ class CourseNotification {
 					// get out all course stored in db
 					for course in courses {
 						let needNotifiedCourses = checkNeedNotifiedCourse(course)
+						print(needNotifiedCourses)
 						for needNotifiedCourse in needNotifiedCourses {
 							setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
 						}
 					}
 				}
+				print(UIApplication.sharedApplication().scheduledLocalNotifications)
+				print("")
 				LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
 					if let localCourses = localCourses {
 						// get out all course stored in db
 						for course in localCourses {
 							let needNotifiedCourses = checkNeedNotifiedLocalCourse(course)
+							print(needNotifiedCourses)
 							for needNotifiedCourse in needNotifiedCourses {
 								setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
 							}
@@ -38,45 +42,6 @@ class CourseNotification {
 					print("")
 				})
 			})
-//            CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
-//                if let objects = courseDBManagedObjects {
-//                    var courses = [Course]()
-//                    for object in objects {
-//                        if let course = Course(courseDBManagedObject: object) {
-//                            courses.append(course)
-//                        }
-//                    }
-//                    // get out all course stored in db
-//                    for course in courses {
-//                        let needNotifiedCourses = checkNeedNotifiedCourse(course)
-//                        for needNotifiedCourse in needNotifiedCourses {
-//                            setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
-//                        }
-//                    }
-//                    
-//        //            print(UIApplication.sharedApplication().scheduledLocalNotifications)
-//                }
-//                // then register new one
-//                LocalCourseDB.getAllStoredCoursesObject(complete: { (localCourseDBManagedObjects) -> Void in
-//                    if let objects = localCourseDBManagedObjects {
-//                        var courses = [LocalCourse]()
-//                        for object in objects {
-//                            if let course = LocalCourse(localCourseDBManagedObject: object) {
-//                                courses.append(course)
-//                            }
-//                        }
-//                        // get out all course stored in db
-//                        for course in courses {
-//                            let needNotifiedCourses = checkNeedNotifiedLocalCourse(course)
-//                            for needNotifiedCourse in needNotifiedCourses {
-//                                setupNotificationWithMessage(course, day: needNotifiedCourse.day, session: needNotifiedCourse.period, index: needNotifiedCourse.index)
-//                            }
-//                        }
-//                    }
-//                    print(UIApplication.sharedApplication().scheduledLocalNotifications)
-//                    print("")
-//                })
-//            })
         }
     }
     
