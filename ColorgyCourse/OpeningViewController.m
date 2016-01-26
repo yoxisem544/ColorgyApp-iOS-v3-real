@@ -7,6 +7,7 @@
 //
 
 #import "OpeningViewController.h"
+#import "UIImage+GaussianBlurUIImage.h"
 #import "NSString+Email.h"
 
 @implementation OpeningViewController
@@ -15,6 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
     
     // nameScrollView Customized
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -172,8 +175,8 @@
     self.checkEmailButton.frame = CGRectMake(141, 440, 120, 41);
     self.checkEmailButton.backgroundColor = [UIColor clearColor];
     self.checkEmailButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
-    self.checkEmailButton.layer.borderWidth = 2.0;
-    self.checkEmailButton.layer.cornerRadius = 2.0;
+    self.checkEmailButton.layer.borderWidth = 2.5;
+    self.checkEmailButton.layer.cornerRadius = 2.5;
     self.checkEmailButton.center = CGPointMake(self.view.center.x, self.welcomeDescriptionLabel.center.y + 50);
     
     [self.checkEmailButton setTitle:@"開始認證" forState:UIControlStateNormal];
@@ -182,48 +185,14 @@
     [self.checkEmailButton addTarget:self action:@selector(showCheckEmailAlert) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.checkEmailButton];
-    
-    
-    // UploadPhotoButton Customized
-    //    self.uploadPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    self.uploadPhotoButton.frame = CGRectMake(141, 440, 96, 32);
-    //    self.uploadPhotoButton.backgroundColor = [UIColor clearColor];
-    //    self.uploadPhotoButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
-    //    self.uploadPhotoButton.layer.borderWidth = 2.0;
-    //    self.uploadPhotoButton.layer.cornerRadius = 2.0;
-    //    self.uploadPhotoButton.center = CGPointMake(self.view.center.x, self.welcomeDescriptionLabel.center.y + 50);
-    //
-    //    [self.view addSubview:self.uploadPhotoButton];
-    
-    // UploadPhotoButtonTitle Customized
-    //    [self.uploadPhotoButton setTitle:@"開始認證" forState:UIControlStateNormal];
-    //    [self.uploadPhotoButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
-    //    [self.uploadPhotoButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
-    //    [self.uploadPhotoButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
-    
-    // UIAlertController AnctionSheetStyle Initializing
-    //    self.photoMeunAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    //
-    //    [self.photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-    //
-    //        // Cancel button tappped.
-    //        [self dismissViewControllerAnimated:YES completion:^{
-    //        }];
-    //    }]];
-    //    [self.photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-    //
-    //        // PhotoAlbumr button tapped.
-    //        [self dismissViewControllerAnimated:YES completion:^{
-    //        }];
-    //        [self openPhotoLibrary];
-    //    }]];
-    //    [self.photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"拍攝照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-    //
-    //        // TakePhoto button tapped.
-    //        [self dismissViewControllerAnimated:YES completion:^{
-    //        }];
-    //        [self openPhotoCamera];
-    //    }]];
+}
+
+- (void)removeOpeningLayout {
+    [self.welcomeChatIconImageView removeFromSuperview];
+    [self.checkEmailButton removeFromSuperview];
+    //[self.uploadPhotoButton removeFromSuperview];
+    [self.welcomeLabel removeFromSuperview];
+    [self.welcomeDescriptionLabel removeFromSuperview];
 }
 
 #pragma mark - CheckEmailButtonAction
@@ -233,25 +202,143 @@
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"colorgy@gmail.com";
+        self.activeTextField = textField;
     }];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         NSString *emailString = alertController.textFields.firstObject.text;
         
         if ([emailString isEmail]) {
+            [self removeOpeningLayout];
+            self.activeTextField = nil;
+            self.loadingView = [[LoadingView alloc] init];
+            self.loadingView.loadingString = @"發送中";
+            self.loadingView.finishedString = @"發送成功";
+            [self.loadingView start];
+            self.loadingView.maskView.backgroundColor = [UIColor blackColor];
+            self.loadingView.maskView.alpha = 0.75;
             
+            // 發送email認證，模擬延遲
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.loadingView finished:^() {
+                    [self.loadingView emailCheck];
+                    [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
+                }];
+            });
         } else {
-            alertController.message = [alertController.message stringByAppendingString:@"信箱錯誤"];
+            alertController.message = @"信箱錯誤";
+            [self presentViewController:alertController animated:YES completion:nil];
         }
     }]];
-    
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)checkEmail {
+    self.loadingView.loadingString = @"驗證中";
+    
+    [self.loadingView start];
+    // 認證信箱
+    // 模擬延遲
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.loadingView finished:^() {
+            [self removeOpeningLayout];
+            [self uploadLayout];
+        }];
+    });
+}
+
+#pragma mark - Upload Layout
+
+- (void)uploadLayout {
+    // userImageView Customized
+    self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
+    self.userImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
+    self.uploadImage = [UIImage imageNamed:@"2.jpg"];
+    self.userImageView.image = [self.uploadImage gaussianBlurImage:self.uploadImage andInputRadius:4];
+    self.userImageView.layer.masksToBounds = YES;
+    self.userImageView.layer.borderWidth = 3;
+    self.userImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.userImageView.layer.cornerRadius = self.userImageView.bounds.size.width / 2;
+    [self.view addSubview:self.userImageView];
+    
+    // uploadTitleLabel Customized
+    NSAttributedString *attributedUploadTitleString = [[NSAttributedString alloc] initWithString:@"展開一段冒險" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:24.0]}];
+    
+    self.uploadTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 254, 315, 25)];
+    self.uploadTitleLabel.attributedText = attributedUploadTitleString;
+    self.uploadTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.uploadTitleLabel.center = CGPointMake(self.view.center.x, self.userImageView.center.y + 100);
+    
+    [self.view addSubview:self.uploadTitleLabel];
+    
+    // uploadDescriptionLabel Customized
+    NSAttributedString *attributedUploadDescriptionString = [[NSAttributedString alloc] initWithString:@"所有頭貼經過模糊處理，唯有越聊越清晰～" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:14.0]}];
+    
+    self.uploadDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(64, 391, 320, 13)];
+    self.uploadDescriptionLabel.attributedText = attributedUploadDescriptionString;
+    self.uploadDescriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.uploadDescriptionLabel.center = CGPointMake(self.view.center.x, self.uploadTitleLabel.center.y + 30);
+    
+    [self.view addSubview:self.uploadDescriptionLabel];
+    
+    // UploadPhotoButton Customized
+    self.uploadPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.uploadPhotoButton.frame = CGRectMake(141, 440, 120, 41);
+    self.uploadPhotoButton.backgroundColor = [UIColor clearColor];
+    self.uploadPhotoButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
+    self.uploadPhotoButton.layer.borderWidth = 2.5;
+    self.uploadPhotoButton.layer.cornerRadius = 2.5;
+    self.uploadPhotoButton.center = CGPointMake(self.view.center.x, self.uploadDescriptionLabel.center.y + 50);
+    
+    [self.uploadPhotoButton setTitle:@"上傳頭貼" forState:UIControlStateNormal];
+    [self.uploadPhotoButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+    [self.uploadPhotoButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
+    [self.uploadPhotoButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.uploadPhotoButton];
+}
+
+- (void)removeUploadLayout {
+    [self.userImageView removeFromSuperview];
+    [self.uploadTitleLabel removeFromSuperview];
+    [self.uploadDescriptionLabel removeFromSuperview];
+    [self.uploadPhotoButton removeFromSuperview];
 }
 
 #pragma mark - UploadButtonAction
 
 - (void)showPhotoMeunAlert {
-    //[self presentViewController:self.photoMeunAlertController animated:YES completion:nil];
+    // UIAlertController AnctionSheetStyle Initializing
+    UIAlertController *photoMeunAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+        // Cancel button tappped.
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+    }]];
+    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        // FBImageSticker button tapped.
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+    }]];
+    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        // PhotoAlbumr button tapped.
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+        [self openPhotoLibrary];
+    }]];
+    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"拍攝照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        // TakePhoto button tapped.
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+        [self openPhotoCamera];
+    }]];
+    [self presentViewController:photoMeunAlertController animated:YES completion:nil];
 }
 
 - (void)openPhotoLibrary {
@@ -266,8 +353,9 @@
     } else {
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相簿失敗" preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self dismissViewControllerAnimated:YES completion:^{
+                
             }];
         }]];
         [self presentViewController:alertError animated:YES completion:nil];
@@ -300,7 +388,8 @@
     [self dismissViewControllerAnimated:YES completion:^{
     }];
     self.uploadImage = [info objectForKey:UIImagePickerControllerEditedImage];
-    [self uploadingImage];
+    [self removeUploadLayout];
+    [self uploadPreviewLayout];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -309,37 +398,99 @@
     }];
 }
 
+#pragma mark - Upload Preview
+- (void)uploadPreviewLayout {
+    // userImageView Customized
+    self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
+    self.userImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
+    self.userImageView.image = [self.uploadImage gaussianBlurImage:self.uploadImage andInputRadius:4];
+    self.userImageView.layer.masksToBounds = YES;
+    self.userImageView.layer.borderWidth = 3;
+    self.userImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.userImageView.layer.cornerRadius = self.userImageView.bounds.size.width / 2;
+    [self.view addSubview:self.userImageView];
+    
+    // uploadTitleLabel Customized
+    NSAttributedString *attributedUploadTitleString = [[NSAttributedString alloc] initWithString:@"真好看" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:24.0]}];
+    
+    self.uploadTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 254, 315, 25)];
+    self.uploadTitleLabel.attributedText = attributedUploadTitleString;
+    self.uploadTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.uploadTitleLabel.center = CGPointMake(self.view.center.x, self.userImageView.center.y + 100);
+    
+    [self.view addSubview:self.uploadTitleLabel];
+    
+    // uploadDescriptionLabel Customized
+    NSAttributedString *attributedUploadDescriptionString = [[NSAttributedString alloc] initWithString:@"模糊的你有顆美麗的心" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:14.0]}];
+    
+    self.uploadDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(64, 391, 320, 13)];
+    self.uploadDescriptionLabel.attributedText = attributedUploadDescriptionString;
+    self.uploadDescriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.uploadDescriptionLabel.center = CGPointMake(self.view.center.x, self.uploadTitleLabel.center.y + 30);
+    
+    [self.view addSubview:self.uploadDescriptionLabel];
+    
+    // UploadPhotoButton Customized
+    self.uploadPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.uploadPhotoButton.frame = CGRectMake(141, 440, 120, 41);
+    self.uploadPhotoButton.backgroundColor = [UIColor clearColor];
+    self.uploadPhotoButton.layer.borderColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100].CGColor;
+    self.uploadPhotoButton.layer.borderWidth = 2.5;
+    self.uploadPhotoButton.layer.cornerRadius = 2.5;
+    self.uploadPhotoButton.center = CGPointMake(self.view.center.x - self.uploadPhotoButton.bounds.size.width / 2 - 5, self.uploadDescriptionLabel.center.y + 50);
+    
+    [self.uploadPhotoButton setTitle:@"重新選取" forState:UIControlStateNormal];
+    [self.uploadPhotoButton setTitleColor:[self UIColorFromRGB:151 green:151 blue:151 alpha:100] forState:UIControlStateNormal];
+    [self.uploadPhotoButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
+    [self.uploadPhotoButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.uploadPhotoButton];
+    
+    // UploadSbmitButton Customized
+    self.uploadSubmitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.uploadSubmitButton.frame = CGRectMake(141, 440, 120, 41);
+    self.uploadSubmitButton.backgroundColor = [UIColor clearColor];
+    self.uploadSubmitButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
+    self.uploadSubmitButton.layer.borderWidth = 2.5;
+    self.uploadSubmitButton.layer.cornerRadius = 2.5;
+    self.uploadSubmitButton.center = CGPointMake(self.view.center.x + self.uploadSubmitButton.bounds.size.width / 2 + 5, self.uploadDescriptionLabel.center.y + 50);
+    
+    [self.uploadSubmitButton setTitle:@"確認使用" forState:UIControlStateNormal];
+    [self.uploadSubmitButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+    [self.uploadSubmitButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
+    [self.uploadSubmitButton addTarget:self action:@selector(uploadingImage) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.uploadSubmitButton];
+}
+
+- (void)removeUploadPreviewLayout {
+    [self.userImageView removeFromSuperview];
+    [self.uploadTitleLabel removeFromSuperview];
+    [self.uploadDescriptionLabel removeFromSuperview];
+    [self.uploadPhotoButton removeFromSuperview];
+    [self.uploadSubmitButton removeFromSuperview];
+}
+
 #pragma mark - UploadingImage
 
 - (void)uploadingImage {
     
     // clear view
-    [self removeOpeningLayout];
+    [self removeUploadPreviewLayout];
     
     // 這裡上傳
-    self.imageLoadingView = [[LoadingView alloc] init];
-    self.imageLoadingView.loadingString = @"上傳中";
-    self.imageLoadingView.finishedString = @"成功";
-    [self.imageLoadingView start];
+    self.loadingView = [[LoadingView alloc] init];
+    self.loadingView.loadingString = @"上傳中";
+    self.loadingView.finishedString = @"成功";
+    [self.loadingView start];
     
     // 測試用需要刪除
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(finishedUploadingImage) userInfo:nil repeats:NO];
-}
-
-#pragma mark - FinishedUploadingImage
-
-- (void)finishedUploadingImage {
-    [self.imageLoadingView finished:^(){
-        [self nameLayout];
-    }];
-}
-
-- (void)removeOpeningLayout {
-    [self.welcomeChatIconImageView removeFromSuperview];
-    [self.checkEmailButton removeFromSuperview];
-    //[self.uploadPhotoButton removeFromSuperview];
-    [self.welcomeLabel removeFromSuperview];
-    [self.welcomeDescriptionLabel removeFromSuperview];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.loadingView finished:^(){
+            [self nameLayout];
+        }];
+    });
 }
 
 #pragma mark - NameLayout
@@ -407,20 +558,20 @@
     self.submitNameButton.frame = CGRectMake(141, 440, 96, 32);
     self.submitNameButton.backgroundColor = [UIColor clearColor];
     self.submitNameButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
-    self.submitNameButton.layer.borderWidth = 2.0;
-    self.submitNameButton.layer.cornerRadius = 2.0;
+    self.submitNameButton.layer.borderWidth = 2.5;
+    self.submitNameButton.layer.cornerRadius = 2.5;
     self.submitNameButton.center = CGPointMake(self.view.center.x, self.nameTextField.center.y + 80);
     
     [self.scrollView addSubview:self.submitNameButton];
     
     // SubmitNameButtom Customized
-    [self.submitNameButton setTitle:@"確定" forState:UIControlStateNormal];
+    [self.submitNameButton setTitle:@"下一題" forState:UIControlStateNormal];
     [self.submitNameButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.submitNameButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
     [self.submitNameButton addTarget:self action:@selector(submitName) forControlEvents:UIControlEventTouchUpInside];
     
     // ProgressImageView1 Customized
-    self.progressBarView1 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 76 + 49, self.view.bounds.size.width, 76)];
+    self.progressBarView1 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 76, self.view.bounds.size.width, 76)];
     self.progressBarView1.backgroundColor = [UIColor whiteColor];
     
     UIImageView *progressBarImageView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ProgressBar1"]];
@@ -563,22 +714,12 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     
-    // CleanAskTitleLabel Customized
-    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
-    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.cleanAskTitleLabel.center = CGPointMake(self.view.center.x, self.view.center.y - 100 );
-    
-    NSAttributedString *attributedcleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問，讓大家更了解你" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    
-    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
-    [self.scrollView addSubview:self.cleanAskTitleLabel];
-    
     // 取得問題
     self.questionString = @"你喜歡的電影或是類型？";
     
     // CleanSakQuestionLabel Customized
     self.cleanAskQuestionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 60, 18)];
-    self.cleanAskQuestionLabel.center = CGPointMake(self.view.center.x, self.cleanAskTitleLabel.center.y + 30);
+    self.cleanAskQuestionLabel.center = CGPointMake(self.view.center.x, self.view.center.y - 120);
     self.cleanAskQuestionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
     self.cleanAskQuestionLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
     self.cleanAskQuestionLabel.text = self.questionString;
@@ -594,8 +735,8 @@
     [self.scrollView addSubview:self.cleanAskQuestionLabel];
     
     // cleanAskReplyTextView Customized
-    self.cleanAskReplyTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 60 , 60)];
-    self.cleanAskReplyTextView.text = @"我是浪漫人，只看浪漫電影。只看浪漫電影。";
+    self.cleanAskReplyTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 60 , 73)];
+    //self.cleanAskReplyTextView.text = @"我是浪漫人，只看浪漫電影。只看浪漫電影。";
     self.cleanAskReplyTextView.backgroundColor = [self UIColorFromRGB:255 green:255 blue:255 alpha:100];
     self.cleanAskReplyTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16];
     self.cleanAskReplyTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
@@ -610,23 +751,23 @@
     [self.scrollView addSubview:self.cleanAskReplyTextView];
     
     // textNumberCunter Customized
-    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskReplyTextView.frame.size.width - 45, 30, 45, 30)];
+    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cleanAskReplyTextView.frame) - 45, CGRectGetMaxY(self.cleanAskReplyTextView.frame) - 30, 45, 30)];
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-    self.textNumberCounterLabel.text = @"20/20";
+    self.textNumberCounterLabel.text = @"0/20";
     
-    [self.cleanAskReplyTextView addSubview:self.textNumberCounterLabel];
+    [self.scrollView addSubview:self.textNumberCounterLabel];
     
     // openChatButton Customized
     self.openChatButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.openChatButton.frame = CGRectMake(141, 440, 96, 32);
     self.openChatButton.backgroundColor = [UIColor clearColor];
     self.openChatButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
-    self.openChatButton.layer.borderWidth = 2.0;
-    self.openChatButton.layer.cornerRadius = 2.0;
+    self.openChatButton.layer.borderWidth = 2.5;
+    self.openChatButton.layer.cornerRadius = 2.5;
     self.openChatButton.center = CGPointMake(self.view.center.x, CGRectGetMaxY(self.cleanAskReplyTextView.frame) + 50);
     
-    [self.openChatButton setTitle:@"開啟聊天" forState:UIControlStateNormal];
+    [self.openChatButton setTitle:@"開始聊" forState:UIControlStateNormal];
     [self.openChatButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.openChatButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
     [self.openChatButton addTarget:self action:@selector(openChatButtonAcion) forControlEvents:UIControlEventTouchUpInside];
@@ -636,7 +777,7 @@
     
     // ProgressImageView2 Customized
     
-    self.progressBarView2 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 76 + 49, self.view.bounds.size.width, 76)];
+    self.progressBarView2 = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 76, self.view.bounds.size.width, 76)];
     self.progressBarView2.backgroundColor = [UIColor whiteColor];
     
     UIImageView *progressBarImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ProgressBar2"]];
@@ -645,6 +786,17 @@
     self.progressBarView2.backgroundColor = [UIColor whiteColor];
     [self.progressBarView2 addSubview:progressBarImageView2];
     [self.view addSubview:self.progressBarView2];
+    
+    // CleanAskTitleLabel Customized
+//    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
+//    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.cleanAskTitleLabel.center = CGPointMake(self.view.center.x, self.progressBarView2.center.y - self.progressBarView2.bounds.size.height / 2 - self.cleanAskTitleLabel.bounds.size.height / 2);
+//    
+//    NSAttributedString *attributedcleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問，讓大家更了解你" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+//    
+//    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
+//    
+//    [self.view addSubview:self.cleanAskTitleLabel];
 }
 
 - (void)removeCleanAskLayout {
@@ -662,6 +814,9 @@
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
         // 開啟模糊牆
+        [self.navigationController.navigationBar setHidden:YES];
+        [self.tabBarController.tabBar setHidden:NO];
+        [self.navigationController popViewControllerAnimated:NO];
     }
 }
 

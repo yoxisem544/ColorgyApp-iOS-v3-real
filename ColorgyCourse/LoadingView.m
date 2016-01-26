@@ -22,7 +22,7 @@
         self.frame = self.currentWindow.frame;
         // mask view
         self.maskView = [[UIView alloc] initWithFrame:self.frame];
-//        self.maskView.backgroundColor = [UIColor blackColor];
+        //        self.maskView.backgroundColor = [UIColor blackColor];
         
         [self addSubview:self.maskView];
         
@@ -30,7 +30,7 @@
         self.popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 125, 125)];
         self.popView.center = self.center;
         self.popView.layer.cornerRadius = 3.54;
-        self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:70].CGColor;
+        self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
         
         [self addSubview:self.popView];
         
@@ -49,25 +49,30 @@
         // attributed message string
         NSAttributedString *attributedMessageString = [[NSAttributedString alloc] initWithString:self.loadingString attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:18.0]}];
         
-        
         // message label
-        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 54, 38)];
+        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.popView.bounds.size.width - 20, 38)];
         self.messageLabel.center = CGPointMake(self.center.x, self.center.y + 30);
         self.messageLabel.attributedText = attributedMessageString;
         self.messageLabel.textAlignment = NSTextAlignmentCenter;
         
         [self addSubview:self.messageLabel];
+        
+        // email view
+        self.emailImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WhiteMail"]];
+        self.emailImageView.center = CGPointMake(self.popView.center.x, self.popView.center.y - 15);
     }
     return self;
 }
 
 - (void)start {
     [self.window addSubview:self];
+    [self.checkEmailButton removeFromSuperview];
+    [self.emailImageView removeFromSuperview];
     [self.pathLayer removeFromSuperlayer];
     [self.indicatorView startAnimating];
     [self addSubview:self.indicatorView];
     
-    self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:70].CGColor;
+    self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
     
     // attributed message string
     NSAttributedString *attributedMessageString = [[NSAttributedString alloc] initWithString:self.loadingString attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:18.0]}];
@@ -118,7 +123,7 @@
     pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
     
     [self.pathLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
 }
 
 - (void)dismiss {
@@ -128,6 +133,39 @@
         self.callbackBlock();
         self.callbackBlock = nil;
     }
+}
+
+- (void)emailCheck {
+    [self.window addSubview:self];
+    [self.pathLayer removeFromSuperlayer];
+    [self.indicatorView startAnimating];
+    [self addSubview:self.emailImageView];
+    
+    self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
+    
+    // attributed message string
+    NSAttributedString *attributedMessageString = [[NSAttributedString alloc] initWithString:@"快去收信" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:18.0]}];
+    
+    // message label
+    self.messageLabel.attributedText = attributedMessageString;
+    
+    // check button
+    self.checkEmailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.checkEmailButton.frame = CGRectMake(141, 440, 160, 41);
+    self.checkEmailButton.backgroundColor = [UIColor clearColor];
+    self.checkEmailButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.checkEmailButton.layer.borderWidth = 2.5;
+    self.checkEmailButton.layer.cornerRadius = 2.5;
+    self.checkEmailButton.center = CGPointMake(self.maskView.center.x, self.popView.center.y + 120);
+    
+    [self.checkEmailButton setTitle:@"收到認證信了" forState:UIControlStateNormal];
+    [self.checkEmailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.checkEmailButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
+    
+    [self.maskView addSubview:self.checkEmailButton];
+    
+    [self.currentWindow addSubview:self];
+    
 }
 
 #pragma mark - UIColor

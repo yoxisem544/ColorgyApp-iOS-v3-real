@@ -13,6 +13,8 @@
 @property UIActivityIndicatorView *indicatorView;
 @property UIView *popView;
 @property UIView *maskView;
+@property UIImageView *emailImageView;
+@property UIButton *checkEmailButton;
 @property UILabel *messageLabel;
 @property NSString *loadingString;
 @property NSString *finishedString;
@@ -24,6 +26,7 @@
 - (void)start;
 - (void)finished:(void (^)(void))callbackBlock;
 - (void)dismiss;
+- (void)emailCheck;
 - (UIColor *)UIColorFromRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 
 @end

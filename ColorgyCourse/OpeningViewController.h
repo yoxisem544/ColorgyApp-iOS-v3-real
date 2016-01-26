@@ -17,6 +17,15 @@
 @property UILabel *welcomeLabel;
 @property UILabel *welcomeDescriptionLabel;
 
+// uplaod layout
+@property UIImageView *userImageView;
+@property UILabel *uploadDescriptionLabel;
+@property UILabel *uploadTitleLabel;
+@property UIButton *uploadPhotoButton;
+
+// upload preview layout
+@property UIButton *uploadSubmitButton;
+
 // name layout
 @property UILabel *nameDescriptionLabel;
 @property UITextField *nameTextField;
@@ -36,7 +45,7 @@
 //
 @property UILabel *textNumberCounterLabel;
 @property UIImage *uploadImage;
-@property LoadingView *imageLoadingView;
+@property LoadingView *loadingView;
 @property UIScrollView *scrollView;
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;

@@ -10,6 +10,11 @@
 		4E3D74F41C560071002812F4 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74EF1C560071002812F4 /* LoadingView.m */; };
 		4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F11C560071002812F4 /* NSString+Email.m */; };
 		4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F31C560071002812F4 /* OpeningViewController.m */; };
+		4EB5A9AD1C57525E009BA61B /* 123.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AC1C57525E009BA61B /* 123.jpeg */; };
+		4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */; };
+		4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */; };
+		4EB5A9B61C575B00009BA61B /* UIImage+GaussianBlurUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */; };
+		4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9BB1C576F70009BA61B /* ImageCache.m */; };
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
@@ -129,6 +134,15 @@
 		4E3D74F11C560071002812F4 /* NSString+Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Email.m"; path = "ColorgyCourse/NSString+Email.m"; sourceTree = "<group>"; };
 		4E3D74F21C560071002812F4 /* OpeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpeningViewController.h; path = ColorgyCourse/OpeningViewController.h; sourceTree = "<group>"; };
 		4E3D74F31C560071002812F4 /* OpeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpeningViewController.m; path = ColorgyCourse/OpeningViewController.m; sourceTree = "<group>"; };
+		4EB5A9AC1C57525E009BA61B /* 123.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 123.jpeg; sourceTree = "<group>"; };
+		4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurWallSwitchViewController.h; path = ColorgyCourse/BlurWallSwitchViewController.h; sourceTree = "<group>"; };
+		4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlurWallSwitchViewController.m; path = ColorgyCourse/BlurWallSwitchViewController.m; sourceTree = "<group>"; };
+		4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurWallViewController.h; path = ColorgyCourse/BlurWallViewController.h; sourceTree = "<group>"; };
+		4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BlurWallViewController.m; path = ColorgyCourse/BlurWallViewController.m; sourceTree = "<group>"; };
+		4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+GaussianBlurUIImage.h"; path = "ColorgyCourse/UIImage+GaussianBlurUIImage.h"; sourceTree = "<group>"; };
+		4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+GaussianBlurUIImage.m"; path = "ColorgyCourse/UIImage+GaussianBlurUIImage.m"; sourceTree = "<group>"; };
+		4EB5A9BA1C576F70009BA61B /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCache.h; path = ColorgyCourse/ImageCache.h; sourceTree = "<group>"; };
+		4EB5A9BB1C576F70009BA61B /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageCache.m; path = ColorgyCourse/ImageCache.m; sourceTree = "<group>"; };
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
@@ -574,10 +588,18 @@
 			children = (
 				4E3D74EE1C560071002812F4 /* LoadingView.h */,
 				4E3D74EF1C560071002812F4 /* LoadingView.m */,
+				4EB5A9BA1C576F70009BA61B /* ImageCache.h */,
+				4EB5A9BB1C576F70009BA61B /* ImageCache.m */,
 				4E3D74F01C560071002812F4 /* NSString+Email.h */,
 				4E3D74F11C560071002812F4 /* NSString+Email.m */,
 				4E3D74F21C560071002812F4 /* OpeningViewController.h */,
 				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
+				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
+				4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */,
+				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
+				4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */,
+				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
+				4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */,
 				63FBCC691B93470700B3084F /* Header.h */,
 				63FBCC0D1B9345B800B3084F /* ColorgyCourse */,
 				63FBCC261B9345B800B3084F /* ColorgyCourseTests */,
@@ -615,6 +637,7 @@
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
 				63FBCC6F1B934D3000B3084F /* Reachability.h */,
 				63FBCC701B934D3000B3084F /* Reachability.m */,
+				4EB5A9AC1C57525E009BA61B /* 123.jpeg */,
 				639D45141B96A75D0053870D /* 4.jpg */,
 				639D450A1B95E5F60053870D /* 3.jpg */,
 				639D45081B95E5E00053870D /* 2.jpg */,
@@ -764,6 +787,7 @@
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
+				4EB5A9AD1C57525E009BA61B /* 123.jpeg in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
 				639D45091B95E5E00053870D /* 2.jpg in Resources */,
 			);
@@ -847,6 +871,7 @@
 				63C2B9831C116331007740DB /* Semester.swift in Sources */,
 				63FBCC501B9346D900B3084F /* PeriodDataObject.swift in Sources */,
 				63FBCC141B9345B800B3084F /* ColorgyCourse.xcdatamodeld in Sources */,
+				4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
 				63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */,
 				6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */,
@@ -877,6 +902,7 @@
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				6311D2101C3A4B2A00812934 /* CreateCourseTableViewCell.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
+				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,
 				63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */,
 				632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */,
 				638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */,
@@ -891,6 +917,7 @@
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
 				63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */,
 				4E3D74F41C560071002812F4 /* LoadingView.m in Sources */,
+				4EB5A9B61C575B00009BA61B /* UIImage+GaussianBlurUIImage.m in Sources */,
 				6311D20B1C3A2FA200812934 /* LocalCourse.swift in Sources */,
 				63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
@@ -925,6 +952,7 @@
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
 				631746711C04110400F612B9 /* School.swift in Sources */,
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
+				4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
 				63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
