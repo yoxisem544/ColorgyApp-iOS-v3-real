@@ -49,17 +49,17 @@ class TimeTableViewController: UIViewController {
         // get courses from db
         getAndSetDataToTimeTable()
 		
-//		for i in 1...100 {
-//			print("firing \(i)")
-//			dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.rawValue), 0), { () -> Void in
-//				print("execing \(i)")
-//				CourseUpdateHelper.needUpdateCourse()
-//				CourseUpdateHelper.updateCourse({ () -> Void in
-//					self.getAndSetDataToTimeTable()
-//				})
-//				print("job in async \(i)")
-//			})
-//		}
+		for i in 1...100 {
+			print("firing \(i)")
+			dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.rawValue), 0), { () -> Void in
+				print("execing \(i)")
+				CourseUpdateHelper.needUpdateCourse()
+				CourseUpdateHelper.updateCourse({ () -> Void in
+					self.getAndSetDataToTimeTable()
+				})
+				print("job in async \(i)")
+			})
+		}
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -121,42 +121,67 @@ class TimeTableViewController: UIViewController {
         let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
         dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
             // server
-            var courses = [Course]()
+            var tempedCourses = [Course]()
             // local
-            var localCourses = [LocalCourse]()
+            var tempedLocalCourses = [LocalCourse]()
             // server
-            CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
-                if let objects = courseDBManagedObjects {
-                    print(objects.count)
-                    for obj in objects {
-                        if let course = Course(courseDBManagedObject: obj) {
-                            courses.append(course)
-                        }
-                    }
-
-                    // load course, then load local course
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        print(self.timetableView.courses?.count)
-                        self.timetableView.courses = courses
-                    })
-                    LocalCourseDB.getAllStoredCoursesObject(complete: { (localCourseDBManagedObjects) -> Void in
-                        if let objects = localCourseDBManagedObjects {
-                            for o in objects {
-                                if let localc = LocalCourse(localCourseDBManagedObject: o) {
-                                    localCourses.append(localc)
-                                }
-                            }
-
-                            // finished loading localc course
-                            // setup notification
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                print(self.timetableView.localCourse?.count)
-                                self.timetableView.localCourse = localCourses
-                            })
-                        }
-                    })
-                }
-            })
+			CourseDB.getAllStoredCourses(complete: { (courses) -> Void in
+				if let courses = courses {
+					for c in courses {
+						tempedCourses.append(c)
+					}
+				}
+				// load course, then load local course
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					print(self.timetableView.courses?.count)
+					self.timetableView.courses = courses
+				})
+				LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
+					if let localCourses = localCourses {
+						for c in localCourses {
+							tempedLocalCourses.append(c)
+						}
+					}
+					// finished loading localc course
+					// setup notification
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						print(self.timetableView.localCourse?.count)
+						self.timetableView.localCourse = localCourses
+					})
+				})
+			})
+//            CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
+//                if let objects = courseDBManagedObjects {
+//                    print(objects.count)
+//                    for obj in objects {
+//                        if let course = Course(courseDBManagedObject: obj) {
+//                            courses.append(course)
+//                        }
+//                    }
+//
+//                    // load course, then load local course
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        print(self.timetableView.courses?.count)
+//                        self.timetableView.courses = courses
+//                    })
+//                    LocalCourseDB.getAllStoredCoursesObject(complete: { (localCourseDBManagedObjects) -> Void in
+//                        if let objects = localCourseDBManagedObjects {
+//                            for o in objects {
+//                                if let localc = LocalCourse(localCourseDBManagedObject: o) {
+//                                    localCourses.append(localc)
+//                                }
+//                            }
+//
+//                            // finished loading localc course
+//                            // setup notification
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                print(self.timetableView.localCourse?.count)
+//                                self.timetableView.localCourse = localCourses
+//                            })
+//                        }
+//                    })
+//                }
+//            })
         })
     }
 
