@@ -32,6 +32,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 		colorgySocket.connectToServer(withParameters: params) { (chatroom, messages) -> Void in
 			print(chatroom)
 			print(messages.count)
+			self.chatroom = chatroom
 			for m in messages {
 				self.messages.append(m)
 				self.messageRecieved()
@@ -76,22 +77,24 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 		print(message)
 		if let message = message {
 			
-			let postData: [String : NSObject]! = [
-				"method": "post",
-				"headers": [],
-				"data": [
-					"chatroomId": chatroom.chatroomId,
-					"userId": userId,
-					"socketId": chatroom.socketId,
-					"type": "text",
-					"content": ["text": message]
-				],
-				"url": "/chatroom/send_message"
-			]
-//			s.emit("post", withItems: postData as! [AnyObject])
-			s.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
-				print(res)
-			})
+//			let postData: [String : NSObject]! = [
+//				"method": "post",
+//				"headers": [],
+//				"data": [
+//					"chatroomId": chatroom.chatroomId,
+//					"userId": userId,
+//					"socketId": chatroom.socketId,
+//					"type": "text",
+//					"content": ["text": message]
+//				],
+//				"url": "/chatroom/send_message"
+//			]
+////			s.emit("post", withItems: postData as! [AnyObject])
+//			s.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
+//				print(res)
+//			})
+			
+			colorgySocket.sendTextMessage(message, withUserId: userId)
 		}
 	}
 }
