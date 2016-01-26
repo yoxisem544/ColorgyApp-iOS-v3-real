@@ -149,4 +149,37 @@ class ChatMessage: NSObject {
 		}
 		return messages
 	}
+	
+	class func generateMessagesOnConnent(json: JSON, complete: (messages: [ChatMessage]) -> Void) {
+		var messages = [ChatMessage]()
+		dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
+			if let (_, json) = json.first {
+				//			print(json["body"]["result"]["messageList"].count)
+				for (_, json) : (String, JSON) in json["body"]["result"]["messageList"] {
+					if let message = ChatMessage(onConnect: json) {
+						messages.append(message)
+					}
+				}
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					complete(messages: messages)
+				})
+			}
+		}
+	}
+	
+	class func generateMessagesOnConnent(json: JSON, withSectionMessage: (message: ChatMessage) -> Void) {
+		dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
+			if let (_, json) = json.first {
+				//			print(json["body"]["result"]["messageList"].count)
+				for (_, json) : (String, JSON) in json["body"]["result"]["messageList"] {
+					if let m = ChatMessage(onConnect: json) {
+						NSThread.sleepForTimeInterval(0.1)
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							withSectionMessage(message: m)
+						})
+					}
+				}
+			}
+		}
+	}
 }

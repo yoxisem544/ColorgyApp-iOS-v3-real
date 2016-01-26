@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/CourseNotification.swift"
-            timestampString = "475482692.239274"
+            timestampString = "475483503.016675"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "setupNotificationWithMessage(_:day:session:index:)"
             landmarkType = "5">
          </BreakpointContent>

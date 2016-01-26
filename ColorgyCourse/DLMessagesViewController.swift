@@ -75,6 +75,18 @@ class DLMessagesViewController: UIViewController {
 	func messageRecieved() {
 		finishedSendingMessage()
 	}
+	
+	func messageRecievedButDontReload() {
+		let rows = bubbleTableView.numberOfRowsInSection(0)
+		// rows is always actul count
+		// pass in rows in inserting
+		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
+	}
+	
+	func recievingABunchMessages() {
+		let rows = bubbleTableView.numberOfRowsInSection(0) - 1
+		bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+	}
 }
 
 extension DLMessagesViewController : TextInputViewDelegate {

@@ -25,6 +25,44 @@ class ColorgySocket : NSObject {
 		}
 	}
 	
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
+		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
+			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
+				
+				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
+					let chatroom = Chatroom(json: JSON(responseOnEmit))
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						self.chatroom = chatroom
+						registerToChatroom(chatroom: self.chatroom)
+					})
+				}
+				
+				ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
+					withMessages(messages: messages)
+				})
+			})
+		}
+	}
+	
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withSectionMessage: (message: ChatMessage) -> Void) {
+		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
+			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
+				
+				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
+					let chatroom = Chatroom(json: JSON(responseOnEmit))
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						self.chatroom = chatroom
+						registerToChatroom(chatroom: self.chatroom)
+					})
+				}
+
+				ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), withSectionMessage: { (message) -> Void in
+					withSectionMessage(message: message)
+				})
+			})
+		}
+	}
+	
 	func onRecievingMessage(messagesRecieved messagesRecieved: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("chatroom") { (response, ack: SocketAckEmitter) -> Void in
 			let ms = ChatMessage.generateMessages(JSON(response))
