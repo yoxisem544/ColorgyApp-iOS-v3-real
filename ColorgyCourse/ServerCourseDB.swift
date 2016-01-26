@@ -13,7 +13,8 @@ class ServerCourseDB {
 	/// This method will delete all courses stored in data base.
 	class func deleteAllCourses() {
 		let main_queue = dispatch_get_main_queue()
-		dispatch_async(SERIAL_QUEUE , { () -> Void in
+		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
 			do {
@@ -22,13 +23,13 @@ class ServerCourseDB {
 				for courseObject in coursesInDB {
 					managedObjectContext.deleteObject(courseObject)
 				}
-				dispatch_sync(main_queue, { () -> Void in
-					do {
-						try managedObjectContext.save()
-					} catch {
-						print(ColorgyErrorType.DBFailure.saveFail)
-					}
-				})
+				
+				do {
+					try managedObjectContext.save()
+				} catch {
+					print(ColorgyErrorType.DBFailure.saveFail)
+				}
+				
 			} catch {
 				print(ColorgyErrorType.DBFailure.fetchFail)
 			}
@@ -38,7 +39,8 @@ class ServerCourseDB {
 	/// store a course to DB
 	class func storeCourseToDB(course: Course?) {
 		let main_queue = dispatch_get_main_queue()
-		dispatch_async(SERIAL_QUEUE , { () -> Void in
+		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
 			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			
@@ -110,13 +112,11 @@ class ServerCourseDB {
 				}
 				
 				// save
-				dispatch_sync(main_queue, { () -> Void in
-					do {
-						try managedObjectContext.save()
-					} catch {
-						print(ColorgyErrorType.DBFailure.saveFail)
-					}
-				})
+				do {
+					try managedObjectContext.save()
+				} catch {
+					print(ColorgyErrorType.DBFailure.saveFail)
+				}
 			}
 		})
 	}
@@ -124,7 +124,8 @@ class ServerCourseDB {
 	/// store a course to DB
 	class func storeABunchOfCoursesToDB(courses: [Course]?) {
 		let main_queue = dispatch_get_main_queue()
-		dispatch_async(SERIAL_QUEUE , { () -> Void in
+		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
+		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
 			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			if let courses = courses {
@@ -196,13 +197,11 @@ class ServerCourseDB {
 					}
 				}
 				// save
-				dispatch_sync(main_queue, { () -> Void in
-					do {
-						try managedObjectContext.save()
-					} catch {
-						print(ColorgyErrorType.DBFailure.saveFail)
-					}
-				})
+				do {
+					try managedObjectContext.save()
+				} catch {
+					print(ColorgyErrorType.DBFailure.saveFail)
+				}
 			}
 		})
 		
@@ -250,17 +249,17 @@ class ServerCourseDB {
 			let coursesInDB: [CourseDataFromServerDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
 			if coursesInDB.count == 0 {
 				// return nil if element in array is zero.
-				dispatch_sync(main_queue, { () -> Void in
+				dispatch_async(main_queue, { () -> Void in
 					complete(courseDataFromServerDBManagedObjects: nil)
 				})
 			} else {
-				dispatch_sync(main_queue, { () -> Void in
+				dispatch_async(main_queue, { () -> Void in
 					complete(courseDataFromServerDBManagedObjects: coursesInDB)
 				})
 			}
 		} catch {
 			print(ColorgyErrorType.DBFailure.fetchFail)
-			dispatch_sync(main_queue, { () -> Void in
+			dispatch_async(main_queue, { () -> Void in
 				complete(courseDataFromServerDBManagedObjects: nil)
 			})
 		}

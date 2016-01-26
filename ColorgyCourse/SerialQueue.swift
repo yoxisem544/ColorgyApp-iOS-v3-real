@@ -9,3 +9,4 @@
 import Foundation
 
 let SERIAL_QUEUE = dispatch_queue_create("this.is.a.serial.queue", DISPATCH_QUEUE_SERIAL)
+let isSerialMode = true

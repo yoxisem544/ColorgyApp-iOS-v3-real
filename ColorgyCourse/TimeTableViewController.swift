@@ -32,11 +32,6 @@ class TimeTableViewController: UIViewController {
         timetableView = TimeTableView(frame: CGRectMake(0, navHeight, self.view.frame.width, self.view.frame.height - navHeight - tabBarHeight))
         self.view.addSubview(timetableView)
         timetableView.delegate = self
-		
-		print(NSProcessInfo.processInfo().operatingSystemVersion)
-		print(NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"])
-		print(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String])
-		print("")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,6 +48,18 @@ class TimeTableViewController: UIViewController {
         
         // get courses from db
         getAndSetDataToTimeTable()
+		
+//		for i in 1...100 {
+//			print("firing \(i)")
+//			dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.rawValue), 0), { () -> Void in
+//				print("execing \(i)")
+//				CourseUpdateHelper.needUpdateCourse()
+//				CourseUpdateHelper.updateCourse({ () -> Void in
+//					self.getAndSetDataToTimeTable()
+//				})
+//				print("job in async \(i)")
+//			})
+//		}
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -70,7 +77,9 @@ class TimeTableViewController: UIViewController {
             CourseUpdateHelper.updateCourse({ () -> Void in
                 // TODO: what i do here?
                 // here is from CourseDB
-                self.getAndSetDataToTimeTable()
+				dispatch_async(SERIAL_QUEUE, { () -> Void in
+					self.getAndSetDataToTimeTable()
+				})
             })
             // update push notification device token
             ColorgyAPI.PUTdeviceToken(success: { () -> Void in
@@ -83,7 +92,9 @@ class TimeTableViewController: UIViewController {
                     ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
                         // if user get a new token
                         // load data again
-                        self.getAndSetDataToTimeTable()
+						dispatch_async(SERIAL_QUEUE, { () -> Void in
+							self.getAndSetDataToTimeTable()
+						})
                         print(UserSetting.UserAccessToken())
                         }, failure: { () -> Void in
                             if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
