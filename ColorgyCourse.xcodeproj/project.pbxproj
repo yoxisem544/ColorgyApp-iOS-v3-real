@@ -54,6 +54,7 @@
 		63ABBC051B94BA7A0077580D /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC041B94BA7A0077580D /* testViewController.swift */; };
 		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
 		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
+		63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFACA81C57107100405EC3 /* ColorgySocket.swift */; };
 		63BB2FFE1C5617390055BA19 /* SocketAckEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */; };
 		63BB2FFF1C5617390055BA19 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE91C5617390055BA19 /* SocketAckManager.swift */; };
 		63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */; };
@@ -76,6 +77,20 @@
 		63BB30111C5617390055BA19 /* SocketTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FFB1C5617390055BA19 /* SocketTypes.swift */; };
 		63BB30121C5617390055BA19 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FFC1C5617390055BA19 /* SwiftRegex.swift */; };
 		63BB30131C5617390055BA19 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FFD1C5617390055BA19 /* WebSocket.swift */; };
+		63BB30161C561E240055BA19 /* TestChatLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */; };
+		63BB30181C561F0A0055BA19 /* TestChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */; };
+		63BB30221C561F280055BA19 /* ATrickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30191C561F280055BA19 /* ATrickyView.swift */; };
+		63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */; };
+		63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */; };
+		63BB30251C561F280055BA19 /* DLMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301C1C561F280055BA19 /* DLMessageData.swift */; };
+		63BB30261C561F280055BA19 /* DLMessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301D1C561F280055BA19 /* DLMessageLabel.swift */; };
+		63BB30271C561F280055BA19 /* DLMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301E1C561F280055BA19 /* DLMessagesViewController.swift */; };
+		63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301F1C561F280055BA19 /* DLOutgoingMessageBubble.swift */; };
+		63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BB30201C561F280055BA19 /* DLOutgoingMessageBubble.xib */; };
+		63BB302A1C561F280055BA19 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30211C561F280055BA19 /* TextInputView.swift */; };
+		63BB302D1C561F680055BA19 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB302C1C561F680055BA19 /* ChatMessage.swift */; };
+		63BB302F1C5623540055BA19 /* ching.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63BB302E1C5623540055BA19 /* ching.jpg */; };
+		63BB30311C5624E10055BA19 /* Chatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30301C5624E10055BA19 /* Chatroom.swift */; };
 		63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */; };
 		63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F41C51D47A001A84D3 /* ReportFormKeyboard.swift */; };
 		63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9F61C51D9D3001A84D3 /* ReportFormTextField.swift */; };
@@ -192,6 +207,7 @@
 		63ABBC041B94BA7A0077580D /* testViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailHeaderView.xib; sourceTree = "<group>"; };
 		63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailHeaderView.swift; sourceTree = "<group>"; };
+		63AFACA81C57107100405EC3 /* ColorgySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgySocket.swift; sourceTree = "<group>"; };
 		63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckEmitter.swift; sourceTree = "<group>"; };
 		63BB2FE91C5617390055BA19 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
 		63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
@@ -214,6 +230,20 @@
 		63BB2FFB1C5617390055BA19 /* SocketTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketTypes.swift; sourceTree = "<group>"; };
 		63BB2FFC1C5617390055BA19 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		63BB2FFD1C5617390055BA19 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
+		63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestChatLoginViewController.swift; sourceTree = "<group>"; };
+		63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestChatRoomViewController.swift; sourceTree = "<group>"; };
+		63BB30191C561F280055BA19 /* ATrickyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATrickyView.swift; sourceTree = "<group>"; };
+		63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLIncomingMessageBubble.swift; sourceTree = "<group>"; };
+		63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLIncomingMessageBubble.xib; sourceTree = "<group>"; };
+		63BB301C1C561F280055BA19 /* DLMessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLMessageData.swift; sourceTree = "<group>"; };
+		63BB301D1C561F280055BA19 /* DLMessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLMessageLabel.swift; sourceTree = "<group>"; };
+		63BB301E1C561F280055BA19 /* DLMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLMessagesViewController.swift; sourceTree = "<group>"; };
+		63BB301F1C561F280055BA19 /* DLOutgoingMessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLOutgoingMessageBubble.swift; sourceTree = "<group>"; };
+		63BB30201C561F280055BA19 /* DLOutgoingMessageBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLOutgoingMessageBubble.xib; sourceTree = "<group>"; };
+		63BB30211C561F280055BA19 /* TextInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
+		63BB302C1C561F680055BA19 /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		63BB302E1C5623540055BA19 /* ching.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ching.jpg; sourceTree = "<group>"; };
+		63BB30301C5624E10055BA19 /* Chatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chatroom.swift; sourceTree = "<group>"; };
 		63BDC9E81C50F0C1001A84D3 /* ColorgyCourseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorgyCourseUITests.swift; sourceTree = "<group>"; };
 		63BDC9EA1C50F0C1001A84D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63BDC9F01C51C14E001A84D3 /* ReportFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportFormView.swift; sourceTree = "<group>"; };
@@ -567,6 +597,22 @@
 			name = SocketIO_Client;
 			sourceTree = "<group>";
 		};
+		63BB302B1C561F300055BA19 /* DLMessageView */ = {
+			isa = PBXGroup;
+			children = (
+				63BB30191C561F280055BA19 /* ATrickyView.swift */,
+				63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */,
+				63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */,
+				63BB301C1C561F280055BA19 /* DLMessageData.swift */,
+				63BB301D1C561F280055BA19 /* DLMessageLabel.swift */,
+				63BB301E1C561F280055BA19 /* DLMessagesViewController.swift */,
+				63BB301F1C561F280055BA19 /* DLOutgoingMessageBubble.swift */,
+				63BB30201C561F280055BA19 /* DLOutgoingMessageBubble.xib */,
+				63BB30211C561F280055BA19 /* TextInputView.swift */,
+			);
+			name = DLMessageView;
+			sourceTree = "<group>";
+		};
 		63BDC9E71C50F0C1001A84D3 /* ColorgyCourseUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,7 +711,13 @@
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
+				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
+				63AFACA81C57107100405EC3 /* ColorgySocket.swift */,
+				63BB30301C5624E10055BA19 /* Chatroom.swift */,
+				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
+				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
 				63C2B9871C155AE3007740DB /* Utilities */,
 				63C2B9841C155A39007740DB /* Models */,
@@ -677,6 +729,7 @@
 				63FBCC121B9345B800B3084F /* ColorgyCourse.xcdatamodeld */,
 				63FBCC6F1B934D3000B3084F /* Reachability.h */,
 				63FBCC701B934D3000B3084F /* Reachability.m */,
+				63BB302E1C5623540055BA19 /* ching.jpg */,
 				639D45141B96A75D0053870D /* 4.jpg */,
 				639D450A1B95E5F60053870D /* 3.jpg */,
 				639D45081B95E5E00053870D /* 2.jpg */,
@@ -821,11 +874,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				63ABBBFB1B9477930077580D /* 1.jpg in Resources */,
+				63BB302F1C5623540055BA19 /* ching.jpg in Resources */,
 				63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */,
 				639D450B1B95E5F60053870D /* 3.jpg in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
+				63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
+				63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
 				639D45091B95E5E00053870D /* 2.jpg in Resources */,
 			);
@@ -924,22 +980,28 @@
 				63FBCC541B9346D900B3084F /* NetwrokQualityDetector.swift in Sources */,
 				6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */,
 				63FBCC601B9346D900B3084F /* PopView.swift in Sources */,
+				63BB30261C561F280055BA19 /* DLMessageLabel.swift in Sources */,
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
 				635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */,
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
 				6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */,
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
+				63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */,
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
 				63BB300A1C5617390055BA19 /* SocketIOClient.swift in Sources */,
 				6311D20D1C3A303F00812934 /* LocalCourseDBManagedObject.swift in Sources */,
 				63BB2FFE1C5617390055BA19 /* SocketAckEmitter.swift in Sources */,
+				63BB30161C561E240055BA19 /* TestChatLoginViewController.swift in Sources */,
 				630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */,
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
+				63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */,
 				63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */,
+				63BB30221C561F280055BA19 /* ATrickyView.swift in Sources */,
 				6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */,
+				63BB30181C561F0A0055BA19 /* TestChatRoomViewController.swift in Sources */,
 				63BDC9FB1C521FE3001A84D3 /* OneWayInputReportTextField.swift in Sources */,
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				63BB30051C5617390055BA19 /* SocketEnginePollable.swift in Sources */,
@@ -955,10 +1017,13 @@
 				634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
+				63BB302D1C561F680055BA19 /* ChatMessage.swift in Sources */,
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
+				63BB302A1C561F280055BA19 /* TextInputView.swift in Sources */,
+				63BB30271C561F280055BA19 /* DLMessagesViewController.swift in Sources */,
 				63BB30041C5617390055BA19 /* SocketEnginePacketType.swift in Sources */,
 				63FBCC591B9346D900B3084F /* CourseRawDataArray.swift in Sources */,
 				63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */,
@@ -995,13 +1060,16 @@
 				63BB300C1C5617390055BA19 /* SocketIOClientStatus.swift in Sources */,
 				6311D2121C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift in Sources */,
 				63BB30071C5617390055BA19 /* SocketEngineWebsocket.swift in Sources */,
+				63BB30251C561F280055BA19 /* DLMessageData.swift in Sources */,
 				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
 				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
 				63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */,
 				63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */,
+				63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */,
 				63BB300D1C5617390055BA19 /* SocketLogger.swift in Sources */,
 				63BB300B1C5617390055BA19 /* SocketIOClientOption.swift in Sources */,
 				63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */,
+				63BB30311C5624E10055BA19 /* Chatroom.swift in Sources */,
 				636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */,
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
 				631746711C04110400F612B9 /* School.swift in Sources */,
