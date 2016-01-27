@@ -41,7 +41,7 @@
     self.blurWallCollectionViewFlowLayout.footerReferenceSize = CGSizeMake(self.view.bounds.size.width, 70);
     
     // blurCollectionView Customized
-    self.blurWallCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height - 49) collectionViewLayout:self.blurWallCollectionViewFlowLayout];
+    self.blurWallCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height) collectionViewLayout:self.blurWallCollectionViewFlowLayout];
     self.blurWallCollectionView.delegate = self;
     self.blurWallCollectionView.dataSource = self;
     self.blurWallCollectionView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
@@ -139,7 +139,7 @@
         [self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
-                [cell setNeedsDisplay];
+                [cell setNeedsLayout];
             });
         }];
     }
@@ -305,7 +305,8 @@
     
     // 重新整理最新的數據
     // Simulate an async load...
-        double delayInSeconds = 3;
+    double delayInSeconds = 3;
+    
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
         [self.blurWallDataMutableArray removeAllObjects];

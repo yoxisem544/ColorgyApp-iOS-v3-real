@@ -7,8 +7,6 @@
 //
 
 #import "BlurWallSwitchViewController.h"
-#import "OpeningViewController.h"
-#import "BlurWallViewController.h"
 
 @interface BlurWallSwitchViewController ()
 
@@ -22,26 +20,48 @@
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-    
     self.isEmailOK = YES;
+    
+    self.openingViewController = [[OpeningViewController alloc] init];
+    [self addChildViewController:self.openingViewController];
+    
+    
+    BlurWallViewController *blurWallViewController = [[BlurWallViewController alloc] init];
+    
+    self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:blurWallViewController];
+    [self addChildViewController:self.navigationBlurWallViewController];
+    
+    self.activityViewController = self.openingViewController;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    [super viewDidAppear:NO];
+    
     // 檢查信箱認證
-//    if (![self isEmailOkCheck]) {
-//        OpeningViewController *openingViewController = [[OpeningViewController alloc] init];
-//        
-//        [self.navigationController pushViewController:openingViewController animated:NO];
-//    } else {
-        BlurWallViewController *blurViewController = [[BlurWallViewController alloc] init];
-        
-        [self.navigationController pushViewController:blurViewController animated:NO];
-//    }
+    if ([self isEmailOkCheck]) {
+        [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
+            if (finished) {
+                [self.view addSubview:self.navigationBlurWallViewController.view];
+                self.activityViewController = self.navigationBlurWallViewController;
+                [self didMoveToParentViewController:self];
+            } else {
+                self.activityViewController = self.openingViewController;
+            }
+        }];
+    } else {
+        [self transitionFromViewController:self.activityViewController toViewController:self.openingViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
+            if (finished) {
+                [self.view addSubview:self.openingViewController.view];
+                self.activityViewController = self.openingViewController;
+                [self didMoveToParentViewController:self];
+            } else {
+                self.activityViewController = self.navigationBlurWallViewController;            }
+        }];
+    }
 }
 
 - (BOOL)isEmailOkCheck {
-    self.isEmailOK = !self.isEmailOK;
+    self.isEmailOK = YES;
     return self.isEmailOK;
 }
 
@@ -49,16 +69,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 #pragma mark - UIColor
 

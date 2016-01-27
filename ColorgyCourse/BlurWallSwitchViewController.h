@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OpeningViewController.h"
+#import "BlurWallViewController.h"
 
 @interface BlurWallSwitchViewController : UIViewController
 
 @property BOOL isEmailOK;
+@property UIViewController *activityViewController;
+@property OpeningViewController *openingViewController;
+@property UINavigationController *navigationBlurWallViewController;
 
 @end
