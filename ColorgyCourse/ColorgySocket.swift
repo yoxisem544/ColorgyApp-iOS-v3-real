@@ -86,8 +86,27 @@ class ColorgySocket : NSObject {
 				"chatroomId": chatroom.chatroomId,
 				"userId": userId,
 				"socketId": chatroom.socketId,
-				"type": "text",
-				"content": ["text": message]
+				"type": ChatMessage.MessageType.Text,
+				"content": [ChatMessage.ContentKey.Text: message]
+			],
+			"url": "/chatroom/send_message"
+		]
+		//			s.emit("post", withItems: postData as! [AnyObject])
+		self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
+			print(res)
+		})
+	}
+	
+	func sendPhotoMessage(imageUrl: String, withUserId userId: String) {
+		let postData: [String : NSObject]! = [
+			"method": "post",
+			"headers": [],
+			"data": [
+				"chatroomId": chatroom.chatroomId,
+				"userId": userId,
+				"socketId": chatroom.socketId,
+				"type": ChatMessage.MessageType.Image,
+				"content": [ChatMessage.ContentKey.Image: imageUrl]
 			],
 			"url": "/chatroom/send_message"
 		]

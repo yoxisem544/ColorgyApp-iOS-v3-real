@@ -16,6 +16,18 @@ class ChatMessage: NSObject {
 	var userId: String
 	var createdAt: String
 	
+	struct MessageType {
+		static let Text = "text"
+		static let Image = "image"
+		static let Sticker = "sticker"
+	}
+	
+	struct ContentKey {
+		static let Text = "text"
+		static let Image = "imgSrc"
+		static let Sticker = "stickerId"
+	}
+	
 	override var description: String { return "message: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n}" }
 	
 	convenience init?(onMessage json: JSON) {
@@ -33,23 +45,23 @@ class ChatMessage: NSObject {
 			type = json["data"]["type"].string!
 		}
 		
-		if type == "text" {
+		if type == ChatMessage.MessageType.Text {
 			if json["data"]["content"]["text"].string != nil {
-				content = json["data"]["content"]["text"].string!
+				content = json["data"]["content"][ChatMessage.ContentKey.Text].string!
 			}
-		} else if type == "image" {
+		} else if type == ChatMessage.MessageType.Image {
 			if json["data"]["content"]["imgSrc"].string != nil {
-				content = json["data"]["content"]["imgSrc"].string!
+				content = json["data"]["content"][ChatMessage.ContentKey.Image].string!
 			}
-		} else if type == "sticker" {
+		} else if type == ChatMessage.MessageType.Sticker {
 			if json["data"]["content"]["stickerId"].string != nil {
-				content = json["data"]["content"]["stickerId"].string!
+				content = json["data"]["content"][ChatMessage.ContentKey.Sticker].string!
 			}
 		}
 		
-		if json["data"]["content"]["text"].string != nil {
-			content = json["data"]["content"]["text"].string!
-		}
+//		if json["data"]["content"]["text"].string != nil {
+//			content = json["data"]["content"]["text"].string!
+//		}
 		if json["data"]["userId"].string != nil {
 			userId = json["data"]["userId"].string!
 		}
@@ -73,23 +85,23 @@ class ChatMessage: NSObject {
 			type = json["type"].string!
 		}
 		
-		if type == "text" {
+		if type == ChatMessage.MessageType.Text {
 			if json["content"]["text"].string != nil {
-				content = json["content"]["text"].string!
+				content = json["content"][ChatMessage.ContentKey.Text].string!
 			}
-		} else if type == "image" {
+		} else if type == ChatMessage.MessageType.Image {
 			if json["content"]["imgSrc"].string != nil {
-				content = json["content"]["imgSrc"].string!
+				content = json["content"][ChatMessage.ContentKey.Image].string!
 			}
-		} else if type == "sticker" {
+		} else if type == ChatMessage.MessageType.Sticker {
 			if json["content"]["stickerId"].string != nil {
-				content = json["content"]["stickerId"].string!
+				content = json["content"][ChatMessage.ContentKey.Sticker].string!
 			}
 		}
 
-		if json["content"]["text"].string != nil {
-			content = json["content"]["text"].string!
-		}
+//		if json["content"]["text"].string != nil {
+//			content = json["content"]["text"].string!
+//		}
 		if json["content"]["image"] != nil {
 			print(json["content"]["image"])
 		}

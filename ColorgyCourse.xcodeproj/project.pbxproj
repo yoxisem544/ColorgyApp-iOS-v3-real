@@ -23,6 +23,7 @@
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
+		632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */; };
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
@@ -190,6 +191,7 @@
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
+		632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyChatAPI.swift; sourceTree = "<group>"; };
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
@@ -786,6 +788,7 @@
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
 				63AFACA81C57107100405EC3 /* ColorgySocket.swift */,
+				632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */,
 				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
@@ -1133,6 +1136,7 @@
 				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
 				63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */,
 				63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */,
+				632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */,
 				63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */,
 				63B942A81C59DEAB0060A097 /* PreviewSupplementaryView.swift in Sources */,
 				63BB300D1C5617390055BA19 /* SocketLogger.swift in Sources */,

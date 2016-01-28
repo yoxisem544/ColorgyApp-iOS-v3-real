@@ -59,6 +59,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 //		})
 		
 		colorgySocket.onRecievingMessage { (messages) -> Void in
+			print(messages.count)
 			for m in messages {
 				self.messages.append(m)
 				self.messageRecieved()
@@ -75,25 +76,55 @@ class TestChatRoomViewController: DLMessagesViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if messages[indexPath.row].userId != userId {
 			// incoming
-			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
-			
-			cell.textlabel.text = messages[indexPath.row].content
-			cell.userImageView.image = UIImage(named: "ching.jpg")
-			
-			return cell
+			if messages[indexPath.row].type == "text" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
+				
+				cell.textlabel.text = messages[indexPath.row].content
+				cell.userImageView.image = UIImage(named: "ching.jpg")
+				
+				return cell
+			} else if messages[indexPath.row].type == "image" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingPhotoBubble
+				
+				cell.imageURLString = messages[indexPath.row].content
+				cell.userImageView.image = UIImage(named: "ching.jpg")
+				
+				return cell
+			} else if messages[indexPath.row].type == "sticker" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
+				
+				return cell
+			} else {
+				print(messages[indexPath.row].type)
+				print(messages)
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
+				
+				return cell
+			}
 		} else {
-//			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
-//			
-//			cell.textlabel.text = messages[indexPath.row].content
-//			
-//			return cell
-			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
-			
-//			cell.textlabel.text = messages[indexPath.row].content
-			cell.contentImageView.image = UIImage(named: "ching.jpg")
-//			cell.userImageView.image = UIImage(named: "ching.jpg")
-			
-			return cell
+			if messages[indexPath.row].type == "text" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
+				
+				cell.textlabel.text = messages[indexPath.row].content
+				
+				return cell
+			} else if messages[indexPath.row].type == "image" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
+				
+				cell.imageURLString = messages[indexPath.row].content
+				
+				return cell
+			} else if messages[indexPath.row].type == "sticker" {
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
+				
+				return cell
+			} else {
+				print(messages[indexPath.row].type)
+				print(messages)
+				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
+				
+				return cell
+			}
 		}
 	}
 	
@@ -109,6 +140,35 @@ class TestChatRoomViewController: DLMessagesViewController {
 				self.presentViewController(controller, animated: true, completion: nil)
 				}, secondaryHandler: { (action: ImagePickerAction, counts: Int) -> () in
 					print(imagePickerController.selectedImageAssets.count)
+					for asset in imagePickerController.selectedImageAssets {
+						
+						let options = PHImageRequestOptions()
+						options.deliveryMode = .FastFormat
+						
+						// request images no bigger than 1/3 the screen width
+						let maxDimension = UIScreen.mainScreen().bounds.width / 3 * UIScreen.mainScreen().scale
+						let size = CGSize(width: maxDimension, height: maxDimension)
+						
+						PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: size, contentMode: PHImageContentMode.AspectFill, options: options, resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) -> Void in
+//							if let image = image {
+//								self.sendImage(image)
+//								print(UIImageJPEGRepresentation(image, 1.0))
+//								self.view.addSubview(UIImageView(image: image))
+//							}
+						})
+						
+						PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data: NSData?, string: String?, orientation: UIImageOrientation, info: [NSObject : AnyObject]?) -> Void in
+							print(data)
+							print(UIImage(data: data!))
+							print(string)
+							print(orientation)
+							if let data = data {
+								if let image = UIImage(data: data) {
+									self.sendImage(image)
+								}
+							}
+						})
+					}
 			}))
 			
 			imagePickerController.addAction(ImagePickerAction(title: "取消", handler: { (action: ImagePickerAction) -> () in
@@ -124,6 +184,15 @@ class TestChatRoomViewController: DLMessagesViewController {
 			})
 		} else {
 			needPermission()
+		}
+	}
+	
+	func sendImage(image: UIImage) {
+		ColorgyChatAPI.uploadImage(image, success: { (result) -> Void in
+			print(result)
+			self.colorgySocket.sendPhotoMessage(result, withUserId: self.userId)
+			}) { () -> Void in
+				print("fail to upload image")
 		}
 	}
 	
@@ -157,5 +226,6 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 		print(image)
 		dismissViewControllerAnimated(true, completion: nil)
+		sendImage(image)
 	}
 }
