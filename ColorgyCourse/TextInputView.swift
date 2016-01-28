@@ -17,7 +17,9 @@ class TextInputView: UIView {
     // Drawing code
     }
     */
-    
+	
+	private var cameraButton: UIButton!
+	private let cameraButtonSize: CGSize = CGSize(width: 30, height: 24)
     private var sendMessageButton: UIButton!
     private let sendMessageButtonSize: CGSize = CGSize(width: 61, height: 30)
     private var messageTextView: UITextView!
@@ -82,10 +84,19 @@ class TextInputView: UIView {
 //        sendMessageButton.backgroundColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9)
         sendMessageButton.addTarget(self, action: "sendMessageButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(sendMessageButton)
+		
+		// camera button
+		cameraButton = UIButton(type: UIButtonType.System)
+		cameraButton.frame.origin.x = leftInset
+		cameraButton.frame.size = cameraButtonSize
+		cameraButton.setImage(UIImage(named: "CameraButton"), forState: UIControlState.Normal)
+		cameraButton.addTarget(self, action: "openCameraButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		cameraButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9)
+		self.addSubview(cameraButton)
         
         messageTextView = UITextView(frame: self.frame)
         messageTextView.frame.size.width -= 2 * leftInset + sendButtonAndMessageTextViewGap
-        messageTextView.frame.origin.x += leftInset
+        messageTextView.frame.origin.x += leftInset + cameraButton.frame.maxX
         messageTextView.frame.size.width -= sendMessageButtonSize.width
         messageTextView.frame.size.height = initialMessageTextViewHeight
         messageTextView.center.y = self.bounds.midY
@@ -107,7 +118,8 @@ class TextInputView: UIView {
         
         sendMessageButton.frame.origin.x = messageTextView.bounds.maxX + leftInset + sendButtonAndMessageTextViewGap
         sendMessageButton.center.y = messageTextView.center.y
-        
+        cameraButton.center.y = messageTextView.center.y
+		
         let a = ATrickyView()
         a.delegate = self
         messageTextView.inputAccessoryView = a
@@ -146,6 +158,8 @@ class TextInputView: UIView {
             self.messageTextView.frame.size.height = self.currentMessageTextViewContentHeight
             // move it
             self.messageTextView.center.y = self.bounds.midY
+			// move camera
+			self.cameraButton.center.y = self.sendMessageButton.center.y
         }
         
         if let a = messageTextView.inputAccessoryView as? ATrickyView {
@@ -163,6 +177,10 @@ class TextInputView: UIView {
             disableSendMessageButton()
         }
     }
+	
+	internal func openCameraButtonClicked() {
+		print("openCameraButtonClicked")
+	}
     
     private func disableSendMessageButton() {
         

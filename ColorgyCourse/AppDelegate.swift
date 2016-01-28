@@ -89,8 +89,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            })
 			
         }
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectContextObjectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
         return true
     }
+	
+	func objectContextObjectsDidChange(notification: NSNotification) {
+		let sender = notification.object as! NSManagedObjectContext
+		print(sender)
+	}
     
     @available(iOS 9.0, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
@@ -216,6 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return coordinator
     }()
 
+	// original settings
     lazy var managedObjectContext: NSManagedObjectContext = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -223,6 +231,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
+	
+//	lazy var managedObjectContext: NSManagedObjectContext = {
+//		// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+//		let coordinator = self.persistentStoreCoordinator
+////		if coordinator == nil {
+////			return nil
+////		}
+//		var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+//		managedObjectContext.persistentStoreCoordinator = coordinator
+//		managedObjectContext.mergePolicy = NSRollbackMergePolicy
+//		return managedObjectContext
+//	}()
+	
+	
+	
+//	lazy var backgroundContext: NSManagedObjectContext = {
+//		let coordinator = self.persistentStoreCoordinator
+////		if coordinator == nil {
+////			return nil
+////		}
+//		var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+//		managedObjectContext.persistentStoreCoordinator = coordinator
+//		managedObjectContext.mergePolicy = NSOverwriteMergePolicy
+//		managedObjectContext.undoManager = nil
+//		return managedObjectContext
+//	}()
 
     // MARK: - Core Data Saving support
 
