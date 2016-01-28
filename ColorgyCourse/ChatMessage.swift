@@ -16,6 +16,8 @@ class ChatMessage: NSObject {
 	var userId: String
 	var createdAt: String
 	
+	var mediaImage: UIImage!
+	
 	struct MessageType {
 		static let Text = "text"
 		static let Image = "image"
