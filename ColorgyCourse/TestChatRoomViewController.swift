@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class TestChatRoomViewController: DLMessagesViewController {
 	
@@ -103,5 +104,39 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 		if let message = message {
 			colorgySocket.sendTextMessage(message, withUserId: userId)
 		}
+	}
+	
+	func openImagePicker() {
+		if PHPhotoLibrary.authorizationStatus() == .Authorized {
+			let imagePickerController = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
+			imagePickerController.addAction(ImagePickerAction(title: "取消", handler: { (action: ImagePickerAction) -> () in
+				print("hihi")
+			}))
+			presentViewController(imagePickerController, animated: true, completion: nil)
+		} else if PHPhotoLibrary.authorizationStatus() == .Denied {
+			needPermission()
+		} else if PHPhotoLibrary.authorizationStatus() == .NotDetermined {
+			PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) -> Void in
+				self.openImagePicker()
+			})
+		} else {
+			needPermission()
+		}
+	}
+	
+	func needPermission() {
+		let alert = UIAlertController(title: "需要存取照片權限", message: "如果要上傳照片，請至\"設定\">\"Colorgy\"的APP中打開存取照片的權限。", preferredStyle: UIAlertControllerStyle.Alert)
+		let ok = UIAlertAction(title: "設定", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+			UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+			print(UIApplicationOpenSettingsURLString)
+		})
+		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+		alert.addAction(ok)
+		alert.addAction(cancel)
+		presentViewController(alert, animated: true, completion: nil)
+	}
+	
+	func DLMessagesViewControllerDidClickedCameraButton() {
+		openImagePicker()
 	}
 }

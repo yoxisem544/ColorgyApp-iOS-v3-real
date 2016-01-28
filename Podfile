@@ -5,7 +5,6 @@ target 'ColorgyCourse' do
   pod "AFNetworking"
   pod "Fabric"
   pod "Crashlytics"
-  pod "ImagePickerSheetController", "~> 0.9.1"
 end
 
 target 'ColorgyCourseTests' do

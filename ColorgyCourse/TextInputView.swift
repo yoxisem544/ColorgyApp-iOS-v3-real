@@ -180,6 +180,7 @@ class TextInputView: UIView {
 	
 	internal func openCameraButtonClicked() {
 		print("openCameraButtonClicked")
+		delegate?.textInputViewDidClickCameraButton()
 	}
     
     private func disableSendMessageButton() {
@@ -253,6 +254,7 @@ protocol TextInputViewDelegate {
     func textInputView(didUpdateKeyboardFrame kbRect: CGRect?, textInputView :TextInputView)
     func textInputView(didUpdateFrame textInputView: TextInputView)
     func textInputView(didClickedSendMessageButton message: String?)
+	func textInputViewDidClickCameraButton()
 }
 
 extension TextInputView : ATrickyViewDelegate {

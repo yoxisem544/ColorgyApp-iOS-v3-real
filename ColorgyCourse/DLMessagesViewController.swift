@@ -18,6 +18,7 @@ struct DLMessageControllerIdentifier {
 
 protocol DLMessagesViewControllerDelegate {
     func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?)
+	func DLMessagesViewControllerDidClickedCameraButton()
 }
 
 class DLMessagesViewController: UIViewController {
@@ -158,12 +159,18 @@ extension DLMessagesViewController : TextInputViewDelegate {
 //            scrollToButtom(animated: false)
         }
     }
+	
     func textInputView(didUpdateFrame textInputView: TextInputView) {
         
     }
+	
     func textInputView(didClickedSendMessageButton message: String?) {
         delegate?.DLMessagesViewControllerDidClickedMessageButton(withReturnMessage: message)
     }
+	
+	func textInputViewDidClickCameraButton() {
+		delegate?.DLMessagesViewControllerDidClickedCameraButton()
+	}
 }
 
 extension DLMessagesViewController : UITableViewDelegate, UITableViewDataSource {
