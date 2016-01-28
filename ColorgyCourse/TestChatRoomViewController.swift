@@ -73,21 +73,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 		return messages.count
 	}
 	
-	func loadImage(url: String, atIndexPath indexPath: NSIndexPath, toImageView: UIImageView!, complete: () -> Void) {
-		if url.isValidURLString {
-			let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-				if let data = NSData(contentsOfURL: NSURL(string: url)!) {
-					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						self.messages[indexPath.row].mediaImage = UIImage(data: data)
-						toImageView.image = UIImage(data: data)
-						complete()
-					})
-				}
-            })
-		}
-	}
-	
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if messages[indexPath.row].userId != userId {
 			// incoming
@@ -101,21 +86,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 			} else if messages[indexPath.row].type == "image" {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingPhotoBubble
 				
-//				cell.imageURLString = messages[indexPath.row].content
-				
-				if messages[indexPath.row].mediaImage == nil {
-					messages[indexPath.row].mediaImage = UIImage()
-					loadImage(messages[indexPath.row].content, atIndexPath: indexPath, toImageView: cell.contentImageView, complete: { () -> Void in
-						
-					})
-//					loadImage(messages[indexPath.row].content, atIndexPath: indexPath, complete: { () -> Void in
-//						print(indexPath)
-//						cell.contentImageView.image = self.messages[indexPath.row].mediaImage
-//					})
-				} else {
-					cell.contentImageView.image = messages[indexPath.row].mediaImage
+				if messages[indexPath.row].content.isValidURLString {
+					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
 				}
-				
 				cell.userImageView.image = UIImage(named: "ching.jpg")
 				
 				return cell
@@ -139,14 +112,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 				return cell
 			} else if messages[indexPath.row].type == "image" {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
-				
-				if messages[indexPath.row].mediaImage == nil {
-					messages[indexPath.row].mediaImage = UIImage()
-					loadImage(messages[indexPath.row].content, atIndexPath: indexPath, toImageView: cell.contentImageView, complete: { () -> Void in
-						
-					})
-				} else {
-					cell.contentImageView.image = messages[indexPath.row].mediaImage
+
+				if messages[indexPath.row].content.isValidURLString {
+					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
 				}
 				
 				return cell
@@ -185,13 +153,13 @@ class TestChatRoomViewController: DLMessagesViewController {
 						let maxDimension = UIScreen.mainScreen().bounds.width / 3 * UIScreen.mainScreen().scale
 						let size = CGSize(width: maxDimension, height: maxDimension)
 						
-						PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: size, contentMode: PHImageContentMode.AspectFill, options: options, resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) -> Void in
+//						PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: size, contentMode: PHImageContentMode.AspectFill, options: options, resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) -> Void in
 //							if let image = image {
 //								self.sendImage(image)
 //								print(UIImageJPEGRepresentation(image, 1.0))
 //								self.view.addSubview(UIImageView(image: image))
 //							}
-						})
+//						})
 						
 						PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data: NSData?, string: String?, orientation: UIImageOrientation, info: [NSObject : AnyObject]?) -> Void in
 							print(data)
