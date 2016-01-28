@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if !Release().mode {
             // for dev
-//            ColorgyAPI.PATCHUserInfo("NTU", department: "000", year: "2012", success: { () -> Void in
+//            ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
 //                print("")
 //                }, failure: { () -> Void in
 //                print("")
@@ -98,14 +98,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let sender = notification.object as! NSManagedObjectContext
 
 		if sender == self.managedObjectContext {
+			// on main thread
 			sender.performBlock { () -> Void in
 				self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
 			}
 		} else if sender == self.backgroundContext {
+			// on background thread
 			sender.performBlock { () -> Void in
 				self.backgroundContext.mergeChangesFromContextDidSaveNotification(notification)
 			}
 		} else {
+			// other thread
 			backgroundContext.performBlock { () -> Void in
 				self.backgroundContext.mergeChangesFromContextDidSaveNotification(notification)
 			}

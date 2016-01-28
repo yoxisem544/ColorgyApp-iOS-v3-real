@@ -25,6 +25,9 @@ class DLMessagesViewController: UIViewController {
     var keyboardAndMessageGap: CGFloat = 8.0
     
     var delegate: DLMessagesViewControllerDelegate?
+	
+	// tap to dismiss keyboard
+	var tapToDismissKeyboard: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +55,57 @@ class DLMessagesViewController: UIViewController {
         
         // adjust inset
         bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
+		
+		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
     }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		registerKeyboardNotification()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		unregisterKeyboardNotification()
+	}
+	
+	func registerKeyboardNotification() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+	}
+	
+	func unregisterKeyboardNotification() {
+		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
+	func keyboardWillHideNotification(notification: NSNotification) {
+		if let kbRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey])?.CGRectValue {
+			let animationKey = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey])?.unsignedIntegerValue
+			let animationDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey])?.doubleValue
+			
+			var offset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.bounds.height
+			if UIApplication.sharedApplication().statusBarFrame.height == 40 {
+				offset -= 20
+			}
+			
+			UIView.animateKeyframesWithDuration(animationDuration!, delay: 0, options: UIViewKeyframeAnimationOptions(rawValue: animationKey!), animations: { () -> Void in
+				self.keyboardTextInputView.frame.origin.y = offset
+				}, completion: nil)
+			
+			let bottomInset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.frame.origin.y + keyboardAndMessageGap
+			bubbleTableView.contentInset.bottom = bottomInset
+		}
+	}
+	
+	func keyboardWillShowNotification(n: NSNotification) {
+		scrollToButtom(animated: false)
+	}
+	
+	func tapOnBubbleTableView() {
+		if tapToDismissKeyboard {
+			view.endEditing(true)
+		}
+	}
     
     func scrollToButtom(animated animated: Bool) {
         let numbers = bubbleTableView.numberOfRowsInSection(0)
@@ -97,7 +150,7 @@ extension DLMessagesViewController : TextInputViewDelegate {
             // adjust inset
             let bottomInset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.frame.origin.y + keyboardAndMessageGap
             bubbleTableView.contentInset.bottom = bottomInset
-            scrollToButtom(animated: false)
+//            scrollToButtom(animated: false)
         }
     }
     func textInputView(didUpdateFrame textInputView: TextInputView) {
