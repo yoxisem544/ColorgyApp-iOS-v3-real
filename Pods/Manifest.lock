@@ -25,15 +25,20 @@ PODS:
   - Fabric (1.6.0):
     - Fabric/Base (= 1.6.0)
   - Fabric/Base (1.6.0)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
 
 DEPENDENCIES:
   - AFNetworking
   - Crashlytics
   - Fabric
+  - SDWebImage (~> 3.7)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Crashlytics: 1ee87895c37472eb3f01f409ea1654a464d2f8d4
   Fabric: d737eda3a26ac940a5430230eedb35f16b226131
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
 
 COCOAPODS: 0.38.2
