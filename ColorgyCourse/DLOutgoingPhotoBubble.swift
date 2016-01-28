@@ -18,6 +18,8 @@ class DLOutgoingPhotoBubble: UITableViewCell {
 		contentImageView.layer.cornerRadius = 10.0
 		contentImageView.clipsToBounds = true
 		contentImageView.contentMode = .ScaleAspectFill
+		
+		self.selectionStyle = .None
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

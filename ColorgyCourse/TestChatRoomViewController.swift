@@ -96,22 +96,25 @@ class TestChatRoomViewController: DLMessagesViewController {
 			return cell
 		}
 	}
-}
-
-extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
-	func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?) {
-		print(message)
-		if let message = message {
-			colorgySocket.sendTextMessage(message, withUserId: userId)
-		}
-	}
 	
 	func openImagePicker() {
 		if PHPhotoLibrary.authorizationStatus() == .Authorized {
 			let imagePickerController = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
+			
+			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("你已經選了 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
+				print("no selection")
+				let controller = UIImagePickerController()
+				controller.delegate = self
+				controller.sourceType = .PhotoLibrary
+				self.presentViewController(controller, animated: true, completion: nil)
+				}, secondaryHandler: { (action: ImagePickerAction, counts: Int) -> () in
+					print(imagePickerController.selectedImageAssets.count)
+			}))
+			
 			imagePickerController.addAction(ImagePickerAction(title: "取消", handler: { (action: ImagePickerAction) -> () in
 				print("hihi")
 			}))
+			
 			presentViewController(imagePickerController, animated: true, completion: nil)
 		} else if PHPhotoLibrary.authorizationStatus() == .Denied {
 			needPermission()
@@ -126,7 +129,7 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 	
 	func needPermission() {
 		let alert = UIAlertController(title: "需要存取照片權限", message: "如果要上傳照片，請至\"設定\">\"Colorgy\"的APP中打開存取照片的權限。", preferredStyle: UIAlertControllerStyle.Alert)
-		let ok = UIAlertAction(title: "設定", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+		let ok = UIAlertAction(title: "前往設定", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
 			UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
 			print(UIApplicationOpenSettingsURLString)
 		})
@@ -135,8 +138,24 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 		alert.addAction(cancel)
 		presentViewController(alert, animated: true, completion: nil)
 	}
+}
+
+extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
+	func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?) {
+		print(message)
+		if let message = message {
+			colorgySocket.sendTextMessage(message, withUserId: userId)
+		}
+	}
 	
 	func DLMessagesViewControllerDidClickedCameraButton() {
 		openImagePicker()
+	}
+}
+
+extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+		print(image)
+		dismissViewControllerAnimated(true, completion: nil)
 	}
 }
