@@ -19,7 +19,9 @@ class CourseDB {
 		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			let fetchRequest = NSFetchRequest(entityName: entityName)
 			do {
 				let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
@@ -50,7 +52,9 @@ class CourseDB {
 				if let courseObjects = courseDBManagedObjects {
 					for courseObject in courseObjects {
 						if courseObject.code == code {
-							let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+							//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+							// try background saving
+							let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 							managedObjectContext.deleteObject(courseObject)
 							
 							do {
@@ -165,7 +169,9 @@ class CourseDB {
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
 			if let course = course {
 				
@@ -277,7 +283,9 @@ class CourseDB {
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			//        let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
 			if let courses = courses {
 				for course in courses {
@@ -368,7 +376,9 @@ class CourseDB {
 		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			let courseObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: managedObjectContext) as! CourseDBManagedObject
 			// assign data
 			courseObject.name = "自動化工程"

@@ -15,7 +15,9 @@ class ServerCourseDB {
 		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			let fetchRequest = NSFetchRequest(entityName: "CourseDataFromServer")
 			do {
 				let coursesInDB = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDataFromServerDBManagedObject]
@@ -42,7 +44,9 @@ class ServerCourseDB {
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			
 			let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
 			if let course = course {
@@ -127,7 +131,9 @@ class ServerCourseDB {
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+			// try background saving
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
 			if let courses = courses {
 				for course in courses {
 					let courseObject = NSEntityDescription.insertNewObjectForEntityForName("CourseDataFromServer", inManagedObjectContext: managedObjectContext) as! CourseDataFromServerDBManagedObject
