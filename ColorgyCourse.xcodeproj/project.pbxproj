@@ -55,6 +55,10 @@
 		63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */; };
 		63ABBC091B94C42B0077580D /* CourseDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */; };
 		63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFACA81C57107100405EC3 /* ColorgySocket.swift */; };
+		63B9428C1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B9428B1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib */; };
+		63B9428E1C59D00E0060A097 /* DLIncomingPhotoBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9428D1C59D00E0060A097 /* DLIncomingPhotoBubble.swift */; };
+		63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */; };
+		63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942911C59D87D0060A097 /* DLOutgoingPhotoBubble.swift */; };
 		63BB2FFE1C5617390055BA19 /* SocketAckEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */; };
 		63BB2FFF1C5617390055BA19 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE91C5617390055BA19 /* SocketAckManager.swift */; };
 		63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */; };
@@ -208,6 +212,10 @@
 		63ABBC061B94C0460077580D /* CourseDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailHeaderView.xib; sourceTree = "<group>"; };
 		63ABBC081B94C42B0077580D /* CourseDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailHeaderView.swift; sourceTree = "<group>"; };
 		63AFACA81C57107100405EC3 /* ColorgySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgySocket.swift; sourceTree = "<group>"; };
+		63B9428B1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLIncomingPhotoBubble.xib; sourceTree = "<group>"; };
+		63B9428D1C59D00E0060A097 /* DLIncomingPhotoBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLIncomingPhotoBubble.swift; sourceTree = "<group>"; };
+		63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLOutgoingPhotoBubble.xib; sourceTree = "<group>"; };
+		63B942911C59D87D0060A097 /* DLOutgoingPhotoBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLOutgoingPhotoBubble.swift; sourceTree = "<group>"; };
 		63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckEmitter.swift; sourceTree = "<group>"; };
 		63BB2FE91C5617390055BA19 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
 		63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
@@ -603,6 +611,10 @@
 				63BB30191C561F280055BA19 /* ATrickyView.swift */,
 				63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */,
 				63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */,
+				63B9428B1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib */,
+				63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */,
+				63B942911C59D87D0060A097 /* DLOutgoingPhotoBubble.swift */,
+				63B9428D1C59D00E0060A097 /* DLIncomingPhotoBubble.swift */,
 				63BB301C1C561F280055BA19 /* DLMessageData.swift */,
 				63BB301D1C561F280055BA19 /* DLMessageLabel.swift */,
 				63BB301E1C561F280055BA19 /* DLMessagesViewController.swift */,
@@ -877,11 +889,13 @@
 				63BB302F1C5623540055BA19 /* ching.jpg in Resources */,
 				63ABBC071B94C0460077580D /* CourseDetailHeaderView.xib in Resources */,
 				639D450B1B95E5F60053870D /* 3.jpg in Resources */,
+				63B9428C1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */,
+				63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
 				639D45091B95E5E00053870D /* 2.jpg in Resources */,
 			);
@@ -987,6 +1001,7 @@
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
 				6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */,
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
+				63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */,
 				63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */,
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
 				63BB300A1C5617390055BA19 /* SocketIOClient.swift in Sources */,
@@ -1010,6 +1025,7 @@
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */,
 				632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */,
+				63B9428E1C59D00E0060A097 /* DLIncomingPhotoBubble.swift in Sources */,
 				63BB30091C5617390055BA19 /* SocketFixUTF8.swift in Sources */,
 				638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */,
 				63FBCC711B934D3000B3084F /* Reachability.m in Sources */,

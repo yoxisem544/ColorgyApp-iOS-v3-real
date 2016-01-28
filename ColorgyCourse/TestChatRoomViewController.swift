@@ -81,9 +81,16 @@ class TestChatRoomViewController: DLMessagesViewController {
 			
 			return cell
 		} else {
-			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
+//			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
+//			
+//			cell.textlabel.text = messages[indexPath.row].content
+//			
+//			return cell
+			let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
 			
-			cell.textlabel.text = messages[indexPath.row].content
+//			cell.textlabel.text = messages[indexPath.row].content
+			cell.contentImageView.image = UIImage(named: "ching.jpg")
+//			cell.userImageView.image = UIImage(named: "ching.jpg")
 			
 			return cell
 		}

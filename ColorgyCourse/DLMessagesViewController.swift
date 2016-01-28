@@ -11,6 +11,9 @@ import UIKit
 struct DLMessageControllerIdentifier {
     static let DLIncomingMessageBubbleIdentifier = "DLIncomingMessageBubble"
     static let DLOutgoingMessageBubbleIdentifier = "DLOutgoingMessageBubble"
+	
+	static let DLIncomingPhotoBubbleIdentifier = "DLIncomingPhotoBubble"
+	static let DLOutgoingPhotoBubbleIdentifier = "DLOutgoingPhotoBubble"
 }
 
 protocol DLMessagesViewControllerDelegate {
@@ -37,6 +40,8 @@ class DLMessagesViewController: UIViewController {
         self.view.addSubview(bubbleTableView)
         bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier)
         bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier)
+		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier)
+		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier)
         
         bubbleTableView.delegate = self
         bubbleTableView.dataSource = self
