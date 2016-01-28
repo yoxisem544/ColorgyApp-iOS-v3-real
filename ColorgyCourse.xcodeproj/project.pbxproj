@@ -59,6 +59,18 @@
 		63B9428E1C59D00E0060A097 /* DLIncomingPhotoBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9428D1C59D00E0060A097 /* DLIncomingPhotoBubble.swift */; };
 		63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */; };
 		63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942911C59D87D0060A097 /* DLOutgoingPhotoBubble.swift */; };
+		63B942A21C59DEAB0060A097 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942941C59DEAB0060A097 /* AnimationController.swift */; };
+		63B942A31C59DEAB0060A097 /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942951C59DEAB0060A097 /* ImagePickerAction.swift */; };
+		63B942A41C59DEAB0060A097 /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942961C59DEAB0060A097 /* ImagePickerSheetController.swift */; };
+		63B942A51C59DEAB0060A097 /* PreviewCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942991C59DEAB0060A097 /* PreviewCollectionView.swift */; };
+		63B942A61C59DEAB0060A097 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429A1C59DEAB0060A097 /* PreviewCollectionViewCell.swift */; };
+		63B942A71C59DEAB0060A097 /* PreviewCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429B1C59DEAB0060A097 /* PreviewCollectionViewLayout.swift */; };
+		63B942A81C59DEAB0060A097 /* PreviewSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429C1C59DEAB0060A097 /* PreviewSupplementaryView.swift */; };
+		63B942A91C59DEAB0060A097 /* SheetActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429D1C59DEAB0060A097 /* SheetActionCollectionViewCell.swift */; };
+		63B942AA1C59DEAB0060A097 /* SheetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429E1C59DEAB0060A097 /* SheetCollectionViewCell.swift */; };
+		63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9429F1C59DEAB0060A097 /* SheetCollectionViewLayout.swift */; };
+		63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942A01C59DEAB0060A097 /* SheetController.swift */; };
+		63B942AD1C59DEAB0060A097 /* SheetPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B942A11C59DEAB0060A097 /* SheetPreviewCollectionViewCell.swift */; };
 		63BB2FFE1C5617390055BA19 /* SocketAckEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */; };
 		63BB2FFF1C5617390055BA19 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FE91C5617390055BA19 /* SocketAckManager.swift */; };
 		63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */; };
@@ -216,6 +228,18 @@
 		63B9428D1C59D00E0060A097 /* DLIncomingPhotoBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLIncomingPhotoBubble.swift; sourceTree = "<group>"; };
 		63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLOutgoingPhotoBubble.xib; sourceTree = "<group>"; };
 		63B942911C59D87D0060A097 /* DLOutgoingPhotoBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLOutgoingPhotoBubble.swift; sourceTree = "<group>"; };
+		63B942941C59DEAB0060A097 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
+		63B942951C59DEAB0060A097 /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
+		63B942961C59DEAB0060A097 /* ImagePickerSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerSheetController.swift; sourceTree = "<group>"; };
+		63B942991C59DEAB0060A097 /* PreviewCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionView.swift; sourceTree = "<group>"; };
+		63B9429A1C59DEAB0060A097 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		63B9429B1C59DEAB0060A097 /* PreviewCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewLayout.swift; sourceTree = "<group>"; };
+		63B9429C1C59DEAB0060A097 /* PreviewSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSupplementaryView.swift; sourceTree = "<group>"; };
+		63B9429D1C59DEAB0060A097 /* SheetActionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		63B9429E1C59DEAB0060A097 /* SheetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetCollectionViewCell.swift; sourceTree = "<group>"; };
+		63B9429F1C59DEAB0060A097 /* SheetCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetCollectionViewLayout.swift; sourceTree = "<group>"; };
+		63B942A01C59DEAB0060A097 /* SheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetController.swift; sourceTree = "<group>"; };
+		63B942A11C59DEAB0060A097 /* SheetPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		63BB2FE81C5617390055BA19 /* SocketAckEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckEmitter.swift; sourceTree = "<group>"; };
 		63BB2FE91C5617390055BA19 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
 		63BB2FEA1C5617390055BA19 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
@@ -576,6 +600,42 @@
 			name = "About Course";
 			sourceTree = "<group>";
 		};
+		63B942931C59DEAB0060A097 /* ImagePickerSheetController */ = {
+			isa = PBXGroup;
+			children = (
+				63B942941C59DEAB0060A097 /* AnimationController.swift */,
+				63B942951C59DEAB0060A097 /* ImagePickerAction.swift */,
+				63B942961C59DEAB0060A097 /* ImagePickerSheetController.swift */,
+				63B942971C59DEAB0060A097 /* Sheet */,
+			);
+			name = ImagePickerSheetController;
+			path = "ImagePickerSheetController 拷貝";
+			sourceTree = "<group>";
+		};
+		63B942971C59DEAB0060A097 /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				63B942981C59DEAB0060A097 /* Preview */,
+				63B9429D1C59DEAB0060A097 /* SheetActionCollectionViewCell.swift */,
+				63B9429E1C59DEAB0060A097 /* SheetCollectionViewCell.swift */,
+				63B9429F1C59DEAB0060A097 /* SheetCollectionViewLayout.swift */,
+				63B942A01C59DEAB0060A097 /* SheetController.swift */,
+				63B942A11C59DEAB0060A097 /* SheetPreviewCollectionViewCell.swift */,
+			);
+			path = Sheet;
+			sourceTree = "<group>";
+		};
+		63B942981C59DEAB0060A097 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				63B942991C59DEAB0060A097 /* PreviewCollectionView.swift */,
+				63B9429A1C59DEAB0060A097 /* PreviewCollectionViewCell.swift */,
+				63B9429B1C59DEAB0060A097 /* PreviewCollectionViewLayout.swift */,
+				63B9429C1C59DEAB0060A097 /* PreviewSupplementaryView.swift */,
+			);
+			path = Preview;
+			sourceTree = "<group>";
+		};
 		63BB30141C56173F0055BA19 /* SocketIO_Client */ = {
 			isa = PBXGroup;
 			children = (
@@ -729,6 +789,7 @@
 				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
+				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
 				63C2B9871C155AE3007740DB /* Utilities */,
@@ -983,6 +1044,7 @@
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
 				63BB30061C5617390055BA19 /* SocketEngineSpec.swift in Sources */,
 				630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */,
+				63B942A71C59DEAB0060A097 /* PreviewCollectionViewLayout.swift in Sources */,
 				63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */,
 				63BB30021C5617390055BA19 /* SocketEngine.swift in Sources */,
 				6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */,
@@ -997,6 +1059,7 @@
 				63BB30261C561F280055BA19 /* DLMessageLabel.swift in Sources */,
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
+				63B942A61C59DEAB0060A097 /* PreviewCollectionViewCell.swift in Sources */,
 				635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */,
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
 				6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */,
@@ -1014,6 +1077,7 @@
 				63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */,
+				63B942A41C59DEAB0060A097 /* ImagePickerSheetController.swift in Sources */,
 				63BB30221C561F280055BA19 /* ATrickyView.swift in Sources */,
 				6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */,
 				63BB30181C561F0A0055BA19 /* TestChatRoomViewController.swift in Sources */,
@@ -1037,7 +1101,9 @@
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
+				63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
+				63B942A21C59DEAB0060A097 /* AnimationController.swift in Sources */,
 				63BB302A1C561F280055BA19 /* TextInputView.swift in Sources */,
 				63BB30271C561F280055BA19 /* DLMessagesViewController.swift in Sources */,
 				63BB30041C5617390055BA19 /* SocketEnginePacketType.swift in Sources */,
@@ -1054,6 +1120,7 @@
 				63BB300F1C5617390055BA19 /* SocketParsable.swift in Sources */,
 				63BB30121C5617390055BA19 /* SwiftRegex.swift in Sources */,
 				63FBCC4D1B9346D900B3084F /* ColorgyUser.swift in Sources */,
+				63B942A91C59DEAB0060A097 /* SheetActionCollectionViewCell.swift in Sources */,
 				63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */,
 				63BB30111C5617390055BA19 /* SocketTypes.swift in Sources */,
 				639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */,
@@ -1076,21 +1143,27 @@
 				63BB300C1C5617390055BA19 /* SocketIOClientStatus.swift in Sources */,
 				6311D2121C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift in Sources */,
 				63BB30071C5617390055BA19 /* SocketEngineWebsocket.swift in Sources */,
+				63B942A31C59DEAB0060A097 /* ImagePickerAction.swift in Sources */,
 				63BB30251C561F280055BA19 /* DLMessageData.swift in Sources */,
 				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
 				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
 				63FBCC4C1B9346D900B3084F /* StringExtension.swift in Sources */,
 				63FBCC561B9346D900B3084F /* CourseDB.swift in Sources */,
 				63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */,
+				63B942A81C59DEAB0060A097 /* PreviewSupplementaryView.swift in Sources */,
 				63BB300D1C5617390055BA19 /* SocketLogger.swift in Sources */,
+				63B942AA1C59DEAB0060A097 /* SheetCollectionViewCell.swift in Sources */,
 				63BB300B1C5617390055BA19 /* SocketIOClientOption.swift in Sources */,
 				63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */,
 				63BB30311C5624E10055BA19 /* Chatroom.swift in Sources */,
+				63B942AD1C59DEAB0060A097 /* SheetPreviewCollectionViewCell.swift in Sources */,
 				636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */,
+				63B942A51C59DEAB0060A097 /* PreviewCollectionView.swift in Sources */,
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
 				631746711C04110400F612B9 /* School.swift in Sources */,
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
+				63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */,
 				63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */,
