@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ColorgyAPI {
+class ColorgyAPI : NSObject {
     
     // what do i need here?
     // need to
@@ -1273,4 +1273,88 @@ class ColorgyAPI {
 				failure()
 		})
 	}
+    
+    class func POSTUserEmail(userEmail: String, success: (AnyObject) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me/emails.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        let params = ["user_app_feedbacks":
+            [
+                "user_email": userEmail,
+            ]
+        ]
+        
+        afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            print(response)
+            success(response)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+                failure()
+        })
+    }
+
+    
+    class func PATCHUserImage(avatar: String, avatar_crop_x: Float, avatar_crop_y: Float, avatar_crop_w: Float, avatar_crop_h: Float, success: (response: AnyObject) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+            print(ColorgyErrorType.TrafficError.stillRefreshing)
+            failure()
+            return
+        }
+        guard let accesstoken = UserSetting.UserAccessToken() else {
+            print(ColorgyErrorType.noAccessToken)
+            failure()
+            return
+        }
+        let url = "https://colorgy.io:443/api/v1/me.json?access_token=\(accesstoken)"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        let params = ["user":
+            [
+                "avatar": avatar,
+                "avatar_crop_x": avatar_crop_x,
+                "avatar_crop_y": avatar_crop_y,
+                "avatar_crop_w": avatar_crop_w,
+                "avatar_crop_h": avatar_crop_h
+            ]
+        ]
+        
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            print("PATCH OK")
+            print(response)
+            success(response: response)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("fail to patch")
+                failure()
+        })
+        
+        return
+    }
 }

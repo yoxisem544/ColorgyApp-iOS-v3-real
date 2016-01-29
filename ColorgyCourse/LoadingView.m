@@ -123,15 +123,16 @@
     pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
     
     [self.pathLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
-    [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(dismiss) userInfo:nil repeats:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismiss:callbackBlock];
+    });
 }
 
-- (void)dismiss {
+- (void)dismiss:(void (^)(void))callbackBlock {
     [self removeFromSuperview];
     
-    if (self.callbackBlock) {
-        self.callbackBlock();
-        self.callbackBlock = nil;
+    if (callbackBlock) {
+        callbackBlock();
     }
 }
 

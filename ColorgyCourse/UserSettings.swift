@@ -48,7 +48,7 @@ struct UserSettingKey {
     static let isCourseNotificationOn = "isCourseNotificationOn for local notitfication"
 }
 
-class UserSetting {
+@objc class UserSetting : NSObject {
     
     // change login state
     class func changeLoginStateSuccessfully() {

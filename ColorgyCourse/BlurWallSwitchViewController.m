@@ -8,6 +8,8 @@
 
 #import "BlurWallSwitchViewController.h"
 
+#import "ColorgyCourse-Swift.h"
+
 @interface BlurWallSwitchViewController ()
 
 @end

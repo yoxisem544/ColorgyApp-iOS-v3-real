@@ -9,6 +9,7 @@
 #import "OpeningViewController.h"
 #import "UIImage+GaussianBlurUIImage.h"
 #import "NSString+Email.h"
+#import "ColorgyChatAPI.h"
 
 @implementation OpeningViewController
 
@@ -26,6 +27,7 @@
     
     // Layout
     [self openingLayout];
+    // [self uploadLayout];
     // [self nameLayout];
     // [self cleanAskLayout];
     
@@ -48,7 +50,7 @@
 #pragma mark - StringCounter
 
 - (NSInteger)stringCounter:(NSString *)string {
-    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
     NSData *data = [string dataUsingEncoding:enc];
     
     NSLog(@"length:%lu", (unsigned long)string.length);
@@ -62,7 +64,7 @@
     for (NSInteger i = 0; i < string.length; ++i) {
         tempString = [string substringToIndex:string.length - i];
         
-        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
         NSData *data = [tempString dataUsingEncoding:enc];
         
         if ([data length] <= number) {
@@ -209,7 +211,7 @@
         NSString *emailString = alertController.textFields.firstObject.text;
         
         if ([emailString isEmail]) {
-            [self removeOpeningLayout];
+            // [self removeOpeningLayout];
             self.activeTextField = nil;
             self.loadingView = [[LoadingView alloc] init];
             self.loadingView.loadingString = @"發送中";
@@ -219,13 +221,28 @@
             self.loadingView.maskView.alpha = 0.75;
             
             // 發送email認證，模擬延遲
+            ColorgyChatAPI *chatApi = [[ColorgyChatAPI alloc] init];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.loadingView finished:^() {
-                    [self.loadingView emailCheck];
-                    [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
-                }];
-            });
+            [chatApi postEmail:emailString success:^(NSDictionary *response) {
+                NSLog(@"%@", [response valueForKey:@""]);
+                [self.loadingView emailCheck];
+                [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
+            } failure:^() {
+                [self.loadingView dismiss:nil];
+                // [self openingLayout];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
+            
+            //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //                [self.loadingView finished:^() {
+            //                    [self.loadingView emailCheck];
+            //                    [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
+            //                }];
+            //            });
         } else {
             alertController.message = @"信箱錯誤";
             [self presentViewController:alertController animated:YES completion:nil];
@@ -388,6 +405,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
     }];
     self.uploadImage = [info objectForKey:UIImagePickerControllerEditedImage];
+    self.uploadImage = [self reSizeImage:self.uploadImage toSize:CGSizeMake(512, 512)];
     [self removeUploadLayout];
     [self uploadPreviewLayout];
 }
@@ -474,23 +492,56 @@
 #pragma mark - UploadingImage
 
 - (void)uploadingImage {
+    NSString *path = [[NSHomeDirectory()stringByAppendingPathComponent:@"Documents"]stringByAppendingPathComponent:@"image.png"];
+    NSData *data = UIImagePNGRepresentation(self.uploadImage);
+    [data writeToFile:path atomically:YES];
+    
+    NSLog(@"%f, %f", self.uploadImage.size.width, self.uploadImage.size.height);
     
     // clear view
     [self removeUploadPreviewLayout];
     
-    // 這裡上傳
     self.loadingView = [[LoadingView alloc] init];
     self.loadingView.loadingString = @"上傳中";
     self.loadingView.finishedString = @"成功";
     [self.loadingView start];
     
-    // 測試用需要刪除
+    // 這裡上傳
+    ColorgyChatAPI *chatApi = [[ColorgyChatAPI alloc] init];
+    CGRect chopRect = CGRectMake(0, 0, self.uploadImage.size.width, self.uploadImage.size.height);
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.loadingView finished:^(){
+    [chatApi patchUserImage:self.uploadImage chopRect:chopRect success:^(NSDictionary *response) {
+        NSLog(@"%@", [response valueForKey:@"avatar_url"]);
+        [self.loadingView finished:^() {
             [self nameLayout];
         }];
-    });
+    } failure:^() {
+        [self.loadingView dismiss:^() {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" delegate:self cancelButtonTitle:@"了解" otherButtonTitles:nil, nil];
+            
+            [alertView show];
+            [self uploadPreviewLayout];
+        }];
+    }];
+    
+    // 測試用需要刪除
+    
+    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //        [self.loadingView finished:^(){
+    //            [self nameLayout];
+    //        }];
+    //    });
+}
+
+#pragma mark - UIImage Resize
+
+- (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize {
+    UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
+    [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return reSizeImage;
 }
 
 #pragma mark - NameLayout
@@ -788,15 +839,15 @@
     [self.view addSubview:self.progressBarView2];
     
     // CleanAskTitleLabel Customized
-//    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
-//    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
-//    self.cleanAskTitleLabel.center = CGPointMake(self.view.center.x, self.progressBarView2.center.y - self.progressBarView2.bounds.size.height / 2 - self.cleanAskTitleLabel.bounds.size.height / 2);
-//    
-//    NSAttributedString *attributedcleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問，讓大家更了解你" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-//    
-//    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
-//    
-//    [self.view addSubview:self.cleanAskTitleLabel];
+    //    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
+    //    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
+    //    self.cleanAskTitleLabel.center = CGPointMake(self.view.center.x, self.progressBarView2.center.y - self.progressBarView2.bounds.size.height / 2 - self.cleanAskTitleLabel.bounds.size.height / 2);
+    //
+    //    NSAttributedString *attributedcleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問，讓大家更了解你" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+    //
+    //    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
+    //
+    //    [self.view addSubview:self.cleanAskTitleLabel];
 }
 
 - (void)removeCleanAskLayout {

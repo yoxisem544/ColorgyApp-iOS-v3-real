@@ -16,9 +16,18 @@
 @property UICollectionViewFlowLayout *blurWallCollectionViewFlowLayout;
 @property UIRefreshControl *blurWallRefreshControl;
 @property NSMutableArray *blurWallDataMutableArray;
-//@property (strong ,nonatomic) NSMutableDictionary *cachedImages;
 @property NSInteger numberOfColumn;
 @property UISegmentedControl *blurWallSegmentedControl;
 @property LoadingView *loadingView;
+
+// CleanAskView
+@property UIView *cleanAskView;
+@property UIView *cleanAskMaskView;
+@property UIView *cleanAskAlertView;
+@property UITextView *cleanAskTextView;
+@property NSString *cleanAskString;
+@property UIWindow *currentWindow;
+@property UILabel *cleanAskTitleLabel;
+@property UILabel *cleanAskMessageLabel;
 
 @end

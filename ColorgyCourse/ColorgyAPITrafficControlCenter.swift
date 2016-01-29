@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ColorgyAPITrafficControlCenter {
+class ColorgyAPITrafficControlCenter : NSObject {
     
     struct TrafficKey {
         static let IsRefreshingAccessToken = "IsRefreshingAccessToken"

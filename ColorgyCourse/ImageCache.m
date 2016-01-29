@@ -57,4 +57,5 @@ static ImageCache *sharedImageCache = nil;
 - (BOOL)doesExist:(NSString *)imageURL {
     return [imgCache objectForKey:imageURL];
 }
+
 @end

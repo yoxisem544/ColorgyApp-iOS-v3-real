@@ -83,6 +83,16 @@
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // 檢查是否回答清晰問
+    if (NO) {
+        
+    } else {
+        [self cleanAskViewLayout];
+    }
+}
+
 #pragma mark - UIColor
 
 - (UIColor *)UIColorFromRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
@@ -183,7 +193,6 @@
 }
 
 - (UICollectionViewCell *)loadingCellForIndexPath:(NSIndexPath *)indexPath {
-    
     // get Cell
     UICollectionViewCell *cell = [self.blurWallCollectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
     
@@ -463,6 +472,60 @@
             break;
     }
     return url;
+}
+
+#pragma mark - cleanAskView
+
+- (void)cleanAskViewLayout {
+    // 取得清晰問
+    self.cleanAskString = @"你最喜歡的電影是？你最喜歡的電影是？你最喜歡的電影是？你最喜歡的電影是？";
+    // currentWindow
+    self.currentWindow = [UIApplication sharedApplication].keyWindow;
+    // cleanAskMaskView
+    self.cleanAskMaskView = [[UIView alloc] initWithFrame:self.currentWindow.bounds];
+    self.cleanAskMaskView.backgroundColor = [UIColor blackColor];
+    self.cleanAskMaskView.alpha = 0.75;
+    [self.currentWindow addSubview:self.cleanAskMaskView];
+    // cleanAskAertView
+    self.cleanAskAlertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.currentWindow.bounds.size.width - 100, 216)];
+    self.cleanAskAlertView.center = self.currentWindow.center;
+    self.cleanAskAlertView.layer.cornerRadius = 12.5;
+    self.cleanAskAlertView.backgroundColor = [UIColor whiteColor];
+    [self.currentWindow addSubview:self.cleanAskAlertView];
+    // cleanAskTitleLabel
+    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.bounds.size.width - 50, 18)];
+    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
+    
+    self.cleanAskTitleLabel.attributedText = attributedCleanAskTitleString;
+    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.cleanAskTitleLabel.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, 30);
+    [self.cleanAskAlertView addSubview:self.cleanAskTitleLabel];
+    // cleanAskMessageLabel
+    self.cleanAskMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.bounds.size.width - 30, 17)];
+    self.cleanAskMessageLabel.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, self.cleanAskTitleLabel.center.y + 35);
+    self.cleanAskMessageLabel.numberOfLines = 0;
+    self.cleanAskMessageLabel.textAlignment = NSTextAlignmentCenter;
+    NSAttributedString *attributedCleanAskMessageString = [[NSAttributedString alloc] initWithString:self.cleanAskString attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Light" size:14.0]}];
+    
+    self.cleanAskMessageLabel.attributedText = attributedCleanAskMessageString;
+    [self.cleanAskAlertView addSubview:self.cleanAskMessageLabel];
+    // cleanAskTextView
+    self.cleanAskTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 222, 62)];
+    self.cleanAskTextView.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, self.cleanAskMessageLabel.center.y + self.cleanAskTextView.bounds.size.height / 2 + self.cleanAskMessageLabel.bounds.size.height / 2 + 40);
+    [self.cleanAskAlertView addSubview:self.cleanAskTextView];
+    self.cleanAskTextView.layer.borderWidth = 1;
+    self.cleanAskTextView.layer.cornerRadius = 3;
+    self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
+    
+    CGSize size = [self.cleanAskString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+    
+    if (size.width >= self.cleanAskMessageLabel.frame.size.width) {
+        [self.cleanAskMessageLabel sizeToFit];
+    }
+}
+
+- (void)removeCleanAskViewLayout {
+    
 }
 
 @end
