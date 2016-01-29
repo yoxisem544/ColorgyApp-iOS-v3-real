@@ -95,6 +95,7 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/check_name_exists", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(response)
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
@@ -125,6 +126,7 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/update_name", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(response)
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)
@@ -155,6 +157,7 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/update_about", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(response)
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)
@@ -183,6 +186,7 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/update_from_core", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(response)
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)
@@ -211,6 +215,7 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/me", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(JSON(response))
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)
@@ -229,9 +234,107 @@ class ColorgyChatAPI : NSObject {
 		print(params)
 		afManager.POST(serverURL + "/users/get_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(JSON(response))
+			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)
+		})
+	}
+	
+	class func reportUser(userId: String, targetId: String, type: String, reason: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"targetId": targetId,
+			"type": type,
+			"reason": reason
+		]
+		print(params)
+		afManager.POST(serverURL + "/report/report_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
+	class func getAvailableTarget(success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		afManager.GET(serverURL + "/users/get_available_target", parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	class func getQuestion(success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		afManager.GET(serverURL + "/questions/get_question", parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	class func answerQuestion(userId: String, answer: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		let now = NSDate()
+		let date = "\(now.year)\(now.month)\(now.day)"
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"date": date,
+			"answer": answer
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/answer_question", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
 		})
 	}
 	

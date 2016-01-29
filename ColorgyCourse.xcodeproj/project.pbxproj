@@ -33,6 +33,7 @@
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
 		632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */; };
 		6323726B1C5B443000C9FC27 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726A1C5B442F00C9FC27 /* ChatUser.swift */; };
+		6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */; };
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
@@ -218,6 +219,7 @@
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
 		632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyChatAPI.swift; sourceTree = "<group>"; };
 		6323726A1C5B442F00C9FC27 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
+		6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			children = (
 				63FBCC331B9346D800B3084F /* StringExtension.swift */,
 				63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */,
+				6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1075,7 +1078,6 @@
 				4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */,
 				63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */,
 				63BB30061C5617390055BA19 /* SocketEngineSpec.swift in Sources */,
-				630DC8A71C0809870060E105 /* SecretKeys.swift in Sources */,
 				63B942A71C59DEAB0060A097 /* PreviewCollectionViewLayout.swift in Sources */,
 				63BDC9F11C51C14E001A84D3 /* ReportFormView.swift in Sources */,
 				63BB30021C5617390055BA19 /* SocketEngine.swift in Sources */,
@@ -1152,6 +1154,7 @@
 				63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */,
 				63BB2FFF1C5617390055BA19 /* SocketAckManager.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
+				6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */,
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
