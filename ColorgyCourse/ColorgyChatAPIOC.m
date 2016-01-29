@@ -1,15 +1,15 @@
 //
-//  ColorgyChatAPI.m
+//  ColorgyChatAPIOC.m
 //  ColorgyCourse
 //
 //  Created by 張子晏 on 2016/1/28.
 //  Copyright © 2016年 David. All rights reserved.
 //
 
-#import "ColorgyChatAPI.h"
+#import "ColorgyChatAPIOC.h"
 #import "ColorgyCourse-Swift.h"
 
-@implementation ColorgyChatAPI
+@implementation ColorgyChatAPIOC
 
 - (void)test {
 }

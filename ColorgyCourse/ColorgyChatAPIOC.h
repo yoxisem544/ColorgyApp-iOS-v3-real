@@ -1,5 +1,5 @@
 //
-//  ColorgyChatAPI.h
+//  ColorgyChatAPIOC.h
 //  ColorgyCourse
 //
 //  Created by 張子晏 on 2016/1/28.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIkit.h>
 
-@interface ColorgyChatAPI : NSObject
+@interface ColorgyChatAPIOC : NSObject
 
 - (void)test;
 - (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;

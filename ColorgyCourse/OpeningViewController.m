@@ -9,7 +9,7 @@
 #import "OpeningViewController.h"
 #import "UIImage+GaussianBlurUIImage.h"
 #import "NSString+Email.h"
-#import "ColorgyChatAPI.h"
+#import "ColorgyChatAPIOC.h"
 
 @implementation OpeningViewController
 
@@ -221,7 +221,7 @@
             self.loadingView.maskView.alpha = 0.75;
             
             // 發送email認證，模擬延遲
-            ColorgyChatAPI *chatApi = [[ColorgyChatAPI alloc] init];
+            ColorgyChatAPIOC *chatApi = [[ColorgyChatAPIOC alloc] init];
             
             [chatApi postEmail:emailString success:^(NSDictionary *response) {
                 NSLog(@"%@", [response valueForKey:@""]);
@@ -507,7 +507,7 @@
     [self.loadingView start];
     
     // 這裡上傳
-    ColorgyChatAPI *chatApi = [[ColorgyChatAPI alloc] init];
+    ColorgyChatAPIOC *chatApi = [[ColorgyChatAPIOC alloc] init];
     CGRect chopRect = CGRectMake(0, 0, self.uploadImage.size.width, self.uploadImage.size.height);
     
     [chatApi patchUserImage:self.uploadImage chopRect:chopRect success:^(NSDictionary *response) {
