@@ -98,6 +98,7 @@ class TextInputView: UIView {
         messageTextView.frame.size.width -= 2 * leftInset + sendButtonAndMessageTextViewGap
         messageTextView.frame.origin.x += leftInset + cameraButton.frame.maxX
         messageTextView.frame.size.width -= sendMessageButtonSize.width
+		messageTextView.frame.size.width -= cameraButtonSize.width + leftInset
         messageTextView.frame.size.height = initialMessageTextViewHeight
         messageTextView.center.y = self.bounds.midY
         messageTextView.textAlignment = .Natural
@@ -116,7 +117,7 @@ class TextInputView: UIView {
 //        messageTextView.layer.borderWidth = 1.0
         self.addSubview(messageTextView)
         
-        sendMessageButton.frame.origin.x = messageTextView.bounds.maxX + leftInset + sendButtonAndMessageTextViewGap
+        sendMessageButton.frame.origin.x = messageTextView.frame.maxX + sendButtonAndMessageTextViewGap
         sendMessageButton.center.y = messageTextView.center.y
         cameraButton.center.y = messageTextView.center.y
 		

@@ -55,6 +55,28 @@ class ColorgyChatAPI {
 			}?.start()
 	}
 	
+	class func checkUserAvailability(success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserId() else {
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			return
+		}
+		
+		let params = ["uuid": uuid, "accessToken": accessToken]
+		print(params)
+		afManager.POST(serverURL + "/users/check_user_available", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+		})
+	}
+	
 	class func checkImageType(data: NSData) {
 		var c = UInt8()
 		data.getBytes(&c, length: 1)

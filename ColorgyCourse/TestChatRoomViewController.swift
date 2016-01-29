@@ -25,38 +25,35 @@ class TestChatRoomViewController: DLMessagesViewController {
         // Do any additional setup after loading the view.
 		self.delegate = self
 		print(self.params)
-    }
-	
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
 		
-//		colorgySocket.connectToServer(withParameters: params) { (chatroom, messages) -> Void in
-//			print(chatroom)
-//			print(messages.count)
-//			self.chatroom = chatroom
-//			for m in messages {
-//				self.messages.append(m)
-//				self.messageRecieved()
-//			}
-//		}
+		
+		//		colorgySocket.connectToServer(withParameters: params) { (chatroom, messages) -> Void in
+		//			print(chatroom)
+		//			print(messages.count)
+		//			self.chatroom = chatroom
+		//			for m in messages {
+		//				self.messages.append(m)
+		//				self.messageRecieved()
+		//			}
+		//		}
 		
 		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
 			self.chatroom = chatroom
-		}, withMessages: { (messages) -> Void in
-			for m in messages {
-				self.messages.append(m)
-//				self.messageRecieved()
-				self.messageRecievedButDontReload()
-			}
-			self.recievingABunchMessages()
+			}, withMessages: { (messages) -> Void in
+				for m in messages {
+					self.messages.append(m)
+					//				self.messageRecieved()
+					self.messageRecievedButDontReload()
+				}
+				self.recievingABunchMessages()
 		})
 		
-//		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
-//			self.chatroom = chatroom
-//			}, withSectionMessage: { (message) -> Void in
-//				self.messages.append(message)
-//				self.messageRecieved()
-//		})
+		//		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
+		//			self.chatroom = chatroom
+		//			}, withSectionMessage: { (message) -> Void in
+		//				self.messages.append(message)
+		//				self.messageRecieved()
+		//		})
 		
 		colorgySocket.onRecievingMessage { (messages) -> Void in
 			print(messages.count)
@@ -67,6 +64,15 @@ class TestChatRoomViewController: DLMessagesViewController {
 		}
 		
 		colorgySocket.connect()
+    }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -137,7 +143,8 @@ class TestChatRoomViewController: DLMessagesViewController {
 			let imagePickerController = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
 			
 			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("你已經選了 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
-				print("no selection")
+				print("go to photo library")
+				self.view.endEditing(true)
 				let controller = UIImagePickerController()
 				controller.delegate = self
 				controller.sourceType = .PhotoLibrary
