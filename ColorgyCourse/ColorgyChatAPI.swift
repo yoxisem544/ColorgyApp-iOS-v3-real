@@ -170,6 +170,62 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
 	
+	class func updateFromCore(success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/update_from_core", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
+	class func me(success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/update_from_core", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
 	class func checkImageType(data: NSData) {
 		var c = UInt8()
 		data.getBytes(&c, length: 1)

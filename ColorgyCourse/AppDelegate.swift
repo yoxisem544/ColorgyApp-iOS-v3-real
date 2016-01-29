@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                print("")
 //            })
 //			print(UserSetting.UserId())
+			print(UserSetting.UserDepartment())
+			print(UserSetting.UserOrganization())
         }
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectContextObjectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
