@@ -46,6 +46,7 @@ struct UserSettingKey {
     // other settings: user's notification time setting
     static let courseNotificationTime = "courseNotificationTime for local notitfication"
     static let isCourseNotificationOn = "isCourseNotificationOn for local notitfication"
+	// for chat
 }
 
 @objc class UserSetting : NSObject {
@@ -86,7 +87,23 @@ struct UserSettingKey {
         }
         return nil
     }
-    
+	
+	class func UserOrganization() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let userOrganization = ud.objectForKey(UserSettingKey.userOrganization) as? String {
+			return userOrganization
+		}
+		return nil
+	}
+	
+	class func UserDepartment() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let userDepartment = ud.objectForKey(UserSettingKey.userDepartment) as? String {
+			return userDepartment
+		}
+		return nil
+	}
+	
     class func UserPossibleOrganization() -> String? {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userPossibleOrganization = ud.objectForKey(UserSettingKey.userPossibleOrganization) as? String {

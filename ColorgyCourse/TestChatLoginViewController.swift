@@ -64,6 +64,7 @@ class TestChatLoginViewController: UIViewController {
 		
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			print(user)
+
 			}) { () -> Void in
 				
 		}
