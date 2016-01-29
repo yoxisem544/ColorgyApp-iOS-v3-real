@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
         }
-        
+		
         if !Release().mode {
             // for dev
 //            ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in

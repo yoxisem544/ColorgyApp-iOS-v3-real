@@ -184,7 +184,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 			needPermission()
 		} else if PHPhotoLibrary.authorizationStatus() == .NotDetermined {
 			PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) -> Void in
-				self.openImagePicker()
+				let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
+                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+                    self.openImagePicker()
+                })
 			})
 		} else {
 			needPermission()
@@ -231,5 +234,12 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 		print(image)
 		dismissViewControllerAnimated(true, completion: nil)
 		sendImage(image)
+	}
+}
+
+extension TestChatRoomViewController : PHPhotoLibraryChangeObserver {
+	func photoLibraryDidChange(changeInstance: PHChange) {
+		print(changeInstance)
+		openImagePicker()
 	}
 }

@@ -34,6 +34,8 @@ class ChooseIntendedTimeViewController: UIViewController {
             intendedTimes?.append(y)
         }
         intendedTimeTableView?.reloadData()
+		
+		title = "選擇入學年度"
     }
 
     override func didReceiveMemoryWarning() {

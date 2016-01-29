@@ -18,6 +18,7 @@ class ReportViewController: UIViewController {
 	
 	var headerTitle: String! = "謝謝大大水水們的回報，我們會更努力的！"
 	var reportProblemTitle: String! = "遇到的問題（必填）"
+	var reportProblemInitialSelectionTitle: String!
 	var reportProblem: [String?]!
 	var problemDescription: String! = "問題描述（選填）"
 	
@@ -64,7 +65,11 @@ class ReportViewController: UIViewController {
 			fuckContent = ["鞭打工程師", "幫工程師加油"]
 		}
 		
-		reportView = ReportFormView(headerTitleText: headerTitle, problemPickerTitleLabelText: reportProblemTitle, problemPickerContents: reportProblem, problemDescriptionLabelText: problemDescription, emailTitleLabelText: "常用信箱", fuckContents: fuckContent, footerTitleLabelText: finalQuestionTitle)
+		reportView = ReportFormView(headerTitleText: headerTitle, problemPickerTitleLabelText: reportProblemTitle, problemPickerTextFieldText: reportProblemInitialSelectionTitle, problemPickerContents: reportProblem, problemDescriptionLabelText: problemDescription, emailTitleLabelText: "常用信箱", fuckContents: fuckContent, footerTitleLabelText: finalQuestionTitle)
+		
+		// set initial problem
+		reportProblemType = reportProblemInitialSelectionTitle
+		
 		reportView.frame.size.height -= 64
 		reportView.frame.origin.y = 64
 		self.view.addSubview(reportView)

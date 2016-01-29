@@ -56,6 +56,8 @@ class ChooseSchoolViewController: UIViewController {
         
         schoolTableView.tableHeaderView = searchControl.searchBar
         searchControl.searchBar.placeholder = "搜尋學校"
+		
+		title = "選擇學校"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -84,6 +86,16 @@ class ChooseSchoolViewController: UIViewController {
         static let cantFindSchoolIdentifier = "cant find school identifier"
         static let showDepartmentSegue = "show department"
     }
+	
+	func showReportController() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("report view controller") as! ReportViewController
+		reportController.headerTitle = "儘管沒有學校資料，還是可以使用喔！"
+		reportController.reportProblemInitialSelectionTitle = "沒有我的學校"
+		reportController.problemDescription = "請填入您尊貴的學校"
+		reportController.delegate = self
+		presentViewController(reportController, animated: true, completion: nil)
+	}
 
 }
 
@@ -140,8 +152,10 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if !searchControl.active {
-            if indexPath == 0 {
+            if indexPath.row == 0 {
                 print("need to perform segue.....")
+				showReportController()
+				tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 if let schoolCode = schools?[indexPath.row - 1].code {
                     let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
@@ -152,8 +166,10 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
                 }
             }
         } else {
-            if indexPath == 0 {
+            if indexPath.row == 0 {
                 print("need to perform segue.....")
+				showReportController()
+				tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 let schoolCode = filteredSchools[indexPath.row - 1].code
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
@@ -217,4 +233,10 @@ extension ChooseSchoolViewController : UISearchResultsUpdating {
             schoolTableView.reloadData()
         }
     }
+}
+
+extension ChooseSchoolViewController : ReportViewControllerDelegate {
+	func reportViewControllerSuccessfullySentReport() {
+		print("ok report")
+	}
 }

@@ -51,6 +51,8 @@ class ChooseDepartmentViewController: UIViewController {
         
         departmentTableView.tableHeaderView = searchControl.searchBar
         searchControl.searchBar.placeholder = "搜尋系所"
+		
+		title = "選擇系所"
     }
     
     override func viewDidAppear(animated: Bool) {
