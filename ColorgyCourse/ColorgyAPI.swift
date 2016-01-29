@@ -665,7 +665,7 @@ class ColorgyAPI {
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
-        
+		
         print("getting me API")
         
         guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {

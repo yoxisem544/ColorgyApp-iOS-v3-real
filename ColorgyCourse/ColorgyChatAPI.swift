@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ColorgyChatAPI {
+class ColorgyChatAPI : NSObject {
 	
 	static let serverURL = "http://52.68.177.186"
 	
@@ -55,16 +55,18 @@ class ColorgyChatAPI {
 			}?.start()
 	}
 	
-	class func checkUserAvailability(success: () -> Void, failure: () -> Void) {
+	class func checkUserAvailability(success: (user: ChatUser) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
 		afManager.responseSerializer = AFJSONResponseSerializer()
 		
-		guard let uuid = UserSetting.UserId() else {
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
 			return
 		}
 		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
 			return
 		}
 		
@@ -72,7 +74,68 @@ class ColorgyChatAPI {
 		print(params)
 		afManager.POST(serverURL + "/users/check_user_available", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			print(response)
+			if let user = ChatUser(json: JSON(response)) {
+				success(user: user)
+			} else {
+				failure()
+			}
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	class func checkNameExists(name: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = ["name": name]
+		print(params)
+		afManager.POST(serverURL + "/users/check_name_exists", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	class func updateName(name: String, userId: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"name": name,
+			"userId": userId,
+			"uuid": uuid,
+			"accessToken": accessToken
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/update_name", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(response)
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
 				print(error.localizedDescription)
 		})
 	}

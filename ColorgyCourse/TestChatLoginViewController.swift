@@ -56,9 +56,14 @@ class TestChatLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-		ColorgyChatAPI.checkUserAvailability({ () -> Void in
+		ColorgyChatAPI.checkNameExists("名字喔喔", success: { () -> Void in
 			
-			
+			}) { () -> Void in
+				
+		}
+		
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			print(user)
 			}) { () -> Void in
 				
 		}

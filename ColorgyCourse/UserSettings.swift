@@ -70,7 +70,15 @@ class UserSetting {
         }
         return nil
     }
-    
+	
+	class func UserUUID() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let uuid = ud.objectForKey(UserSettingKey.userUUID) as? String {
+			return uuid
+		}
+		return nil
+	}
+	
     class func UserName() -> String? {
         let ud = NSUserDefaults.standardUserDefaults()
         if let userName = ud.objectForKey(UserSettingKey.userName) as? String {
