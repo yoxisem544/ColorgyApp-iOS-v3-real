@@ -56,17 +56,23 @@ class TestChatLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//		ColorgyChatAPI.checkNameExists("名字喔喔", success: { () -> Void in
-//			
-//			}) { () -> Void in
-//				
-//		}
-//		
-//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-//			print(user)
-//			}) { () -> Void in
-//		}
-//		
+		ColorgyChatAPI.checkNameExists("早安少女組", success: { () -> Void in
+			
+			}) { () -> Void in
+				
+		}
+		
+
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			print(user)
+			ColorgyChatAPI.updateName("早安少女組", userId: user.userId, success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+		}
+//
 //		ColorgyChatAPI.updateFromCore({ () -> Void in
 //			
 //			}) { () -> Void in
@@ -103,12 +109,12 @@ class TestChatLoginViewController: UIViewController {
 //				
 //		}
 		
-		ColorgyChatAPI.answerQuestion("yo", answer: "yo", success: { () -> Void in
-			
-			
-			}) { () -> Void in
-				
-		}
+//		ColorgyChatAPI.answerQuestion("yo", answer: "yo", success: { () -> Void in
+//			
+//			
+//			}) { () -> Void in
+//				
+//		}
     }
 
 

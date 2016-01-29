@@ -274,6 +274,37 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
 	
+	class func blockUser(userId: String, targetId: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"targetId": targetId
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/block_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			success()
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
 	class func getAvailableTarget(success: () -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
