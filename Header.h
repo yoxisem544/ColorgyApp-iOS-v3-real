@@ -18,4 +18,6 @@
 
 #import "Reachability.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 #endif

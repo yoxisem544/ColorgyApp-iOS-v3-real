@@ -665,7 +665,7 @@ class ColorgyAPI : NSObject {
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
-        
+		
         print("getting me API")
         
         guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
@@ -701,6 +701,8 @@ class ColorgyAPI : NSObject {
                 print("ME get!")
                 if let result = ColorgyAPIMeResult(json: json) {
 					print(result)
+					// store
+					UserSetting.storeAPIMeResult(result: result)
                     // return to main queue
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         completionHandler(result: result)

@@ -46,8 +46,8 @@ class CourseUpdateHelper {
                 CourseDB.storeABunchOfCoursesToDB(courses)
     
                 // setup notifications
-    //            CourseNotification.registerForCourseNotification()
-                
+                CourseNotification.registerForCourseNotification()
+				
                 // cancel need update
                 self.finishUpdateCourse()
                 

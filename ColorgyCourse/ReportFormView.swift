@@ -51,7 +51,7 @@ class ReportFormView: UIScrollView {
 	private var fuckContents: [String?] = []
 	
 	///
-	init(headerTitleText: String?, problemPickerTitleLabelText: String?, problemPickerContents: [String?], problemDescriptionLabelText: String?, emailTitleLabelText: String?, fuckContents: [String?], footerTitleLabelText: String?) {
+	init(headerTitleText: String?, problemPickerTitleLabelText: String?, problemPickerTextFieldText: String?, problemPickerContents: [String?], problemDescriptionLabelText: String?, emailTitleLabelText: String?, fuckContents: [String?], footerTitleLabelText: String?) {
 		super.init(frame: UIScreen.mainScreen().bounds)
 		
 		// configure header view
@@ -85,6 +85,7 @@ class ReportFormView: UIScrollView {
 		problemPickerTextField.layer.borderWidth = 1.0
 		problemPickerTextField.layer.cornerRadius = 2
 		problemPickerTextField.placeholder = "請選擇遇到的問題..."
+		problemPickerTextField.text = problemPickerTextFieldText
 		problemPickerTextField.delegate = self
 		self.problemPickerContents = problemPickerContents
 		// arrange view
@@ -132,6 +133,13 @@ class ReportFormView: UIScrollView {
 		emailView.addSubview(emailTitleLabel)
 		emailView.addSubview(emailTextField)
 		emailTextField.addTarget(self, action: "emailTextFieldValueChanged:", forControlEvents: UIControlEvents.EditingChanged)
+		// insert email
+		if UserSetting.UserEmail() != nil {
+			emailTextField.text = UserSetting.UserEmail()
+		}
+		if UserSetting.UserFBEmail() != nil {
+			emailTextField.text = UserSetting.UserFBEmail()
+		}
 		
 		// configure footer view
 		footerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))

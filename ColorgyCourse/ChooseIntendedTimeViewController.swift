@@ -34,6 +34,11 @@ class ChooseIntendedTimeViewController: UIViewController {
             intendedTimes?.append(y)
         }
         intendedTimeTableView?.reloadData()
+		
+		title = "選擇入學年度"
+		
+		let barButton = UIBarButtonItem(title: "送出", style: UIBarButtonItemStyle.Plain, target: self, action: "finishChoosingAndReadyToPATCHUserInfo")
+		self.navigationItem.rightBarButtonItem = barButton
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +62,7 @@ class ChooseIntendedTimeViewController: UIViewController {
                         // store usr settings
                         //                            self.statusLabel.text = "setting me api result"
                         UserSetting.storeAPIMeResult(result: result)
+						print(result)
                         //                            self.statusLabel.text = "generateAndStoreDeviceUUID"
                         UserSetting.generateAndStoreDeviceUUID()
                         // set state refresh can use

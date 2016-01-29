@@ -56,6 +56,8 @@ class ChooseSchoolViewController: UIViewController {
         
         schoolTableView.tableHeaderView = searchControl.searchBar
         searchControl.searchBar.placeholder = "搜尋學校"
+		
+		title = "選擇學校"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -84,6 +86,16 @@ class ChooseSchoolViewController: UIViewController {
         static let cantFindSchoolIdentifier = "cant find school identifier"
         static let showDepartmentSegue = "show department"
     }
+	
+	func showReportController() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("report view controller") as! ReportViewController
+		reportController.headerTitle = "儘管沒有學校資料，還是可以使用喔！"
+		reportController.reportProblemInitialSelectionTitle = "沒有我的學校"
+		reportController.problemDescription = "請填入您尊貴的學校"
+		reportController.delegate = self
+		presentViewController(reportController, animated: true, completion: nil)
+	}
 
 }
 
@@ -140,8 +152,10 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if !searchControl.active {
-            if indexPath == 0 {
+            if indexPath.row == 0 {
                 print("need to perform segue.....")
+				showReportController()
+				tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 if let schoolCode = schools?[indexPath.row - 1].code {
                     let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
@@ -152,8 +166,10 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
                 }
             }
         } else {
-            if indexPath == 0 {
+            if indexPath.row == 0 {
                 print("need to perform segue.....")
+				showReportController()
+				tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 let schoolCode = filteredSchools[indexPath.row - 1].code
                 let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
@@ -217,4 +233,72 @@ extension ChooseSchoolViewController : UISearchResultsUpdating {
             schoolTableView.reloadData()
         }
     }
+}
+
+extension ChooseSchoolViewController : ReportViewControllerDelegate {
+	func reportViewControllerSuccessfullySentReport() {
+		print("ok report")
+		ColorgyAPI.PATCHUserInfo("null", department: "null", year: "null", success: { () -> Void in
+			// login if user patch the info
+			ColorgyAPI.me({ (result) -> Void in
+				// check if user has a school or deparment
+				// log out result here
+				if result.isUserRegisteredTheirSchool() {
+					// store usr settings
+					//                            self.statusLabel.text = "setting me api result"
+					UserSetting.storeAPIMeResult(result: result)
+					//                            self.statusLabel.text = "generateAndStoreDeviceUUID"
+					UserSetting.generateAndStoreDeviceUUID()
+					// set state refresh can use
+					ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
+					
+					// get period data
+					ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
+						if let periodDataObjects = periodDataObjects {
+							UserSetting.storePeriodsData(periodDataObjects)
+							if Release().mode {
+								Flurry.logEvent("v3.0: User login using FB")
+							}
+							// need update course
+							CourseUpdateHelper.needUpdateCourse()
+							// ready to change view
+							let storyboard = UIStoryboard(name: "Main", bundle: nil)
+							let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+							self.presentViewController(vc, animated: true, completion: nil)
+							UserSetting.changeLoginStateSuccessfully()
+							UserSetting.registerCourseNotification()
+						} else {
+							// fail to get period data
+							//                                let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
+							//                                self.presentViewController(alert, animated: true, completion: nil)
+							UserSetting.storeFakePeriodsData()
+							if Release().mode {
+								Flurry.logEvent("v3.0: User login using FB, but has no period data")
+							}
+							// need update course
+							CourseUpdateHelper.needUpdateCourse()
+							// ready to change view
+							let storyboard = UIStoryboard(name: "Main", bundle: nil)
+							let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+							self.presentViewController(vc, animated: true, completion: nil)
+							UserSetting.changeLoginStateSuccessfully()
+							UserSetting.registerCourseNotification()
+						}
+					})
+				} else {
+					// user need to fill in their school and their department
+					// show the register view
+					let storyboard = UIStoryboard(name: "Main", bundle: nil)
+					let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
+					self.presentViewController(vc, animated: true, completion: nil)
+				}
+				}, failure: { () -> Void in
+					//                                self.statusLabel.text = "fail get me api"
+					let alert = ErrorAlertView.alertUserWithError("讀取個人資料錯誤，請重新登入。如果你是第一次登入，請至Colorgy網頁填寫你的學校！如果有不清楚的地方請到粉專詢問！")
+					self.presentViewController(alert, animated: true, completion: nil)
+			})
+			}, failure: { () -> Void in
+				// show something
+		})
+	}
 }

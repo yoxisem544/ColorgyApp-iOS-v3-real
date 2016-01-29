@@ -106,7 +106,7 @@ class ColorgyAPIMeResult : CustomStringConvertible {
             } else {
                 if self.organization == nil {
                     // if user is not authorized, use the possible one.
-                    self.organization = self.possible_organization_code
+//                    self.organization = self.possible_organization_code
                 }
             }
 			if let email = json[APIResult.Me.email].string {

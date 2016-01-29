@@ -51,6 +51,8 @@ class ChooseDepartmentViewController: UIViewController {
         
         departmentTableView.tableHeaderView = searchControl.searchBar
         searchControl.searchBar.placeholder = "搜尋系所"
+		
+		title = "選擇系所"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -80,6 +82,9 @@ class ChooseDepartmentViewController: UIViewController {
             let destinationVC = segue.destinationViewController as! ChooseIntendedTimeViewController
             destinationVC.school = self.school
             destinationVC.department = self.choosedDepartment
+			if let department = sender as? String {
+				destinationVC.department = department
+			}
         }
     }
     
@@ -136,6 +141,16 @@ class ChooseDepartmentViewController: UIViewController {
             })
         }
     }
+	
+	func showReportController() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("report view controller") as! ReportViewController
+		reportController.headerTitle = "儘管沒有系所資料，還是可以使用喔！"
+		reportController.reportProblemInitialSelectionTitle = "沒有我的系所"
+		reportController.problemDescription = "請填入您尊貴的系所"
+		reportController.delegate = self
+		presentViewController(reportController, animated: true, completion: nil)
+	}
 }
 
 extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDelegate {
@@ -205,6 +220,7 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         if !searchControl.active {
             if indexPath.row == 0 {
                 print("dep need implement perform fro segue")
+				showReportController()
             } else {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 if indexPathUserSelected >= 0 {
@@ -230,6 +246,7 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         } else {
             if indexPath.row == 0 {
                 print("dep need implement perform fro segue")
+				showReportController()
             } else {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 if indexPathUserSelected >= 0 {
@@ -303,4 +320,10 @@ extension ChooseDepartmentViewController : UISearchResultsUpdating {
             departmentTableView.reloadData()
         }
     }
+}
+
+extension ChooseDepartmentViewController : ReportViewControllerDelegate {
+	func reportViewControllerSuccessfullySentReport() {
+		self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: "null")
+	}
 }
