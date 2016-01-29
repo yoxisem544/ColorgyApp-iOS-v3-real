@@ -249,13 +249,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/AppDelegate.swift"
-            timestampString = "475750069.8434"
+            filePath = "ColorgyCourse/ColorgyChatAPI.swift"
+            timestampString = "475751936.535213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "getUser(_:success:failure:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ColorgyCourse/ColorgyChatAPI.swift"
+            timestampString = "475751938.24587"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "getUser(_:success:failure:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

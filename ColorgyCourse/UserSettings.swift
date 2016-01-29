@@ -88,6 +88,22 @@ struct UserSettingKey {
         return nil
     }
 	
+	class func UserAvatarUrl() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let url = ud.objectForKey(UserSettingKey.userAvatarUrl) as? String {
+			return url
+		}
+		return nil
+	}
+	
+	class func UserCoverPhotoUrl() -> String? {
+		let ud = NSUserDefaults.standardUserDefaults()
+		if let url = ud.objectForKey(UserSettingKey.userCoverPhotoUrl) as? String {
+			return url
+		}
+		return nil
+	}
+	
 	class func UserOrganization() -> String? {
 		let ud = NSUserDefaults.standardUserDefaults()
 		if let userOrganization = ud.objectForKey(UserSettingKey.userOrganization) as? String {

@@ -90,16 +90,7 @@ class ColorgyChatAPI : NSObject {
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
 		afManager.responseSerializer = AFJSONResponseSerializer()
-		
-		guard let uuid = UserSetting.UserUUID() else {
-			failure()
-			return
-		}
-		guard let accessToken = UserSetting.UserAccessToken() else {
-			failure()
-			return
-		}
-		
+
 		let params = ["name": name]
 		print(params)
 		afManager.POST(serverURL + "/users/check_name_exists", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
@@ -218,8 +209,26 @@ class ColorgyChatAPI : NSObject {
 			"accessToken": accessToken
 		]
 		print(params)
-		afManager.POST(serverURL + "/users/update_from_core", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-			print(response)
+		afManager.POST(serverURL + "/users/me", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
+	class func getUser(userId: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		let params = [
+			"userId": userId
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/get_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			print(JSON(response))
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				failure()
 				print(error.localizedDescription)

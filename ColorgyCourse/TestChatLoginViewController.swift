@@ -73,12 +73,23 @@ class TestChatLoginViewController: UIViewController {
 //				
 //		}
 		
-		ColorgyChatAPI.me({ () -> Void in
-			
-			
+//		ColorgyChatAPI.me({ () -> Void in
+//			
+//			
+//			}) { () -> Void in
+//				
+//		}
+		
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getUser(user.userId, success: { () -> Void in
+
+				}, failure: { () -> Void in
+					
+			})
 			}) { () -> Void in
 				
 		}
+
     }
 
 
