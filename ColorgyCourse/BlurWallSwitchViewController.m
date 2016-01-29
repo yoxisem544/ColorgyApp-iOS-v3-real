@@ -7,7 +7,7 @@
 //
 
 #import "BlurWallSwitchViewController.h"
-
+#import "ColorgyChatAPIOC.h"
 #import "ColorgyCourse-Swift.h"
 
 @interface BlurWallSwitchViewController ()
@@ -19,6 +19,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    ColorgyChatAPIOC *chatApi = [[ColorgyChatAPIOC alloc] init];
+    
+    [chatApi postEmail:@"b10202012@ntust.edu.tw" success:^(NSDictionary *response) {
+        NSLog(@"%@", [response valueForKey:@""]);
+    } failure:^() {
+    }];
+    
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];

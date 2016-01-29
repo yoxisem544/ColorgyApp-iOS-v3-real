@@ -17,4 +17,7 @@
     return isValid;
 }
 
+- (BOOL)isValidURLString {
+    return [[NSURL alloc] initFileURLWithPath:self];
+}
 @end

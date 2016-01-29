@@ -9,7 +9,9 @@
 #import "OpeningViewController.h"
 #import "UIImage+GaussianBlurUIImage.h"
 #import "NSString+Email.h"
+#import "ColorgyCourse-Swift.h"
 #import "ColorgyChatAPIOC.h"
+#import "ImageCache.h"
 
 @implementation OpeningViewController
 
@@ -224,7 +226,6 @@
             ColorgyChatAPIOC *chatApi = [[ColorgyChatAPIOC alloc] init];
             
             [chatApi postEmail:emailString success:^(NSDictionary *response) {
-                NSLog(@"%@", [response valueForKey:@""]);
                 [self.loadingView emailCheck];
                 [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
             } failure:^() {
@@ -255,14 +256,13 @@
     self.loadingView.loadingString = @"驗證中";
     
     [self.loadingView start];
-    // 認證信箱
-    // 模擬延遲
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.loadingView finished:^() {
-            [self removeOpeningLayout];
-            [self uploadLayout];
-        }];
-    });
+    // 認證信箱，模擬延遲
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self.loadingView finished:^() {
+//            [self removeOpeningLayout];
+//            [self uploadLayout];
+//        }];
+//    });
 }
 
 #pragma mark - Upload Layout
@@ -339,6 +339,7 @@
         
         // FBImageSticker button tapped.
         [self dismissViewControllerAnimated:YES completion:^{
+            [self.loadingView start];
         }];
     }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -902,6 +903,28 @@
     }
     
     return YES;
+}
+
+#pragma mark - Lazy Loading Image
+
+- (void)downloadImageAtURL:(NSString *)imageURL withHandler:(void(^)(UIImage *image))handler {
+    NSURL *urlString = [NSURL URLWithString:imageURL];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_async(queue, ^{
+        NSError *error = nil;
+        NSData *data = [NSData dataWithContentsOfURL:urlString options:NSDataReadingUncached error:&error];
+        
+        if (!error) {
+            UIImage *downloadedImage = [UIImage imageWithData:data];
+            // Add the image to the cache
+            [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
+            handler(downloadedImage); // pass back the image in a block
+        } else {
+            NSLog(@"%@", [error localizedDescription]);
+            handler(nil); // pass back nil in the block
+        }
+    });
 }
 
 @end
