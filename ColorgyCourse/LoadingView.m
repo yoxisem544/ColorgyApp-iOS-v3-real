@@ -69,6 +69,8 @@
     [self.checkEmailButton removeFromSuperview];
     [self.emailImageView removeFromSuperview];
     [self.pathLayer removeFromSuperlayer];
+    [self.indicatorView stopAnimating];
+    [self.indicatorView removeFromSuperview];
     [self.indicatorView startAnimating];
     [self addSubview:self.indicatorView];
     
@@ -138,8 +140,9 @@
 
 - (void)emailCheck {
     [self.window addSubview:self];
-    [self.pathLayer removeFromSuperlayer];
     [self.indicatorView startAnimating];
+    [self.indicatorView removeFromSuperview];
+    [self.pathLayer removeFromSuperlayer];
     [self addSubview:self.emailImageView];
     
     self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;

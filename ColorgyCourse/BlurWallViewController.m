@@ -10,16 +10,19 @@
 #import "UIImage+GaussianBlurUIImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OpeningViewController.h"
+#import "ColorgyCourse-Swift.h"
 
 #define CELL_IDENTIFIER @"cellIdentifier"
 #define FOOTER_IDENTIFIER @"footerIdentifier"
 #define HEADER_IDENTIFIER @"headerIdentifier"
 #define INSET_NUMBER 2
-#define PHOTO_KEY @"photo"
-#define MESSAGE_KEY @"message"
+#define PHOTO_KEY @"avatar_blur_2x_url"
+#define MESSAGE_KEY @"name"
 #define PRELOAD_NUMBER 10
 
-@implementation BlurWallViewController
+@implementation BlurWallViewController {
+    ChatUser *chatUser;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,15 +86,15 @@
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    // 檢查是否回答清晰問
-    if (NO) {
-        
-    } else {
-        [self cleanAskViewLayout];
-    }
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    // 檢查是否回答清晰問
+//    if (NO) {
+//
+//    } else {
+//        [self cleanAskViewLayout];
+//    }
+//}
 
 #pragma mark - UIColor
 
@@ -254,7 +257,7 @@
     } else {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
         
-        if (self.blurWallDataMutableArray.count) {
+        if (self.blurWallDataMutableArray.count > 6) {
             UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
             
             activityIndicator.color = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
@@ -311,43 +314,64 @@
 }
 
 - (void)refreshData:(void (^)(void))callbackBlock {
-    
+    [self.blurWallDataMutableArray removeAllObjects];
     // 重新整理最新的數據
-    // Simulate an async load...
-    double delayInSeconds = 3;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        [self.blurWallDataMutableArray removeAllObjects];
-        // Add the new data to our local collection of data.
-        for (int i = 19; i >= 0; --i) {
-            NSDictionary *dataSet;
-            
-            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
-                case 0:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
-                    break;
-                case 1:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
-                    break;
-                case 2:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
-                    break;
-                    
-                default:
-                    break;
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        [ColorgyChatAPI getUser:user.userId success:^(NSDictionary *response) {
+            [self.blurWallDataMutableArray addObject:[response objectForKey:@"result"]];
+            // Tell the collectionView to reload.
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+            if (callbackBlock) {
+                callbackBlock();
             }
-            
-            [self.blurWallDataMutableArray addObject:dataSet];
-        }
+        } failure:^() {
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+        }];
+    } failure:^() {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
-        // Tell the collectionView to reload.
-        [self.blurWallCollectionView reloadData];
-        [self.blurWallRefreshControl endRefreshing];
-        if (callbackBlock) {
-            callbackBlock();
-        }
-    });
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
+    
+    // Simulate an async load...
+    //    double delayInSeconds = 3;
+    //
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+    //        [self.blurWallDataMutableArray removeAllObjects];
+    //        // Add the new data to our local collection of data.
+    //        for (int i = 19; i >= 0; --i) {
+    //            NSDictionary *dataSet;
+    //
+    //            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+    //                case 0:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
+    //                    break;
+    //                case 1:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
+    //                    break;
+    //                case 2:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
+    //                    break;
+    //
+    //                default:
+    //                    break;
+    //            }
+    //
+    //            [self.blurWallDataMutableArray addObject:dataSet];
+    //        }
+    //
+    //        // Tell the collectionView to reload.
+    //        [self.blurWallCollectionView reloadData];
+    //        [self.blurWallRefreshControl endRefreshing];
+    //        if (callbackBlock) {
+    //            callbackBlock();
+    //        }
+    //    });
     [self.blurWallCollectionView reloadData];
 }
 
@@ -358,55 +382,57 @@
     
     // Simulate an async load...
     
-    double delayInSeconds = 3;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        // Add the new data to our local collection of data.
-        for (int i = 19; i >= 0; --i) {
-            NSDictionary *dataSet;
-            
-            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
-                case 0:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
-                    break;
-                case 1:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
-                    break;
-                case 2:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
-                    break;
-                    
-                default:
-                    break;
-            }
-            [self.blurWallDataMutableArray addObject:dataSet];
-        }
-        // Tell the collectionView to reload.
-        [self.blurWallCollectionView reloadData];
-    });
+    //    double delayInSeconds = 3;
+    //
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+    //        // Add the new data to our local collection of data.
+    //        for (int i = 19; i >= 0; --i) {
+    //            NSDictionary *dataSet;
+    //
+    //            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+    //                case 0:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
+    //                    break;
+    //                case 1:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
+    //                    break;
+    //                case 2:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
+    //                    break;
+    //
+    //                default:
+    //                    break;
+    //            }
+    //            [self.blurWallDataMutableArray addObject:dataSet];
+    //        }
+    //        // Tell the collectionView to reload.
+    //        [self.blurWallCollectionView reloadData];
+    //    });
 }
 
 #pragma mark - Lazy Loading Image
 
 - (void)downloadImageAtURL:(NSString *)imageURL withHandler:(void(^)(UIImage *image))handler {
-    NSURL *urlString = [NSURL URLWithString:imageURL];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
-    dispatch_async(queue, ^{
-        NSError *error = nil;
-        NSData *data = [NSData dataWithContentsOfURL:urlString options:NSDataReadingUncached error:&error];
+    if (imageURL) {
+        NSURL *urlString = [NSURL URLWithString:imageURL];
         
-        if (!error) {
-            UIImage *downloadedImage = [UIImage imageWithData:data];
-            // Add the image to the cache
-            [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
-            handler(downloadedImage); // pass back the image in a block
-        } else {
-            NSLog(@"%@", [error localizedDescription]);
-            handler(nil); // pass back nil in the block
-        }
-    });
+        dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+        dispatch_async(queue, ^{
+            NSError *error = nil;
+            NSData *data = [NSData dataWithContentsOfURL:urlString options:NSDataReadingUncached error:&error];
+            
+            if (!error) {
+                UIImage *downloadedImage = [UIImage imageWithData:data];
+                // Add the image to the cache
+                [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
+                handler(downloadedImage); // pass back the image in a block
+            } else {
+                NSLog(@"%@", [error localizedDescription]);
+                handler(nil); // pass back nil in the block
+            }
+        });
+    }
 }
 
 - (NSString *)randomImageURL {

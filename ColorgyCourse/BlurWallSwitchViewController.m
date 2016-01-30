@@ -20,17 +20,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    ColorgyChatAPIOC *chatApi = [[ColorgyChatAPIOC alloc] init];
-    
-    [chatApi postEmail:@"b10202012@ntust.edu.tw" success:^(NSDictionary *response) {
-        NSLog(@"%@", [response valueForKey:@""]);
-    } failure:^() {
-    }];
-    
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" success:^() {} failure:^() {}];
+    } failure:^() {}];
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-    self.isEmailOK = YES;
+    self.isEmailOK = NO;
     
     self.openingViewController = [[OpeningViewController alloc] init];
     [self addChildViewController:self.openingViewController];
@@ -46,14 +42,20 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:NO];
+    [self switchViewController];
+}
+
+- (void)switchViewController {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSInteger status = [userDefaults integerForKey:OPENING_VIEW_STATUS];
     
     // 檢查信箱認證
-    if ([self isEmailOkCheck]) {
+    if ([self isEmailOkCheck] || status == 1) {
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];
                 self.activityViewController = self.navigationBlurWallViewController;
-                [self didMoveToParentViewController:self];
+                //[self didMoveToParentViewController:self];
             } else {
                 self.activityViewController = self.openingViewController;
             }
@@ -63,7 +65,7 @@
             if (finished) {
                 [self.view addSubview:self.openingViewController.view];
                 self.activityViewController = self.openingViewController;
-                [self didMoveToParentViewController:self];
+                //[self didMoveToParentViewController:self];
             } else {
                 self.activityViewController = self.navigationBlurWallViewController;            }
         }];
@@ -71,7 +73,11 @@
 }
 
 - (BOOL)isEmailOkCheck {
-    self.isEmailOK = YES;
+    if ([UserSetting UserOrganization]) {
+        self.isEmailOK = YES;
+    } else {
+        self.isEmailOK = NO;
+    }
     return self.isEmailOK;
 }
 

@@ -14,7 +14,24 @@
 @implementation ColorgyChatAPIOC
 
 - (void)test {
-    
+}
+
+- (void)preloadInformation:(void (^)(NSDictionary *))success failure:(void (^)(void))failure {
+    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+        self.todayQuestion = [response valueForKey:@"question"];
+        if (success) {
+            success(response);
+        }
+    } failure:failure];
+}
+
+- (void)getQuestion:(void (^)(NSString *))success failure:(void (^)(void))failure {
+    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+        self.todayQuestion = [response valueForKey:@"question"];
+        if (success) {
+            success(self.todayQuestion);
+        }
+    } failure:failure];
 }
 
 - (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {

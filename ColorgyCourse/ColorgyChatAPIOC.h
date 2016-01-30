@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIkit.h>
+#define OPENING_VIEW_STATUS @"openingViewStatus"
 
 @interface ColorgyChatAPIOC : NSObject
 
+@property NSString *todayQuestion;
+
 - (void)test;
+- (void)getQuestion:(void (^)(NSString *))success failure:(void (^)(void))failure;
+- (void)preloadInformation:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
 - (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
 - (void)patchUserImage:(UIImage *)image chopRect:(CGRect)chopRect success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
 

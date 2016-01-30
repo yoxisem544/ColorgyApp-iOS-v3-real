@@ -26,7 +26,7 @@
 - (void)start;
 - (void)finished:(void (^)(void))callbackBlock;
 - (void)dismiss:(void (^)(void))callbackBlock;
-- (void)emailCheck;
+// - (void)emailCheck;
 - (UIColor *)UIColorFromRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 
 @end

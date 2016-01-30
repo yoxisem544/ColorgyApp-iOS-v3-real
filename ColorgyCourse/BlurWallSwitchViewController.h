@@ -17,4 +17,6 @@
 @property OpeningViewController *openingViewController;
 @property UINavigationController *navigationBlurWallViewController;
 
+- (void)switchViewController;
+
 @end
