@@ -10,7 +10,7 @@ import Foundation
 
 class ColorgyChatAPI : NSObject {
 	
-	static let serverURL = "http://52.68.177.186"
+	static let serverURL = "https://chat.colorgy.io"
 	
 	class func uploadImage(image: UIImage, success: (result: String) -> Void, failure: () -> Void) {
 		

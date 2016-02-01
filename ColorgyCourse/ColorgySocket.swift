@@ -10,7 +10,7 @@ import Foundation
 
 class ColorgySocket : NSObject {
 	
-	internal let socket = SocketIOClient(socketURL: "52.68.177.186:1337", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
+	internal let socket = SocketIOClient(socketURL: "https://chat.colorgy.io:1337", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
 	internal var chatroom: Chatroom!
 	internal var didConnectToSocketOnce: Bool = false
 	
