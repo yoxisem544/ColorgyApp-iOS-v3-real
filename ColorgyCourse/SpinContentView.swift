@@ -44,6 +44,8 @@ class SpinContentView: UIView {
         subTitleLabel?.center = CGPoint(x: titleLabel!.center.x, y: titleLabel!.center.y + (titleTextSize + subtitleTextSize) / 2 + titleSpacing)
         subTitleLabel?.text = subtitle
         subTitleLabel?.font = UIFont(name: "STHeitiTC-Medium", size: subtitleTextSize)
+		subTitleLabel?.minimumScaleFactor = 0.6
+		subTitleLabel?.adjustsFontSizeToFitWidth = true
 //        subTitleLabel?.sizeToFit()
         
         // setup image view
