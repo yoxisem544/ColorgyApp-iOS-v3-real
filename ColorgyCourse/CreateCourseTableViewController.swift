@@ -125,7 +125,7 @@ class CreateCourseTableViewController: UIViewController {
 
         initializeContents()
         
-        createCourseTableView.keyboardDismissMode = .Interactive
+        createCourseTableView.keyboardDismissMode = .OnDrag
     }
     
     func initializeContents() {

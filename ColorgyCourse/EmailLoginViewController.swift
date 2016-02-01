@@ -164,7 +164,7 @@ class EmailLoginViewController: UIViewController {
 						self.showButtons()
 				})
             }, failure: { () -> Void in
-                let alert = ErrorAlertView.alertUserWithError("登入失敗，請確認帳號密碼無誤。如果忘記帳號密碼請至Colorgy網頁查詢。")
+                let alert = ErrorAlertView.alertUserWithError("登入失敗，請確認帳號密碼無誤。如果忘記帳號密碼或新會員請用Facebook登入。")
                 self.presentViewController(alert, animated: true, completion: nil)
                 self.showButtons()
             })

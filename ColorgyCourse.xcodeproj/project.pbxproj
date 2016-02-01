@@ -126,6 +126,10 @@
 		63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */; };
 		63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */; };
 		63C2B9831C116331007740DB /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C2B9821C116331007740DB /* Semester.swift */; };
+		63C2BA301C5F0D0C00C8D289 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C2BA2F1C5F0D0C00C8D289 /* libz.tbd */; };
+		63C2BA321C5F0D1500C8D289 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C2BA311C5F0D1500C8D289 /* libc++.tbd */; };
+		63C2BA341C5F0D8400C8D289 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C2BA331C5F0D8400C8D289 /* Security.framework */; };
+		63C2BA361C5F0D8E00C8D289 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C2BA351C5F0D8E00C8D289 /* SystemConfiguration.framework */; };
 		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
 		63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */; };
 		63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */; };
@@ -316,6 +320,10 @@
 		63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SerialQueue.swift; sourceTree = "<group>"; };
 		63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseTableViewController.swift; sourceTree = "<group>"; };
 		63C2B9821C116331007740DB /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
+		63C2BA2F1C5F0D0C00C8D289 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		63C2BA311C5F0D1500C8D289 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		63C2BA331C5F0D8400C8D289 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		63C2BA351C5F0D8E00C8D289 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
 		63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDataFromServerDBManagedObject.swift; sourceTree = "<group>"; };
 		63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityWebViewController.swift; sourceTree = "<group>"; };
@@ -374,6 +382,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C2BA361C5F0D8E00C8D289 /* SystemConfiguration.framework in Frameworks */,
+				63C2BA341C5F0D8400C8D289 /* Security.framework in Frameworks */,
+				63C2BA321C5F0D1500C8D289 /* libc++.tbd in Frameworks */,
+				63C2BA301C5F0D0C00C8D289 /* libz.tbd in Frameworks */,
 				63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */,
 				63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */,
 				63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */,
@@ -903,6 +915,10 @@
 		D3696DBF4F008F5A9563B415 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63C2BA351C5F0D8E00C8D289 /* SystemConfiguration.framework */,
+				63C2BA331C5F0D8400C8D289 /* Security.framework */,
+				63C2BA311C5F0D1500C8D289 /* libc++.tbd */,
+				63C2BA2F1C5F0D0C00C8D289 /* libz.tbd */,
 				2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */,
 			);
 			name = Frameworks;
@@ -921,6 +937,7 @@
 				63FBCC091B9345B800B3084F /* Resources */,
 				EE3AB707EF51D6D745D55316 /* Copy Pods Resources */,
 				63FBCC6A1B93498800B3084F /* ShellScript */,
+				A931CA1C955B1FA30E9D9BE0 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1048,6 +1065,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" e709dd3229ee919ed0fef9ac4423afa4c9bae156 2fbc1d63ab59663379a655410b55e15089849de3798b93b390afc2613c3a9bb4";
+		};
+		A931CA1C955B1FA30E9D9BE0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		EE3AB707EF51D6D745D55316 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

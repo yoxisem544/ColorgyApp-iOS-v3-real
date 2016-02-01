@@ -91,7 +91,7 @@ class FBLoginViewController: UIViewController {
 							self.presentViewController(alert, animated: true, completion: nil)
 							self.showButtons()
 						} else {
-							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，請重新登入。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。🚀😎")
+							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，請重新登入。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。")
 							self.presentViewController(alert, animated: true, completion: nil)
 							self.showButtons()
 						}
@@ -99,7 +99,7 @@ class FBLoginViewController: UIViewController {
                 })
             } else {
 //                self.statusLabel.text = "login fb fail"
-                let alert = ErrorAlertView.alertUserWithError("登入Facebook錯誤。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。🚀😎")
+                let alert = ErrorAlertView.alertUserWithError("登入Facebook錯誤。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。")
                 self.presentViewController(alert, animated: true, completion: nil)
                 self.showButtons()
             }
