@@ -33,67 +33,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self()])
         
         // Flurry setup
-        if Release().mode {
-            // setup Flurry
-            // Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
-            let id = UserSetting.UserId() ?? -1
-            let school = UserSetting.UserPossibleOrganization() ?? "no school"
-            let name = UserSetting.UserName() ?? "no name"
-            let params = ["user_id": id, "user_name": name, "school": school]
-            Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
-        } else {
-            // Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
-            let id = UserSetting.UserId() ?? -1
-            let school = UserSetting.UserPossibleOrganization() ?? "no school"
-            let name = UserSetting.UserName() ?? "no name"
-            let params = ["user_id": id, "user_name": name, "school": school]
-            Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
-        }
+		setupFlurry()
         
         // register for notification
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil))
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
         // segemented control font face
-        // TODO: optional chaining??
-        let attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as! [NSObject : AnyObject]
-        UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)
-        UITabBar.appearance().tintColor = ColorgyColor.MainOrange
+		setupAppearance()
         
         // show view
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.backgroundColor = UIColor.whiteColor()
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
-//        self.window?.rootViewController = vc
-//        self.window?.makeKeyAndVisible()
-        if !UserSetting.isLogin() {
-            // dump data
-            CourseDB.deleteAllCourses()
-            // need login
-            let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        } else {
-            let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
-        }
+		setupView()
 		
-        if !Release().mode {
-            // for dev
-            ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
-                print("")
-                }, failure: { () -> Void in
-                print("")
-            })
-//			print(UserSetting.UserId())
-			print(UserSetting.UserDepartment())
-			print(UserSetting.UserOrganization())
-			
-        }
+		// for dev
+		developmentMethods()
+
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectContextObjectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
+		
         return true
     }
 	
@@ -120,7 +77,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
 	}
-    
+	
+	func setupFlurry() {
+		if Release().mode {
+			// setup Flurry
+			// Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
+			let id = UserSetting.UserId() ?? -1
+			let school = UserSetting.UserPossibleOrganization() ?? "no school"
+			let name = UserSetting.UserName() ?? "no name"
+			let params = ["user_id": id, "user_name": name, "school": school]
+			Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
+		} else {
+			// Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
+			let id = UserSetting.UserId() ?? -1
+			let school = UserSetting.UserPossibleOrganization() ?? "no school"
+			let name = UserSetting.UserName() ?? "no name"
+			let params = ["user_id": id, "user_name": name, "school": school]
+			Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
+		}
+	}
+	
+	func setupAppearance() {
+		let attr: [NSObject : AnyObject] = NSDictionary(object: UIFont(name: "STHeitiTC-Light", size: 15)!, forKey: NSFontAttributeName) as! [NSObject : AnyObject]
+		UISegmentedControl.appearance().setTitleTextAttributes(attr, forState: UIControlState.Normal)
+		UITabBar.appearance().tintColor = ColorgyColor.MainOrange
+	}
+	
+	func setupView() {
+		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		self.window?.backgroundColor = UIColor.whiteColor()
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
+		//        self.window?.rootViewController = vc
+		//        self.window?.makeKeyAndVisible()
+		if !UserSetting.isLogin() {
+			// dump data
+			CourseDB.deleteAllCourses()
+			// need login
+			let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+			self.window?.rootViewController = vc
+			self.window?.makeKeyAndVisible()
+		} else {
+			let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+			self.window?.rootViewController = vc
+			self.window?.makeKeyAndVisible()
+		}
+	}
+	
+	func developmentMethods() {
+		if !Release().mode {
+			// for dev
+			ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
+				print("")
+				}, failure: { () -> Void in
+					print("")
+			})
+			//			print(UserSetting.UserId())
+			print(UserSetting.UserDepartment())
+			print(UserSetting.UserOrganization())
+			
+		}
+	}
+	
     @available(iOS 9.0, *)
     func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
         print("i am now inside performing")
