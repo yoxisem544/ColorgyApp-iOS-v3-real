@@ -113,10 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window?.backgroundColor = UIColor.whiteColor()
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
-		
-		//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
-		//        self.window?.rootViewController = vc
-		//        self.window?.makeKeyAndVisible()
+//		
+//		        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
+//		        self.window?.rootViewController = vc
+//		        self.window?.makeKeyAndVisible()
 		
 		if HintViewSettings.isAppFirstLaunchNavigationViewShown() {
 			// guide shown
@@ -142,11 +142,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func developmentMethods() {
 		if !Release().mode {
 			// for dev
-			ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
-				print("")
-				}, failure: { () -> Void in
-					print("")
-			})
+//			ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
+//				print("")
+//				}, failure: { () -> Void in
+//					print("")
+//			})
 			//			print(UserSetting.UserId())
 			print(UserSetting.UserDepartment())
 			print(UserSetting.UserOrganization())
