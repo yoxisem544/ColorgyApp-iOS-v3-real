@@ -67,7 +67,7 @@ class ColorgyAPI : NSObject {
 				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 				success()
 				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-					print("fail \(error)")
+					print("fail \(error.localizedDescription)")
 					// job ended
 					ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 					failure()
@@ -911,7 +911,9 @@ class ColorgyAPI : NSObject {
         afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-            success()
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				success()
+			})
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
@@ -963,9 +965,12 @@ class ColorgyAPI : NSObject {
                     afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
                         // job ended
                         ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                        success(courseCode: courseCode)
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							success(courseCode: courseCode)
+						})
                         }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                             // job ended
+							print(error.localizedDescription)
                             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                             failure()
                     })

@@ -163,37 +163,25 @@ class SearchCourseViewController: UIViewController {
     }
     
     private func loadEnrolledLocalCourses() {
-        LocalCourseDB.getAllStoredCoursesObject { (localCourseDBManagedObjects) -> Void in
-            if let courseObjects = localCourseDBManagedObjects {
-                var courses = [LocalCourse]()
-                for courseObject in courseObjects {
-                    if let c = LocalCourse(localCourseDBManagedObject: courseObject) {
-                        courses.append(c)
-                    }
-                }
-                self.enrolledLocalCourse = courses
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if self.courseSegementedControl.selectedSegmentIndex == 1 {
-                        self.searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.None)
-                    }
-                })
-            }
-        }
+		LocalCourseDB.getAllStoredCourses { (localCourses) -> Void in
+			if let localCourses = localCourses {
+				self.enrolledLocalCourse = localCourses
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					if self.courseSegementedControl.selectedSegmentIndex == 1 {
+						self.searchCourseTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: UITableViewRowAnimation.None)
+					}
+				})
+			}
+		}
     }
-    
+	
     private func loadEnrolledCourses() {
-        CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
-            // enrolled courses
-            if let courseObjects = courseDBManagedObjects {
-                var courses = [Course]()
-                for object in courseObjects {
-                    if let course = Course(courseDBManagedObject: object) {
-                        courses.append(course)
-                    }
-                }
-                self.enrolledCourses = courses
-            }
-        })
+		CourseDB.getAllStoredCourses { (courses) -> Void in
+			if let courses = courses {
+				self.enrolledCourses = courses
+				self.searchCourseTableView.reloadData()
+			}
+		}
     }
     
     @IBAction func updateCourseDataClicked(sender: AnyObject) {
@@ -321,6 +309,8 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // change state
             cell.hasEnrolledState = false
             CourseUpdateHelper.needUpdateCourse()
+			self.loadEnrolledCourses()
+			self.searchCourseTableView.reloadData()
             // Flurry
             if Release().mode {
                 Flurry.logEvent("v3.0: User Delete A Course")
@@ -380,6 +370,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
             CourseDB.storeCourseToDB(course)
             CourseUpdateHelper.needUpdateCourse()
             cell.hasEnrolledState = true
+			self.searchCourseTableView.reloadData()
             // Flurry
             if Release().mode {
                 Flurry.logEvent("v3.0: User Add A Course")

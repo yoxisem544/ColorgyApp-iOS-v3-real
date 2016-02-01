@@ -54,14 +54,17 @@ class CourseDB {
 						if courseObject.code == code {
 							//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 							// try background saving
-							let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
-							managedObjectContext.deleteObject(courseObject)
-							
-							do {
-								try managedObjectContext.save()
-							} catch {
-								print(ColorgyErrorType.DBFailure.saveFail)
-							}
+							dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
+//								let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
+								let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+								managedObjectContext.deleteObject(courseObject)
+								
+								do {
+									try managedObjectContext.save()
+								} catch {
+									print(ColorgyErrorType.DBFailure.saveFail)
+								}
+							})
 						}
 					}
 				}
