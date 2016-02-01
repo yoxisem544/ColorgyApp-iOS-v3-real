@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import Fabric
-import Crashlytics
 
 struct AnswersLogEvents {
 	// App Delegate
