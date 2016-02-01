@@ -15,7 +15,7 @@ class CreateCourseTableViewCell: UITableViewCell {
             if courseName == nil {
                 cellTitle.text = "手動加入課程！"
             } else {
-                let title = "手動加入\"\(courseName!)\"課程！" as NSString
+                let title = "找不到課嗎？手動加入\"\(courseName!)\"課程！" as NSString
                 let attributedString = NSMutableAttributedString(string: title as String)
                 let black = [NSForegroundColorAttributeName: UIColor.blackColor()]
                 let white = [NSForegroundColorAttributeName: UIColor.whiteColor()]

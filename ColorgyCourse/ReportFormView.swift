@@ -117,6 +117,8 @@ class ReportFormView: UIScrollView {
 		problemDescriptionView.addSubview(problemDescriptionLabel)
 		problemDescriptionView.addSubview(problemDescriptionTextView)
 		problemDescriptionTextView.delegate = self
+		problemDescriptionTextView.textColor = UIColor.lightGrayColor()
+		problemDescriptionTextView.text = "對不起造成您的不便！我們將用最快速度修正您回報的問題。"
 		
 		// configure email view
 		emailView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, titleHeight * 2 + bottomPadding))
@@ -151,7 +153,7 @@ class ReportFormView: UIScrollView {
 		fuckDeveloperTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
 		fuckDeveloperTextField.layer.borderWidth = 1.0
 		fuckDeveloperTextField.layer.cornerRadius = 2
-		fuckDeveloperTextField.placeholder = "有沒有什麼話想對工程師說？"
+		fuckDeveloperTextField.placeholder = "什麼都可以呦：）"
 		fuckDeveloperTextField.delegate = self
 		self.fuckContents = fuckContents
 		// arrange view
@@ -235,5 +237,26 @@ extension ReportFormView : UITextViewDelegate {
 			print((textView.text))
 			formDelegate?.reportFormViewContentUpdate(problemPickerTextField.text, problemDescription: problemDescriptionTextView.text, email: emailTextField.text, lastQuestion: fuckDeveloperTextField.text)
 		}
+	}
+	
+	func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+		if textView == problemDescriptionTextView {
+			if textView.textColor == UIColor.lightGrayColor() {
+				textView.text = ""
+				textView.textColor = UIColor.blackColor()
+			}
+		}
+		return true
+	}
+	
+	func textViewShouldEndEditing(textView: UITextView) -> Bool {
+		if textView == problemDescriptionTextView {
+			if textView.text == "" {
+				textView.textColor = UIColor.lightGrayColor()
+				textView.text = "對不起造成您的不便！我們將用最快速度修正您回報的問題。"
+			}
+		}
+		
+		return true
 	}
 }

@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
+		
+//		HintViewSettings.resetSettings()
+//		HintViewSettings.setAppFirstLaunchNavigationViewShown()
         // reset all jobs
         ColorgyAPITrafficControlCenter.unQueueAllJobs()
         
@@ -107,18 +109,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		self.window?.backgroundColor = UIColor.whiteColor()
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		
 		//        let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
 		//        self.window?.rootViewController = vc
 		//        self.window?.makeKeyAndVisible()
-		if !UserSetting.isLogin() {
-			// dump data
-			CourseDB.deleteAllCourses()
-			// need login
-			let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
-			self.window?.rootViewController = vc
-			self.window?.makeKeyAndVisible()
+		
+		if HintViewSettings.isAppFirstLaunchNavigationViewShown() {
+			// guide shown
+			if !UserSetting.isLogin() {
+				// dump data
+				CourseDB.deleteAllCourses()
+				// need login
+				let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+				self.window?.rootViewController = vc
+				self.window?.makeKeyAndVisible()
+			} else {
+				let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+				self.window?.rootViewController = vc
+				self.window?.makeKeyAndVisible()
+			}
 		} else {
-			let vc = storyboard.instantiateViewControllerWithIdentifier("TabBarViewController") as! UITabBarController
+			let vc = storyboard.instantiateViewControllerWithIdentifier("launch navigation") as! LaunchNavigationViewController
 			self.window?.rootViewController = vc
 			self.window?.makeKeyAndVisible()
 		}

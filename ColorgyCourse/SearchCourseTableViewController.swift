@@ -195,7 +195,7 @@ class SearchCourseViewController: UIViewController {
     
     @IBAction func updateCourseDataClicked(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alert = UIAlertController(title: "更新課程資料", message: "你要更新課程資料嗎？過程可能需要數分鐘歐！", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "更新課程資料", message: "您要更新課程資料嗎？過程需要30秒喔！", preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
                 self.blockAndDownloadCourse()
             })
@@ -208,7 +208,7 @@ class SearchCourseViewController: UIViewController {
     
     
     private func blockAndDownloadCourse() {
-        processAlertController = UIAlertController(title: "請稍等", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
+        processAlertController = UIAlertController(title: "資料要吐出來囉！", message: "正在為您下載新的課程資料，過程可能需要數分鐘。請等待歐！！ 😆", preferredStyle: UIAlertControllerStyle.Alert)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.presentViewController(self.processAlertController, animated: true, completion: nil)
         })
@@ -244,11 +244,12 @@ class SearchCourseViewController: UIViewController {
                 dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
                     self.processAlertController.dismissViewControllerAnimated(true, completion: nil)
                 })
-            }, processing: { (state) -> Void in
+            }, processing: { (title, state) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     print("now on state:\(state)")
                     print(self.processAlertController.message)
                     self.processAlertController.message = state
+					self.processAlertController.title = title
                 })
         })
     }

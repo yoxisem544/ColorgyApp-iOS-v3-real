@@ -229,7 +229,7 @@ class ColorgyAPI : NSObject {
     ///
     /// :param: count: Pass the count you want to download. nil, 0, -1~ for all course.
     /// :returns: courseRawDataObjects: A parsed [CourseRawDataObject]? array. Might be nil or 0 element.
-    class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: (failInfo: String?) -> Void, processing: (processState: String) -> Void) {
+	class func getSchoolCourseData(count: Int?, year: Int, term: Int, success: (courses: [Course], json: JSON) -> Void, failure: (failInfo: String?) -> Void, processing: (processTitle: String, processState: String) -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -261,7 +261,8 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // indicate user while downloading
-        processing(processState: "正在下載資料...")
+//        processing(processState: "正在下載資料...")
+		processing(processTitle: "資料要吐出來囉！", processState: "正在下載資料...")
         // then start job
         afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             // check header
@@ -274,14 +275,13 @@ class ColorgyAPI : NSObject {
             let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
             
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-                
-                processing(processState: "下載完成，準備處理資料...")
+				
                 // then handle response
                 let json = JSON(response)
                 let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
-                    processing(processState: state)
+					processing(processTitle: "吐了！", processState: state)
                 })
-                processing(processState: "正在儲存資料到手機上...")
+				processing(processTitle: "在一下下就好了！", processState: "正在儲存資料到手機上...")
                 var dicts = [[String : AnyObject]]()
                 // this dic can use to generate [course]
                 if courseRawDataArray.objects != nil {

@@ -24,4 +24,20 @@ class HintViewSettings : NSObject {
 		let ud = NSUserDefaults.standardUserDefaults()
 		return ud.boolForKey(HintViewSettingKey.TimetableHintView)
 	}
+	
+	class func setAppFirstLaunchNavigationViewShown() {
+		let ud = NSUserDefaults.standardUserDefaults()
+		ud.setBool(true, forKey: HintViewSettingKey.AppFirstLaunchNavigationView)
+	}
+	
+	class func setTimetableHintViewShown() {
+		let ud = NSUserDefaults.standardUserDefaults()
+		ud.setBool(true, forKey: HintViewSettingKey.TimetableHintView)
+	}
+	
+	class func resetSettings() {
+		let ud = NSUserDefaults.standardUserDefaults()
+		ud.setBool(false, forKey: HintViewSettingKey.TimetableHintView)
+		ud.setBool(false, forKey: HintViewSettingKey.AppFirstLaunchNavigationView)
+	}
 }

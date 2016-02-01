@@ -37,6 +37,11 @@
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
 		633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */; };
+		633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */; };
+		633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C21C5F2ECF009370B4 /* SpinView.swift */; };
+		633D11C61C5F2ECF009370B4 /* DismissGuideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */; };
+		633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C41C5F2ECF009370B4 /* SpinContentView.swift */; };
+		633D11C91C5F2F09009370B4 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C81C5F2F09009370B4 /* NumberExtensions.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -228,6 +233,11 @@
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
 		633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintViewSettings.swift; sourceTree = "<group>"; };
+		633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchNavigationViewController.swift; sourceTree = "<group>"; };
+		633D11C21C5F2ECF009370B4 /* SpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinView.swift; sourceTree = "<group>"; };
+		633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissGuideButton.swift; sourceTree = "<group>"; };
+		633D11C41C5F2ECF009370B4 /* SpinContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinContentView.swift; sourceTree = "<group>"; };
+		633D11C81C5F2F09009370B4 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -760,6 +770,11 @@
 				63B5FB181C53388800C45CF2 /* Login */,
 				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
 				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
+				633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */,
+				633D11C21C5F2ECF009370B4 /* SpinView.swift */,
+				633D11C81C5F2F09009370B4 /* NumberExtensions.swift */,
+				633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */,
+				633D11C41C5F2ECF009370B4 /* SpinContentView.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1136,6 +1151,7 @@
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
 				63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */,
 				63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */,
+				633D11C61C5F2ECF009370B4 /* DismissGuideButton.swift in Sources */,
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
 				63BB300A1C5617390055BA19 /* SocketIOClient.swift in Sources */,
 				6311D20D1C3A303F00812934 /* LocalCourseDBManagedObject.swift in Sources */,
@@ -1209,6 +1225,7 @@
 				63FBCC4E1B9346D900B3084F /* UserSettings.swift in Sources */,
 				63BDC9F91C5200EC001A84D3 /* ReportViewController.swift in Sources */,
 				63BB30131C5617390055BA19 /* WebSocket.swift in Sources */,
+				633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */,
 				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
 				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
@@ -1222,6 +1239,7 @@
 				6311D2121C3A68C800812934 /* CreateCourseNameAndLecturerTableViewCell.swift in Sources */,
 				63BB30071C5617390055BA19 /* SocketEngineWebsocket.swift in Sources */,
 				63B942A31C59DEAB0060A097 /* ImagePickerAction.swift in Sources */,
+				633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */,
 				63BB30251C561F280055BA19 /* DLMessageData.swift in Sources */,
 				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
 				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
@@ -1230,8 +1248,10 @@
 				632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */,
 				63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */,
 				63B942A81C59DEAB0060A097 /* PreviewSupplementaryView.swift in Sources */,
+				633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */,
 				63BB300D1C5617390055BA19 /* SocketLogger.swift in Sources */,
 				63B942AA1C59DEAB0060A097 /* SheetCollectionViewCell.swift in Sources */,
+				633D11C91C5F2F09009370B4 /* NumberExtensions.swift in Sources */,
 				63BB300B1C5617390055BA19 /* SocketIOClientOption.swift in Sources */,
 				63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */,
 				63BB30311C5624E10055BA19 /* Chatroom.swift in Sources */,

@@ -175,7 +175,7 @@ class CourseNotification {
 //                        localNotification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
                         // TODO: week???
                         localNotification.repeatInterval = NSCalendarUnit.WeekOfYear
-                        let location = course.locations?[index] ?? ""
+						let location = course.locations?[index] ?? ""
                         let message = "\(startTime) 在 \(location) 上 \(course.name)"
 //                        print(message)
                         localNotification.alertBody = message

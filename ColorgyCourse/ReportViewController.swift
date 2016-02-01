@@ -16,13 +16,13 @@ class ReportViewController: UIViewController {
 	
 	var reportView: ReportFormView!
 	
-	var headerTitle: String! = "謝謝大大水水們的回報，我們會更努力的！"
+	var headerTitle: String! = "您的回報可以幫助到貴校其他同學！謝謝您！"
 	var reportProblemTitle: String! = "遇到的問題（必填）"
 	var reportProblemInitialSelectionTitle: String!
 	var reportProblem: [String?]!
 	var problemDescription: String! = "問題描述（選填）"
 	
-	var finalQuestionTitle: String! = "最後（選填）"
+	var finalQuestionTitle: String! = "其他想說的話（選填）"
 	var fuckContent: [String?]!
 	
 	var reportProblemType: String?
@@ -60,8 +60,12 @@ class ReportViewController: UIViewController {
 					self.presentViewController(alert, animated: true, completion: nil)
 			})
 		} else {
-			let alert = ErrorAlertView.alertUserWithError("請選擇遇到的問題！")
-			presentViewController(alert, animated: true, completion: nil)
+			let alert = UIAlertController(title: "阿呀！", message: "要選擇遇到的問題喔！", preferredStyle: UIAlertControllerStyle.Alert)
+			let ok = UIAlertAction(title: "我知道了！", style: UIAlertActionStyle.Cancel, handler: nil)
+			alert.addAction(ok)
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.presentViewController(alert, animated: true, completion: nil)
+			})
 		}
 	}
 	

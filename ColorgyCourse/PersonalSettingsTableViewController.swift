@@ -60,7 +60,7 @@ class PersonalSettingsTableViewController: UITableViewController {
     }
     
     func goToFanPage() {
-        let alert = UIAlertController(title: "你正準備離開ColorgyTable", message: "你現在要前往我們的粉絲專頁！\n如果喜歡這個App，請幫我們按讚加油打氣！", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "你正準備離開ColorgyTable", message: "您現在要前往我們的粉絲專頁！如果喜歡我們的App，歡迎幫我們打氣按讚喔！", preferredStyle: UIAlertControllerStyle.Alert)
         let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) in
             if UIApplication.sharedApplication().canOpenURL(NSURL(string: "fb://profile/1529686803975150")!) {
                 UIApplication.sharedApplication().openURL(NSURL(string: "fb://profile/1529686803975150")!)
@@ -80,7 +80,7 @@ class PersonalSettingsTableViewController: UITableViewController {
     
     func alertLogout() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alert = UIAlertController(title: "準備登出", message: "確定要登出嗎？登出將會移除手機上的資料，不會影響存在網路上的資料！", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "登出", message: "確定要登出嗎？登出將會移除手機上的資料，不會影響存在網路上的資料！", preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) in
                 LogoutHelper.logoutPrepare(success: { () -> Void in
                     UserSetting.deleteAllUserSettings()

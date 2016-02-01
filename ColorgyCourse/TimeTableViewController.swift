@@ -33,6 +33,64 @@ class TimeTableViewController: UIViewController {
         self.view.addSubview(timetableView)
         timetableView.delegate = self
     }
+	
+	func showHintView() {
+		let hintView = UIView(frame: UIScreen.mainScreen().bounds)
+		let path = UIBezierPath(rect: hintView.frame)
+		let circleSize: CGFloat = 32
+		let circlePath = UIBezierPath(roundedRect: CGRectMake(UIScreen.mainScreen().bounds.width - circleSize - 10, 25, circleSize, circleSize), cornerRadius: circleSize / 2)
+		path.appendPath(circlePath)
+		path.usesEvenOddFillRule = true
+		
+		let fillLayer = CAShapeLayer()
+		fillLayer.path = path.CGPath
+		fillLayer.fillRule = kCAFillRuleEvenOdd
+		fillLayer.fillColor = UIColor.blackColor().CGColor
+		fillLayer.opacity = 0.8
+		
+		hintView.layer.addSublayer(fillLayer)
+		
+		let title = UILabel(frame: UIScreen.mainScreen().bounds)
+		title.frame.size.height = 25
+		title.frame.size.width -= circleSize * 2
+		title.textColor = UIColor.whiteColor()
+		title.textAlignment = .Right
+		title.text = "開始加課"
+		title.font = UIFont.systemFontOfSize(24)
+		
+		let content = UILabel(frame: UIScreen.mainScreen().bounds)
+		content.frame.size.height = 500
+		content.frame.size.width = content.frame.width * 0.7
+		content.textColor = UIColor.whiteColor()
+		content.textAlignment = .Center
+		content.text = "按上面可以開始選課，如果系統內沒有你的課程，沒關係！現在可以手動新增課程了～\n\n若你想鞭打/鼓勵工程師 !要他們快點新增我尊貴的學校科系請至\n「更多」>「問題回報」"
+		content.font = UIFont.systemFontOfSize(16)
+		content.numberOfLines = 0
+		
+		title.center.y = 25 + circleSize / 2
+		content.center = hintView.center
+
+		hintView.addSubview(title)
+		hintView.addSubview(content)
+		
+		hintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapToDismissHintView:"))
+		
+		tabBarController?.view.addSubview(hintView)
+	}
+	
+	func tapToDismissHintView(gesture: UITapGestureRecognizer) {
+		if let view = gesture.view {
+			print(view)
+			UIView.animateWithDuration(0.4, animations: { () -> Void in
+				view.alpha = 0
+				}, completion: { (finised) -> Void in
+					if finised {
+						view.removeFromSuperview()
+						HintViewSettings.setTimetableHintViewShown()
+					}
+			})
+		}
+	}
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -49,6 +107,9 @@ class TimeTableViewController: UIViewController {
         // get courses from db
         getAndSetDataToTimeTable()
 		
+		if !HintViewSettings.isTimetableHintViewShown() {
+			showHintView()
+		}
 //		for i in 1...100 {
 //			print("firing \(i)")
 //			dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.rawValue), 0), { () -> Void in

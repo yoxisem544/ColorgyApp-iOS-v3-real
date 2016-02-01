@@ -75,7 +75,15 @@ class NotificationTableViewController: UITableViewController {
         tableView.keyboardDismissMode = .OnDrag
         
         navigationItem.title = "提醒設定"
+		
+		notificationTimeTextField.addTarget(self, action: "notificationTimeTextFieldEditingChanged", forControlEvents: UIControlEvents.EditingChanged)
+		setNotificaionButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     }
+	
+	func notificationTimeTextFieldEditingChanged() {
+		print("notificationTimeTextFieldValueChanged")
+		setNotificaionButton.setTitleColor(ColorgyColor.MainOrange, forState: .Normal)
+	}
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
