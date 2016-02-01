@@ -136,20 +136,21 @@ class TimeTableViewController: UIViewController {
 					print(self.timetableView.courses?.count)
 					self.timetableView.courses = courses
 				})
-				LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
-					if let localCourses = localCourses {
-						for c in localCourses {
-							tempedLocalCourses.append(c)
-						}
+			})
+			LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
+				if let localCourses = localCourses {
+					for c in localCourses {
+						tempedLocalCourses.append(c)
 					}
-					// finished loading localc course
-					// setup notification
-					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						print(self.timetableView.localCourse?.count)
-						self.timetableView.localCourse = localCourses
-					})
-//					CourseNotification.registerForCourseNotification()
+				}
+				print(localCourses)
+				// finished loading localc course
+				// setup notification
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					print(self.timetableView.localCourse?.count)
+					self.timetableView.localCourse = localCourses
 				})
+				//					CourseNotification.registerForCourseNotification()
 			})
         })
     }

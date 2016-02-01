@@ -44,7 +44,7 @@
                                     <action selector="FBloginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="fCM-Hd-mmb"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-uD-rhN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-uD-rhN">
                                 <rect key="frame" x="176" y="440" width="249" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="249" id="Iu6-e7-QVw"/>
@@ -59,12 +59,20 @@
                                     <action selector="EmailLoginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="a5r-aN-UaN"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如遇登入問題，重開即可～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qz-ZF-j4D">
+                                <rect key="frame" x="228" y="492" width="144" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5Dl-ks-TA6" secondAttribute="trailing" constant="-16" id="BXv-i2-0zp"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" constant="0.5" id="bpQ-57-mBb"/>
                             <constraint firstAttribute="centerY" secondItem="5Dl-ks-TA6" secondAttribute="centerY" multiplier="1.1" constant="0.5" id="evb-EX-JfY"/>
+                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="centerX" secondItem="QA1-uD-rhN" secondAttribute="centerX" id="fbo-bL-E2p"/>
+                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="top" secondItem="QA1-uD-rhN" secondAttribute="bottom" constant="8" id="gVl-3Z-qQM"/>
                             <constraint firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" id="jVm-0e-T7Q"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="QA1-uD-rhN" secondAttribute="centerX" id="jeJ-X4-82i"/>
                             <constraint firstItem="5Dl-ks-TA6" firstAttribute="top" secondItem="Mtf-RN-KeB" secondAttribute="bottom" constant="16" id="mnM-rA-G21"/>

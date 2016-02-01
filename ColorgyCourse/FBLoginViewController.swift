@@ -75,7 +75,7 @@ class FBLoginViewController: UIViewController {
                                 // user need to fill in their school and their department
                                 // show the register view
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! ChooseSchoolViewController
+                                let vc = storyboard.instantiateViewControllerWithIdentifier("A1") as! UINavigationController
                                 self.presentViewController(vc, animated: true, completion: nil)
                             }
                             }, failure: { () -> Void in
@@ -144,12 +144,12 @@ class FBLoginViewController: UIViewController {
     // MARK: - show/hide buttons
     func showButtons() {
         FBloginButton.hidden = false
-//        EmailLoginButton.hidden = false
+        EmailLoginButton.hidden = false
     }
     
     func hideButtons() {
         FBloginButton.hidden = true
-//        EmailLoginButton.hidden = true
+        EmailLoginButton.hidden = true
     }
 
     // MARK: - Navigation

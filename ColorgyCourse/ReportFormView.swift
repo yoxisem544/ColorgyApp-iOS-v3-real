@@ -125,7 +125,7 @@ class ReportFormView: UIScrollView {
 		emailTitleLabel.text = emailTitleLabelText
 		// text field
 		emailTextField = ReportFormTextField(frame: emailTitleLabel.frame)
-		emailTextField.placeholder = "請填常用的email..."
+		emailTextField.placeholder = "感謝您的意見，我們會盡快改善"
 		// arrange view
 		emailTitleLabel.center.x = emailView.center.x
 		emailTextField.center.x = emailTitleLabel.center.x
@@ -151,7 +151,7 @@ class ReportFormView: UIScrollView {
 		fuckDeveloperTextField.layer.borderColor = UIColor.lightGrayColor().CGColor
 		fuckDeveloperTextField.layer.borderWidth = 1.0
 		fuckDeveloperTextField.layer.cornerRadius = 2
-		fuckDeveloperTextField.placeholder = "安安幾歲給虧嗎？"
+		fuckDeveloperTextField.placeholder = "有沒有什麼話想對工程師說？"
 		fuckDeveloperTextField.delegate = self
 		self.fuckContents = fuckContents
 		// arrange view

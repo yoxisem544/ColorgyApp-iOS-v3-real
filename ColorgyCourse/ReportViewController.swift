@@ -41,6 +41,18 @@ class ReportViewController: UIViewController {
 		if reportProblemType != nil {
 			ColorgyAPI.POSTUserFeedBack(reportEmail ?? "no email", feedbackType: reportProblemType!, feedbackDescription: reportProblemDescription ?? "no description", success: { () -> Void in
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
+					if Release().mode {
+						let params = [
+							"user_id": UserSetting.UserId() ?? -1,
+							"user_organization": UserSetting.UserPossibleOrganization() ?? "no organization",
+							"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
+							"feedback_type": self.reportProblemType ?? "no type",
+							"feedback_description": self.reportProblemDescription ?? "no description",
+							"feedback_email": self.reportEmail ?? "no email",
+							"feedback_last_question": self.reportLastQuestion ?? "no last question"
+						]
+						Flurry.logEvent("v3.0: User Send Feedback", withParameters: params as [NSObject : AnyObject])
+					}
 					self.delegate?.reportViewControllerSuccessfullySentReport()
 				})
 				}, failure: { () -> Void in

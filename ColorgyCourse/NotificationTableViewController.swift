@@ -35,7 +35,20 @@ class NotificationTableViewController: UITableViewController {
             showAlert("你輸入的時間有問題喔！")
         }
     }
-    
+	
+	func flurryEventLog() {
+		if Release().mode {
+			let params = [
+				"user_id": UserSetting.UserId() ?? -1,
+				"user_orgazination": UserSetting.UserPossibleOrganization() ?? "no orgazination",
+				"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
+				"local_course_notification": courseNotificationSwitch.on ? "On" : "Off",
+				"notification_time": courseNotificationLabel.text ?? "no time"
+			]
+			Flurry.logEvent("v3.0: User Set Their Course Notification Setting", withParameters: params as [NSObject : AnyObject])
+		}
+	}
+	
     func showAlert(message: String) {
         let alert = UIAlertController(title: "咦？！", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let ok = UIAlertAction(title: "讓我改一下", style: UIAlertActionStyle.Default, handler: {(action) in

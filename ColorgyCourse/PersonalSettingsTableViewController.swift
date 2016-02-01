@@ -21,6 +21,13 @@ class PersonalSettingsTableViewController: UITableViewController {
         statusBarBackgroundView.backgroundColor = UIColor.whiteColor()
         self.navigationController?.view.addSubview(statusBarBackgroundView)
     }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		if Release().mode {
+			Flurry.logEvent("v3.0: User On Setting Page")
+		}
+	}
 
     // MARK: - Navigation
 

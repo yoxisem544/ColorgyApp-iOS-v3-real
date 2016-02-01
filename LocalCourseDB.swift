@@ -115,7 +115,7 @@ class LocalCourseDB {
 						}
 					}
 					dispatch_async(main_queue, { () -> Void in
-						complete(localCourses: nil)
+						complete(localCourses: courses)
 					})
 				}
 			} catch {
