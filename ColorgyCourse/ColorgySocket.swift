@@ -10,13 +10,9 @@ import Foundation
 
 class ColorgySocket : NSObject {
 	
-	internal let socket = SocketIOClient(socketURL: "52.68.177.186:1337", options: [.Log(false), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
+	internal let socket = SocketIOClient(socketURL: "52.68.177.186:1337", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
 	internal var chatroom: Chatroom!
 	internal var didConnectToSocketOnce: Bool = false
-	
-	func test() {
-		
-	}
 	
 	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom, messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
@@ -93,40 +89,44 @@ class ColorgySocket : NSObject {
 	}
 	
 	func sendTextMessage(message: String, withUserId userId: String) {
-		let postData: [String : NSObject]! = [
-			"method": "post",
-			"headers": [],
-			"data": [
-				"chatroomId": chatroom.chatroomId,
-				"userId": userId,
-				"socketId": chatroom.socketId,
-				"type": ChatMessage.MessageType.Text,
-				"content": [ChatMessage.ContentKey.Text: message]
-			],
-			"url": "/chatroom/send_message"
-		]
-		//			s.emit("post", withItems: postData as! [AnyObject])
-		self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
-			print(res)
-		})
+		if chatroom != nil {
+			let postData: [String : NSObject]! = [
+				"method": "post",
+				"headers": [],
+				"data": [
+					"chatroomId": chatroom.chatroomId,
+					"userId": userId,
+					"socketId": chatroom.socketId,
+					"type": ChatMessage.MessageType.Text,
+					"content": [ChatMessage.ContentKey.Text: message]
+				],
+				"url": "/chatroom/send_message"
+			]
+			//			s.emit("post", withItems: postData as! [AnyObject])
+			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
+				print(res)
+			})
+		}
 	}
 	
 	func sendPhotoMessage(imageUrl: String, withUserId userId: String) {
-		let postData: [String : NSObject]! = [
-			"method": "post",
-			"headers": [],
-			"data": [
-				"chatroomId": chatroom.chatroomId,
-				"userId": userId,
-				"socketId": chatroom.socketId,
-				"type": ChatMessage.MessageType.Image,
-				"content": [ChatMessage.ContentKey.Image: imageUrl]
-			],
-			"url": "/chatroom/send_message"
-		]
-		//			s.emit("post", withItems: postData as! [AnyObject])
-		self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
-			print(res)
-		})
+		if chatroom != nil {
+			let postData: [String : NSObject]! = [
+				"method": "post",
+				"headers": [],
+				"data": [
+					"chatroomId": chatroom.chatroomId,
+					"userId": userId,
+					"socketId": chatroom.socketId,
+					"type": ChatMessage.MessageType.Image,
+					"content": [ChatMessage.ContentKey.Image: imageUrl]
+				],
+				"url": "/chatroom/send_message"
+			]
+			//			s.emit("post", withItems: postData as! [AnyObject])
+			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
+				print(res)
+			})
+		}
 	}
 }

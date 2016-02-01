@@ -16,7 +16,6 @@ class CourseDB {
 	// delete all
 	/// This method will delete all courses stored in data base.
 	class func deleteAllCourses() {
-		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
@@ -45,7 +44,6 @@ class CourseDB {
 	///
 	/// :param: code: a specific course code
 	class func deleteCourseWithCourseCode(code: String) {
-		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			CourseDB.getAllStoredCoursesObject(complete: { (courseDBManagedObjects) -> Void in
@@ -100,13 +98,11 @@ class CourseDB {
 	
 	class func getAllStoredCoursesObject(complete complete: (courseDBManagedObjects: [CourseDBManagedObject]?) -> Void) {
 		let main_queue = dispatch_get_main_queue()
-		let queue = SERIAL_QUEUE
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
 			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			let fetchRequest = NSFetchRequest(entityName: entityName)
-			let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
 			
 			do {
 				let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
@@ -131,13 +127,11 @@ class CourseDB {
 	
 	class func getAllStoredCourses(complete complete: (courses: [Course]?) -> Void) {
 		let main_queue = dispatch_get_main_queue()
-		let queue = SERIAL_QUEUE
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
 			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			let fetchRequest = NSFetchRequest(entityName: entityName)
-			let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
 			
 			do {
 				let coursesInDB: [CourseDBManagedObject] = try managedObjectContext.executeFetchRequest(fetchRequest) as! [CourseDBManagedObject]
@@ -168,7 +162,6 @@ class CourseDB {
 	
 	/// store a course to DB
 	class func storeCourseToDB(course: Course?) {
-		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
@@ -282,7 +275,6 @@ class CourseDB {
 	
 	/// store a course to DB
 	class func storeABunchOfCoursesToDB(courses: [Course]?) {
-		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			// TODO: we dont want to take care of dirty things, so i think i need to have a course class to handle this.
@@ -376,7 +368,6 @@ class CourseDB {
 	
 	// fake data
 	class func storeFakeData() {
-		let main_queue = dispatch_get_main_queue()
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 			//			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
