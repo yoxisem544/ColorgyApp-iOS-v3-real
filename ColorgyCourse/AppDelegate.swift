@@ -82,11 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
         if !Release().mode {
             // for dev
-//            ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
-//                print("")
-//                }, failure: { () -> Void in
-//                print("")
-//            })
+            ColorgyAPI.PATCHUserInfo("NTUST", department: "000", year: "2012", success: { () -> Void in
+                print("")
+                }, failure: { () -> Void in
+                print("")
+            })
 //			print(UserSetting.UserId())
 			print(UserSetting.UserDepartment())
 			print(UserSetting.UserOrganization())

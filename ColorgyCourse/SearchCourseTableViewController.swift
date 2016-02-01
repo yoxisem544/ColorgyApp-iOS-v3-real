@@ -85,6 +85,9 @@ class SearchCourseViewController: UIViewController {
         if Release().mode {
             Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
         }
+		
+		// focus
+		self.searchControl.active = true
         
         // check if need to refresh
         checkToken()
