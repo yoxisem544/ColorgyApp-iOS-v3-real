@@ -16,20 +16,13 @@
 - (void)test {
 }
 
-- (void)preloadInformation:(void (^)(NSDictionary *))success failure:(void (^)(void))failure {
+- (void)getQuestion:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
     [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-        self.todayQuestion = [response valueForKey:@"question"];
+        self.lastestQuestion = [response valueForKey:@"question"];
+        self.questionDate = [response valueForKey:@"date"];
+        
         if (success) {
             success(response);
-        }
-    } failure:failure];
-}
-
-- (void)getQuestion:(void (^)(NSString *))success failure:(void (^)(void))failure {
-    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-        self.todayQuestion = [response valueForKey:@"question"];
-        if (success) {
-            success(self.todayQuestion);
         }
     } failure:failure];
 }

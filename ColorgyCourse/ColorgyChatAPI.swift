@@ -10,7 +10,7 @@ import Foundation
 
 class ColorgyChatAPI : NSObject {
     
-    static let serverURL = "http://52.68.177.186"
+    static let serverURL = "https://chat.colorgy.io"
     
     // A Cross of Colorgy me
     class func ColorgyAPIMe( success: () -> Void, failure: () -> Void ) {
@@ -314,15 +314,32 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func getAvailableTarget(success: () -> Void, failure: () -> Void) {
+    class func getAvailableTarget(userId: String, gender: String, page: String, success: (AnyObject) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
-        afManager.GET(serverURL + "/users/get_available_target", parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        guard let uuid = UserSetting.UserUUID() else {
+            failure()
+            return
+        }
+        guard let accessToken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        
+        let params = [
+            "uuid": uuid,
+            "accessToken": accessToken,
+            "userId": userId,
+            "gender": gender,
+            "page": page
+        ]
+        
+        afManager.POST(serverURL + "/users/get_available_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             print(JSON(response))
-            success()
+            success(response)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()
@@ -344,7 +361,7 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func answerQuestion(userId: String, answer: String, success: () -> Void, failure: () -> Void) {
+    class func answerQuestion(userId: String, answer: String, date: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -358,8 +375,6 @@ class ColorgyChatAPI : NSObject {
             failure()
             return
         }
-        let now = NSDate()
-        let date = "\(now.year)\(now.month)\(now.day)"
         
         let params = [
             "uuid": uuid,
@@ -370,7 +385,7 @@ class ColorgyChatAPI : NSObject {
         ]
         print(params)
         afManager.POST(serverURL + "/users/answer_question", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(JSON(response))
+            // print(JSON(response))
             success()
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)

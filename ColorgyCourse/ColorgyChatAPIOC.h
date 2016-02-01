@@ -12,11 +12,11 @@
 
 @interface ColorgyChatAPIOC : NSObject
 
-@property NSString *todayQuestion;
+@property NSString *lastestQuestion;
+@property NSString *questionDate;
 
 - (void)test;
-- (void)getQuestion:(void (^)(NSString *))success failure:(void (^)(void))failure;
-- (void)preloadInformation:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
+- (void)getQuestion:(void (^)(NSDictionary *))success failure:(void (^)(void))failure;
 - (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
 - (void)patchUserImage:(UIImage *)image chopRect:(CGRect)chopRect success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure;
 

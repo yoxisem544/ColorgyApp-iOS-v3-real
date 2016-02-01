@@ -15,7 +15,6 @@
 #import "BlurWallSwitchViewController.h"
 
 @implementation OpeningViewController {
-    NSUserDefaults *userDefaults;
     ChatUser *chatUser;
 }
 
@@ -24,12 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setInteger:0 forKey:OPENING_VIEW_STATUS];
-//    [userDefaults synchronize];
-    
     self.chatApiOC = [[ColorgyChatAPIOC alloc] init];
-    [self.chatApiOC getQuestion:nil failure:nil];
     self.navigationItem.hidesBackButton = YES;
     
     // nameScrollView Customized
@@ -767,8 +761,6 @@
     [self.submitNameButton removeFromSuperview];
     [self.scrollView removeFromSuperview];
     [self.progressBarView1 removeFromSuperview];
-    [userDefaults setInteger:1 forKey:OPENING_VIEW_STATUS];
-    [userDefaults synchronize];
 }
 
 #pragma mark - CheckView
@@ -917,7 +909,7 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
-    self.questionString = self.chatApiOC.todayQuestion;
+    self.questionString = [(BlurWallSwitchViewController *)self.parentViewController lastestQuestion];
     
     [self.view addSubview:self.scrollView];
     [self.tabBarController.tabBar setHidden:YES];
@@ -1018,7 +1010,7 @@
 
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text success:^() {
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController questionDate] success:^() {
             // 開啟模糊牆
             [self removeCleanAskLayout];
             [self.view removeFromSuperview];

@@ -19,9 +19,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+        self.lastestQuestion = [response valueForKey:@"question"];
+        self.questionDate = [response valueForKey:@"date"];
+    } failure:^() {}];
     
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" success:^() {} failure:^() {}];
+//        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" date:self.questionDate  success:^() {} failure:^() {}];
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:@"male" page:@"0" success:^(NSDictionary *response) {
+            NSLog(@"%@", response);
+        } failure:^() {}];
     } failure:^() {}];
     
     // View Customized
@@ -38,19 +45,16 @@
     [self addChildViewController:self.navigationBlurWallViewController];
     
     self.activityViewController = self.openingViewController;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:NO];
+    
     [self switchViewController];
 }
 
+#pragma mark - switcher
+
 - (void)switchViewController {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSInteger status = [userDefaults integerForKey:OPENING_VIEW_STATUS];
     
     // 檢查信箱認證
-    if ([self isEmailOkCheck] || status == 1) {
+    if ([self isEmailOkCheck]) {
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];

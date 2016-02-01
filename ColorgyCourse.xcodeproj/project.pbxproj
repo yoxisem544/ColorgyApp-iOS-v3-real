@@ -10,6 +10,7 @@
 		4E3D74F41C560071002812F4 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74EF1C560071002812F4 /* LoadingView.m */; };
 		4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F11C560071002812F4 /* NSString+Email.m */; };
 		4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F31C560071002812F4 /* OpeningViewController.m */; };
+		4E71E0181C5F4DBE00A9A694 /* PersonalViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */; };
 		4EB5A9AD1C57525E009BA61B /* 123.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AC1C57525E009BA61B /* 123.jpeg */; };
 		4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */; };
 		4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */; };
@@ -191,6 +192,8 @@
 		4E3D74F11C560071002812F4 /* NSString+Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Email.m"; sourceTree = "<group>"; };
 		4E3D74F21C560071002812F4 /* OpeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningViewController.h; sourceTree = "<group>"; };
 		4E3D74F31C560071002812F4 /* OpeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningViewController.m; sourceTree = "<group>"; };
+		4E71E0161C5F4DBE00A9A694 /* PersonalViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewViewController.h; sourceTree = "<group>"; };
+		4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewViewController.m; sourceTree = "<group>"; };
 		4EB5A9AC1C57525E009BA61B /* 123.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 123.jpeg; sourceTree = "<group>"; };
 		4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurWallSwitchViewController.h; sourceTree = "<group>"; };
 		4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurWallSwitchViewController.m; sourceTree = "<group>"; };
@@ -819,6 +822,8 @@
 				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
 				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
 				4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */,
+				4E71E0161C5F4DBE00A9A694 /* PersonalViewViewController.h */,
+				4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */,
 				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
 				4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */,
 				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
@@ -1108,6 +1113,7 @@
 				63BB30161C561E240055BA19 /* TestChatLoginViewController.swift in Sources */,
 				630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */,
 				4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */,
+				4E71E0181C5F4DBE00A9A694 /* PersonalViewViewController.m in Sources */,
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
 				63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */,
 				63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */,
