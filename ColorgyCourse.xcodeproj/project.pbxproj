@@ -36,6 +36,7 @@
 		6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */; };
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
+		633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -226,6 +227,7 @@
 		6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
+		633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintViewSettings.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -790,6 +792,7 @@
 				63C2B9821C116331007740DB /* Semester.swift */,
 				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
 				63FBCC351B9346D800B3084F /* UserSettings.swift */,
+				633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */,
 				63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */,
 				63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */,
 			);
@@ -1167,6 +1170,7 @@
 				6348F8801B9B02D5005E4D37 /* CourseDBManagedObjectOld.swift in Sources */,
 				634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */,
 				63FBCC5E1B9346D900B3084F /* ColorgyLoginResult.swift in Sources */,
+				633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */,
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
 				63BB302D1C561F680055BA19 /* ChatMessage.swift in Sources */,
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
