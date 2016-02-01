@@ -11,13 +11,12 @@ import Photos
 
 class TestChatRoomViewController: DLMessagesViewController {
 	
-	let s = SocketIOClient(socketURL: "52.68.177.186:1337", options: [.Log(false), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
 	let colorgySocket = ColorgySocket()
 	var messages = [ChatMessage]()
 	
 	var params: [String : NSObject]!
 	var userId: String!
-	var chatroom: Chatroom!
+	var chatroom: Chatroom?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,35 +24,20 @@ class TestChatRoomViewController: DLMessagesViewController {
         // Do any additional setup after loading the view.
 		self.delegate = self
 		print(self.params)
-		
-		
-		//		colorgySocket.connectToServer(withParameters: params) { (chatroom, messages) -> Void in
-		//			print(chatroom)
-		//			print(messages.count)
-		//			self.chatroom = chatroom
-		//			for m in messages {
-		//				self.messages.append(m)
-		//				self.messageRecieved()
-		//			}
-		//		}
-		
+
 		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
 			self.chatroom = chatroom
+			print(self.chatroom)
+			// TODO: handle not connect condition
 			}, withMessages: { (messages) -> Void in
+				print(messages)
 				for m in messages {
 					self.messages.append(m)
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
 				}
-				self.recievingABunchMessages()
+					self.recievingABunchMessages()
 		})
-		
-		//		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
-		//			self.chatroom = chatroom
-		//			}, withSectionMessage: { (message) -> Void in
-		//				self.messages.append(message)
-		//				self.messageRecieved()
-		//		})
 		
 		colorgySocket.onRecievingMessage { (messages) -> Void in
 			print(messages.count)
@@ -155,19 +139,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 						
 						let options = PHImageRequestOptions()
 						options.deliveryMode = .FastFormat
-						
-						// request images no bigger than 1/3 the screen width
-						let maxDimension = UIScreen.mainScreen().bounds.width / 3 * UIScreen.mainScreen().scale
-						let size = CGSize(width: maxDimension, height: maxDimension)
-						
-//						PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: size, contentMode: PHImageContentMode.AspectFill, options: options, resultHandler: { (image: UIImage?, info: [NSObject : AnyObject]?) -> Void in
-//							if let image = image {
-//								self.sendImage(image)
-//								print(UIImageJPEGRepresentation(image, 1.0))
-//								self.view.addSubview(UIImageView(image: image))
-//							}
-//						})
-						
+							
 						PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data: NSData?, string: String?, orientation: UIImageOrientation, info: [NSObject : AnyObject]?) -> Void in
 							print(data)
 							print(UIImage(data: data!))

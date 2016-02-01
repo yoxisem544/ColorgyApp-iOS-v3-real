@@ -85,22 +85,20 @@ class DLMessagesViewController: UIViewController {
 	}
 	
 	func keyboardWillHideNotification(notification: NSNotification) {
-		if let kbRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey])?.CGRectValue {
-			let animationKey = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey])?.unsignedIntegerValue
-			let animationDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey])?.doubleValue
-			
-			var offset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.bounds.height
-			if UIApplication.sharedApplication().statusBarFrame.height == 40 {
-				offset -= 20
-			}
-			
-			UIView.animateKeyframesWithDuration(animationDuration!, delay: 0, options: UIViewKeyframeAnimationOptions(rawValue: animationKey!), animations: { () -> Void in
-				self.keyboardTextInputView.frame.origin.y = offset
-				}, completion: nil)
-			
-			let bottomInset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.frame.origin.y + keyboardAndMessageGap
-			bubbleTableView.contentInset.bottom = bottomInset
+		let animationKey = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey])?.unsignedIntegerValue
+		let animationDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey])?.doubleValue
+		
+		var offset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.bounds.height
+		if UIApplication.sharedApplication().statusBarFrame.height == 40 {
+			offset -= 20
 		}
+		
+		UIView.animateKeyframesWithDuration(animationDuration!, delay: 0, options: UIViewKeyframeAnimationOptions(rawValue: animationKey!), animations: { () -> Void in
+			self.keyboardTextInputView.frame.origin.y = offset
+			}, completion: nil)
+		
+		let bottomInset = UIScreen.mainScreen().bounds.height - keyboardTextInputView.frame.origin.y + keyboardAndMessageGap
+		bubbleTableView.contentInset.bottom = bottomInset
 	}
 	
 	func keyboardWillShowNotification(n: NSNotification) {
@@ -144,7 +142,9 @@ class DLMessagesViewController: UIViewController {
 	
 	func recievingABunchMessages() {
 		let rows = bubbleTableView.numberOfRowsInSection(0) - 1
-		bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+		if rows >= 0 {
+			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+		}
 	}
 }
 

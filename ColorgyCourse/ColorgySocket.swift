@@ -10,11 +10,11 @@ import Foundation
 
 class ColorgySocket : NSObject {
 	
-	internal let socket = SocketIOClient(socketURL: "https://chat.colorgy.io:1337", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
-	internal var chatroom: Chatroom!
+	internal let socket = SocketIOClient(socketURL: "http://chat.colorgy.io:80", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
+	internal var chatroom: Chatroom?
 	internal var didConnectToSocketOnce: Bool = false
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom, messages: [ChatMessage]) -> Void) {
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?, messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
 				let chatroom = Chatroom(json: JSON(responseOnEmit))
@@ -29,7 +29,7 @@ class ColorgySocket : NSObject {
 		}
 	}
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
 
@@ -39,19 +39,21 @@ class ColorgySocket : NSObject {
 						self.chatroom = chatroom
 						registerToChatroom(chatroom: self.chatroom)
 					})
-				}
-				
-				if !self.didConnectToSocketOnce {
-					ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
-						withMessages(messages: messages)
-					})
-					self.didConnectToSocketOnce = true
+					
+					if chatroom != nil {
+						if !self.didConnectToSocketOnce {
+							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
+								withMessages(messages: messages)
+							})
+							self.didConnectToSocketOnce = true
+						}
+					}
 				}
 			})
 		}
 	}
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withSectionMessage: (message: ChatMessage) -> Void) {
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?) -> Void, withSectionMessage: (message: ChatMessage) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
 
@@ -61,13 +63,15 @@ class ColorgySocket : NSObject {
 						self.chatroom = chatroom
 						registerToChatroom(chatroom: self.chatroom)
 					})
-				}
-				
-				if !self.didConnectToSocketOnce {
-					ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), withSectionMessage: { (message) -> Void in
-						withSectionMessage(message: message)
-					})
-					self.didConnectToSocketOnce = true
+					
+					if chatroom != nil {
+						if !self.didConnectToSocketOnce {
+							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), withSectionMessage: { (message) -> Void in
+								withSectionMessage(message: message)
+							})
+							self.didConnectToSocketOnce = true
+						}
+					}
 				}
 			})
 		}
@@ -89,7 +93,7 @@ class ColorgySocket : NSObject {
 	}
 	
 	func sendTextMessage(message: String, withUserId userId: String) {
-		if chatroom != nil {
+		if let chatroom = self.chatroom {
 			let postData: [String : NSObject]! = [
 				"method": "post",
 				"headers": [],
@@ -110,7 +114,7 @@ class ColorgySocket : NSObject {
 	}
 	
 	func sendPhotoMessage(imageUrl: String, withUserId userId: String) {
-		if chatroom != nil {
+		if let chatroom = self.chatroom {
 			let postData: [String : NSObject]! = [
 				"method": "post",
 				"headers": [],
