@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 protocol ReportViewControllerDelegate {
 	func reportViewControllerSuccessfullySentReport()
@@ -42,7 +44,7 @@ class ReportViewController: UIViewController {
 			ColorgyAPI.POSTUserFeedBack(reportEmail ?? "no email", feedbackType: reportProblemType!, feedbackDescription: reportProblemDescription ?? "no description", success: { () -> Void in
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
 					if Release().mode {
-						let params = [
+						let params: [String : AnyObject] = [
 							"user_id": UserSetting.UserId() ?? -1,
 							"user_organization": UserSetting.UserPossibleOrganization() ?? "no organization",
 							"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
@@ -52,6 +54,7 @@ class ReportViewController: UIViewController {
 							"feedback_last_question": self.reportLastQuestion ?? "no last question"
 						]
 						Flurry.logEvent("v3.0: User Send Feedback", withParameters: params as [NSObject : AnyObject])
+						Answers.logCustomEventWithName(AnswersLogEvents.userSendFeedback, customAttributes: params)
 					}
 					self.delegate?.reportViewControllerSuccessfullySentReport()
 				})

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class SearchCourseViewController: UIViewController {
     
@@ -84,6 +86,7 @@ class SearchCourseViewController: UIViewController {
         // Flurry
         if Release().mode {
             Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
+			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSearchCourseView, customAttributes: nil)
         }
 		
 		// focus
@@ -321,6 +324,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // Flurry
             if Release().mode {
                 Flurry.logEvent("v3.0: User Delete A Course")
+				Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
             }
             }) { () -> Void in
                 alertDeleteCourseView.hideView(0.4)
@@ -379,6 +383,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
             // Flurry
             if Release().mode {
                 Flurry.logEvent("v3.0: User Add A Course")
+				Answers.logCustomEventWithName(AnswersLogEvents.userAddCourse, customAttributes: nil)
             }
             }, failure: { () -> Void in
                 

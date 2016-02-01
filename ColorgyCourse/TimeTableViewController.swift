@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class TimeTableViewController: UIViewController {
     
@@ -97,6 +99,7 @@ class TimeTableViewController: UIViewController {
         
         if Release().mode {
             Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
+			Answers.logCustomEventWithName(AnswersLogEvents.userUsingTimetable, customAttributes: nil)
         } else {
             Flurry.logEvent("test: Using User Timetable", timed: true)
         }

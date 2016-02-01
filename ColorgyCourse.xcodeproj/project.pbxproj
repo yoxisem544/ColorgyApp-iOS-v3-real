@@ -42,6 +42,7 @@
 		633D11C61C5F2ECF009370B4 /* DismissGuideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */; };
 		633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C41C5F2ECF009370B4 /* SpinContentView.swift */; };
 		633D11C91C5F2F09009370B4 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C81C5F2F09009370B4 /* NumberExtensions.swift */; };
+		633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -238,6 +239,7 @@
 		633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissGuideButton.swift; sourceTree = "<group>"; };
 		633D11C41C5F2ECF009370B4 /* SpinContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinContentView.swift; sourceTree = "<group>"; };
 		633D11C81C5F2F09009370B4 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
+		633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersLogEvent.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -858,6 +860,7 @@
 				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
+				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
@@ -1194,6 +1197,7 @@
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
 				63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
+				633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */,
 				63B942A21C59DEAB0060A097 /* AnimationController.swift in Sources */,
 				63BB302A1C561F280055BA19 /* TextInputView.swift in Sources */,
 				63BB30271C561F280055BA19 /* DLMessagesViewController.swift in Sources */,

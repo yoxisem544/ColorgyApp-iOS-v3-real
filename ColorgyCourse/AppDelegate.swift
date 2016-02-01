@@ -31,9 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // every time open the app, download new data
         CourseUpdateHelper.needUpdateCourse()
 
-        // crashlytics
-        Fabric.with([Crashlytics.self()])
-        
+        // crashlytics, answers
+        Fabric.with([Crashlytics.self(), Answers.self()])
+		let id = UserSetting.UserId() ?? -1
+		let school = UserSetting.UserPossibleOrganization() ?? "no school"
+		let name = UserSetting.UserName() ?? "no name"
+		let params: [String : AnyObject] = ["user_id": id, "user_name": name, "school": school]
+		Answers.logCustomEventWithName(AnswersLogEvents.userDidFinishedLaunchWithOption, customAttributes: params)
+		
         // Flurry setup
 		setupFlurry()
         
@@ -50,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// for dev
 		developmentMethods()
 
-		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectContextObjectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
 		
         return true

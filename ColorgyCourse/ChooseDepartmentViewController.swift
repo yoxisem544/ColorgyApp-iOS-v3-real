@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class ChooseDepartmentViewController: UIViewController {
     
@@ -110,6 +112,7 @@ class ChooseDepartmentViewController: UIViewController {
                                 UserSetting.storePeriodsData(periodDataObjects)
                                 if Release().mode {
                                     Flurry.logEvent("v3.0: User login using FB")
+									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
                                 }
                                 // need update course
                                 CourseUpdateHelper.needUpdateCourse()

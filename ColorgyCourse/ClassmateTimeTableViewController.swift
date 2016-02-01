@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class ClassmateTimeTableViewController: UIViewController {
     
@@ -75,7 +77,9 @@ class ClassmateTimeTableViewController: UIViewController {
         super.viewDidAppear(animated)
         // Flurry
         if Release().mode {
-            Flurry.logEvent("v3.0: User Watching Other's Timetable View", withParameters: ["user_id": userCourseObject.user_id], timed: true)
+			let params: [String : AnyObject] = ["user_id": userCourseObject.user_id]
+            Flurry.logEvent("v3.0: User Watching Other's Timetable View", withParameters: params, timed: true)
+			Answers.logCustomEventWithName(AnswersLogEvents.userWatchingOthersTimetable, customAttributes: params)
         }
     }
     

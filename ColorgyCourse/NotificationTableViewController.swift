@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class NotificationTableViewController: UITableViewController {
     
@@ -38,7 +40,7 @@ class NotificationTableViewController: UITableViewController {
 	
 	func flurryEventLog() {
 		if Release().mode {
-			let params = [
+			let params: [String : AnyObject] = [
 				"user_id": UserSetting.UserId() ?? -1,
 				"user_orgazination": UserSetting.UserPossibleOrganization() ?? "no orgazination",
 				"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
@@ -46,6 +48,7 @@ class NotificationTableViewController: UITableViewController {
 				"notification_time": courseNotificationLabel.text ?? "no time"
 			]
 			Flurry.logEvent("v3.0: User Set Their Course Notification Setting", withParameters: params as [NSObject : AnyObject])
+			Answers.logCustomEventWithName(AnswersLogEvents.userChangedCourseNotificationSetting, customAttributes: params)
 		}
 	}
 	

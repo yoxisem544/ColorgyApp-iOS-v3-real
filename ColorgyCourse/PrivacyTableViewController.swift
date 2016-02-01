@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class PrivacyTableViewController: UITableViewController {
     
@@ -43,13 +45,14 @@ class PrivacyTableViewController: UITableViewController {
     func publicTimeTableSwitchValueChanged(publicSwitch: UISwitch) {
         print(publicSwitch.on)
         ColorgyAPI.PATCHMEPrivacySetting(trunIt: publicSwitch.on, success: { () -> Void in
-			let params = [
+			let params: [String : AnyObject] = [
 				"user_id": UserSetting.UserId() ?? -1,
 				"user_orgazination": UserSetting.UserPossibleOrganization() ?? "no orgazination",
 				"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
 				"privacy_setting": self.publicTimeTableSwitch.on ? "On" : "Off"
 			]
 			Flurry.logEvent("v3.0: User Change Their Privacy Setting", withParameters: params as [NSObject : AnyObject])
+			Answers.logCustomEventWithName(AnswersLogEvents.userChangedPrivacySetting, customAttributes: params)
             }) { () -> Void in
 
         }

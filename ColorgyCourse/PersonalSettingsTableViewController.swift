@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class PersonalSettingsTableViewController: UITableViewController {
 
@@ -26,6 +28,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 		super.viewDidAppear(animated)
 		if Release().mode {
 			Flurry.logEvent("v3.0: User On Setting Page")
+			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSettingsPage, customAttributes: nil)
 		}
 	}
 
@@ -70,6 +73,7 @@ class PersonalSettingsTableViewController: UITableViewController {
             // Flurry
             if Release().mode {
                 Flurry.logEvent("v3.0: User goto FB fan page using app.")
+				Answers.logCustomEventWithName(AnswersLogEvents.userGoToFanPage, customAttributes: nil)
             }
         })
         let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -90,6 +94,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                     // Flurry
                     if Release().mode {
                         Flurry.logEvent("v3.0: User Logout App")
+						Answers.logCustomEventWithName(AnswersLogEvents.userLogout, customAttributes: nil)
                     }
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController

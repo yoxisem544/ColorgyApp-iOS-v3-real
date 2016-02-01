@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class EmailLoginViewController: UIViewController {
 
@@ -122,6 +124,7 @@ class EmailLoginViewController: UIViewController {
 								UserSetting.storePeriodsData(periodDataObjects)
 								if Release().mode {
 									Flurry.logEvent("v3.0: User login using FB")
+									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
 								}
 								// need update course
 								CourseUpdateHelper.needUpdateCourse()
@@ -139,6 +142,7 @@ class EmailLoginViewController: UIViewController {
 								UserSetting.storeFakePeriodsData()
 								if Release().mode {
 									Flurry.logEvent("v3.0: User login using FB, but has no period data")
+									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
 								}
 								// need update course
 								CourseUpdateHelper.needUpdateCourse()
