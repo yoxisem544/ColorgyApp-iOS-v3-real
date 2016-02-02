@@ -139,6 +139,8 @@
 		63C2BA361C5F0D8E00C8D289 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C2BA351C5F0D8E00C8D289 /* SystemConfiguration.framework */; };
 		63C7A79C1C605143004DF000 /* SayHelloTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */; };
 		63C7A79E1C605211004DF000 /* SayHelloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C7A79D1C605211004DF000 /* SayHelloViewController.swift */; };
+		63C7A7A01C6059E5004DF000 /* FriendListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */; };
+		63C7A7A21C605AAF004DF000 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */; };
 		63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */; };
 		63C9A97C1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */; };
 		63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */; };
@@ -342,6 +344,8 @@
 		63C2BA351C5F0D8E00C8D289 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SayHelloTableViewCell.swift; sourceTree = "<group>"; };
 		63C7A79D1C605211004DF000 /* SayHelloViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SayHelloViewController.swift; sourceTree = "<group>"; };
+		63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListTableViewCell.swift; sourceTree = "<group>"; };
+		63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
 		63C9A9791B9EBC5200B2D5A2 /* ServerCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCourseDB.swift; sourceTree = "<group>"; };
 		63C9A97B1B9EBCE700B2D5A2 /* CourseDataFromServerDBManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDataFromServerDBManagedObject.swift; sourceTree = "<group>"; };
 		63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityWebViewController.swift; sourceTree = "<group>"; };
@@ -866,6 +870,8 @@
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
+				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
 				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
 				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
@@ -1155,6 +1161,7 @@
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
 				63B942A61C59DEAB0060A097 /* PreviewCollectionViewCell.swift in Sources */,
+				63C7A7A01C6059E5004DF000 /* FriendListTableViewCell.swift in Sources */,
 				635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */,
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
 				6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */,
@@ -1217,6 +1224,7 @@
 				63C9A97A1B9EBC5200B2D5A2 /* ServerCourseDB.swift in Sources */,
 				63BB2FFF1C5617390055BA19 /* SocketAckManager.swift in Sources */,
 				63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */,
+				63C7A7A21C605AAF004DF000 /* FriendListViewController.swift in Sources */,
 				6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */,
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
