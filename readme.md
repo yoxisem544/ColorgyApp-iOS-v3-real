@@ -23,6 +23,26 @@ Flurry.startSession(SecretKey.FlurryDevelopmentKey)
 
 然後按下`cmd+R`就可以執行了。
 
+## Chatroom usage
+###### 怎麼串
+為了保留上面的`navigationcontroller`，這邊還是要用push segue的方式進來。
+
+```swift
+self.performSegueWithIdentifier("to chat room", sender: nil)
+```
+
+然後在`prepareForSegue`這邊設定他所須要的值
+
+```swift
+let vc = segue.destinationViewController as! TestChatRoomViewController
+vc.userId = self.userId
+vc.uuid = self.uuid
+vc.friendId = self.friendId
+vc.accessToken = self.accesstoken
+```
+
+開啟聊天必須要附上這四個值。
+
 ## how to use it
 
 
