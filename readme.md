@@ -26,17 +26,17 @@ Flurry.startSession(SecretKey.FlurryDevelopmentKey)
 然後按下`cmd+R`就可以執行了。
 
 ## 使用套件
-1. AFNetworking
+1. [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 2. FBSDKCoreKit
 3. FBSDKLoginKit 
-3. SDWebImage
-4. Answers
-5. Fabric
-6. Crashlytics
-7. Flurry
-8. SwiftyJSON
-9. ImagePickerSheetController
-10. DLMessageViewController(自己講)
+3. [SDWebImage](https://github.com/rs/SDWebImage)
+4. [Answers](http://try.crashlytics.com/answers/)
+5. [Fabric](https://get.fabric.io/)
+6. [Crashlytics](https://try.crashlytics.com/)
+7. [Flurry](http://www.flurry.com/)
+8. [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+9. [ImagePickerSheetController](https://github.com/larcus94/ImagePickerSheetController)
+10. [DLMessageViewController](https://github.com/yoxisem544/DLChatView)(自己講)
 
 ## Chatroom usage
 ### 怎麼串
