@@ -7,6 +7,8 @@
 //
 
 #import "ColorgyChatAPIOC.h"
+#import "AFNetworking.h"
+#import "NSString+Email.h"
 #import "ColorgyCourse-Swift.h"
 
 @implementation ColorgyChatAPIOC
@@ -14,7 +16,18 @@
 - (void)test {
 }
 
-- (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *))success failure:(void (^)(void))failure {
+- (void)getQuestion:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
+    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+        self.lastestQuestion = [response valueForKey:@"question"];
+        self.questionDate = [response valueForKey:@"date"];
+        
+        if (success) {
+            success(response);
+        }
+    } failure:failure];
+}
+
+- (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
     [ColorgyAPI POSTUserEmail:email success:^(NSDictionary *response) {
         if(success) {
             success(response);
@@ -38,6 +51,9 @@
             failure();
         }
     }];
+}
+
+- (void)postChatUserNamer:(NSString *)name successs:(void (^) (NSDictionary *response))success failure:(void (^)(void))failure {
 }
 
 #pragma mark - Base64

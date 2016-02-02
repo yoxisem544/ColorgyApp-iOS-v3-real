@@ -29,5 +29,10 @@
 @property UIWindow *currentWindow;
 @property UILabel *cleanAskTitleLabel;
 @property UILabel *cleanAskMessageLabel;
+@property UIButton *cancelButton;
+@property UIButton *submitButton;
+@property UIView *line1;
+@property UIView *line2;
+@property UILabel *textNumberCounterLabel;
 
 @end

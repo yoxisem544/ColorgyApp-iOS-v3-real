@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ColorgyCOurse-Swift.h"
 #import "OpeningViewController.h"
 #import "BlurWallViewController.h"
 
@@ -16,5 +17,10 @@
 @property UIViewController *activityViewController;
 @property OpeningViewController *openingViewController;
 @property UINavigationController *navigationBlurWallViewController;
+@property NSString *lastestQuestion;
+@property NSString *questionDate;
+@property ChatUser *chatUser;
+
+- (void)switchViewController;
 
 @end

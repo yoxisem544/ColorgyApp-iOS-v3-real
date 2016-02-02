@@ -7,7 +7,7 @@
 //
 
 #import "BlurWallSwitchViewController.h"
-
+#import "ColorgyChatAPIOC.h"
 #import "ColorgyCourse-Swift.h"
 
 @interface BlurWallSwitchViewController ()
@@ -19,10 +19,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+        if (![[response valueForKey:@"question"] isEqual:[NSNull null]]) {
+            self.lastestQuestion = [response valueForKey:@"question"];
+            self.questionDate = [response valueForKey:@"date"];
+        } else {
+            self.lastestQuestion = nil;
+            self.questionDate = nil;
+        }
+    } failure:^() {}];
+    
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        //        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" date:self.questionDate  success:^() {} failure:^() {}];
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:@"male" page:@"0" success:^(NSDictionary *response) {
+            NSLog(@"%@", response);
+        } failure:^() {}];
+    } failure:^() {}];
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-    self.isEmailOK = YES;
+    self.isEmailOK = NO;
     
     self.openingViewController = [[OpeningViewController alloc] init];
     [self addChildViewController:self.openingViewController];
@@ -34,10 +50,13 @@
     [self addChildViewController:self.navigationBlurWallViewController];
     
     self.activityViewController = self.openingViewController;
+    
+    [self switchViewController];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:NO];
+#pragma mark - switcher
+
+- (void)switchViewController {
     
     // 檢查信箱認證
     if ([self isEmailOkCheck]) {
@@ -45,7 +64,7 @@
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];
                 self.activityViewController = self.navigationBlurWallViewController;
-                [self didMoveToParentViewController:self];
+                //[self didMoveToParentViewController:self];
             } else {
                 self.activityViewController = self.openingViewController;
             }
@@ -55,7 +74,7 @@
             if (finished) {
                 [self.view addSubview:self.openingViewController.view];
                 self.activityViewController = self.openingViewController;
-                [self didMoveToParentViewController:self];
+                //[self didMoveToParentViewController:self];
             } else {
                 self.activityViewController = self.navigationBlurWallViewController;            }
         }];
@@ -63,7 +82,11 @@
 }
 
 - (BOOL)isEmailOkCheck {
-    self.isEmailOK = YES;
+    if ([UserSetting UserOrganization]) {
+        self.isEmailOK = YES;
+    } else {
+        self.isEmailOK = NO;
+    }
     return self.isEmailOK;
 }
 

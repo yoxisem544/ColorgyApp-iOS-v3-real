@@ -1308,9 +1308,9 @@ class ColorgyAPI : NSObject {
             return
         }
         
-        let params = ["user_app_feedbacks":
+        let params = ["user_email":
             [
-                "user_email": userEmail,
+                "email": userEmail
             ]
         ]
         

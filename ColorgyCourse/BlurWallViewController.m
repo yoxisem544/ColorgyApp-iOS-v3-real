@@ -10,16 +10,21 @@
 #import "UIImage+GaussianBlurUIImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OpeningViewController.h"
+#import "ColorgyCourse-Swift.h"
+#import "BlurWallSwitchViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 #define CELL_IDENTIFIER @"cellIdentifier"
 #define FOOTER_IDENTIFIER @"footerIdentifier"
 #define HEADER_IDENTIFIER @"headerIdentifier"
 #define INSET_NUMBER 2
-#define PHOTO_KEY @"photo"
-#define MESSAGE_KEY @"message"
+#define PHOTO_KEY @"avatar_blur_2x_url"
+#define MESSAGE_KEY @"name"
 #define PRELOAD_NUMBER 10
 
-@implementation BlurWallViewController
+@implementation BlurWallViewController {
+    ChatUser *chatUser;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,7 +82,13 @@
     
     [self.loadingView start];
     [self refreshData:^() {
-        [self.loadingView finished:NULL];
+        [self.loadingView finished:^() {
+            // 取得清晰問
+            self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
+            if (self.cleanAskString) {
+                [self cleanAskViewLayout];
+            }
+        }];
     }];
     
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
@@ -85,12 +96,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    // 檢查是否回答清晰問
-    if (NO) {
-        
-    } else {
-        [self cleanAskViewLayout];
-    }
+    //    // 檢查是否回答清晰問
+    //    if (NO) {
+    //
+    //    } else {
+    //        // [self cleanAskViewLayout];
+    //    }
 }
 
 #pragma mark - UIColor
@@ -139,19 +150,21 @@
     // set Image
     UIImageView *blurImageView = [[UIImageView alloc] initWithFrame:cell.bounds];
     
-    //blurImageView.image = [[self.blurWallDataMutableArray objectAtIndex:indexPath.item] objectForKey:PHOTO_KEY];
-    NSString *imageUrl = [[self.blurWallDataMutableArray objectAtIndex:indexPath.item] objectForKey:PHOTO_KEY];
+    NSDictionary *tempDic = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
+    NSString *imageUrl = [tempDic objectForKey:PHOTO_KEY];
     
     if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
         blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
     } else {
         blurImageView.image = nil;
-        [self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
-                [cell setNeedsLayout];
-            });
-        }];
+        [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+        /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
+         dispatch_sync(dispatch_get_main_queue(), ^{
+         blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
+         
+         [cell setNeedsLayout];
+         });
+         }];*/
     }
     
     blurImageView.center = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
@@ -254,7 +267,7 @@
     } else {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
         
-        if (self.blurWallDataMutableArray.count) {
+        if (self.blurWallDataMutableArray.count > 6) {
             UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
             
             activityIndicator.color = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
@@ -311,43 +324,84 @@
 }
 
 - (void)refreshData:(void (^)(void))callbackBlock {
+    [self.blurWallDataMutableArray removeAllObjects];
+    NSString *currentGender;
+    
+    switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            currentGender = @"unspecified";
+            break;
+        case 1:
+            currentGender = @"male";
+            break;
+        case 2:
+            currentGender = @"female";
+            break;
+    }
     
     // 重新整理最新的數據
-    // Simulate an async load...
-    double delayInSeconds = 3;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        [self.blurWallDataMutableArray removeAllObjects];
-        // Add the new data to our local collection of data.
-        for (int i = 19; i >= 0; --i) {
-            NSDictionary *dataSet;
-            
-            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
-                case 0:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
-                    break;
-                case 1:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
-                    break;
-                case 2:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
-                    break;
-                    
-                default:
-                    break;
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:@"0" success:^(NSDictionary *response) {
+            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:[response objectForKey:@"result"]];
+            // Tell the collectionView to reload.
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+            if (callbackBlock) {
+                callbackBlock();
             }
-            
-            [self.blurWallDataMutableArray addObject:dataSet];
-        }
+        } failure:^() {
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+            if (callbackBlock) {
+                callbackBlock();
+            }
+        }];
+    } failure:^() {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
-        // Tell the collectionView to reload.
-        [self.blurWallCollectionView reloadData];
-        [self.blurWallRefreshControl endRefreshing];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
         if (callbackBlock) {
             callbackBlock();
         }
-    });
+    }];
+    
+    // Simulate an async load...
+    //    double delayInSeconds = 3;
+    //
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+    //        [self.blurWallDataMutableArray removeAllObjects];
+    //        // Add the new data to our local collection of data.
+    //        for (int i = 19; i >= 0; --i) {
+    //            NSDictionary *dataSet;
+    //
+    //            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+    //                case 0:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
+    //                    break;
+    //                case 1:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
+    //                    break;
+    //                case 2:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
+    //                    break;
+    //
+    //                default:
+    //                    break;
+    //            }
+    //
+    //            [self.blurWallDataMutableArray addObject:dataSet];
+    //        }
+    //
+    //        // Tell the collectionView to reload.
+    //        [self.blurWallCollectionView reloadData];
+    //        [self.blurWallRefreshControl endRefreshing];
+    //        if (callbackBlock) {
+    //            callbackBlock();
+    //        }
+    //    });
     [self.blurWallCollectionView reloadData];
 }
 
@@ -358,55 +412,57 @@
     
     // Simulate an async load...
     
-    double delayInSeconds = 3;
-    
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        // Add the new data to our local collection of data.
-        for (int i = 19; i >= 0; --i) {
-            NSDictionary *dataSet;
-            
-            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
-                case 0:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
-                    break;
-                case 1:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
-                    break;
-                case 2:
-                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
-                    break;
-                    
-                default:
-                    break;
-            }
-            [self.blurWallDataMutableArray addObject:dataSet];
-        }
-        // Tell the collectionView to reload.
-        [self.blurWallCollectionView reloadData];
-    });
+    //    double delayInSeconds = 3;
+    //
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+    //        // Add the new data to our local collection of data.
+    //        for (int i = 19; i >= 0; --i) {
+    //            NSDictionary *dataSet;
+    //
+    //            switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+    //                case 0:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"愛情片類型的我都愛～" };
+    //                    break;
+    //                case 1:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"男：愛情片類型的我都愛～愛情片類型的我都" };
+    //                    break;
+    //                case 2:
+    //                    dataSet = @{ PHOTO_KEY:[self randomImageURL], MESSAGE_KEY:@"女：最喜歡看的是浪漫的電影" };
+    //                    break;
+    //
+    //                default:
+    //                    break;
+    //            }
+    //            [self.blurWallDataMutableArray addObject:dataSet];
+    //        }
+    //        // Tell the collectionView to reload.
+    //        [self.blurWallCollectionView reloadData];
+    //    });
 }
 
 #pragma mark - Lazy Loading Image
 
 - (void)downloadImageAtURL:(NSString *)imageURL withHandler:(void(^)(UIImage *image))handler {
-    NSURL *urlString = [NSURL URLWithString:imageURL];
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
-    dispatch_async(queue, ^{
-        NSError *error = nil;
-        NSData *data = [NSData dataWithContentsOfURL:urlString options:NSDataReadingUncached error:&error];
+    if (imageURL) {
+        NSURL *urlString = [NSURL URLWithString:imageURL];
         
-        if (!error) {
-            UIImage *downloadedImage = [UIImage imageWithData:data];
-            // Add the image to the cache
-            [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
-            handler(downloadedImage); // pass back the image in a block
-        } else {
-            NSLog(@"%@", [error localizedDescription]);
-            handler(nil); // pass back nil in the block
-        }
-    });
+        dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+        dispatch_async(queue, ^{
+            NSError *error = nil;
+            NSData *data = [NSData dataWithContentsOfURL:urlString options:NSDataReadingUncached error:&error];
+            NSLog(@"%@", urlString);
+            if (!error) {
+                UIImage *downloadedImage = [UIImage imageWithData:data];
+                // Add the image to the cache
+                [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
+                handler(downloadedImage); // pass back the image in a block
+            } else {
+                NSLog(@"%@", [error localizedDescription]);
+                handler(nil); // pass back nil in the block
+            }
+        });
+    }
 }
 
 - (NSString *)randomImageURL {
@@ -477,8 +533,17 @@
 #pragma mark - cleanAskView
 
 - (void)cleanAskViewLayout {
-    // 取得清晰問
-    self.cleanAskString = @"你最喜歡的電影是？你最喜歡的電影是？你最喜歡的電影是？你最喜歡的電影是？";
+    
+    //    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:@"你最喜歡的電影是？" preferredStyle:UIAlertControllerStyleAlert];
+    //
+    //    [alertController addAction:[UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
+    //    [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {}]];
+    //    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+    //    }];
+    //
+    //    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
     // currentWindow
     self.currentWindow = [UIApplication sharedApplication].keyWindow;
     // cleanAskMaskView
@@ -494,9 +559,13 @@
     [self.currentWindow addSubview:self.cleanAskAlertView];
     // cleanAskTitleLabel
     self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.bounds.size.width - 50, 18)];
-    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
+    //    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
     
-    self.cleanAskTitleLabel.attributedText = attributedCleanAskTitleString;
+    if (self.cleanAskString) {
+        self.cleanAskTitleLabel.text = self.cleanAskString;
+    }
+    self.cleanAskTitleLabel.textColor = [self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0];
+    self.cleanAskTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Medium" size:17.0];
     self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.cleanAskTitleLabel.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, 30);
     [self.cleanAskAlertView addSubview:self.cleanAskTitleLabel];
@@ -505,27 +574,149 @@
     self.cleanAskMessageLabel.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, self.cleanAskTitleLabel.center.y + 35);
     self.cleanAskMessageLabel.numberOfLines = 0;
     self.cleanAskMessageLabel.textAlignment = NSTextAlignmentCenter;
-    NSAttributedString *attributedCleanAskMessageString = [[NSAttributedString alloc] initWithString:self.cleanAskString attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Light" size:14.0]}];
+    NSAttributedString *attributedCleanAskMessageString;
+    if (self.cleanAskString) {
+        attributedCleanAskMessageString = [[NSAttributedString alloc] initWithString:self.cleanAskString attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Light" size:14.0]}];
+    }
     
     self.cleanAskMessageLabel.attributedText = attributedCleanAskMessageString;
     [self.cleanAskAlertView addSubview:self.cleanAskMessageLabel];
     // cleanAskTextView
-    self.cleanAskTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 222, 62)];
-    self.cleanAskTextView.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, self.cleanAskMessageLabel.center.y + self.cleanAskTextView.bounds.size.height / 2 + self.cleanAskMessageLabel.bounds.size.height / 2 + 40);
+    self.cleanAskTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.frame.size.width - 60, 62)];
+    self.cleanAskTextView.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, CGRectGetMaxY(self.cleanAskMessageLabel.frame) + self.cleanAskTextView.frame.size.height / 2 + 20);
     [self.cleanAskAlertView addSubview:self.cleanAskTextView];
     self.cleanAskTextView.layer.borderWidth = 1;
     self.cleanAskTextView.layer.cornerRadius = 3;
     self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
     
-    CGSize size = [self.cleanAskString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    
-    if (size.width >= self.cleanAskMessageLabel.frame.size.width) {
-        [self.cleanAskMessageLabel sizeToFit];
+    CGSize size;
+    if (self.cleanAskString) {
+        [self.cleanAskString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+        
+        if (size.width >= self.cleanAskMessageLabel.frame.size.width) {
+            [self.cleanAskMessageLabel sizeToFit];
+        }
     }
+    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    self.cancelButton.frame = CGRectMake(CGRectGetMinX(self.cleanAskAlertView.frame), CGRectGetMaxY(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    self.submitButton.frame = CGRectMake(CGRectGetMidX(self.cleanAskAlertView.frame), CGRectGetMaxY(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    //    cancelButton.backgroundColor = [UIColor orangeColor];
+    //    submitButton.backgroundColor = [UIColor blueColor];
+    [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [self.submitButton setTitle:@"發送" forState:UIControlStateNormal];
+    [self.cancelButton setTitleColor:[self UIColorFromRGB:151 green:151 blue:151 alpha:100] forState:UIControlStateNormal];
+    [self.submitButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+    [self.cancelButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Medium" size:17]];
+    [self.submitButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Medium" size:17]];
+    
+    UIBezierPath *maskPath;
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.cancelButton.bounds byRoundingCorners:(UIRectCornerBottomLeft) cornerRadii:CGSizeMake(12.5, 12.5)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.cancelButton.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.cancelButton.layer.mask = maskLayer;
+    
+    maskPath = [UIBezierPath bezierPathWithRoundedRect:self.submitButton.bounds byRoundingCorners:(UIRectCornerBottomRight) cornerRadii:CGSizeMake(12.5, 12.5)];
+    
+    maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.submitButton.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.submitButton.layer.mask = maskLayer;
+    
+    [self.currentWindow addSubview:self.cancelButton];
+    [self.currentWindow addSubview:self.submitButton];
+    
+    [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
+    [self.submitButton addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.line1 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.cancelButton.frame), CGRectGetMinY(self.cancelButton.frame), self.cleanAskAlertView.frame.size.width, 1)];
+    [self.line1 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
+    [self.currentWindow addSubview:self.line1];
+    
+    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.cleanAskAlertView.frame), CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
+    [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
+    [self.currentWindow addSubview:self.line2];
+    
+    // textNumberCunter Customized
+    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cleanAskTextView.frame) - 45, CGRectGetMaxY(self.cleanAskTextView.frame) - 30, 45, 30)];
+    self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
+    self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+    self.textNumberCounterLabel.text = @"0/20";
+    [self.cleanAskTextView addSubview:self.textNumberCounterLabel];
 }
 
 - (void)removeCleanAskViewLayout {
+    [self.cleanAskView removeFromSuperview];
+    [self.cleanAskMaskView removeFromSuperview];
+    [self.cleanAskAlertView removeFromSuperview];
+    [self.cleanAskTextView removeFromSuperview];
+    [self.currentWindow removeFromSuperview];
+    [self.cleanAskTitleLabel removeFromSuperview];
+    [self.cleanAskMessageLabel removeFromSuperview];
+    [self.cancelButton removeFromSuperview];
+    [self.submitButton removeFromSuperview];
+    [self.line1 removeFromSuperview];
+    [self.line2 removeFromSuperview];
+    [self.textNumberCounterLabel removeFromSuperview];
+}
+
+- (void)answerQuestion {
+    [self removeCleanAskViewLayout];
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    if (textView == self.cleanAskTextView) {
+        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/20", [self stringCounter:textView.text] / 2];
+    }
     
+    return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    if (textView == self.cleanAskTextView) {
+        if (!self.cleanAskTextView.markedTextRange) {
+            self.cleanAskTextView.text = [self stringCounterTo:textView.text number:40.0];
+            self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/20", [self stringCounter:textView.text] / 2];
+        }
+    }
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    if (textView == self.cleanAskTextView) {
+        self.cleanAskTextView.text = [self stringCounterTo:textView.text number:40.0];
+    }
+    
+    return YES;
+}
+
+#pragma mark - StringCounter
+
+- (NSInteger)stringCounter:(NSString *)string {
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
+    NSData *data = [string dataUsingEncoding:enc];
+    
+    NSLog(@"length:%lu", (unsigned long)string.length);
+    NSLog(@"counter:%lu", [data length] / 2);
+    return [data length];
+}
+
+- (NSString *)stringCounterTo:(NSString *)string number:(CGFloat)number {
+    NSString *tempString;
+    
+    for (NSInteger i = 0; i < string.length; ++i) {
+        tempString = [string substringToIndex:string.length - i];
+        
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
+        NSData *data = [tempString dataUsingEncoding:enc];
+        
+        if ([data length] <= number) {
+            break;
+        }
+    }
+    return tempString;
 }
 
 @end

@@ -8,14 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "LoadingView.h"
+#import "ColorgyChatAPIOC.h"
 
 @interface OpeningViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 // opening layout
 @property UIImageView *welcomeChatIconImageView;
-@property UIButton *checkEmailButton;
 @property UILabel *welcomeLabel;
 @property UILabel *welcomeDescriptionLabel;
+@property UIButton *startCheckEmailButton;
+
+// email check layout
+@property UIView *popView;
+@property UIView *maskView;
+@property UIImageView *emailImageView;
+@property UILabel *messageLabel;
+@property NSString *loadingString;
+@property NSString *finishedString;
+@property UIButton *checkEmailButton;
 
 // uplaod layout
 @property UIImageView *userImageView;
@@ -30,7 +40,8 @@
 @property UILabel *nameDescriptionLabel;
 @property UITextField *nameTextField;
 @property UIButton *submitNameButton;
-@property UIView *checkView;
+@property UIView *checkedView;
+@property UIActivityIndicatorView *checkingView;
 @property Boolean nameIsOk;
 @property UIView *progressBarView1;
 
@@ -49,5 +60,6 @@
 @property UIScrollView *scrollView;
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
+@property ColorgyChatAPIOC *chatApiOC;
 
 @end

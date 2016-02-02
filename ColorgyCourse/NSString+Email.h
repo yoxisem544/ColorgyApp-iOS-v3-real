@@ -12,5 +12,6 @@
 @interface NSString (Email)
 
 - (BOOL)isEmail;
+- (BOOL)isValidURLString;
 
 @end
