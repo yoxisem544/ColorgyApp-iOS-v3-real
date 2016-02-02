@@ -20,12 +20,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-        self.lastestQuestion = [response valueForKey:@"question"];
-        self.questionDate = [response valueForKey:@"date"];
+        if (![[response valueForKey:@"question"] isEqual:[NSNull null]]) {
+            self.lastestQuestion = [response valueForKey:@"question"];
+            self.questionDate = [response valueForKey:@"date"];
+        } else {
+            self.lastestQuestion = nil;
+            self.questionDate = nil;
+        }
     } failure:^() {}];
     
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-//        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" date:self.questionDate  success:^() {} failure:^() {}];
+        //        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" date:self.questionDate  success:^() {} failure:^() {}];
         [ColorgyChatAPI getAvailableTarget:user.userId gender:@"male" page:@"0" success:^(NSDictionary *response) {
             NSLog(@"%@", response);
         } failure:^() {}];

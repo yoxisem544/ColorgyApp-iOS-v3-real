@@ -83,7 +83,11 @@
     [self.loadingView start];
     [self refreshData:^() {
         [self.loadingView finished:^() {
-            [self cleanAskViewLayout];
+            // 取得清晰問
+            self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
+            if (self.cleanAskString) {
+                [self cleanAskViewLayout];
+            }
         }];
     }];
     
@@ -529,8 +533,6 @@
 #pragma mark - cleanAskView
 
 - (void)cleanAskViewLayout {
-    // 取得清晰問
-    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
     
     //    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:@"你最喜歡的電影是？" preferredStyle:UIAlertControllerStyleAlert];
     //
@@ -557,9 +559,13 @@
     [self.currentWindow addSubview:self.cleanAskAlertView];
     // cleanAskTitleLabel
     self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.bounds.size.width - 50, 18)];
-    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
+    //    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
     
-    self.cleanAskTitleLabel.attributedText = attributedCleanAskTitleString;
+    if (self.cleanAskString) {
+        self.cleanAskTitleLabel.text = self.cleanAskString;
+    }
+    self.cleanAskTitleLabel.textColor = [self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0];
+    self.cleanAskTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Medium" size:17.0];
     self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.cleanAskTitleLabel.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, 30);
     [self.cleanAskAlertView addSubview:self.cleanAskTitleLabel];
@@ -583,12 +589,14 @@
     self.cleanAskTextView.layer.cornerRadius = 3;
     self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
     
-    CGSize size = [self.cleanAskString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    
-    if (size.width >= self.cleanAskMessageLabel.frame.size.width) {
-        [self.cleanAskMessageLabel sizeToFit];
+    CGSize size;
+    if (self.cleanAskString) {
+        [self.cleanAskString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+        
+        if (size.width >= self.cleanAskMessageLabel.frame.size.width) {
+            [self.cleanAskMessageLabel sizeToFit];
+        }
     }
-    
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
