@@ -47,7 +47,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			}
 		}
 		
-		colorgySocket.connect()
+//		colorgySocket.connect()
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -57,6 +57,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
+	}
+	
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 1
 	}
 	
 	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,6 +75,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				
 				cell.textlabel.text = messages[indexPath.row].content
 				cell.userImageView.image = UIImage(named: "ching.jpg")
+				cell.delegate = self
 				
 				return cell
 			} else if messages[indexPath.row].type == "image" {
@@ -80,17 +85,18 @@ class TestChatRoomViewController: DLMessagesViewController {
 					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
 				}
 				cell.userImageView.image = UIImage(named: "ching.jpg")
+				cell.delegate = self
 				
 				return cell
 			} else if messages[indexPath.row].type == "sticker" {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
-				
+				cell.delegate = self
 				return cell
 			} else {
 				print(messages[indexPath.row].type)
 				print(messages)
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
-				
+				cell.delegate = self
 				return cell
 			}
 		} else {
@@ -128,7 +134,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			
 			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("你已經選了 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
 				print("go to photo library")
-				self.view.endEditing(true)
+				self.dismissKeyboard()
 				let controller = UIImagePickerController()
 				controller.delegate = self
 				controller.sourceType = .PhotoLibrary
@@ -141,8 +147,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 						options.deliveryMode = .FastFormat
 							
 						PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data: NSData?, string: String?, orientation: UIImageOrientation, info: [NSObject : AnyObject]?) -> Void in
-							print(data)
-							print(UIImage(data: data!))
 							print(string)
 							print(orientation)
 							if let data = data {
@@ -201,6 +205,10 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 		if let message = message {
 			colorgySocket.sendTextMessage(message, withUserId: userId)
 		}
+		if let m = ChatMessage.fakeData() {
+			self.messages.append(m)
+			self.messageRecieved()
+		}
 	}
 	
 	func DLMessagesViewControllerDidClickedCameraButton() {
@@ -210,7 +218,6 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 
 extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-		print(image)
 		dismissViewControllerAnimated(true, completion: nil)
 		sendImage(image)
 	}
@@ -220,5 +227,15 @@ extension TestChatRoomViewController : PHPhotoLibraryChangeObserver {
 	func photoLibraryDidChange(changeInstance: PHChange) {
 		print(changeInstance)
 		openImagePicker()
+	}
+}
+
+extension TestChatRoomViewController : DLIncomingMessageDelegate {
+	func DLIncomingMessageDidTapOnUserImageView(image: UIImage?) {
+		if let image = image {
+			print("did tap on user image \(image)")
+			self.dismissKeyboard()
+			self.view.addSubview(UserDetailInformationView(withBlurPercentage: 0.5, withUserImage: image))
+		}
 	}
 }

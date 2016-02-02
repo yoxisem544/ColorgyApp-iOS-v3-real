@@ -32,6 +32,11 @@ class ChatMessage: NSObject {
 	
 	override var description: String { return "message: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n}" }
 	
+	class func fakeData() -> ChatMessage? {
+		let m = ChatMessage(id: "i", type: "text", content: "yoyoyoyo馬英九給你握握手", userId: "123", createdAt: "223")
+		return m
+	}
+	
 	convenience init?(onMessage json: JSON) {
 		
 		var id: String?

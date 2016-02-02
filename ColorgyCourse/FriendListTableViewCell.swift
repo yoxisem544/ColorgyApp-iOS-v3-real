@@ -22,6 +22,12 @@ class FriendListTableViewCell: UITableViewCell {
 		userProfileImageView.clipsToBounds = true
 		userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.width / 2
 		
+		let separatorLine = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 0.5))
+		separatorLine.backgroundColor = UIColor.lightGrayColor()
+		separatorLine.frame.origin.y = self.frame.height - 0.5
+		separatorLine.alpha = 0.8
+		self.addSubview(separatorLine)
+		
 		self.selectionStyle = .None
     }
 

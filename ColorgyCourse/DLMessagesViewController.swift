@@ -84,6 +84,10 @@ class DLMessagesViewController: UIViewController {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
 	}
 	
+	func dismissKeyboard() {
+		self.view.endEditing(true)
+	}
+	
 	func keyboardWillHideNotification(notification: NSNotification) {
 		let animationKey = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey])?.unsignedIntegerValue
 		let animationDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey])?.doubleValue
@@ -122,26 +126,37 @@ class DLMessagesViewController: UIViewController {
     
     func finishedSendingMessage() {
 		let rows = bubbleTableView.numberOfRowsInSection(0)
+		print("rows \(rows)")
 		// rows is always actul count
 		// pass in rows in inserting
-        bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
-		// rows here no need to -1
-		bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+		let insertIndex = rows - 1
+//		if insertIndex > 0 {
+			bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: insertIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
+			// rows here no need to -1
+			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: insertIndex, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+//		}
     }
 	
 	func messageRecieved() {
-		finishedSendingMessage()
+//		finishedSendingMessage()
+		messageRecievedButDontReload()
+		recievingABunchMessages()
 	}
 	
 	func messageRecievedButDontReload() {
 		let rows = bubbleTableView.numberOfRowsInSection(0)
+		print("rows \(rows)")
 		// rows is always actul count
 		// pass in rows in inserting
+//		bubbleTableView.beginUpdates()
 		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
+		print("after \(bubbleTableView.numberOfRowsInSection(0))")
+//		bubbleTableView.endUpdates()
 	}
 	
 	func recievingABunchMessages() {
 		let rows = bubbleTableView.numberOfRowsInSection(0) - 1
+		print("about to reload \(bubbleTableView.numberOfRowsInSection(0))")
 		if rows >= 0 {
 			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
 		}

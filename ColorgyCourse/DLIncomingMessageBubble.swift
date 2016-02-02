@@ -12,6 +12,8 @@ class DLIncomingMessageBubble: UITableViewCell {
     
     @IBOutlet weak var textlabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
+	
+	var delegate: DLIncomingMessageDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,9 +29,17 @@ class DLIncomingMessageBubble: UITableViewCell {
         userImageView.layer.cornerRadius = userImageView.bounds.width / 2
         userImageView.clipsToBounds = true
         userImageView.contentMode = .ScaleAspectFill
+		
+		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnUserImageView"))
+		userImageView.userInteractionEnabled = true
         
         self.selectionStyle = .None
     }
+	
+	func tapOnUserImageView() {
+		print("tapOnUserImageView")
+		delegate?.DLIncomingMessageDidTapOnUserImageView(userImageView.image)
+	}
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

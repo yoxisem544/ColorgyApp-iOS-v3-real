@@ -12,6 +12,8 @@ class DLIncomingPhotoBubble: UITableViewCell {
 	
 	@IBOutlet weak var userImageView: UIImageView!
 	@IBOutlet weak var contentImageView: UIImageView!
+	
+	var delegate: DLIncomingMessageDelegate?
 
 	var imageURLString: String! {
 		didSet {
@@ -44,14 +46,22 @@ class DLIncomingPhotoBubble: UITableViewCell {
 		userImageView.clipsToBounds = true
 		userImageView.contentMode = .ScaleAspectFill
 		
+		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnUserImageView"))
+		
 		contentImageView.layer.cornerRadius = 10.0
 		contentImageView.clipsToBounds = true
 		contentImageView.contentMode = .ScaleAspectFill
 		
 		contentImageView.backgroundColor = UIColor.lightGrayColor()
+		userImageView.userInteractionEnabled = true
 		
 		self.selectionStyle = .None
     }
+	
+	func tapOnUserImageView() {
+		print("tapOnUserImageView")
+		delegate?.DLIncomingMessageDidTapOnUserImageView(userImageView.image)
+	}
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
