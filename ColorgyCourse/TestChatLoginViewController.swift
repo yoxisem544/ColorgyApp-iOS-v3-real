@@ -17,8 +17,8 @@ class TestChatLoginViewController: UIViewController {
 				"headers": [],
 				"data": [
 					"accessToken": result.access_token!,
-					"friendId": "56a470aab94e4a5a7f5394b3",
-					"userId": "56a470cfb94e4a5a7f5394b4",
+					"friendId": "56aef7f0e50c113d8cd702d9",
+					"userId": "56af0fb34bd9c5f12d613d7d",
 					"uuid": "68efe6c7-66b8-43bd-8046-ca228a65767e"
 				],
 				"url": "/chatroom/establish_connection"
@@ -37,8 +37,8 @@ class TestChatLoginViewController: UIViewController {
 				"headers": [],
 				"data": [
 					"accessToken": result.access_token!,
-					"friendId": "56a470cfb94e4a5a7f5394b4",
-					"userId": "56a470aab94e4a5a7f5394b3",
+					"friendId": "56af0fb34bd9c5f12d613d7d",
+					"userId": "56aef7f0e50c113d8cd702d9",
 					"uuid": "7d936b9c-b670-487a-a6d6-23aac674124a"
 				],
 				"url": "/chatroom/establish_connection"

@@ -106,6 +106,7 @@ class ColorgySocket : NSObject {
 				],
 				"url": "/chatroom/send_message"
 			]
+			print(postData)
 			//			s.emit("post", withItems: postData as! [AnyObject])
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)
