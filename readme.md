@@ -4,7 +4,7 @@
 
 ## 使用說明 
 ### Setup 
-專案使用`CocoaPods`版本`0.36`
+專案使用`CocoaPods`版本`0.39`
 
 安裝方式
 
@@ -22,6 +22,19 @@ Flurry.startSession(SecretKey.FlurryDevelopmentKey)
 ```
 
 然後按下`cmd+R`就可以執行了。
+
+## 使用套件
+1. AFNetworking
+2. FBSDKCoreKit
+3. FBSDKLoginKit 
+3. SDWebImage
+4. Answers
+5. Fabric
+6. Crashlytics
+7. Flurry
+8. SwiftyJSON
+9. ImagePickerSheetController
+10. DLMessageViewController(自己講)
 
 ## Chatroom usage
 ### 怎麼串
