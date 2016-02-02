@@ -1,5 +1,7 @@
 #Colorgy 課表 App
 ## 這是一個 Colorgy 的課表
+![image](./ColorgyCourse/Images.xcassets/AppIcon.appiconset/icon60_3x.png)
+
 一個課表，待補東西
 
 ## 使用說明 
