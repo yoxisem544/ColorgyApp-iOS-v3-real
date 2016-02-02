@@ -33,9 +33,47 @@ class UserDetailInformationView: UIView {
 		userImageView.clipsToBounds = true
 		userImageView.contentMode = .ScaleAspectFill
 		
+		userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+		userImageView.layer.borderWidth = 2.0
+		
 		userImageView.image = image
 		
+		let title = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 21))
+		title.font = UIFont.systemFontOfSize(20)
+		title.textAlignment = .Center
+		title.textColor = UIColor.whiteColor()
+		title.center = self.center
+		
+		let subtitle = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 18))
+		subtitle.font = UIFont.systemFontOfSize(16)
+		subtitle.textAlignment = .Center
+		subtitle.textColor = UIColor.whiteColor()
+		subtitle.center = self.center
+		
+		title.frame.origin.y = userImageView.frame.maxY + 20
+		subtitle.frame.origin.y = title.frame.maxY + 8
+		
+		title.text = "iuiuyiu"
+		subtitle.text = "iuiuyiu"
+		
+		let percenageLabel = UILabel(frame: CGRectMake(0, 0, 66, 28))
+		percenageLabel.layer.cornerRadius = 13.0
+		percenageLabel.clipsToBounds = true
+		percenageLabel.text = "30%"
+		percenageLabel.textAlignment = .Center
+		percenageLabel.textColor = UIColor.whiteColor()
+		percenageLabel.backgroundColor = ColorgyColor.MainOrange
+		let centerOfUserImageView: CGPoint = userImageView.center
+		let radius: CGFloat = userImageView.bounds.width / 2
+		let x = centerOfUserImageView.x + cos(60.0.RadianValue).CGFloatValue * radius
+		let y = centerOfUserImageView.y + sin(60.0.RadianValue).CGFloatValue * radius
+		percenageLabel.center = CGPoint(x: x, y: y)
+		
+		
 		self.addSubview(userImageView)
+		self.addSubview(title)
+		self.addSubview(subtitle)
+		self.addSubview(percenageLabel)
 	}
 	
 	func dismissView() {

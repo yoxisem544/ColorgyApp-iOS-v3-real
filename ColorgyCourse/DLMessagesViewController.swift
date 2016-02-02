@@ -63,6 +63,7 @@ class DLMessagesViewController: UIViewController {
         bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
 		
 		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "frameWillChangeNotification:", name: UIApplicationWillChangeStatusBarFrameNotification, object: nil)
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -82,6 +83,20 @@ class DLMessagesViewController: UIViewController {
 	
 	func unregisterKeyboardNotification() {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
+	func frameWillChangeNotification(notification: NSNotification) {
+		let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+		print("statusBarHeight \(statusBarHeight)")
+		if statusBarHeight == 20 {
+			UIView.animateWithDuration(0.3, animations: { () -> Void in
+				self.keyboardTextInputView.frame.origin.y += 20
+			})
+		} else if statusBarHeight == 40 {
+			UIView.animateWithDuration(0.4, animations: { () -> Void in
+				self.keyboardTextInputView.frame.origin.y -= 20
+			})
+		}
 	}
 	
 	func dismissKeyboard() {
