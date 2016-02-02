@@ -23,8 +23,6 @@ class FriendListTableViewCell: UITableViewCell {
 		userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.width / 2
 		
 		self.selectionStyle = .None
-		self.backgroundColor = UIColor.clearColor()
-		self.contentView.backgroundColor = UIColor.clearColor()
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

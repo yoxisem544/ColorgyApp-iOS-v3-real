@@ -20,8 +20,9 @@ class FriendListViewController: UIViewController {
 		friendListTableView.dataSource = self
 		friendListTableView.estimatedRowHeight = 120
 		friendListTableView.rowHeight = UITableViewAutomaticDimension
-		friendListTableView.separatorInset.left = 50 + 16 + 8
-		friendListTableView.backgroundColor = UIColor.clearColor()
+//		friendListTableView.separatorInset.left = 50 + 16 + 8
+//		friendListTableView.separatorInset.left = -10
+		friendListTableView.backgroundColor = ColorgyColor.BackgroundColor
     }
 	
 	struct Storyboard {
