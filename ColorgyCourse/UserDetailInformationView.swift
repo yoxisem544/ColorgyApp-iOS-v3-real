@@ -73,10 +73,17 @@ class UserDetailInformationView: UIView {
 		self.addSubview(subtitle)
 		self.addSubview(percenageLabel)
 		
-		userImageView.alpha = 1.0
-		title.alpha = 1.0
-		subtitle.alpha = 1.0
-		percenageLabel.alpha = 1.0
+		// adjust blur percentage
+		if percentage > 1.0 {
+			// set to 100%
+			percenageLabel.text = "100%"
+		} else if percentage < 0.0 {
+			// set to 0%
+			percenageLabel.text = "0%"
+		} else {
+			// ok!
+			percenageLabel.text = "\(Int(percentage * 100))%"
+		}
 	}
 	
 	func dismissView() {
