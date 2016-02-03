@@ -295,6 +295,14 @@ class SearchCourseViewController: UIViewController {
             }
         }
     }
+	
+	func refreshAccessToken() {
+		ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+			
+			}, failure: { () -> Void in
+				
+		})
+	}
 }
 
 // MARK: - AlertDeleteCourseViewDelegate
@@ -316,10 +324,12 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
                 Flurry.logEvent("v3.0: User Delete A Course")
 				Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
             }
-            }) { () -> Void in
+            }, failure: { () -> Void in
                 alertDeleteCourseView.hideView(0.4)
                 alertDeleteCourseView.removeFromSuperview()
-        }
+				// try refresh here
+				self.refreshAccessToken()
+        })
     }
     
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, localCourse: LocalCourse, cell: SearchCourseCell) {
