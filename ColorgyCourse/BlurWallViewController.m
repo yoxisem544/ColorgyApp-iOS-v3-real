@@ -12,6 +12,7 @@
 #import "OpeningViewController.h"
 #import "ColorgyCourse-Swift.h"
 #import "BlurWallSwitchViewController.h"
+#import "HelloViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 #define CELL_IDENTIFIER @"cellIdentifier"
@@ -299,6 +300,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"You Touch: %ld, %ld -> %ld", indexPath.row / self.numberOfColumn, indexPath.row % self.numberOfColumn, indexPath.item);
+    HelloViewController *vc = [[HelloViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {

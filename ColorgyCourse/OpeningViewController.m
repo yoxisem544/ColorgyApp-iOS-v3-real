@@ -717,7 +717,7 @@
     checkImageView.center = CGPointMake(self.checkedView.frame.size.width / 2, self.checkedView.frame.size.height / 2);
     [self.checkedView addSubview:checkImageView];
     
-    // textNumberCunter Customized
+    // textNumberCounter Customized
     self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nameTextField.frame.size.width - 50, 30, 45, 30)];
     self.textNumberCounterLabel.center = CGPointMake(self.nameTextField.frame.size.width - 50 / 2, self.nameTextField.frame.size.height / 2);
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];

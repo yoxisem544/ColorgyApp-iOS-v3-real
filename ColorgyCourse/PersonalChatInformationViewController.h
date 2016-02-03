@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalChatInformationViewController : UIViewController
-
+@interface PersonalChatInformationViewController : UIViewController<UITextFieldDelegate, UIImagePickerControllerDelegate>
+@property UITextField *activeTextField;
+@property UIImage *uploadImage;
 @end

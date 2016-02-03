@@ -29,6 +29,7 @@
 
 - (void)layout {
     [self.navigationController.navigationBar setHidden:NO];
+    [self.navigationController.navigationBar setTintColor:[UIColor clearColor]];
     [self.tabBarController.tabBar setHidden:YES];
     
     // UserImageView
