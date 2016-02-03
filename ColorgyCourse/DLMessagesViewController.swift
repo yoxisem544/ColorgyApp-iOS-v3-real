@@ -73,6 +73,10 @@ class DLMessagesViewController: UIViewController {
 	private func configureKeyboardTextInputView() {
 		keyboardTextInputView = TextInputView()
 		keyboardTextInputView.frame.origin.y = UIScreen.mainScreen().bounds.maxY - keyboardTextInputView.bounds.height
+		if UIApplication.sharedApplication().statusBarFrame.height == 40 {
+			// move up 20
+			keyboardTextInputView.frame.origin.y -= 20
+		}
 		keyboardTextInputView.delegate = self
 		self.view.addSubview(keyboardTextInputView)
 	}
