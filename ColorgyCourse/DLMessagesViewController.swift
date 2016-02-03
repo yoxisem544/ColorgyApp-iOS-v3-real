@@ -37,11 +37,13 @@ class DLMessagesViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+		automaticallyAdjustsScrollViewInsets = false
+		
         registerForNibs()
 		
-		configureBubbleTableView()
-        
 		configureKeyboardTextInputView()
+		
+		configureBubbleTableView()
     }
 	
 	private func registerForNibs() {
@@ -66,6 +68,12 @@ class DLMessagesViewController: UIViewController {
 		
 		// adjust inset
 		bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
+		
+		// check if there is a navigation controller on it
+		if navigationController != nil {
+			print("there is a navi")
+			bubbleTableView.contentInset.top = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height
+		}
 		
 		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
 	}
@@ -108,13 +116,24 @@ class DLMessagesViewController: UIViewController {
 	func frameWillChangeNotification(notification: NSNotification) {
 		let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
 		print("statusBarHeight \(statusBarHeight)")
+		
+		// check if there is a navi controller
+		var topInset: CGFloat = 0
+		if navigationController != nil {
+			topInset = navigationController!.navigationBar.frame.height + 20
+		} else {
+			topInset = statusBarHeight
+		}
+		print("will change top inset \(topInset)")
 		if statusBarHeight == 20 {
 			UIView.animateWithDuration(0.3, animations: { () -> Void in
 				self.keyboardTextInputView.frame.origin.y += 20
+				self.bubbleTableView.contentInset.top = topInset
 			})
 		} else if statusBarHeight == 40 {
 			UIView.animateWithDuration(0.4, animations: { () -> Void in
 				self.keyboardTextInputView.frame.origin.y -= 20
+				self.bubbleTableView.contentInset.top = topInset
 			})
 		}
 	}

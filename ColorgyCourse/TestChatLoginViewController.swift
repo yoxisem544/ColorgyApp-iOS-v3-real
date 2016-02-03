@@ -34,6 +34,11 @@ class TestChatLoginViewController: UIViewController {
 		}
 	}
 	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		hidesBottomBarWhenPushed = false
+	}
+	
 	var userId: String!
 	var accesstoken: String!
 	var friendId: String!
@@ -112,6 +117,7 @@ class TestChatLoginViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 		if segue.identifier == "to chat room" {
+			hidesBottomBarWhenPushed = true
 			let vc = segue.destinationViewController as! TestChatRoomViewController
 			vc.userId = self.userId
 			vc.uuid = self.uuid
