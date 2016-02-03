@@ -31,6 +31,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	// You can track user's current chatrom by this property.
 	private var chatroom: Chatroom?
+	
+	// Floating option view
+	private let floatingOptionView = FloatingOptionView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +43,29 @@ class TestChatRoomViewController: DLMessagesViewController {
 		// set it to current class
 		self.delegate = self
 		
+		configureFloatingOptionView()
+		
 		checkAndStartSocket()
+		
+		self.bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tt"))
     }
+	
+	func tt() {
+		print("tt")
+		if floatingOptionView.isShown {
+			// hide it
+			floatingOptionView.isShown = false
+			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+				self.floatingOptionView.frame.origin.y -= self.floatingOptionView.frame.height
+				}, completion: nil)
+		} else {
+			// show it
+			floatingOptionView.isShown = true
+			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+				self.floatingOptionView.frame.origin.y += self.floatingOptionView.frame.height
+				}, completion: nil)
+		}
+	}
 	
 	func checkAndStartSocket() {
 		
@@ -113,6 +137,15 @@ class TestChatRoomViewController: DLMessagesViewController {
 		super.viewDidDisappear(animated)
 	}
 	
+	func configureFloatingOptionView() {
+		let barHeight = UIApplication.sharedApplication().statusBarFrame.height + (navigationController != nil ? navigationController!.navigationBar.frame.height : 0)
+		print(barHeight)
+		floatingOptionView.frame.origin.y = barHeight - floatingOptionView.frame.height
+		view.addSubview(floatingOptionView)
+	}
+	
+	
+	// MARK: - TableView Delegate and DataSource
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
 	}
