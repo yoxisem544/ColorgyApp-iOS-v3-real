@@ -23,8 +23,7 @@ class UserDetailInformationView: UIView {
 		// dismiss
 		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismissView"))
 		
-		self.backgroundColor = UIColor.blackColor()
-		self.alpha = 0.7
+		self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
 		
 		let userImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.width * 0.5, self.bounds.width * 0.5))
 		userImageView.center = self.center
@@ -69,11 +68,15 @@ class UserDetailInformationView: UIView {
 		let y = centerOfUserImageView.y + sin(60.0.RadianValue).CGFloatValue * radius
 		percenageLabel.center = CGPoint(x: x, y: y)
 		
-		
 		self.addSubview(userImageView)
 		self.addSubview(title)
 		self.addSubview(subtitle)
 		self.addSubview(percenageLabel)
+		
+		userImageView.alpha = 1.0
+		title.alpha = 1.0
+		subtitle.alpha = 1.0
+		percenageLabel.alpha = 1.0
 	}
 	
 	func dismissView() {

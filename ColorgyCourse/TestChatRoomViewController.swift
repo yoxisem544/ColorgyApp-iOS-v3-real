@@ -282,7 +282,7 @@ extension TestChatRoomViewController : DLIncomingMessageDelegate {
 		if let image = image {
 			print("did tap on user image \(image)")
 			self.dismissKeyboard()
-			self.view.addSubview(UserDetailInformationView(withBlurPercentage: 0.5, withUserImage: image))
+			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.5, withUserImage: image))
 		}
 	}
 }
