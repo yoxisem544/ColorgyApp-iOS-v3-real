@@ -37,53 +37,108 @@ class DLMessagesViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        bubbleTableView = UITableView(frame: UIScreen.mainScreen().bounds)
-        self.view.addSubview(bubbleTableView)
-        bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier)
-        bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier)
+		automaticallyAdjustsScrollViewInsets = false
+		
+        registerForNibs()
+		
+		configureKeyboardTextInputView()
+		
+		configureBubbleTableView()
+    }
+	
+	private func registerForNibs() {
+		bubbleTableView = UITableView(frame: UIScreen.mainScreen().bounds)
+		self.view.addSubview(bubbleTableView)
+		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier)
+		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier)
 		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier)
 		bubbleTableView.registerNib(UINib(nibName: DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, bundle: nil), forCellReuseIdentifier: DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier)
-        
-        bubbleTableView.delegate = self
-        bubbleTableView.dataSource = self
-        
-        bubbleTableView.estimatedRowHeight = 197
-        bubbleTableView.rowHeight = UITableViewAutomaticDimension
-        
-        bubbleTableView.keyboardDismissMode = .Interactive
-        
-        bubbleTableView.separatorStyle = .None
-        
-        keyboardTextInputView = TextInputView()
-        keyboardTextInputView.frame.origin.y = UIScreen.mainScreen().bounds.maxY - keyboardTextInputView.bounds.height
-        keyboardTextInputView.delegate = self
-        self.view.addSubview(keyboardTextInputView)
-        
-        // adjust inset
-        bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
+	}
+	
+	private func configureBubbleTableView() {
+		bubbleTableView.delegate = self
+		bubbleTableView.dataSource = self
+		
+		bubbleTableView.estimatedRowHeight = 197
+		bubbleTableView.rowHeight = UITableViewAutomaticDimension
+		
+		bubbleTableView.keyboardDismissMode = .Interactive
+		
+		bubbleTableView.separatorStyle = .None
+		
+		// adjust inset
+		bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
+		
+		// check if there is a navigation controller on it
+		if navigationController != nil {
+			print("there is a navi")
+			bubbleTableView.contentInset.top = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height
+		}
 		
 		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
-    }
+	}
+	
+	private func configureKeyboardTextInputView() {
+		keyboardTextInputView = TextInputView()
+		keyboardTextInputView.frame.origin.y = UIScreen.mainScreen().bounds.maxY - keyboardTextInputView.bounds.height
+		if UIApplication.sharedApplication().statusBarFrame.height == 40 {
+			// move up 20
+			keyboardTextInputView.frame.origin.y -= 20
+		}
+		keyboardTextInputView.delegate = self
+		self.view.addSubview(keyboardTextInputView)
+	}
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		registerKeyboardNotification()
+		registerForNotifications()
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
-		unregisterKeyboardNotification()
+		unregisterNotifications()
 	}
 	
-	func registerKeyboardNotification() {
+	private func registerForNotifications() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "frameWillChangeNotification:", name: UIApplicationWillChangeStatusBarFrameNotification, object: nil)
+		registerKeyboardNotifications()
+	}
+	
+	func registerKeyboardNotifications() {
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
 	}
 	
-	func unregisterKeyboardNotification() {
+	func unregisterNotifications() {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
 	}
 	
+	func frameWillChangeNotification(notification: NSNotification) {
+		let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+		print("statusBarHeight \(statusBarHeight)")
+		
+		// check if there is a navi controller
+		var topInset: CGFloat = 0
+		if navigationController != nil {
+			topInset = navigationController!.navigationBar.frame.height + 20
+		} else {
+			topInset = statusBarHeight
+		}
+		print("will change top inset \(topInset)")
+		if statusBarHeight == 20 {
+			UIView.animateWithDuration(0.35, animations: { () -> Void in
+				self.keyboardTextInputView.frame.origin.y += 20
+				self.bubbleTableView.contentInset.top = topInset
+			})
+		} else if statusBarHeight == 40 {
+			UIView.animateWithDuration(0.35, animations: { () -> Void in
+				self.keyboardTextInputView.frame.origin.y -= 20
+				self.bubbleTableView.contentInset.top = topInset
+			})
+		}
+	}
+	
+	/// Instantly close the keyboard
 	func dismissKeyboard() {
 		self.view.endEditing(true)
 	}
@@ -111,7 +166,7 @@ class DLMessagesViewController: UIViewController {
 	
 	func tapOnBubbleTableView() {
 		if tapToDismissKeyboard {
-			view.endEditing(true)
+			dismissKeyboard()
 		}
 	}
     
@@ -124,18 +179,18 @@ class DLMessagesViewController: UIViewController {
 		}
     }
     
-    func finishedSendingMessage() {
-		let rows = bubbleTableView.numberOfRowsInSection(0)
-		print("rows \(rows)")
-		// rows is always actul count
-		// pass in rows in inserting
-		let insertIndex = rows - 1
-//		if insertIndex > 0 {
-			bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: insertIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
-			// rows here no need to -1
-			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: insertIndex, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-//		}
-    }
+//    func finishedSendingMessage() {
+//		let rows = bubbleTableView.numberOfRowsInSection(0)
+//		print("rows \(rows)")
+//		// rows is always actul count
+//		// pass in rows in inserting
+//		let insertIndex = rows - 1
+////		if insertIndex > 0 {
+//			bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: insertIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
+//			// rows here no need to -1
+//			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: insertIndex, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+////		}
+//    }
 	
 	func messageRecieved() {
 //		finishedSendingMessage()
@@ -145,18 +200,16 @@ class DLMessagesViewController: UIViewController {
 	
 	func messageRecievedButDontReload() {
 		let rows = bubbleTableView.numberOfRowsInSection(0)
-		print("rows \(rows)")
+//		print("rows \(rows)")
 		// rows is always actul count
 		// pass in rows in inserting
-//		bubbleTableView.beginUpdates()
 		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Bottom)
-		print("after \(bubbleTableView.numberOfRowsInSection(0))")
-//		bubbleTableView.endUpdates()
+//		print("after \(bubbleTableView.numberOfRowsInSection(0))")
 	}
 	
 	func recievingABunchMessages() {
 		let rows = bubbleTableView.numberOfRowsInSection(0) - 1
-		print("about to reload \(bubbleTableView.numberOfRowsInSection(0))")
+//		print("about to reload \(bubbleTableView.numberOfRowsInSection(0))")
 		if rows >= 0 {
 			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
 		}
@@ -199,12 +252,6 @@ extension DLMessagesViewController : UITableViewDelegate, UITableViewDataSource 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
-        //        let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
-        
-        //        let s = ["幹你媽的回去當心北市長啦", "不要擔心他1/16就回來當了","選後新民意既已讓民進黨全面執政，可提早進場一展執政抱負卻一再牽拖，民進黨真的做好執政準備了嗎？", "jaksjkas", "a"]
-        //        cell.textlabel.text = s[random()%3]
-        //        let img = ["11.jpg", "60.jpg", "1.jpg"]
-        //        cell.userImageView.image = UIImage(named: img[random()%3])
         
         return cell
     }

@@ -11,20 +11,73 @@ import Photos
 
 class TestChatRoomViewController: DLMessagesViewController {
 	
-	let colorgySocket = ColorgySocket()
-	var messages = [ChatMessage]()
+	/// Will be initialize once only, when enter this controller
+	/// This socket will save the connection state.
+	private let colorgySocket = ColorgySocket()
+	/// messages of this controller
+	/// just append a new message to it if you recieved a new message
+	private var messages = [ChatMessage]()
+	/// Parameter to create a new Chatroom
+	private var params: [String : NSObject]!
 	
-	var params: [String : NSObject]!
+	/// **Need accesstoken to create chatroom**
+	var accessToken: String!
+	/// **Need friendId to create chatroom**
+	var friendId: String!
+	/// **Need userId to create chatroom**
 	var userId: String!
-	var chatroom: Chatroom?
+	/// **Need uuid to create chatroom**
+	var uuid: String!
+	
+	// You can track user's current chatrom by this property.
+	private var chatroom: Chatroom?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+		// the delegate here is from DLMessageView
+		// set it to current class
 		self.delegate = self
+		
+		checkAndStartSocket()
+    }
+	
+	func checkAndStartSocket() {
+		
+		guard accessToken != nil else {
+			print("fail to initialize chat room, no accesstoken")
+			return
+		}
+		guard friendId != nil else {
+			print("fail to initialize chat room, no friendId")
+			return
+		}
+		guard userId != nil else {
+			print("fail to initialize chat room, no userId")
+			return
+		}
+		guard uuid != nil else {
+			print("fail to initialize chat room, no uuid")
+			return
+		}
+		
+		// configure parameters
+		params = [
+			"method": "post",
+			"headers": [],
+			"data": [
+				"accessToken": accessToken,
+				"friendId": friendId,
+				"userId": userId,
+				"uuid": uuid
+			],
+			"url": "/chatroom/establish_connection"
+		]
+		
 		print(self.params)
-
+		
+		// register for connect event
 		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
 			self.chatroom = chatroom
 			print(self.chatroom)
@@ -36,9 +89,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
 				}
-					self.recievingABunchMessages()
+				self.recievingABunchMessages()
 		})
 		
+		// register for recieving message event
 		colorgySocket.onRecievingMessage { (messages) -> Void in
 			print(messages.count)
 			for m in messages {
@@ -47,8 +101,8 @@ class TestChatRoomViewController: DLMessagesViewController {
 			}
 		}
 		
-//		colorgySocket.connect()
-    }
+		//		colorgySocket.connect()
+	}
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
@@ -220,13 +274,6 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 		dismissViewControllerAnimated(true, completion: nil)
 		sendImage(image)
-	}
-}
-
-extension TestChatRoomViewController : PHPhotoLibraryChangeObserver {
-	func photoLibraryDidChange(changeInstance: PHChange) {
-		print(changeInstance)
-		openImagePicker()
 	}
 }
 

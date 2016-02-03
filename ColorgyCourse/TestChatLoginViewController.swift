@@ -12,19 +12,11 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func  test_yuntech_student_ca62() {
 		ColorgyLogin.loginToColorgyWithUsername(username: "test-yzu-student-f478@test.colorgy.io", password: "test-yzu-student-f478", success: { (result) -> Void in
-			let params = [
-				"method": "post",
-				"headers": [],
-				"data": [
-					"accessToken": result.access_token!,
-					"friendId": "56aef7f0e50c113d8cd702d9",
-					"userId": "56af0fb34bd9c5f12d613d7d",
-					"uuid": "68efe6c7-66b8-43bd-8046-ca228a65767e"
-				],
-				"url": "/chatroom/establish_connection"
-			]
 			self.userId = "56a470cfb94e4a5a7f5394b4"
-			self.performSegueWithIdentifier("to chat room", sender: params)
+			self.accesstoken = result.access_token
+			self.uuid = "68efe6c7-66b8-43bd-8046-ca228a65767e"
+			self.friendId = "56aef7f0e50c113d8cd702d9"
+			self.performSegueWithIdentifier("to chat room", sender: nil)
 			}) { () -> Void in
 			
 		}
@@ -32,25 +24,25 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func test_yzu_student_f478() {
 		ColorgyLogin.loginToColorgyWithUsername(username: "test-yuntech-student-ca62@test.colorgy.io", password: "test-yuntech-student-ca62", success: { (result) -> Void in
-			let params = [
-				"method": "post",
-				"headers": [],
-				"data": [
-					"accessToken": result.access_token!,
-					"friendId": "56af0fb34bd9c5f12d613d7d",
-					"userId": "56aef7f0e50c113d8cd702d9",
-					"uuid": "7d936b9c-b670-487a-a6d6-23aac674124a"
-				],
-				"url": "/chatroom/establish_connection"
-			]
-			self.userId = "56a470aab94e4a5a7f5394b3"
-			self.performSegueWithIdentifier("to chat room", sender: params)
+			self.userId = "56aef7f0e50c113d8cd702d9"
+			self.accesstoken = result.access_token
+			self.uuid = "7d936b9c-b670-487a-a6d6-23aac674124a"
+			self.friendId = "56af0fb34bd9c5f12d613d7d"
+			self.performSegueWithIdentifier("to chat room", sender: nil)
 			}) { () -> Void in
 				
 		}
 	}
 	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		hidesBottomBarWhenPushed = false
+	}
+	
 	var userId: String!
+	var accesstoken: String!
+	var friendId: String!
+	var uuid: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,9 +117,12 @@ class TestChatLoginViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
 		if segue.identifier == "to chat room" {
+			hidesBottomBarWhenPushed = true
 			let vc = segue.destinationViewController as! TestChatRoomViewController
-			vc.params = sender as? [String : NSObject]
 			vc.userId = self.userId
+			vc.uuid = self.uuid
+			vc.friendId = self.friendId
+			vc.accessToken = self.accesstoken
 		}
     }
 
