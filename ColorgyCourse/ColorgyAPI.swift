@@ -796,6 +796,76 @@ class ColorgyAPI : NSObject {
                 failure()
         })
     }
+	
+	// get **ALL** me courses
+	/// Get **ALL** self courses from server.
+	///
+	/// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
+	class func getALLMeCourses(completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let userId = UserSetting.UserId() else {
+			print(ColorgyErrorType.noSuchUser)
+			failure()
+			return
+		}
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		guard let user = ColorgyUser() else {
+			print(ColorgyErrorType.noSuchUser)
+			failure()
+			return
+		}
+		guard let possibleOrganization = user.possibleOrganization else {
+			print("user get no possible org")
+			failure()
+			return
+		}
+		guard let accesstoken = user.accessToken else {
+			failure()
+			return
+		}
+//		let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
+		let url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=\(userId)&filter%5Bcourse_organization_code%5D=\(possibleOrganization)&&&&&&&access_token=\(accesstoken)"
+		guard url.isValidURLString else {
+			print(ColorgyErrorType.invalidURLString)
+			failure()
+			return
+		}
+		
+		// queue job
+		ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+		// then start job
+		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			// job ended
+			ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+			// into background
+			//                            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
+			let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+			dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+				// then handle response
+				// will return a array of courses
+				let json = JSON(response)
+				let userCourseObjects = UserCourseObjectArray(json: json).objects
+				// return to main queue
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					completionHandler(userCourseObjects: userCourseObjects)
+				})
+			})
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				// job ended
+				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+				// then handle response
+				print(ColorgyErrorType.APIFailure.failGetUserCourses)
+				failure()
+		})
+	}
     // get other's courses
     /// Get a specific courses from server.
     ///
@@ -804,7 +874,7 @@ class ColorgyAPI : NSObject {
     /// :param: userid: A specific user id
     /// :returns: userCourseObjects: A [UserCourseObject]? array, might be nil or 0 element.
     class func getUserCoursesWithUserId(userid: String, completionHandler: (userCourseObjects: [UserCourseObject]?) -> Void, failure: () -> Void) {
-        
+		
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
@@ -921,6 +991,7 @@ class ColorgyAPI : NSObject {
                 failure()
         })
     }
+	
     // DELETE class
     class func DELETECourseToServer(courseCode: String, success: (courseCode: String) -> Void, failure: () -> Void) {
         
@@ -940,69 +1011,54 @@ class ColorgyAPI : NSObject {
         }
         
         // get self course data from server
-        ColorgyAPI.getMeCourses({ (userCourseObjects) -> Void in
-            guard let userCourseObjects = userCourseObjects else {
-                print("fail to get me course")
-                failure()
-                return
-            }
-            print(userCourseObjects)
-            var isMatch = false
-            for userCourseObject in userCourseObjects {
-                if courseCode == userCourseObject.course_code  {
-                    isMatch = true
-                    let uuid = userCourseObject.uuid
-                    let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
-                    
-                    guard url.isValidURLString else {
-                        print(ColorgyErrorType.invalidURLString)
-                        failure()
-                        return
-                    }
-                    
-                    // queue job
-                    ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-                    afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-                        // job ended
-                        ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+		ColorgyAPI.getALLMeCourses({ (userCourseObjects) -> Void in
+			print(userCourseObjects?.count)
+			guard let userCourseObjects = userCourseObjects else {
+				print("fail to get me course")
+				failure()
+				return
+			}
+			//            print(userCourseObjects)
+			var isMatch = false
+			for userCourseObject in userCourseObjects {
+				if courseCode == userCourseObject.course_code  {
+					isMatch = true
+					let uuid = userCourseObject.uuid
+					let url = "https://colorgy.io:443/api/v1/me/user_courses/\(uuid).json?access_token=\(accesstoken)"
+					
+					guard url.isValidURLString else {
+						print(ColorgyErrorType.invalidURLString)
+						failure()
+						return
+					}
+					print(courseCode)
+					// queue job
+					ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
+					afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+						// job ended
+						ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 						dispatch_async(dispatch_get_main_queue(), { () -> Void in
 							success(courseCode: courseCode)
 						})
-                        }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                            // job ended
+						}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+							// job ended
 							print(error.localizedDescription)
-                            ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-                            failure()
-                    })
-                }
-            }
-            // if no uuid match, shows that server doesnt store this course
-            if !isMatch {
-                // TODO: something wierd
-                failure()
-            }
-            
-            }, failure: { () -> Void in
-                print("cant get me courses")
-                failure()
-        })
+							ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
+							failure()
+					})
+				}
+			}
+			// if no uuid match, shows that server doesnt store this course
+			if !isMatch {
+				// TODO: something wierd
+				
+				failure()
+			}
+			}, failure: { () -> Void in
+				print("cant get me courses")
+				failure()
+		})
     }
-    // get user basic info
-    // after get user basic info, do i need to download their image?
-    // no, i'll download it if i need it
-    
-    
-    
-    // properties
-    
-    // functions
-    
-    // keys
-    //    struct Method {
-    //        static let put = "PUT"
-    //        static let delete = "DELETE"
-    //    }
-    
     
     class func getSchools(success: (schools: [School]) -> Void, failure: () -> Void) {
         
