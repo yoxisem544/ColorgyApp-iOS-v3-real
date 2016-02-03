@@ -126,12 +126,12 @@ class DLMessagesViewController: UIViewController {
 		}
 		print("will change top inset \(topInset)")
 		if statusBarHeight == 20 {
-			UIView.animateWithDuration(0.3, animations: { () -> Void in
+			UIView.animateWithDuration(0.35, animations: { () -> Void in
 				self.keyboardTextInputView.frame.origin.y += 20
 				self.bubbleTableView.contentInset.top = topInset
 			})
 		} else if statusBarHeight == 40 {
-			UIView.animateWithDuration(0.4, animations: { () -> Void in
+			UIView.animateWithDuration(0.35, animations: { () -> Void in
 				self.keyboardTextInputView.frame.origin.y -= 20
 				self.bubbleTableView.contentInset.top = topInset
 			})
