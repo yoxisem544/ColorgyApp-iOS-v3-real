@@ -297,10 +297,14 @@ class SearchCourseViewController: UIViewController {
     }
 	
 	func refreshAccessToken() {
-		ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+		ColorgyAPI.checkIfTokenHasExpired(unexpired: { () -> Void in
 			
-			}, failure: { () -> Void in
-				
+			}, expired: { () -> Void in
+				ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
 		})
 	}
 }

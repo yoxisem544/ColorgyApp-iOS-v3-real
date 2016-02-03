@@ -83,6 +83,9 @@ class ColorgyAPITrafficControlCenter : NSObject {
         }
         return false
     }
+	
+	static var refreshRetryTimeAccumulator: Double = 1.0
+	static let refreshRetryTimeAccumulatroFactor: Double = 1.4
     
     class func canRefresh() -> Bool {
         // if no queueing jobs and not refreshing, then you can refresh token
@@ -160,8 +163,24 @@ class ColorgyAPITrafficControlCenter : NSObject {
                 //                completionHandler(loginResult: nil)
                 failure()
             }
-        } else {
-            print("cant refresh")
+		} else if ColorgyAPITrafficControlCenter.isAnyBackgroundJobs() {
+			print("can't refresh, because there is still jobs in the background")
+			print("will retry in \(ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulator) seconds")
+			let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulator))
+			dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+				// increase retry time
+				ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulator = ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulator * ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulatroFactor
+				// retry again
+				ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+					print("successfully refresh token, resetting time to 1.0")
+					ColorgyAPITrafficControlCenter.refreshRetryTimeAccumulator = 1.0
+					completionHandler(loginResult: loginResult)
+					}, failure: { () -> Void in
+						failure()
+				})
+			})
+		} else {
+            print("can't refresh, because token is refershing")
             //            completionHandler(loginResult: nil)
             failure()
         }
