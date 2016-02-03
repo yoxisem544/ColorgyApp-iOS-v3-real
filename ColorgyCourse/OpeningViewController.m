@@ -159,7 +159,7 @@
     [self.view addSubview:self.welcomeChatIconImageView];
     
     // Label Welcome Customized
-    NSAttributedString *attributedWelcomeString = [[NSAttributedString alloc] initWithString:@"歡迎光臨模糊聊" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:24.0]}];
+    NSAttributedString *attributedWelcomeString = [[NSAttributedString alloc] initWithString:@"歡迎光臨模糊聊" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Light" size:24.0]}];
     
     self.welcomeLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 254, 315, 25)];
     self.welcomeLabel.attributedText = attributedWelcomeString;

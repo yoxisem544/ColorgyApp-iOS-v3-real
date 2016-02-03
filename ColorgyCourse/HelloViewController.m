@@ -1,18 +1,18 @@
 //
-//  PersonalViewViewController.m
+//  HelloViewController.m
 //  ColorgyCourse
 //
 //  Created by 張子晏 on 2016/2/1.
 //  Copyright © 2016年 David. All rights reserved.
 //
 
-#import "PersonalViewViewController.h"
+#import "HelloViewController.h"
 
-@interface PersonalViewViewController ()
+@interface HelloViewController ()
 
 @end
 
-@implementation PersonalViewViewController
+@implementation HelloViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,6 +59,15 @@
     [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
     [self.helloButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.buttonView addSubview:self.helloButton];
+    
+    // scrollView
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height)];
+    self.scrollView.contentSize = CGSizeMake(1000, 1000);
+    self.scrollView.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:self.scrollView];
+}
+
+- (void)scrollViewLayout {
 }
 
 #pragma mark - UIColor
