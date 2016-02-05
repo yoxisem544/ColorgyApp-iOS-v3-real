@@ -45,17 +45,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self.tabBarController.tabBar setHidden:YES];
+    
+    // keyboard and tapGesture
+    [self registerForKeyboardNotifications];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewToReturn)];
+    
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    
     // Navigation Customized
-     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
     [self.navigationController.navigationBar setTintColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100]];
     [self setTitle:@"個人資料"];
     submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitMethod)];
     self.navigationItem.rightBarButtonItem = submitBarButtonItem;
-    
-    [ColorgyChatAPI me:^(NSDictionary *response) {
-        NSLog(@"%@", response);
-        
-    } failure:^() {}];
     
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     scrollView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
@@ -68,7 +72,7 @@
     // userImageview
     CGFloat imageViewLength = 150;
     
-    userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2 - imageViewLength / 2, self.view.bounds.origin.y + 90, imageViewLength, imageViewLength)];
+    userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2 - imageViewLength / 2, self.view.bounds.origin.y + 100, imageViewLength, imageViewLength)];
     [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
     [userImageView.layer setCornerRadius:imageViewLength / 2];
     [userImageView.layer setBorderColor:[UIColor whiteColor].CGColor];
@@ -93,7 +97,7 @@
     CGFloat width = self.view.bounds.size.width - marginX * 2;
     CGRect textFieldPaddingRect = CGRectMake(0, 0, 5, 20);
     
-    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(userImageView.frame) + 100, width, height)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(userImageView.frame) + 50, width, height)];
     nameLabel.text = @"暱稱";
     nameLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     nameLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
@@ -142,6 +146,7 @@
     [scrollView addSubview:zodiacLabel];
     
     zodiacTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(zodiacLabel.frame) + marginY, width, height)];
+    [zodiacTextField setDelegate:self];
     zodiacTextField.backgroundColor = [UIColor whiteColor];
     zodiacTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     zodiacTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
@@ -180,6 +185,7 @@
     [scrollView addSubview:addressLabel];
     
     addressTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(addressLabel.frame) + marginY, width, height)];
+    [addressTextField setDelegate:self];
     addressTextField.backgroundColor = [UIColor whiteColor];
     addressTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     addressTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
@@ -203,6 +209,7 @@
     [topicTextView.layer setBorderWidth:1];
     [topicTextView.layer setCornerRadius:3];
     [topicTextView.layer setMasksToBounds:YES];
+    [topicTextView setDelegate:self];
     [scrollView addSubview:topicLabel];
     [scrollView addSubview:topicTextView];
     
@@ -216,6 +223,7 @@
                            CGRectMake(marginX, CGRectGetMaxY(interestingLabel.frame) + marginY, width, height  *2.5)];
     interestingTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     interestingTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    [interestingTextView setDelegate:self];
     [interestingTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
     [interestingTextView.layer setBorderWidth:1];
     [interestingTextView.layer setCornerRadius:3];
@@ -231,6 +239,7 @@
     goodAtThingsTextView = [[UITextView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(goodAtThingsLabel.frame) + marginY, width, height * 2.5)];
     goodAtThingsTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     goodAtThingsTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    [goodAtThingsTextView setDelegate:self];
     [goodAtThingsTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
     [goodAtThingsTextView.layer setBorderWidth:1];
     [goodAtThingsTextView.layer setCornerRadius:3];
@@ -238,6 +247,25 @@
     [scrollView addSubview:goodAtThingsTextView];
     
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(goodAtThingsTextView.frame) + 50);
+    
+    [ColorgyChatAPI me:^(NSDictionary *response) {
+        if (response) {
+            NSDictionary *about = [[response objectForKey:@"result"] objectForKey:@"about"];
+            
+            nameTextField.text = [[response objectForKey:@"result"] objectForKey:@"name"];
+            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+            [ud setObject:[[response objectForKey:@"result"] objectForKey:@"name"] forKey:@"nickyName"];
+            textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
+            [self showCheck];
+            topicTextView.text = [about objectForKey:@"conversation"];
+            goodAtThingsTextView.text = [about objectForKey:@"expertise"];
+            addressTextField.text = [about objectForKey:@"habitancy"];
+            zodiacTextField.text = [about objectForKey:@"horoscope"];
+            interestingTextView.text = [about objectForKey:@"passion"];
+            schoolTextField.text = [about objectForKey:@"school"];
+        }
+    } failure:^() {}];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -248,7 +276,29 @@
 #pragma mark - Submit
 
 - (void)submitMethod {
-    
+    if (nameIsOk) {
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+            NSDictionary *dic = @{
+                                  @"conversation" : topicTextView.text,
+                                  @"expertise" : goodAtThingsTextView.text,
+                                  @"habitancy" : addressTextField.text,
+                                  @"horoscope" : zodiacTextField.text,
+                                  @"passion" : interestingTextView.text,
+                                  @"school" : schoolTextField.text
+                                  };
+            [ColorgyChatAPI updateAbout:dic userId:chatUser.userId success:^() {
+            } failure:^() {}];
+            [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
+            } failure:^() {}];
+        } failure:^() {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - StringCounter
@@ -280,15 +330,13 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.activeTextField = textField;
     
-    [self dismissCheck];
-    
     if (textField == nameTextField) {
+        [self dismissCheck];
         textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:nameTextField.text] / 2];
     }
-    return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
@@ -301,6 +349,10 @@
         // 檢查名字 尚需修改
         if (nameTextField.text.length) {
             [self showChecking];
+            if ([nameTextField.text isEqualToString:[UserSetting UserNickyName]]) {
+                [self showCheck];
+                return YES;
+            }
             [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSDictionary *response) {
                 if ([[response valueForKey:@"result"] isEqualToString:@"ok"]) {
                     [self showCheck];
@@ -345,6 +397,20 @@
     return YES;
 }
 
+#pragma mark - UITextView Delegate
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.activeTextView = textView;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    self.activeTextView = textView;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.activeTextView = nil;
+}
+
 #pragma mark - CheckView
 
 - (void)showChecking {
@@ -384,26 +450,26 @@
         [self dismissViewControllerAnimated:YES completion:^{
         }];
     }]];
-//    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//        
-//        // FBImageSticker button tapped.
-//        [self dismissViewControllerAnimated:YES completion:^{
-//        }];
-//        [self removeUploadLayout];
-//        [self uploadPreviewLayout];
-//        UIActivityIndicatorView *indView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//        [indView startAnimating];
-//        indView.center = CGPointMake(self.userImageView.bounds.size.width / 2, self.userImageView.bounds.size.height / 2);
-//        [userImageView addSubview:indView];
-//        [self downloadImageAtURL:[UserSetting UserAvatarUrl] withHandler:^(UIImage *image) {
-//            self.uploadImage = image;
-//            dispatch_sync(dispatch_get_main_queue(), ^{
-//                self.userImageView.image = [image gaussianBlurImage:image andInputRadius:4];
-//                [indView removeFromSuperview];
-//                [self.userImageView setNeedsLayout];
-//            });
-//        }];
-//    }]];
+    //    [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    //
+    //        // FBImageSticker button tapped.
+    //        [self dismissViewControllerAnimated:YES completion:^{
+    //        }];
+    //        [self removeUploadLayout];
+    //        [self uploadPreviewLayout];
+    //        UIActivityIndicatorView *indView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    //        [indView startAnimating];
+    //        indView.center = CGPointMake(self.userImageView.bounds.size.width / 2, self.userImageView.bounds.size.height / 2);
+    //        [userImageView addSubview:indView];
+    //        [self downloadImageAtURL:[UserSetting UserAvatarUrl] withHandler:^(UIImage *image) {
+    //            self.uploadImage = image;
+    //            dispatch_sync(dispatch_get_main_queue(), ^{
+    //                self.userImageView.image = [image gaussianBlurImage:image andInputRadius:4];
+    //                [indView removeFromSuperview];
+    //                [self.userImageView setNeedsLayout];
+    //            });
+    //        }];
+    //    }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // PhotoAlbumr button tapped.
@@ -494,6 +560,61 @@
 - (UIColor *)UIColorFromRGB:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
     
     return [UIColor colorWithRed:(red / 255.0) green:(green / 255.0) blue:(blue / 255.0) alpha:(alpha / 100)];
+}
+
+#pragma mark - TouchViewToReturn
+
+- (void)touchViewToReturn {
+    [self.activeTextField resignFirstResponder];
+    [self.activeTextView resignFirstResponder];
+}
+
+#pragma mark - KeyboardNotifications
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + statusBarSize.height, 0.0);
+    
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.bounds;
+    
+    aRect.size.height -= kbSize.height;
+    aRect.size.height -= statusBarSize.height;
+    
+    NSLog(@"%f", ([UIApplication sharedApplication].statusBarFrame.size.height));
+    
+    if (CGRectGetMaxY(self.activeTextField.frame) > CGRectGetMaxY(self.activeTextView.frame)) {
+        if (!CGRectContainsPoint(aRect, self.activeTextField.frame.origin) ) {
+            CGPoint scrollPoint = CGPointMake(0.0, self.activeTextField.frame.origin.y - kbSize.height - statusBarSize.height + 90);
+            [scrollView setContentOffset:scrollPoint animated:YES];
+        }
+    } else {
+        if (!CGRectContainsPoint(aRect, self.activeTextView.frame.origin) ) {
+            CGPoint scrollPoint = CGPointMake(0.0, CGRectGetMaxY(self.activeTextView.frame) - kbSize.height + 60 - statusBarSize.height);
+            [scrollView setContentOffset:scrollPoint animated:YES];
+        }
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

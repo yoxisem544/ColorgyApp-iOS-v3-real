@@ -10,7 +10,7 @@ import Foundation
 
 class ColorgyChatAPI : NSObject {
 
-    static let serverURL = "https://chat.colorgy.io"
+    static let serverURL = "http://chat.colorgy.io"
     
     // A Cross of Colorgy me
     class func ColorgyAPIMe( success: () -> Void, failure: () -> Void ) {
@@ -146,7 +146,7 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func updateAbout(about: String, userId: String, success: () -> Void, failure: () -> Void) {
+    class func updateAbout(about: NSDictionary, userId: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -162,7 +162,14 @@ class ColorgyChatAPI : NSObject {
         }
         
         let params = [
-            "about": about,
+            "about": [
+                "horoscope": "123", //星座
+                "school": "123", //學校
+                "habitancy": "123", //居住地
+                "conversation": "123", //想聊的話題
+                "passion": "123", //現在熱衷的事情
+                "expertise": "123" //專精的事情
+            ],
             "userId": userId,
             "uuid": uuid,
             "accessToken": accessToken
