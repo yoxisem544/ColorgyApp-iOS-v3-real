@@ -138,7 +138,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 	}
 	
 	func configureFloatingOptionView() {
-		let barHeight = UIApplication.sharedApplication().statusBarFrame.height + (navigationController != nil ? navigationController!.navigationBar.frame.height : 0)
+		let barHeight = (navigationController != nil ? navigationController!.navigationBar.frame.height : 0) + 20
 		print(barHeight)
 		floatingOptionView.frame.origin.y = barHeight - floatingOptionView.frame.height
 		view.addSubview(floatingOptionView)
