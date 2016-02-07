@@ -1,5 +1,5 @@
 //
-//  PersonalViewViewController.h
+//  HelloViewController.h
 //  ColorgyCourse
 //
 //  Created by 張子晏 on 2016/2/1.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalViewViewController : UIViewController
+@interface HelloViewController : UIViewController
 
 @property UIImage *userImage;
 
@@ -17,5 +17,6 @@
 @property UILabel *chatMessageLabel;
 @property UIView *buttonView;
 @property UIButton *helloButton;
+@property UIScrollView *scrollView;
 
 @end

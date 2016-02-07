@@ -47,6 +47,7 @@ struct UserSettingKey {
     static let courseNotificationTime = "courseNotificationTime for local notitfication"
     static let isCourseNotificationOn = "isCourseNotificationOn for local notitfication"
 	// for chat
+    static let nickyName = "nickyName"
 }
 
 @objc class UserSetting : NSObject {
@@ -86,6 +87,14 @@ struct UserSettingKey {
             return userName
         }
         return nil
+    }
+    
+    class func UserNickyName() -> String? {
+        let ud = NSUserDefaults.standardUserDefaults()
+        if let userNickyName = ud.objectForKey(UserSettingKey.nickyName) as? String {
+            return userNickyName
+        }
+        return nil;
     }
 	
 	class func UserAvatarUrl() -> String? {
@@ -407,6 +416,7 @@ struct UserSettingKey {
         ud.removeObjectForKey(UserSettingKey.deviceUUID)
         // course notification time
         ud.removeObjectForKey(UserSettingKey.courseNotificationTime)
+        ud.removeObjectForKey(UserSettingKey.nickyName)
         ud.synchronize()
     }
     // 2. refresh token expired logout

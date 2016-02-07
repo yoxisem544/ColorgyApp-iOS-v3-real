@@ -29,13 +29,6 @@
         }
     } failure:^() {}];
     
-    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-        //        [ColorgyChatAPI answerQuestion:user.userId answer:@"嘿咻！" date:self.questionDate  success:^() {} failure:^() {}];
-        [ColorgyChatAPI getAvailableTarget:user.userId gender:@"male" page:@"0" success:^(NSDictionary *response) {
-            NSLog(@"%@", response);
-        } failure:^() {}];
-    } failure:^() {}];
-    
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     self.isEmailOK = NO;

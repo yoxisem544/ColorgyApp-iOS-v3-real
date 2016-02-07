@@ -10,13 +10,14 @@
 		4E3D74F41C560071002812F4 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74EF1C560071002812F4 /* LoadingView.m */; };
 		4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F11C560071002812F4 /* NSString+Email.m */; };
 		4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F31C560071002812F4 /* OpeningViewController.m */; };
-		4E71E0181C5F4DBE00A9A694 /* PersonalViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */; };
+		4E71E0181C5F4DBE00A9A694 /* HelloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E71E0171C5F4DBE00A9A694 /* HelloViewController.m */; };
 		4EB5A9AD1C57525E009BA61B /* 123.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AC1C57525E009BA61B /* 123.jpeg */; };
 		4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */; };
 		4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */; };
 		4EB5A9B61C575B00009BA61B /* UIImage+GaussianBlurUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */; };
 		4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9BB1C576F70009BA61B /* ImageCache.m */; };
 		4EE325721C5A19D500880D68 /* ColorgyChatAPIOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */; };
+		4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */; };
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
@@ -210,8 +211,8 @@
 		4E3D74F11C560071002812F4 /* NSString+Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Email.m"; sourceTree = "<group>"; };
 		4E3D74F21C560071002812F4 /* OpeningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningViewController.h; sourceTree = "<group>"; };
 		4E3D74F31C560071002812F4 /* OpeningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningViewController.m; sourceTree = "<group>"; };
-		4E71E0161C5F4DBE00A9A694 /* PersonalViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewViewController.h; sourceTree = "<group>"; };
-		4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewViewController.m; sourceTree = "<group>"; };
+		4E71E0161C5F4DBE00A9A694 /* HelloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloViewController.h; sourceTree = "<group>"; };
+		4E71E0171C5F4DBE00A9A694 /* HelloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloViewController.m; sourceTree = "<group>"; };
 		4EB5A9AC1C57525E009BA61B /* 123.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 123.jpeg; sourceTree = "<group>"; };
 		4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurWallSwitchViewController.h; sourceTree = "<group>"; };
 		4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurWallSwitchViewController.m; sourceTree = "<group>"; };
@@ -223,6 +224,8 @@
 		4EB5A9BB1C576F70009BA61B /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorgyChatAPIOC.h; sourceTree = "<group>"; };
 		4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorgyChatAPIOC.m; sourceTree = "<group>"; };
+		4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalChatInformationViewController.h; sourceTree = "<group>"; };
+		4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalChatInformationViewController.m; sourceTree = "<group>"; };
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
@@ -869,8 +872,10 @@
 				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
 				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
 				4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */,
-				4E71E0161C5F4DBE00A9A694 /* PersonalViewViewController.h */,
-				4E71E0171C5F4DBE00A9A694 /* PersonalViewViewController.m */,
+				4E71E0161C5F4DBE00A9A694 /* HelloViewController.h */,
+				4E71E0171C5F4DBE00A9A694 /* HelloViewController.m */,
+				4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */,
+				4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */,
 				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
 				4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */,
 				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
@@ -1021,12 +1026,11 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = David;
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -1192,7 +1196,7 @@
 				63BB30161C561E240055BA19 /* TestChatLoginViewController.swift in Sources */,
 				630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */,
 				4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */,
-				4E71E0181C5F4DBE00A9A694 /* PersonalViewViewController.m in Sources */,
+				4E71E0181C5F4DBE00A9A694 /* HelloViewController.m in Sources */,
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
 				63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */,
 				63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */,
@@ -1303,6 +1307,7 @@
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
 				63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */,
 				63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */,
+				4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */,
 				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,
@@ -1370,6 +1375,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1456,6 +1462,7 @@
 					"$(PROJECT_DIR)/ColorgyCourse",
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "misk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
@@ -1507,6 +1514,7 @@
 				);
 				INFOPLIST_FILE = ColorgyCourseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "misk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ColorgyCourse.app/ColorgyCourse";
 			};
@@ -1522,6 +1530,7 @@
 				);
 				INFOPLIST_FILE = ColorgyCourseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "misk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ColorgyCourse.app/ColorgyCourse";
 			};

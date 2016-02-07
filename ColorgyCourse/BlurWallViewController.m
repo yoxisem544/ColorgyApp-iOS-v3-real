@@ -12,6 +12,8 @@
 #import "OpeningViewController.h"
 #import "ColorgyCourse-Swift.h"
 #import "BlurWallSwitchViewController.h"
+#import "HelloViewController.h"
+#import "PersonalChatInformationViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 #define CELL_IDENTIFIER @"cellIdentifier"
@@ -24,14 +26,26 @@
 
 @implementation BlurWallViewController {
     ChatUser *chatUser;
+    int currentPage;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.tabBarController setHidesBottomBarWhenPushed:YES];
+    [self.tabBarController.tabBar setHidden:NO];
+    currentPage = 0;
     // self.cachedImages = [[NSMutableDictionary alloc] init];
     [self.navigationController.navigationBar setHidden:NO];
     self.navigationItem.hidesBackButton = YES;
+    
+    // Make RightBarButtonItem
+    UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [completeButton setImage:[UIImage imageNamed:@"InformationIcon"] forState:UIControlStateNormal];
+    [completeButton sizeToFit];
+    [completeButton addTarget:self action:@selector(pushToPersonalChatInformationViewController) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:completeButton];
+    
     
     self.numberOfColumn = 2;
     
@@ -86,7 +100,9 @@
             // 取得清晰問
             self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
             if (self.cleanAskString) {
-                [self cleanAskViewLayout];
+                if ([self.cleanAskString length]) {
+                    [self cleanAskViewLayout];
+                }
             }
         }];
     }];
@@ -299,6 +315,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"You Touch: %ld, %ld -> %ld", indexPath.row / self.numberOfColumn, indexPath.row % self.numberOfColumn, indexPath.item);
+    HelloViewController *vc = [[HelloViewController alloc] init];
+    //ViewController *vc = [[UIViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -326,7 +345,7 @@
 - (void)refreshData:(void (^)(void))callbackBlock {
     [self.blurWallDataMutableArray removeAllObjects];
     NSString *currentGender;
-    
+    currentPage = 0;
     switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
         case 0:
             currentGender = @"unspecified";
@@ -341,7 +360,7 @@
     
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:@"0" success:^(NSDictionary *response) {
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:[NSString stringWithFormat:@"%d", currentPage] success:^(NSDictionary *response) {
             self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:[response objectForKey:@"result"]];
             // Tell the collectionView to reload.
             [self.blurWallCollectionView reloadData];
@@ -409,6 +428,7 @@
 
 - (void)loadMoreData {
     // 載入更多
+    currentPage += 1;
     
     // Simulate an async load...
     
@@ -559,11 +579,8 @@
     [self.currentWindow addSubview:self.cleanAskAlertView];
     // cleanAskTitleLabel
     self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.bounds.size.width - 50, 18)];
-    //    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
-    
-    if (self.cleanAskString) {
-        self.cleanAskTitleLabel.text = self.cleanAskString;
-    }
+    NSAttributedString *attributedCleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]}];
+    self.cleanAskTitleLabel.attributedText = attributedCleanAskTitleString;
     self.cleanAskTitleLabel.textColor = [self UIColorFromRGB:0.0 green:0.0 blue:0.0 alpha:100.0];
     self.cleanAskTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Medium" size:17.0];
     self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -717,6 +734,12 @@
         }
     }
     return tempString;
+}
+
+#pragma mark - information view
+- (void)pushToPersonalChatInformationViewController {
+    PersonalChatInformationViewController *vc = [[PersonalChatInformationViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
