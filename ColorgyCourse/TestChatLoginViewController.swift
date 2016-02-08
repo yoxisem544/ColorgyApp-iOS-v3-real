@@ -123,7 +123,11 @@ class TestChatLoginViewController: UIViewController {
 	@IBAction func testAPI() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.checkHi(user.userId, targetId: user.userId, success: { () -> Void in
-				
+				ColorgyChatAPI.sayHi(user.userId, targetId: user.userId, message: "糙糙糙", success: { () -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
 				}, failure: { () -> Void in
 					
 			})
@@ -139,6 +143,15 @@ class TestChatLoginViewController: UIViewController {
 //			})
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				print(hiList)
+				for hi in hiList {
+					if hi.userId == user.userId {
+//						ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
+//							
+//							}, failure: { () -> Void in
+//								
+//						})
+					}
+				}
 				}, failure: { () -> Void in
 					
 			})

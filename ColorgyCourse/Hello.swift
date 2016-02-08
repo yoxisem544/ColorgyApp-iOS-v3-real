@@ -16,6 +16,10 @@ class Hello: NSObject {
 	var id: String
 	var name: String?
 	
+	override var description: String {
+		return "Hello: {\n\tuserId -> \(userId)\n\ttargetId -> \(targetId)\n\tmessage -> \(message)\n\tstatus -> \(status)\n\tid -> \(id)\n\tname -> \(name)\n}"
+	}
+	
 	convenience init?(json: JSON) {
 		var _userId: String?
 		var _targetId: String?

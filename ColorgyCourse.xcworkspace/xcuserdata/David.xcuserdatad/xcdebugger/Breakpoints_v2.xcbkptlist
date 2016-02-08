@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ColorgyChatAPI.swift"
-            timestampString = "476612979.676733"
+            timestampString = "476613759.231756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "632"
-            endingLineNumber = "632"
+            startingLineNumber = "633"
+            endingLineNumber = "633"
             landmarkName = "rejectHi(_:hiId:success:failure:)"
             landmarkType = "5">
          </BreakpointContent>

@@ -31,8 +31,8 @@ class SayHelloViewController: UIViewController {
 	
 	func loadHi() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			ColorgyChatAPI.getHiList(user.userId, success: { () -> Void in
-				
+			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				print(hiList)
 				}, failure: { () -> Void in
 					
 			})

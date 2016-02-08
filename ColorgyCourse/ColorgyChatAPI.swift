@@ -453,7 +453,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	/// 1. 傳一個http post給/hi/check_hi，參數包含的userId,targetId,uuid,accessToken
 	/// 2. 回傳打招呼的結果，有兩種狀況可以繼續打招呼：(1) 從沒打過招呼 (2) 被拒絕可以再打一次
-	class func checkHi(userId: String, targetId: String, success: () -> Void, failure: () -> Void) {
+	class func checkHi(userId: String, targetId: String, success: (canSayHi: Bool) -> Void, failure: () -> Void) {
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
 		afManager.responseSerializer = AFJSONResponseSerializer()
@@ -475,8 +475,17 @@ class ColorgyChatAPI : NSObject {
 		]
 		
 		afManager.POST(serverURL + "/hi/check_hi", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-			print(JSON(response))
-			success()
+			let json = JSON(response)
+			if json["result"].string == "already said hi" {
+				// can't say hi, return false
+				success(canSayHi: false)
+			} else if json["result"].string == "ok, you can say hi" {
+				// can say hi, return true
+				success(canSayHi: true)
+			} else {
+				print("fail to check say hi, unknown result")
+				failure()
+			}
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
