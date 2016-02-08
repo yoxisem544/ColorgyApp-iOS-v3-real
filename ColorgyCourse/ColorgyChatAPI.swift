@@ -26,12 +26,17 @@ enum HiStatus: String {
 	case Rejected = "rejected"
 }
 
+enum NameStatus: String {
+	case Ok = "ok"
+	case AlreadyExists = "exists"
+}
+
 class ColorgyChatAPI : NSObject {
 
     static let serverURL = "http://chat.colorgy.io"
     
     // A Cross of Colorgy me
-    class func ColorgyAPIMe( success: () -> Void, failure: () -> Void ) {
+    class func ColorgyAPIMe(success: () -> Void, failure: () -> Void ) {
         ColorgyAPI.me({ (result) -> Void in
             success()
             }, failure: { () -> Void in
@@ -100,7 +105,7 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func checkNameExists(name: String, success: (AnyObject) -> Void, failure: () -> Void) {
+	class func checkNameExists(name: String, success: (status: NameStatus) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -109,8 +114,16 @@ class ColorgyChatAPI : NSObject {
         let params = ["name": name]
         print(params)
         afManager.POST(serverURL + "/users/check_name_exists", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(response)
-            success(response)
+			let json = JSON(response)
+            print(json["result"].string)
+			if json["result"].string == NameStatus.Ok.rawValue {
+				success(status: NameStatus.Ok)
+			} else if json["result"].string == NameStatus.AlreadyExists.rawValue {
+				success(status: NameStatus.AlreadyExists)
+			} else {
+				failure()
+				print("fail to generate NameStatus, unknown status")
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()
@@ -145,6 +158,7 @@ class ColorgyChatAPI : NSObject {
         print(params)
         afManager.POST(serverURL + "/users/update_name", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             print(response)
+			// TODO: maybe handle returned response
             success()
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
@@ -166,7 +180,7 @@ class ColorgyChatAPI : NSObject {
             failure()
             return
         }
-        
+        // FIXME: 這編寫死了
         let params = [
             "about": [
                 "horoscope": "123", //星座
@@ -219,7 +233,7 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func me(success: (AnyObject) -> Void, failure: () -> Void) {
+	class func me(success: (user: ChatMeUser) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -240,8 +254,14 @@ class ColorgyChatAPI : NSObject {
         ]
         print(params)
         afManager.POST(serverURL + "/users/me", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(JSON(response))
-            success(response)
+			let json = JSON(response)["result"]
+            print(json)
+			if let user = ChatMeUser(json: json) {
+				success(user: user)
+			} else {
+				print("fail to generate UnmatchedUser at me api.")
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
                 print(error.localizedDescription)

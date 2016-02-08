@@ -248,24 +248,24 @@
     
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(goodAtThingsTextView.frame) + 50);
     
-    [ColorgyChatAPI me:^(NSDictionary *response) {
-        if (response) {
-            NSDictionary *about = [[response objectForKey:@"result"] objectForKey:@"about"];
-            
-            nameTextField.text = [[response objectForKey:@"result"] objectForKey:@"name"];
-            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            [ud setObject:[[response objectForKey:@"result"] objectForKey:@"name"] forKey:@"nickyName"];
-            textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
-            [self showCheck];
-            topicTextView.text = [about objectForKey:@"conversation"];
-            goodAtThingsTextView.text = [about objectForKey:@"expertise"];
-            addressTextField.text = [about objectForKey:@"habitancy"];
-            zodiacTextField.text = [about objectForKey:@"horoscope"];
-            interestingTextView.text = [about objectForKey:@"passion"];
-            schoolTextField.text = [about objectForKey:@"school"];
-        }
-    } failure:^() {}];
-    
+//    [ColorgyChatAPI me:^(NSDictionary *response) {
+//        if (response) {
+//            NSDictionary *about = [[response objectForKey:@"result"] objectForKey:@"about"];
+//            
+//            nameTextField.text = [[response objectForKey:@"result"] objectForKey:@"name"];
+//            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//            [ud setObject:[[response objectForKey:@"result"] objectForKey:@"name"] forKey:@"nickyName"];
+//            textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
+//            [self showCheck];
+//            topicTextView.text = [about objectForKey:@"conversation"];
+//            goodAtThingsTextView.text = [about objectForKey:@"expertise"];
+//            addressTextField.text = [about objectForKey:@"habitancy"];
+//            zodiacTextField.text = [about objectForKey:@"horoscope"];
+//            interestingTextView.text = [about objectForKey:@"passion"];
+//            schoolTextField.text = [about objectForKey:@"school"];
+//        }
+//    } failure:^() {}];
+	
 }
 
 - (void)didReceiveMemoryWarning {
@@ -353,19 +353,19 @@
                 [self showCheck];
                 return YES;
             }
-            [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSDictionary *response) {
-                if ([[response valueForKey:@"result"] isEqualToString:@"ok"]) {
-                    [self showCheck];
-                } else {
-                    [self dismissCheck];
-                }
-            } failure:^() {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                }]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }];
+//            [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSDictionary *response) {
+//                if ([[response valueForKey:@"result"] isEqualToString:@"ok"]) {
+//                    [self showCheck];
+//                } else {
+//                    [self dismissCheck];
+//                }
+//            } failure:^() {
+//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+//                
+//                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+//                }]];
+//                [self presentViewController:alertController animated:YES completion:nil];
+//            }];
         }
     }
     return YES;
