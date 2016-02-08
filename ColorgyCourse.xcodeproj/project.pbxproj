@@ -43,6 +43,7 @@
 		63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E7C1C68728900D5D57C /* ChatUserInformation.swift */; };
 		63306E7F1C6878AD00D5D57C /* ChatMeUserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */; };
 		63306E811C687C0900D5D57C /* AvailableTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E801C687C0900D5D57C /* AvailableTarget.swift */; };
+		63306E831C68AEEA00D5D57C /* HistoryChatroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */; };
 		633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */; };
 		633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */; };
 		633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C21C5F2ECF009370B4 /* SpinView.swift */; };
@@ -256,6 +257,7 @@
 		63306E7C1C68728900D5D57C /* ChatUserInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInformation.swift; sourceTree = "<group>"; };
 		63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMeUserInformation.swift; sourceTree = "<group>"; };
 		63306E801C687C0900D5D57C /* AvailableTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableTarget.swift; sourceTree = "<group>"; };
+		63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryChatroom.swift; sourceTree = "<group>"; };
 		633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintViewSettings.swift; sourceTree = "<group>"; };
 		633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchNavigationViewController.swift; sourceTree = "<group>"; };
 		633D11C21C5F2ECF009370B4 /* SpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinView.swift; sourceTree = "<group>"; };
@@ -914,6 +916,7 @@
 				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
 				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
 				63BB30301C5624E10055BA19 /* Chatroom.swift */,
+				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
@@ -1270,6 +1273,7 @@
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
+				63306E831C68AEEA00D5D57C /* HistoryChatroom.swift in Sources */,
 				63BB30081C5617390055BA19 /* SocketEventHandler.swift in Sources */,
 				63BB300F1C5617390055BA19 /* SocketParsable.swift in Sources */,
 				63BB30121C5617390055BA19 /* SwiftRegex.swift in Sources */,
