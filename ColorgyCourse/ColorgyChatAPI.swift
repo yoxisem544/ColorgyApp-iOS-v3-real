@@ -355,7 +355,6 @@ class ColorgyChatAPI : NSObject {
         ]
         
         afManager.POST(serverURL + "/users/get_available_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(JSON(response))
             success(response)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)

@@ -23,6 +23,10 @@ class UnmatchedUser : NSObject {
 	var aboutHabitancy: String?
 	var aboutExpertise: String?
 	
+	override var description: String {
+		return "UnmatchedUser: {\n\tgender -> \(gender)\n\tlastAnswer -> \(lastAnswer)\n\tid -> \(id)\n\tavatarBlur2XURL -> \(avatarBlur2XURL)\n\tname -> \(name)\n\taboutSchool -> \(aboutSchool)\n\taboutConversation -> \(aboutConversation)\n\taboutPassion -> \(aboutPassion)\n\taboutHoroscope -> \(aboutHoroscope)\n\taboutHabitancy -> \(aboutHabitancy)\n\taboutExpertise -> \(aboutExpertise)\n}"
+	}
+	
 	convenience init?(json: JSON) {
 		
 		var _gender: String?
@@ -91,4 +95,18 @@ class UnmatchedUser : NSObject {
 		self.aboutExpertise = aboutExpertise
 	}
 	
+	class func generateUnmatchedUsers(json: JSON) -> [UnmatchedUser] {
+		let result = json["result"]
+//		print(result)
+		var unmatchedUsers = [UnmatchedUser]()
+		if result.isArray {
+			for (_, json) : (String, JSON) in result {
+				if let u = UnmatchedUser(json: json) {
+					unmatchedUsers.append(u)
+				}
+			}
+		}
+		
+		return unmatchedUsers
+	}
 }
