@@ -16,6 +16,45 @@ class FriendListTableViewCell: UITableViewCell {
 	@IBOutlet weak var userLastMessageLabel: UILabel!
 	@IBOutlet weak var timeStampLabel: UILabel!
 	
+	var userId: String!
+	var historyChatroom: HistoryChatroom! {
+		didSet {
+			updateUI()
+		}
+	}
+	
+	func updateUI() {
+		if userId == historyChatroom.chatId1 {
+			// get user 2
+			userNameLabel.text = historyChatroom.aliasId2
+			userQuestionLabel.text = nil
+			userLastMessageLabel.text = nil
+			timeStampLabel.text = "hi time"
+			if let urlString = historyChatroom.imageId2 {
+				if urlString.isValidURLString {
+					if let url = NSURL(string: urlString) {
+						userProfileImageView.sd_setImageWithURL(url, placeholderImage: nil)
+					}
+				}
+			}
+		} else if userId == historyChatroom.chatId2 {
+			// get user 1
+			userNameLabel.text = historyChatroom.aliasId1
+			userQuestionLabel.text = nil
+			userLastMessageLabel.text = nil
+			timeStampLabel.text = "hi time"
+			if let urlString = historyChatroom.imageId1 {
+				if urlString.isValidURLString {
+					if let url = NSURL(string: urlString) {
+						userProfileImageView.sd_setImageWithURL(url, placeholderImage: nil)
+					}
+				}
+			}
+		} else {
+			print("userId doesn't match")
+		}
+	}
+	
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

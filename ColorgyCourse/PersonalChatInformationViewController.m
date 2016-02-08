@@ -286,8 +286,8 @@
                                   @"passion" : interestingTextView.text,
                                   @"school" : schoolTextField.text
                                   };
-            [ColorgyChatAPI updateAbout:dic userId:chatUser.userId success:^() {
-            } failure:^() {}];
+//            [ColorgyChatAPI updateAbout:dic userId:chatUser.userId success:^() {
+//            } failure:^() {}];
             [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
             } failure:^() {}];
         } failure:^() {

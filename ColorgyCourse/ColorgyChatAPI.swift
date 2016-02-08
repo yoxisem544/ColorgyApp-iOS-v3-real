@@ -633,6 +633,7 @@ class ColorgyChatAPI : NSObject {
 		
 		afManager.POST(serverURL + "/hi/get_list", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			let json = JSON(response)
+			print(json)
 			let hiList = Hello.generateHiList(json)
 			success(hiList: hiList)
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
@@ -762,7 +763,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
 	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
-	class func getHistoryTarget(userId: String, gender: Gender, page: String, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
+	class func getHistoryTarget(userId: String, gender: Gender, page: Int, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
 			
 			let afManager = AFHTTPSessionManager(baseURL: nil)
 			afManager.requestSerializer = AFJSONRequestSerializer()
@@ -782,7 +783,7 @@ class ColorgyChatAPI : NSObject {
 				"accessToken": accessToken,
 				"userId": userId,
 				"gender": gender.rawValue,
-				"page": page
+				"page": page.stringValue
 			]
 			
 			afManager.POST(serverURL + "/users/get_history_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in

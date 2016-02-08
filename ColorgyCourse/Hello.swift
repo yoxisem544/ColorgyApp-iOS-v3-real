@@ -15,9 +15,10 @@ class Hello: NSObject {
 	var status: HiStatus
 	var id: String
 	var name: String?
+	var imageURL: String?
 	
 	override var description: String {
-		return "Hello: {\n\tuserId -> \(userId)\n\ttargetId -> \(targetId)\n\tmessage -> \(message)\n\tstatus -> \(status)\n\tid -> \(id)\n\tname -> \(name)\n}"
+		return "Hello: {\n\tuserId -> \(userId)\n\ttargetId -> \(targetId)\n\tmessage -> \(message)\n\tstatus -> \(status)\n\tid -> \(id)\n\tname -> \(name)\n\timageURL -> \(imageURL)\n}"
 	}
 	
 	convenience init?(json: JSON) {
@@ -27,6 +28,7 @@ class Hello: NSObject {
 		var _status: String?
 		var _id: String?
 		var _name: String?
+		var _imageURL: String?
 		
 		_userId = json["userId"].string
 		_targetId = json["targetId"].string
@@ -34,11 +36,12 @@ class Hello: NSObject {
 		_status = json["status"].string
 		_id = json["id"].string
 		_name = json["name"].string
+		_imageURL = json["image"].string
 		
-		self.init(userId: _userId, targetId: _targetId, message: _message, status: _status, id: _id, name: _name)
+		self.init(userId: _userId, targetId: _targetId, message: _message, status: _status, id: _id, name: _name, imageURL: _imageURL)
 	}
 	
-	init?(userId: String?, targetId: String?, message: String?, status: String?, id: String?, name: String?) {
+	init?(userId: String?, targetId: String?, message: String?, status: String?, id: String?, name: String?, imageURL: String?) {
 		self.userId = String()
 		self.targetId = String()
 		self.message = String()
@@ -71,12 +74,13 @@ class Hello: NSObject {
 		
 		self.id = id!
 		self.name = name
+		self.imageURL = imageURL
 	}
 	
 	class func generateHiList(json: JSON) -> [Hello] {
 		let json = json["result"]
 		var hiList = [Hello]()
-		print(json)
+
 		if json.isArray {
 			for (_, json) : (String, JSON) in json {
 				if let h = Hello(json: json) {
