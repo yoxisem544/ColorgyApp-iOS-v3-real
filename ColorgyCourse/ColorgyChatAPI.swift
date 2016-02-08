@@ -402,15 +402,15 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-    class func getQuestion(success: (AnyObject) -> Void, failure: () -> Void) {
+	class func getQuestion(success: (date: String?, question: String?) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
         afManager.responseSerializer = AFJSONResponseSerializer()
         
         afManager.GET(serverURL + "/questions/get_question", parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(JSON(response))
-            success(response)
+            let json = JSON(response)
+			success(date: json["date"].string, question: json["question"].string)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()

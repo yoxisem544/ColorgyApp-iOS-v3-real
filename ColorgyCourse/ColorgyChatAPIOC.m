@@ -17,14 +17,14 @@
 }
 
 - (void)getQuestion:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
-    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-        self.lastestQuestion = [response valueForKey:@"question"];
-        self.questionDate = [response valueForKey:@"date"];
-        
-        if (success) {
-            success(response);
-        }
-    } failure:failure];
+//    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+//        self.lastestQuestion = [response valueForKey:@"question"];
+//        self.questionDate = [response valueForKey:@"date"];
+//        
+//        if (success) {
+//            success(response);
+//        }
+//    } failure:failure];
 }
 
 - (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {

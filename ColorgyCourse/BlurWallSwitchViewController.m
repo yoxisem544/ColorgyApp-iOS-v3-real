@@ -19,16 +19,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-        if (![[response valueForKey:@"question"] isEqual:[NSNull null]]) {
-            self.lastestQuestion = [response valueForKey:@"question"];
-            self.questionDate = [response valueForKey:@"date"];
-        } else {
-            self.lastestQuestion = nil;
-            self.questionDate = nil;
-        }
-    } failure:^() {}];
-    
+//    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
+//        if (![[response valueForKey:@"question"] isEqual:[NSNull null]]) {
+//            self.lastestQuestion = [response valueForKey:@"question"];
+//            self.questionDate = [response valueForKey:@"date"];
+//        } else {
+//            self.lastestQuestion = nil;
+//            self.questionDate = nil;
+//        }
+//    } failure:^() {}];
+	
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     self.isEmailOK = NO;

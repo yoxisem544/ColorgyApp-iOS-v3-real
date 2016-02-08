@@ -122,8 +122,9 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func testAPI() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			ColorgyChatAPI.getAvailableTarget(user.userId, gender: Gender.Unspecified.rawValue, page: "0", success: { (hi) -> Void in
-				print(hi)
+			ColorgyChatAPI.getQuestion({ (date, question) -> Void in
+				print(date)
+				print(question)
 				}, failure: { () -> Void in
 					
 			})
