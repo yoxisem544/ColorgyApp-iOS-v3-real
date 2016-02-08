@@ -43,7 +43,14 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
+	
+	///上傳聊天室照片：
+	///
+	///用途：單純一個end-point以供照片上傳
+	///使用方式：
+	///
+	///1. 傳一個http post給/upload/upload_chat_image，將圖片檔案放在file這個參數內
+	///2. 伺服器會回傳圖片位置到result這個參數內
     class func uploadImage(image: UIImage, success: (result: String) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPRequestOperationManager()
@@ -74,7 +81,14 @@ class ColorgyChatAPI : NSObject {
                 failure()
             }?.start()
     }
-    
+	
+	///檢查使用者狀態：(simple test passed)
+	///
+	///用途：在一打開聊天功能時，第一件事就是檢查他是不是已經登入過並且認證完成，如果成功的話會回傳在聊天系統裡面的userId。若是第一次登入，也會創建一個user並且回傳id。
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/check_user_available，參數包含使用者的uuid、accessToken
+	///2. 如果成功，回傳使用者的id以及status
     class func checkUserAvailability(success: (user: ChatUser) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -104,7 +118,14 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
+	
+	///檢查使用者暱稱：(simple test passed)
+	///
+	///用途：給 app 一個 web API endpoint 來更檢查使用者暱稱
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/check_name_exists，參數包含使用者的name
+	///2. 回傳json：{ result: 'ok' }或者json：{ result: 'exists' }、狀態皆為200
 	class func checkNameExists(name: String, success: (status: NameStatus) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -129,7 +150,13 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
+	
+	///更新使用者名稱：(simple test passed)
+	///
+	///用途：給 app 一個 web API endpoint 來更新使用者名稱
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/update_name，參數包含使用者的name、userId、 uuid、accessToken
     class func updateName(name: String, userId: String, success: () -> Void, failure: () -> Void) {
         
         let ud = NSUserDefaults.standardUserDefaults()
@@ -165,7 +192,13 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	///更新使用者資料：(simple test passed)
+	///
+	///用途：給 app 一個 web API endpoint 來更新使用者的相關訊息（星座，興趣等等）
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/update_about，參數包含使用者的about、userId、 uuid、accessToken
     class func updateAbout(about: NSDictionary, userId: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -203,7 +236,13 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	///更新使用者大頭貼，更新使用者的驗證狀態：
+	///
+	///用途：因為資料庫不同，需要在上傳大頭貼後，或者使用者收到信件驗證後跟chat server確認更新的資料
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/update_from_core，參數包含使用者的 uuid、accessToken
     class func updateFromCore(success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -303,7 +342,13 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	///舉報使用者：
+	///
+	///用途：給 app 一個 web API endpoint 來舉報使用者
+	///使用方式：
+	///
+	///1. 傳一個http post給/report/report_user，參數包含uuid, accessToken,  userId, targetId, type,reason
     class func reportUser(userId: String, targetId: String, type: String, reason: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -336,7 +381,14 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	///封鎖使用者：
+	///
+	///用途：給 app 一個 web API endpoint 來封鎖使用者，之後在得到聊天室列表將會得不到被封鎖的人。進不去過去的聊天室，也收不到任何聊天室的訊息（單方面）。
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/block_user，參數包含uuid,accessToken, userId,targetId
+	///2. 回傳200即代表已經封鎖
     class func blockUser(userId: String, targetId: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -368,8 +420,14 @@ class ColorgyChatAPI : NSObject {
         })
     }
 	
-	// TODO: 改回傳值
-	class func getAvailableTarget(userId: String, gender: Gender, page: String, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
+	///取得聊天室列表：(simple test passed)
+	///
+	///用途：給 app 一個 web API endpoint 來封鎖使用者，之後在得到聊天室列表將會得不到被封鎖的人。進不去過去的聊天室，也收不到任何聊天室的訊息（單方面）。
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/get_available_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
+	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
+	class func getAvailableTarget(userId: String, gender: Gender, page: Int, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -389,7 +447,7 @@ class ColorgyChatAPI : NSObject {
             "accessToken": accessToken,
             "userId": userId,
             "gender": gender.rawValue,
-            "page": page
+            "page": page.stringValue
         ]
         
         afManager.POST(serverURL + "/users/get_available_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
@@ -401,7 +459,14 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
+	
+	///取得最新問題：
+	///
+	///用途：取得最新問題以及最新問題的date，此處的date會用在回答問題的api call中。
+	///使用方式：
+	///
+	///1. 傳一個http get給/questions/get_question
+	///2. 成功的會會回傳最新的問題以及date參數
 	class func getQuestion(success: (date: String?, question: String?) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -416,7 +481,13 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
+	
+	///回答問題：
+	///
+	///用途：回傳當日（或者最新）問題的答案給伺服器，如果不是最新會回傳錯誤。
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/answer_question，參數包含uuid,accessToken, userId,date(format:yyyymmdd),answer
     class func answerQuestion(userId: String, answer: String, date: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -448,6 +519,7 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
+	
 	///用途：檢查是否已經打過招呼。如果有打過回傳打招呼的結果。
 	///使用方式：
 	///
@@ -722,11 +794,6 @@ class ColorgyChatAPI : NSObject {
 					failure()
 			})
 	}
-	
-	
-
-
-
 	
     class func checkImageType(data: NSData) {
         var c = UInt8()

@@ -28,4 +28,8 @@ extension Int {
 	var DoubleValue: Double {
 		return Double(self)
 	}
+	
+	var stringValue: String {
+		return String(self)
+	}
 }
