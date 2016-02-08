@@ -529,7 +529,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/hi/get_list，參數包含使用者的userId,uuid,accessToken
 	///2. 回傳被打過招呼的列表
-	class func getHiList(userId: String, success: () -> Void, failure: () -> Void) {
+	class func getHiList(userId: String, success: (hiList: [Hello]) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -551,8 +551,9 @@ class ColorgyChatAPI : NSObject {
 		]
 		
 		afManager.POST(serverURL + "/hi/get_list", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-			print(JSON(response))
-			success()
+			let json = JSON(response)
+			let hiList = Hello.generateHiList(json)
+			success(hiList: hiList)
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
