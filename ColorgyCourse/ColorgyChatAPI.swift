@@ -369,7 +369,7 @@ class ColorgyChatAPI : NSObject {
     }
 	
 	// TODO: 改回傳值
-	class func getAvailableTarget(userId: String, gender: String, page: String, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
+	class func getAvailableTarget(userId: String, gender: Gender, page: String, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -388,7 +388,7 @@ class ColorgyChatAPI : NSObject {
             "uuid": uuid,
             "accessToken": accessToken,
             "userId": userId,
-            "gender": gender,
+            "gender": gender.rawValue,
             "page": page
         ]
         
@@ -690,7 +690,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
 	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
-	class func getHistoryTarget(userId: String, gender: String, page: String, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
+	class func getHistoryTarget(userId: String, gender: Gender, page: String, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
 			
 			let afManager = AFHTTPSessionManager(baseURL: nil)
 			afManager.requestSerializer = AFJSONRequestSerializer()
@@ -709,7 +709,7 @@ class ColorgyChatAPI : NSObject {
 				"uuid": uuid,
 				"accessToken": accessToken,
 				"userId": userId,
-				"gender": gender,
+				"gender": gender.rawValue,
 				"page": page
 			]
 			
