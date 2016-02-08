@@ -8,6 +8,24 @@
 
 import Foundation
 
+enum Gender: String {
+	case Male = "male"
+	case Female = "female"
+	case Unspecified = "unspecified"
+}
+
+enum UserStatus: String {
+	case NotRegistered = "not_registered"
+	case Registered = "registered"
+	case Banned = "banned"
+}
+
+enum HiStatus: String {
+	case Pending = "pending"
+	case Accepted = "accepted"
+	case Rejected = "rejected"
+}
+
 class ColorgyChatAPI : NSObject {
 
     static let serverURL = "http://chat.colorgy.io"
@@ -68,9 +86,9 @@ class ColorgyChatAPI : NSObject {
         }
         
         let params = ["uuid": uuid, "accessToken": accessToken]
-        print(params)
+//        print(params)
         afManager.POST(serverURL + "/users/check_user_available", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(response)
+//            print(response)
             if let user = ChatUser(json: JSON(response)) {
                 success(user: user)
             } else {
@@ -615,6 +633,48 @@ class ColorgyChatAPI : NSObject {
 				failure()
 		})
 	}
+	
+	///取得好友列表：
+	///
+	///用途：給 app 一個 web API endpoint 來得到過去聊天過的使用者
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
+	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
+	class func getHistoryTarget(userId: String, gender: String, page: String, success: () -> Void, failure: () -> Void) {
+			
+			let afManager = AFHTTPSessionManager(baseURL: nil)
+			afManager.requestSerializer = AFJSONRequestSerializer()
+			afManager.responseSerializer = AFJSONResponseSerializer()
+			
+			guard let uuid = UserSetting.UserUUID() else {
+				failure()
+				return
+			}
+			guard let accessToken = UserSetting.UserAccessToken() else {
+				failure()
+				return
+			}
+			
+			let params = [
+				"uuid": uuid,
+				"accessToken": accessToken,
+				"userId": userId,
+				"gender": gender,
+				"page": page
+			]
+			
+			afManager.POST(serverURL + "/users/get_history_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+				print(JSON(response))
+				success()
+				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+					print(error.localizedDescription)
+					failure()
+			})
+	}
+	
+	
+
 
 
 	

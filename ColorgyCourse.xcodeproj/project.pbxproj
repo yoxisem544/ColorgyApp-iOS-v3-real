@@ -38,6 +38,7 @@
 		6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */; };
 		632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */; };
 		632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E0A711C508D240063B941 /* NotificationTableViewController.swift */; };
+		63306E791C6838AE00D5D57C /* Hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E781C6838AE00D5D57C /* Hello.swift */; };
 		633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */; };
 		633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */; };
 		633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C21C5F2ECF009370B4 /* SpinView.swift */; };
@@ -246,6 +247,7 @@
 		6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		632E0A6D1C4FB9C10063B941 /* PrivacyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyTableViewController.swift; sourceTree = "<group>"; };
 		632E0A711C508D240063B941 /* NotificationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewController.swift; sourceTree = "<group>"; };
+		63306E781C6838AE00D5D57C /* Hello.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hello.swift; sourceTree = "<group>"; };
 		633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintViewSettings.swift; sourceTree = "<group>"; };
 		633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchNavigationViewController.swift; sourceTree = "<group>"; };
 		633D11C21C5F2ECF009370B4 /* SpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinView.swift; sourceTree = "<group>"; };
@@ -890,6 +892,7 @@
 				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
 				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
+				63306E781C6838AE00D5D57C /* Hello.swift */,
 				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
@@ -1212,6 +1215,7 @@
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				63BB30051C5617390055BA19 /* SocketEnginePollable.swift in Sources */,
 				6311D2101C3A4B2A00812934 /* CreateCourseTableViewCell.swift in Sources */,
+				63306E791C6838AE00D5D57C /* Hello.swift in Sources */,
 				63BB30101C5617390055BA19 /* SocketStringReader.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,

@@ -23,6 +23,23 @@ class SayHelloViewController: UIViewController {
 		sayHelloTableView.separatorStyle = .None
 		sayHelloTableView.backgroundColor = ColorgyColor.BackgroundColor
     }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		loadHi()
+	}
+	
+	func loadHi() {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getHiList(user.userId, success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
+			}, failure: { () -> Void in
+				
+		})
+	}
 
 	struct Storyboard {
 		static let SayHelloCellIdentifier = "Say Hello Cell"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -772,10 +772,19 @@
                                     <action selector="test_yuntech_student_ca62" destination="hgm-h5-9n1" eventType="touchUpInside" id="it7-s5-S0y"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHD-1v-6SD">
+                                <rect key="frame" x="277" y="222" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="testAPI" destination="hgm-h5-9n1" eventType="touchUpInside" id="zIC-Ha-IAk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="BFG-3d-Umq"/>
+                            <constraint firstItem="DHD-1v-6SD" firstAttribute="centerX" secondItem="UdK-Y0-9OJ" secondAttribute="centerX" id="FQY-fy-Kc7"/>
+                            <constraint firstItem="DHD-1v-6SD" firstAttribute="top" secondItem="UdK-Y0-9OJ" secondAttribute="bottom" constant="52" id="Nrp-3j-n0q"/>
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="top" secondItem="vNV-9E-Oy5" secondAttribute="bottom" constant="47" id="Zuu-El-vl0"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="gbL-yY-YFI"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="top" secondItem="arq-Pk-5sb" secondAttribute="bottom" constant="43" id="t3o-fm-QRN"/>

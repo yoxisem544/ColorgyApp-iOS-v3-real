@@ -48,22 +48,22 @@ class TestChatLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-		ColorgyChatAPI.checkNameExists("早安少女組", success: { (AnyObject) -> Void in
-			
-			}) { () -> Void in
-				
-		}
-		
-
-		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			print(user)
-			ColorgyChatAPI.updateName("早安少女組", userId: user.userId, success: { () -> Void in
-				
-				}, failure: { () -> Void in
-					
-			})
-			}) { () -> Void in
-		}
+//		ColorgyChatAPI.checkNameExists("早安少女組", success: { (AnyObject) -> Void in
+//			
+//			}) { () -> Void in
+//				
+//		}
+//		
+//
+//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+//			print(user)
+//			ColorgyChatAPI.updateName("早安少女組", userId: user.userId, success: { () -> Void in
+//				
+//				}, failure: { () -> Void in
+//					
+//			})
+//			}) { () -> Void in
+//		}
 //
 //		ColorgyChatAPI.updateFromCore({ () -> Void in
 //			
@@ -107,7 +107,30 @@ class TestChatLoginViewController: UIViewController {
 //			}) { () -> Void in
 //				
 //		}
+		
+//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+//			print(user)
+//			ColorgyChatAPI.getHiList(user.userId, success: { () -> Void in
+//				
+//				}, failure: { () -> Void in
+//					
+//			})
+//			}) { () -> Void in
+//				
+//		}
     }
+	
+	@IBAction func testAPI() {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Female.rawValue, page: "0", success: { () -> Void in
+				print("ok")
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
+	}
 
 
     // MARK: - Navigation
