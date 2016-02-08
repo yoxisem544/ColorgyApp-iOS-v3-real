@@ -232,7 +232,14 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	///取得使用者資料（是自己）：
+	///
+	///用途：給 app 一個 web API endpoint 來取得使用者的相關訊息（星座，興趣等等）
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/me，參數包括使用者的 uuid, accessToken
+	///2. 回傳使用者的基本資料，包括status, name, about, lastAnswer, avatar_url
 	class func me(success: (user: ChatMeUserInformation) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -255,7 +262,6 @@ class ColorgyChatAPI : NSObject {
         print(params)
         afManager.POST(serverURL + "/users/me", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			let json = JSON(response)["result"]
-            print(json)
 			if let user = ChatMeUserInformation(json: json) {
 				success(user: user)
 			} else {
@@ -361,7 +367,8 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
+	
+	// TODO: 改回傳值
     class func getAvailableTarget(userId: String, gender: String, page: String, success: (AnyObject) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)

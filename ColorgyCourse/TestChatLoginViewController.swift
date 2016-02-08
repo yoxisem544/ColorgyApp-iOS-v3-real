@@ -132,6 +132,11 @@ class TestChatLoginViewController: UIViewController {
 				}, failure: { () -> Void in
 					
 			})
+			ColorgyChatAPI.getAvailableTarget(user.userId, gender: Gender.Unspecified.rawValue, page: "0", success: { (hi) -> Void in
+				print(JSON(hi))
+				}, failure: { () -> Void in
+					
+			})
 			}) { () -> Void in
 				
 		}

@@ -42,6 +42,7 @@
 		63306E7B1C684A8600D5D57C /* UnmatchedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */; };
 		63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E7C1C68728900D5D57C /* ChatUserInformation.swift */; };
 		63306E7F1C6878AD00D5D57C /* ChatMeUserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */; };
+		63306E811C687C0900D5D57C /* AvailableTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63306E801C687C0900D5D57C /* AvailableTarget.swift */; };
 		633D11BF1C5F23CB009370B4 /* HintViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */; };
 		633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */; };
 		633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C21C5F2ECF009370B4 /* SpinView.swift */; };
@@ -254,6 +255,7 @@
 		63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnmatchedUser.swift; sourceTree = "<group>"; };
 		63306E7C1C68728900D5D57C /* ChatUserInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInformation.swift; sourceTree = "<group>"; };
 		63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMeUserInformation.swift; sourceTree = "<group>"; };
+		63306E801C687C0900D5D57C /* AvailableTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableTarget.swift; sourceTree = "<group>"; };
 		633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintViewSettings.swift; sourceTree = "<group>"; };
 		633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchNavigationViewController.swift; sourceTree = "<group>"; };
 		633D11C21C5F2ECF009370B4 /* SpinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinView.swift; sourceTree = "<group>"; };
@@ -901,6 +903,7 @@
 				63306E781C6838AE00D5D57C /* Hello.swift */,
 				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
+				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
 				63C7A7A51C607B74004DF000 /* UserDetailInformationView.swift */,
 				637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */,
@@ -1178,6 +1181,7 @@
 				63BB30021C5617390055BA19 /* SocketEngine.swift in Sources */,
 				6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */,
 				63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */,
+				63306E811C687C0900D5D57C /* AvailableTarget.swift in Sources */,
 				4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */,
 				63F7186A1C3D17B800870C5F /* OneWayInputTextField.swift in Sources */,
 				635959431B9DA07B00371AE7 /* CourseNotification.swift in Sources */,
