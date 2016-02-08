@@ -125,7 +125,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			}
 		}
 		
-		//		colorgySocket.connect()
+		colorgySocket.connect()
 	}
 	
 	override func viewDidAppear(animated: Bool) {

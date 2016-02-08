@@ -12,7 +12,7 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func  test_yuntech_student_ca62() {
 		ColorgyLogin.loginToColorgyWithUsername(username: "test-yzu-student-f478@test.colorgy.io", password: "test-yzu-student-f478", success: { (result) -> Void in
-			self.userId = "56a470cfb94e4a5a7f5394b4"
+			self.userId = "56af0fb34bd9c5f12d613d7d"
 			self.accesstoken = result.access_token
 			self.uuid = "68efe6c7-66b8-43bd-8046-ca228a65767e"
 			self.friendId = "56aef7f0e50c113d8cd702d9"
@@ -122,8 +122,8 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func testAPI() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Female.rawValue, page: "0", success: { () -> Void in
-				print("ok")
+			ColorgyChatAPI.getAvailableTarget(user.userId, gender: Gender.Unspecified.rawValue, page: "0", success: { (response) -> Void in
+				print(response)
 				}, failure: { () -> Void in
 					
 			})
