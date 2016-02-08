@@ -369,7 +369,7 @@ class ColorgyChatAPI : NSObject {
     }
 	
 	// TODO: 改回傳值
-    class func getAvailableTarget(userId: String, gender: String, page: String, success: (AnyObject) -> Void, failure: () -> Void) {
+	class func getAvailableTarget(userId: String, gender: String, page: String, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -393,7 +393,9 @@ class ColorgyChatAPI : NSObject {
         ]
         
         afManager.POST(serverURL + "/users/get_available_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            success(response)
+			print(JSON(response))
+			let targets = AvailableTarget.generateAvailableTarget(JSON(response))
+			success(targets: targets)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()

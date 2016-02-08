@@ -360,21 +360,21 @@
     
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:[NSString stringWithFormat:@"%d", currentPage] success:^(NSDictionary *response) {
-            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:[response objectForKey:@"result"]];
-            // Tell the collectionView to reload.
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
-            if (callbackBlock) {
-                callbackBlock();
-            }
-        } failure:^() {
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
-            if (callbackBlock) {
-                callbackBlock();
-            }
-        }];
+//        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:[NSString stringWithFormat:@"%d", currentPage] success:^(NSDictionary *response) {
+//            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:[response objectForKey:@"result"]];
+//            // Tell the collectionView to reload.
+//            [self.blurWallCollectionView reloadData];
+//            [self.blurWallRefreshControl endRefreshing];
+//            if (callbackBlock) {
+//                callbackBlock();
+//            }
+//        } failure:^() {
+//            [self.blurWallCollectionView reloadData];
+//            [self.blurWallRefreshControl endRefreshing];
+//            if (callbackBlock) {
+//                callbackBlock();
+//            }
+//        }];
     } failure:^() {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
