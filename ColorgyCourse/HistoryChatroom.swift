@@ -19,10 +19,10 @@ class HistoryChatroom : NSObject {
 	var imageId1: String?
 	var imageId2: String?
 	var lastSpeaker: String?
-	var updateAt: String?
+	var updatedAt: String?
 	
 	override var description: String {
-		return "HistoryChatroom: {\n\tid -> \(id)\n\tchatProgress -> \(chatProgress)\n\tchatId1 -> \(chatId1)\n\tchatId2 -> \(chatId2)\n\taliasId1 -> \(aliasId1)\n\taliasId2 -> \(aliasId2)\n\timageId1 -> \(imageId1)\n\timageId2 -> \(imageId2)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdateAt -> \(updateAt)\n}"
+		return "HistoryChatroom: {\n\tid -> \(id)\n\tchatProgress -> \(chatProgress)\n\tchatId1 -> \(chatId1)\n\tchatId2 -> \(chatId2)\n\taliasId1 -> \(aliasId1)\n\taliasId2 -> \(aliasId2)\n\timageId1 -> \(imageId1)\n\timageId2 -> \(imageId2)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n}"
 	}
 	
 	convenience init?(json: JSON) {
@@ -36,8 +36,8 @@ class HistoryChatroom : NSObject {
 		var _imageId1: String?
 		var _imageId2: String?
 		var _lastSpeaker: String?
-		var _updateAt: String?
-		
+		var _updatedAt: String?
+
 		_id = json["id"].string
 		_chatProgress = json["chatProgress"].int
 		_chatId1 = json["chatId1"].string
@@ -47,12 +47,12 @@ class HistoryChatroom : NSObject {
 		_imageId1 = json["imageId1"].string
 		_imageId2 = json["imageId2"].string
 		_lastSpeaker = json["lastSpeaker"].string
-		_updateAt = json["updateAt"].string
+		_updatedAt = json["updatedAt"].string
 		
-		self.init(id: _id, chatProgress: _chatProgress, chatId1: _chatId1, chatId2: _chatId2, aliasId1: _aliasId1, aliasId2: _aliasId2, imageId1: _imageId1, imageId2: _imageId2, lastSpeaker: _lastSpeaker, updateAt: _updateAt)
+		self.init(id: _id, chatProgress: _chatProgress, chatId1: _chatId1, chatId2: _chatId2, aliasId1: _aliasId1, aliasId2: _aliasId2, imageId1: _imageId1, imageId2: _imageId2, lastSpeaker: _lastSpeaker, updatedAt: _updatedAt)
 	}
 	
-	init?(id: String?, chatProgress: Int?, chatId1: String?, chatId2: String?, aliasId1: String?, aliasId2: String?, imageId1: String?, imageId2: String?, lastSpeaker: String?, updateAt: String?) {
+	init?(id: String?, chatProgress: Int?, chatId1: String?, chatId2: String?, aliasId1: String?, aliasId2: String?, imageId1: String?, imageId2: String?, lastSpeaker: String?, updatedAt: String?) {
 		
 		self.id = String()
 		self.chatProgress = Int()
@@ -83,6 +83,21 @@ class HistoryChatroom : NSObject {
 		self.imageId1 = imageId1
 		self.imageId2 = imageId2
 		self.lastSpeaker = lastSpeaker
-		self.updateAt = updateAt
+		self.updatedAt = updatedAt
+	}
+	
+	class func generateHistoryChatrooms(json: JSON) -> [HistoryChatroom] {
+		let json = json["result"]
+		var rooms = [HistoryChatroom]()
+		
+		if json.isArray {
+			for (_, json) : (String, JSON) in json {
+				if let r = HistoryChatroom(json: json) {
+					rooms.append(r)
+				}
+			}
+		}
+		
+		return rooms
 	}
 }

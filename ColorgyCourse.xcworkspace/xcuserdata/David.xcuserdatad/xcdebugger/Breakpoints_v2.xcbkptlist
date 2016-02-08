@@ -227,53 +227,5 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/TestChatLoginViewController.swift"
-            timestampString = "476622278.317195"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "testAPI()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ColorgyCourse.TestChatLoginViewController.(testAPI (ColorgyCourse.TestChatLoginViewController) -&gt; () -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/TestChatLoginViewController.swift"
-                  timestampString = "476622288.305961"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "155"
-                  endingLineNumber = "155"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ColorgyCourse.TestChatLoginViewController.(testAPI (ColorgyCourse.TestChatLoginViewController) -&gt; () -&gt; ()).(closure #1).(closure #2)"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/TestChatLoginViewController.swift"
-                  timestampString = "476622288.306236"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "157"
-                  endingLineNumber = "157"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

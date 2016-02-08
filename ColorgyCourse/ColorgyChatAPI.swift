@@ -690,7 +690,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
 	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
-	class func getHistoryTarget(userId: String, gender: String, page: String, success: () -> Void, failure: () -> Void) {
+	class func getHistoryTarget(userId: String, gender: String, page: String, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
 			
 			let afManager = AFHTTPSessionManager(baseURL: nil)
 			afManager.requestSerializer = AFJSONRequestSerializer()
@@ -714,8 +714,9 @@ class ColorgyChatAPI : NSObject {
 			]
 			
 			afManager.POST(serverURL + "/users/get_history_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-				print(JSON(response))
-				success()
+				let json = JSON(response)
+				let rooms = HistoryChatroom.generateHistoryChatrooms(json)
+				success(targets: rooms)
 				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 					print(error.localizedDescription)
 					failure()
