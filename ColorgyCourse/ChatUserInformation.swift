@@ -8,10 +8,10 @@
 
 import Foundation
 
-class ChatMeUser : NSObject {
+class ChatUserInformation : NSObject {
 	// required
 	var status: String
-	var avatarURL: String?
+	var avatarBlur2XURL: String?
 	var organizationCode: String
 	var id: String
 	var name: String
@@ -24,13 +24,13 @@ class ChatMeUser : NSObject {
 	var aboutExpertise: String?
 	
 	override var description: String {
-		return "UnmatchedUser: {\n\tstatus -> \(status)\n\tavatarURL -> \(avatarURL)\n\torganizationCode -> \(organizationCode)\n\tid -> \(id)\n\tname -> \(name)\n\taboutSchool -> \(aboutSchool)\n\taboutConversation -> \(aboutConversation)\n\taboutPassion -> \(aboutPassion)\n\taboutHoroscope -> \(aboutHoroscope)\n\taboutHabitancy -> \(aboutHabitancy)\n\taboutExpertise -> \(aboutExpertise)\n}"
+		return "ChatUserInformation: {\n\tstatus -> \(status)\n\tavatarBlur2XURL -> \(avatarBlur2XURL)\n\torganizationCode -> \(organizationCode)\n\tid -> \(id)\n\tname -> \(name)\n\taboutSchool -> \(aboutSchool)\n\taboutConversation -> \(aboutConversation)\n\taboutPassion -> \(aboutPassion)\n\taboutHoroscope -> \(aboutHoroscope)\n\taboutHabitancy -> \(aboutHabitancy)\n\taboutExpertise -> \(aboutExpertise)\n}"
 	}
 	
 	convenience init?(json: JSON) {
 		
 		var _status: String?
-		var _avatarURL: String?
+		var _avatarBlur2XURL: String?
 		var _organizationCode: String?
 		var _id: String?
 		var _name: String?
@@ -42,8 +42,8 @@ class ChatMeUser : NSObject {
 		var _aboutExpertise: String?
 		
 		_status = json["status"].string
-		_avatarURL = json["avatarURL"].string
-		_organizationCode = json["organizationCode"].string
+		_avatarBlur2XURL = json["avatar_blur_2x_url"].string
+		_organizationCode = json["organization_code"].string
 		_id = json["id"].string
 		_name = json["name"].string
 		_aboutSchool = json["about"]["school"].string
@@ -53,10 +53,10 @@ class ChatMeUser : NSObject {
 		_aboutHabitancy = json["about"]["habitancy"].string
 		_aboutExpertise = json["about"]["expertise"].string
 		
-		self.init(status: _status, avatarURL: _avatarURL, organizationCode: _organizationCode, id: _id, name: _name, aboutSchool: _aboutSchool, aboutConversation: _aboutConversation, aboutPassion: _aboutPassion, aboutHoroscope: _aboutHoroscope, aboutHabitancy: _aboutHabitancy, aboutExpertise: _aboutExpertise)
+		self.init(status: _status, avatarBlur2XURL: _avatarBlur2XURL, organizationCode: _organizationCode, id: _id, name: _name, aboutSchool: _aboutSchool, aboutConversation: _aboutConversation, aboutPassion: _aboutPassion, aboutHoroscope: _aboutHoroscope, aboutHabitancy: _aboutHabitancy, aboutExpertise: _aboutExpertise)
 	}
 	
-	init?(status: String?, avatarURL: String?, organizationCode: String?, id: String?, name: String?, aboutSchool: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?) {
+	init?(status: String?, avatarBlur2XURL: String?, organizationCode: String?, id: String?, name: String?, aboutSchool: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?) {
 		
 		self.status = String()
 		self.organizationCode = String()
@@ -75,7 +75,7 @@ class ChatMeUser : NSObject {
 		self.id = id!
 		self.organizationCode = organizationCode!
 		self.name = name!
-		self.avatarURL = avatarURL
+		self.avatarBlur2XURL = avatarBlur2XURL
 		
 		// optional
 		self.aboutSchool = aboutSchool

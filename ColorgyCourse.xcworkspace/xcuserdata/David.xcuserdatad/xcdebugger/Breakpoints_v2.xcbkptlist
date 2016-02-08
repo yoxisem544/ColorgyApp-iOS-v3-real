@@ -233,13 +233,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ColorgyChatAPI.swift"
-            timestampString = "476603118.774831"
+            filePath = "ColorgyCourse/TestChatLoginViewController.swift"
+            timestampString = "476608276.449457"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "me(_:failure:)"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "testAPI()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -249,13 +249,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ColorgyChatAPI.swift"
-            timestampString = "476603120.301439"
+            filePath = "ColorgyCourse/TestChatLoginViewController.swift"
+            timestampString = "476608872.109699"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "me(_:failure:)"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "testAPI()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

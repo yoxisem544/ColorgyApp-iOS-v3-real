@@ -233,7 +233,7 @@ class ColorgyChatAPI : NSObject {
         })
     }
     
-	class func me(success: (user: ChatMeUser) -> Void, failure: () -> Void) {
+	class func me(success: (user: ChatMeUserInformation) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -256,7 +256,7 @@ class ColorgyChatAPI : NSObject {
         afManager.POST(serverURL + "/users/me", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			let json = JSON(response)["result"]
             print(json)
-			if let user = ChatMeUser(json: json) {
+			if let user = ChatMeUserInformation(json: json) {
 				success(user: user)
 			} else {
 				print("fail to generate UnmatchedUser at me api.")
@@ -267,8 +267,15 @@ class ColorgyChatAPI : NSObject {
                 print(error.localizedDescription)
         })
     }
-    
-    class func getUser(userId: String, success: (AnyObject) -> Void, failure: () -> Void) {
+	
+	///取得使用者資料（不是自己的使用者）：
+	///
+	///用途：給 app 一個 web API endpoint 來取得使用者的相關訊息（星座，興趣等等）
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/get_user，參數包含使用者的userId
+	///2. 回傳使用者的公開詳細資料，包含使用者的status,name,about,lastAnsweredDate,lastAnswer,avatar_blur_2x_url(預設就是都是最模糊的),organization_code
+	class func getUser(userId: String, success: (user: ChatUserInformation) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
         afManager.requestSerializer = AFJSONRequestSerializer()
@@ -279,8 +286,12 @@ class ColorgyChatAPI : NSObject {
         ]
         print(params)
         afManager.POST(serverURL + "/users/get_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print(JSON(response))
-            success(response)
+            let json = JSON(response)["result"]
+			if let u = ChatUserInformation(json: json) {
+				success(user: u)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
                 print(error.localizedDescription)
