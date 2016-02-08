@@ -122,34 +122,29 @@ class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func testAPI() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			ColorgyChatAPI.checkHi(user.userId, targetId: user.userId, success: { () -> Void in
-				ColorgyChatAPI.sayHi(user.userId, targetId: user.userId, message: "糙糙糙", success: { () -> Void in
-					
-					}, failure: { () -> Void in
+			ColorgyChatAPI.checkHi(user.userId, targetId: user.userId, success: { (canSayHi) -> Void in
+				if canSayHi {
+					ColorgyChatAPI.sayHi(user.userId, targetId: user.userId, message: "糙糙糙", success: { () -> Void in
 						
-				})
+						}, failure: { () -> Void in
+							
+					})
+				} else {
+					print("oh, cant say hi")
+				}
 				}, failure: { () -> Void in
 					
 			})
-//			ColorgyChatAPI.rejectHi(user.userId, hiId: user.userId, success: { () -> Void in
-//				
-//				}, failure: { () -> Void in
-//					
-//			})
-//			ColorgyChatAPI.sayHi(user.userId, targetId: user.userId, message: "幹幹幹幹", success: { () -> Void in
-//				
-//				}, failure: { () -> Void in
-//					
-//			})
+
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				print(hiList)
 				for hi in hiList {
 					if hi.userId == user.userId {
-//						ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
-//							
-//							}, failure: { () -> Void in
-//								
-//						})
+						ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
+							
+							}, failure: { () -> Void in
+								
+						})
 					}
 				}
 				}, failure: { () -> Void in

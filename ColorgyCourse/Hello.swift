@@ -76,7 +76,7 @@ class Hello: NSObject {
 	class func generateHiList(json: JSON) -> [Hello] {
 		let json = json["result"]
 		var hiList = [Hello]()
-		
+		print(json)
 		if json.isArray {
 			for (_, json) : (String, JSON) in json {
 				if let h = Hello(json: json) {

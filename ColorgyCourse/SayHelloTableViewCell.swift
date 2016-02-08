@@ -10,10 +10,23 @@ import UIKit
 
 class SayHelloTableViewCell: UITableViewCell {
 	
-	@IBOutlet weak var userProfileImageView: UIImageView!
-	@IBOutlet weak var userNameLabel: UILabel!
-	@IBOutlet weak var userQuestionLabel: UILabel!
-	@IBOutlet weak var userLastMessageLabel: UILabel!
+	@IBOutlet weak var profileImageView: UIImageView!
+	@IBOutlet weak var nameLabel: UILabel!
+	@IBOutlet weak var messageLabel: UILabel!
+	@IBOutlet weak var lastMessageLabel: UILabel!
+	
+	var hello: Hello! {
+		didSet {
+			updateUI()
+		}
+	}
+	
+	func updateUI() {
+		nameLabel.text = hello.name
+		lastMessageLabel.text = nil
+		profileImageView.image = nil
+		messageLabel.text = hello.message
+	}
 	
 	@IBAction func accpectHelloButtonClicked() {
 		
@@ -30,8 +43,9 @@ class SayHelloTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-		userProfileImageView.clipsToBounds = true
-		userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.width / 2
+		profileImageView.clipsToBounds = true
+		profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2
+		profileImageView.backgroundColor = UIColor.lightGrayColor()
 		
 		self.selectionStyle = .None
 		self.backgroundColor = UIColor.clearColor()

@@ -11,6 +11,7 @@ import UIKit
 class SayHelloViewController: UIViewController {
 	
 	@IBOutlet weak var sayHelloTableView: UITableView!
+	var hiList: [Hello] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,8 @@ class SayHelloViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				print(hiList)
+				self.hiList = hiList
+				self.sayHelloTableView.reloadData()
 				}, failure: { () -> Void in
 					
 			})
@@ -50,11 +53,14 @@ class SayHelloViewController: UIViewController {
 extension SayHelloViewController : UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 10
+		return hiList.count
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.SayHelloCellIdentifier, forIndexPath: indexPath) as! SayHelloTableViewCell
+		
+		cell.hello = hiList[indexPath.row]
+		
 		return cell
 	}
 }
