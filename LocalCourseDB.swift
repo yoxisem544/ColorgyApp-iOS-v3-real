@@ -133,7 +133,7 @@ class LocalCourseDB {
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 //			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			// try background saving
-			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).backgroundContext
+			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 			
 			guard let localCourse = localCourse else { return }
 			guard let localCoursesInDB = LocalCourseDB.getAllStoredCoursesObject() else { return }

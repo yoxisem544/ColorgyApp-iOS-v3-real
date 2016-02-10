@@ -124,18 +124,34 @@ class TestChatLoginViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 //			ColorgyChatAPI.checkHi(user.userId, targetId: user.userId, success: { (canSayHi) -> Void in
 //				if canSayHi {
+//					print("yes, can say hi")
 //					ColorgyChatAPI.sayHi(user.userId, targetId: user.userId, message: "糙糙糙", success: { () -> Void in
-//						
+//
 //						}, failure: { () -> Void in
 //							
 //					})
 //				} else {
-//					print("oh, cant say hi")
+//					print("oh, can't say hi")
 //				}
 //				}, failure: { () -> Void in
 //					
 //			})
-//
+//			
+//			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+//				print(hiList)
+//				for hi in hiList {
+//					if hi.userId == user.userId {
+//						// accept hi
+//						ColorgyChatAPI.acceptHi(user.userId, hiId: hi.id, success: { () -> Void in
+//							print("acc")
+//							}, failure: { () -> Void in
+//							print("acc fail")
+//						})
+//					}
+//				}
+//				}, failure: { () -> Void in
+//					
+//			})
 //			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 //				print(hiList)
 //				for hi in hiList {
@@ -150,8 +166,61 @@ class TestChatLoginViewController: UIViewController {
 //				}, failure: { () -> Void in
 //					
 //			})
-			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
-				print(hiList)
+//			print(user)
+//			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+//				print(hiList)
+//				}, failure: { () -> Void in
+//					
+//			})
+			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
+				print(targets)
+				}, failure: { () -> Void in
+					
+			})
+			
+			
+			
+			
+			}) { () -> Void in
+				
+		}
+	}
+	
+	@IBAction func helloto8() {
+		let idof8 = "56af5808695f5f733211aea2"
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.checkHi(user.userId, targetId: idof8, success: { (canSayHi) -> Void in
+				if canSayHi {
+					ColorgyChatAPI.sayHi(user.userId, targetId: idof8, message: "安安我要跟八打招呼", success: { () -> Void in
+						
+						}, failure: { () -> Void in
+							
+					})
+				} else {
+					
+				}
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
+		
+	}
+	
+	@IBAction func hellototest() {
+		let testId = "56aef7f0e50c113d8cd702d9"
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.checkHi(user.userId, targetId: testId, success: { (canSayHi) -> Void in
+				if canSayHi {
+					ColorgyChatAPI.sayHi(user.userId, targetId: testId, message: "安安我要跟測式打招呼", success: { () -> Void in
+						
+						}, failure: { () -> Void in
+							
+					})
+				} else {
+					
+				}
 				}, failure: { () -> Void in
 					
 			})

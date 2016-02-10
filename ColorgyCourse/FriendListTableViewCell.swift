@@ -24,34 +24,23 @@ class FriendListTableViewCell: UITableViewCell {
 	}
 	
 	func updateUI() {
-		if userId == historyChatroom.chatId1 {
-			// get user 2
-			userNameLabel.text = historyChatroom.aliasId2
-			userQuestionLabel.text = nil
-			userLastMessageLabel.text = nil
-			timeStampLabel.text = "hi time"
-			if let urlString = historyChatroom.imageId2 {
-				if urlString.isValidURLString {
-					if let url = NSURL(string: urlString) {
-						userProfileImageView.sd_setImageWithURL(url, placeholderImage: nil)
-					}
-				}
+		if let imageurl = historyChatroom.image {
+			if imageurl.isValidURLString {
+				userProfileImageView.sd_setImageWithURL(NSURL(string: imageurl)!, placeholderImage: nil)
 			}
-		} else if userId == historyChatroom.chatId2 {
-			// get user 1
-			userNameLabel.text = historyChatroom.aliasId1
-			userQuestionLabel.text = nil
-			userLastMessageLabel.text = nil
-			timeStampLabel.text = "hi time"
-			if let urlString = historyChatroom.imageId1 {
-				if urlString.isValidURLString {
-					if let url = NSURL(string: urlString) {
-						userProfileImageView.sd_setImageWithURL(url, placeholderImage: nil)
-					}
-				}
-			}
-		} else {
-			print("userId doesn't match")
+		}
+		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
+		userQuestionLabel.text = " "
+		userLastMessageLabel.text = (historyChatroom.lastAnswer != "" ? historyChatroom.lastAnswer : " ")
+		timeStampLabel.text = (historyChatroom.lastAnswerDate != "" ? historyChatroom.lastAnswerDate : " ")
+		
+		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
+			print(user)
+			dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.userQuestionLabel.text = (user.lastAnswer != "" ? user.lastAnswer : " ")
+			})
+			}) { () -> Void in
+				
 		}
 	}
 	

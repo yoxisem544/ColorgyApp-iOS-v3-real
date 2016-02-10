@@ -332,6 +332,7 @@ class ColorgyChatAPI : NSObject {
         print(params)
         afManager.POST(serverURL + "/users/get_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             let json = JSON(response)["result"]
+			print(json)
 			if let u = ChatUserInformation(json: json) {
 				success(user: u)
 			} else {
@@ -630,7 +631,7 @@ class ColorgyChatAPI : NSObject {
 			"accessToken": accessToken,
 			"userId": userId
 		]
-		
+		print(params)
 		afManager.POST(serverURL + "/hi/get_list", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 			let json = JSON(response)
 			print(json)
@@ -785,9 +786,10 @@ class ColorgyChatAPI : NSObject {
 				"gender": gender.rawValue,
 				"page": page.stringValue
 			]
-			
+			print(params)
 			afManager.POST(serverURL + "/users/get_history_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 				let json = JSON(response)
+				print(json)
 				let rooms = HistoryChatroom.generateHistoryChatrooms(json)
 				success(targets: rooms)
 				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in

@@ -758,25 +758,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arq-Pk-5sb">
-                                <rect key="frame" x="193" y="67" width="215" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arq-Pk-5sb">
+                                <rect key="frame" x="193" y="111" width="215" height="30"/>
                                 <state key="normal" title="Login as test-yzu-student-f478"/>
                                 <connections>
                                     <action selector="test_yzu_student_f478" destination="hgm-h5-9n1" eventType="touchUpInside" id="lEU-L6-A3P"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UdK-Y0-9OJ">
-                                <rect key="frame" x="176" y="140" width="249" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UdK-Y0-9OJ">
+                                <rect key="frame" x="176" y="184" width="249" height="30"/>
                                 <state key="normal" title="Login as test-yuntech-student-ca62"/>
                                 <connections>
                                     <action selector="test_yuntech_student_ca62" destination="hgm-h5-9n1" eventType="touchUpInside" id="it7-s5-S0y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHD-1v-6SD">
-                                <rect key="frame" x="277" y="222" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHD-1v-6SD">
+                                <rect key="frame" x="277" y="266" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="testAPI" destination="hgm-h5-9n1" eventType="touchUpInside" id="zIC-Ha-IAk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CvR-xR-jsd">
+                                <rect key="frame" x="254" y="329" width="92" height="30"/>
+                                <state key="normal" title="say hello to 8"/>
+                                <connections>
+                                    <action selector="helloto8" destination="hgm-h5-9n1" eventType="touchUpInside" id="W2k-dO-FjC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epP-xZ-2gE">
+                                <rect key="frame" x="245" y="367" width="110" height="30"/>
+                                <state key="normal" title="Say hello to test"/>
+                                <connections>
+                                    <action selector="hellototest" destination="hgm-h5-9n1" eventType="touchUpInside" id="M9i-3W-K5U"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -785,9 +799,13 @@
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="BFG-3d-Umq"/>
                             <constraint firstItem="DHD-1v-6SD" firstAttribute="centerX" secondItem="UdK-Y0-9OJ" secondAttribute="centerX" id="FQY-fy-Kc7"/>
                             <constraint firstItem="DHD-1v-6SD" firstAttribute="top" secondItem="UdK-Y0-9OJ" secondAttribute="bottom" constant="52" id="Nrp-3j-n0q"/>
+                            <constraint firstItem="CvR-xR-jsd" firstAttribute="top" secondItem="DHD-1v-6SD" secondAttribute="bottom" constant="33" id="WCD-GG-S50"/>
+                            <constraint firstItem="epP-xZ-2gE" firstAttribute="centerX" secondItem="CvR-xR-jsd" secondAttribute="centerX" id="Z8o-GA-7bS"/>
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="top" secondItem="vNV-9E-Oy5" secondAttribute="bottom" constant="47" id="Zuu-El-vl0"/>
+                            <constraint firstItem="epP-xZ-2gE" firstAttribute="top" secondItem="CvR-xR-jsd" secondAttribute="bottom" constant="8" id="cMg-tQ-vbv"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="gbL-yY-YFI"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="top" secondItem="arq-Pk-5sb" secondAttribute="bottom" constant="43" id="t3o-fm-QRN"/>
+                            <constraint firstItem="CvR-xR-jsd" firstAttribute="centerX" secondItem="DHD-1v-6SD" secondAttribute="centerX" id="uU6-Pt-gS0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eVf-fZ-QiO"/>

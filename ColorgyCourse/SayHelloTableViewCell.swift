@@ -8,12 +8,20 @@
 
 import UIKit
 
+protocol SayHelloTableViewCellDelegate {
+	func sayHelloTableViewCellAcceptHelloButtonClicked(hi: Hello)
+	func sayHelloTableViewCellRejectHelloButtonClicked(hi: Hello)
+	func sayHelloTableViewCellMoreActionButtonClicked()
+}
+
 class SayHelloTableViewCell: UITableViewCell {
 	
 	@IBOutlet weak var profileImageView: UIImageView!
 	@IBOutlet weak var nameLabel: UILabel!
 	@IBOutlet weak var messageLabel: UILabel!
 	@IBOutlet weak var lastMessageLabel: UILabel!
+	
+	var delegate: SayHelloTableViewCellDelegate?
 	
 	var hello: Hello! {
 		didSet {
@@ -29,15 +37,15 @@ class SayHelloTableViewCell: UITableViewCell {
 	}
 	
 	@IBAction func accpectHelloButtonClicked() {
-		
+		delegate?.sayHelloTableViewCellAcceptHelloButtonClicked(hello)
 	}
 	
 	@IBAction func reclineHelloButtonClicked() {
-		
+		delegate?.sayHelloTableViewCellRejectHelloButtonClicked(hello)
 	}
 	
 	@IBAction func moreActionButtonClicked() {
-		
+		delegate?.sayHelloTableViewCellMoreActionButtonClicked()
 	}
 
     override func awakeFromNib() {

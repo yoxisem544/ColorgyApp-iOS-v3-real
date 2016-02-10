@@ -47,6 +47,19 @@ class SayHelloViewController: UIViewController {
 	struct Storyboard {
 		static let SayHelloCellIdentifier = "Say Hello Cell"
 	}
+	
+	func reloadHi() {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				self.hiList = hiList
+				self.sayHelloTableView.reloadData()
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
+	}
 }
 
 
@@ -60,7 +73,41 @@ extension SayHelloViewController : UITableViewDelegate, UITableViewDataSource {
 		let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.SayHelloCellIdentifier, forIndexPath: indexPath) as! SayHelloTableViewCell
 		
 		cell.hello = hiList[indexPath.row]
+		cell.delegate = self
 		
 		return cell
+	}
+}
+
+extension SayHelloViewController : SayHelloTableViewCellDelegate {
+	
+	func sayHelloTableViewCellAcceptHelloButtonClicked(hi: Hello) {
+		print("sayHelloTableViewCellAcceptHelloButtonClicked")
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.acceptHi(user.userId, hiId: hi.id, success: { () -> Void in
+				self.reloadHi()
+				}, failure: { () -> Void in
+					
+			})
+			}, failure: { () -> Void in
+				
+		})
+	}
+	
+	func sayHelloTableViewCellRejectHelloButtonClicked(hi: Hello) {
+		print("sayHelloTableViewCellRejectHelloButtonClicked")
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
+				self.reloadHi()
+				}, failure: { () -> Void in
+					
+			})
+			}, failure: { () -> Void in
+				
+		})
+	}
+	
+	func sayHelloTableViewCellMoreActionButtonClicked() {
+		
 	}
 }
