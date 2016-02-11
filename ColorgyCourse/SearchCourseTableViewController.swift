@@ -311,6 +311,15 @@ class SearchCourseViewController: UIViewController {
 
 // MARK: - AlertDeleteCourseViewDelegate
 extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
+	
+	func removeCourse(course: Course) {
+		if enrolledCourses.contains(course) {
+			if let index = enrolledCourses.indexOf(course) {
+				enrolledCourses.removeAtIndex(index)
+			}
+		}
+	}
+	
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
         print("didTapDeleteCourseAlertDeleteCourseView")
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
@@ -321,7 +330,8 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // change state
             cell.hasEnrolledState = false
             CourseUpdateHelper.needUpdateCourse()
-			self.loadEnrolledCourses()
+//			self.loadEnrolledCourses()
+			self.removeCourse(course)
 			self.searchCourseTableView.reloadData()
             // Flurry
             if Release().mode {
