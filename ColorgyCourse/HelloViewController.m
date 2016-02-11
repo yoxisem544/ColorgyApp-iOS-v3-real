@@ -7,12 +7,23 @@
 //
 
 #import "HelloViewController.h"
+#import "ColorgyCourse-Swift.h"
 
 @interface HelloViewController ()
+
+@property ChatUserInformation *imformation;
 
 @end
 
 @implementation HelloViewController
+
+- (instancetype)initWithInformaion:(ChatUserInformation *)information {
+    self = [super init];
+    if (self) {
+        self.imformation = information;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
