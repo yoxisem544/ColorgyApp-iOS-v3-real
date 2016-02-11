@@ -150,6 +150,31 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
+    
+    class func checkNameExists(name: String, success: (status: String) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        let params = ["name": name]
+        print(params)
+        afManager.POST(serverURL + "/users/check_name_exists", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            let json = JSON(response)
+            print(json["result"].string)
+            if json["result"].string == NameStatus.Ok.rawValue {
+                success(status: NameStatus.Ok.rawValue)
+            } else if json["result"].string == NameStatus.AlreadyExists.rawValue {
+                success(status: NameStatus.AlreadyExists.rawValue)
+            } else {
+                failure()
+                print("fail to generate NameStatus, unknown status")
+            }
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+                failure()
+        })
+    }
 	
 	///更新使用者名稱：(simple test passed)
 	///
@@ -455,6 +480,39 @@ class ColorgyChatAPI : NSObject {
 			print(JSON(response))
 			let targets = AvailableTarget.generateAvailableTarget(JSON(response))
 			success(targets: targets)
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+                failure()
+        })
+    }
+    
+    class func getAvailableTarget(userId: String, gender: String, page: Int, success: (targets: [AvailableTarget]) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard let uuid = UserSetting.UserUUID() else {
+            failure()
+            return
+        }
+        guard let accessToken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        
+        let params = [
+            "uuid": uuid,
+            "accessToken": accessToken,
+            "userId": userId,
+            "gender": gender,
+            "page": page.stringValue
+        ]
+        
+        afManager.POST(serverURL + "/users/get_available_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+            print(JSON(response))
+            let targets = AvailableTarget.generateAvailableTarget(JSON(response))
+            success(targets: targets)
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()

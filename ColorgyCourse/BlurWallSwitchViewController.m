@@ -19,32 +19,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-//        if (![[response valueForKey:@"question"] isEqual:[NSNull null]]) {
-//            self.lastestQuestion = [response valueForKey:@"question"];
-//            self.questionDate = [response valueForKey:@"date"];
-//        } else {
-//            self.lastestQuestion = nil;
-//            self.questionDate = nil;
-//        }
-//    } failure:^() {}];
-	
-    // View Customized
-    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-    self.isEmailOK = NO;
-    
-    self.openingViewController = [[OpeningViewController alloc] init];
-    [self addChildViewController:self.openingViewController];
-    
-    
-    BlurWallViewController *blurWallViewController = [[BlurWallViewController alloc] init];
-    
-    self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:blurWallViewController];
-    [self addChildViewController:self.navigationBlurWallViewController];
-    
-    self.activityViewController = self.openingViewController;
-    
-    [self switchViewController];
+    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+        self.lastestQuestion = question;
+        self.questionDate = date;
+        
+        // View Customized
+        self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
+        self.isEmailOK = NO;
+        
+        self.openingViewController = [[OpeningViewController alloc] init];
+        [self addChildViewController:self.openingViewController];
+        
+        BlurWallViewController *blurWallViewController = [[BlurWallViewController alloc] init];
+        
+        self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:blurWallViewController];
+        [self addChildViewController:self.navigationBlurWallViewController];
+        
+        self.activityViewController = self.openingViewController;
+        
+        [self switchViewController];
+    } failure:^() {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - switcher
