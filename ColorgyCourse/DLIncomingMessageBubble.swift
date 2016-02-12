@@ -13,7 +13,7 @@ class DLIncomingMessageBubble: UITableViewCell {
     @IBOutlet weak var textlabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
 	
-	var delegate: DLIncomingMessageDelegate?
+	var delegate: DLMessageDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,7 +39,7 @@ class DLIncomingMessageBubble: UITableViewCell {
 	
 	func tapOnUserImageView() {
 		print("tapOnUserImageView")
-		delegate?.DLIncomingMessageDidTapOnUserImageView(userImageView.image)
+		delegate?.DLMessage(didTapOnUserImageView: userImageView.image)
 	}
 
     override func setSelected(selected: Bool, animated: Bool) {

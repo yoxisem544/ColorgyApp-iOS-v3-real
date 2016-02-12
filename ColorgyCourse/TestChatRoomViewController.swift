@@ -70,21 +70,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 	func tt() {
 		print("tt")
 		
-		var images = [SKPhoto]()
-		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
-		for img in imagesCache {
-			images.append(SKPhoto.photoWithImage(img))
-		}
-		images.append(photo)
-		images.append(photo)
-		images.append(photo)
-		
-		// create PhotoBrowser Instance, and present.
-		let browser = SKPhotoBrowser(photos: images)
-		browser.initializePageIndex(0)
-		browser.delegate = self
-		presentViewController(browser, animated: true, completion: {})
-		
 		if floatingOptionView.isShown {
 			// hide it
 			floatingOptionView.isShown = false
@@ -100,8 +85,23 @@ class TestChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	func openPhotoBrowser() {
+	func openPhotoBrowserWithURL(image: UIImage) {
+		var images = [SKPhoto]()
+		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
+//		for img in imagesCache {
+//			images.append(SKPhoto.photoWithImage(img))
+//		}
+//		SKPhoto.photoWithImageURL("")
+//		images.append(photo)
+//		images.append(photo)
+//		images.append(photo)
+		images.append(SKPhoto.photoWithImage(image))
 		
+		// create PhotoBrowser Instance, and present.
+		let browser = SKPhotoBrowser(photos: images)
+		browser.initializePageIndex(0)
+		browser.delegate = self
+		presentViewController(browser, animated: true, completion: {})
 	}
 	
 	func checkAndStartSocket() {
@@ -360,7 +360,7 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 	}
 }
 
-extension TestChatRoomViewController : DLIncomingMessageDelegate {
+extension TestChatRoomViewController : DLMessageDelegate {
 	func DLIncomingMessageDidTapOnUserImageView(image: UIImage?) {
 		if let image = image {
 			print("did tap on user image \(image)")
@@ -368,6 +368,8 @@ extension TestChatRoomViewController : DLIncomingMessageDelegate {
 			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.59, withUserImage: image, user: yourFriend))
 		}
 	}
+	
+	
 }
 
 extension TestChatRoomViewController : SKPhotoBrowserDelegate {
