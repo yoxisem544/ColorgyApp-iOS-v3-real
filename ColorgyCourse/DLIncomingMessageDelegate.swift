@@ -10,5 +10,5 @@ import Foundation
 
 protocol DLMessageDelegate {
 	func DLMessage(didTapOnUserImageView image: UIImage?)
-	func DLMessage(didTapOnSentImageView imageView: UIImageView)
+	func DLMessage(didTapOnSentImageView imageView: UIImageView?)
 }

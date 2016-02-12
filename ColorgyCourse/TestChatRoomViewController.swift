@@ -14,6 +14,8 @@ class TestChatRoomViewController: DLMessagesViewController {
 	/// Will be initialize once only, when enter this controller
 	/// This socket will save the connection state.
 	private let colorgySocket = ColorgySocket()
+	/// Can check if need to disconnect the socket or not
+	private var shouldDisconnectSocket: Bool = true
 	/// messages of this controller
 	/// just append a new message to it if you recieved a new message
 	private var messages: [ChatMessage] = [ChatMessage]()
@@ -188,9 +190,11 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
-		colorgySocket.disconnect()
+		if shouldDisconnectSocket {
+			colorgySocket.disconnect()
+		}
 	}
-	
+
 	func configureFloatingOptionView() {
 		let barHeight = (navigationController != nil ? navigationController!.navigationBar.frame.height : 0) + 20
 		print(barHeight)
@@ -223,7 +227,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingPhotoBubble
 				
 				if messages[indexPath.row].content.isValidURLString {
-					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
+					cell.contentImageView.sd_setImageWithURL(messages[indexPath.row].content.url, placeholderImage: nil)
 				}
 				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
 				cell.delegate = self
@@ -251,8 +255,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
 
 				if messages[indexPath.row].content.isValidURLString {
-					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
+					cell.contentImageView.sd_setImageWithURL(messages[indexPath.row].content.url, placeholderImage: nil)
 				}
+				cell.delegate = self
 				
 				return cell
 			} else if messages[indexPath.row].type == "sticker" {
@@ -275,6 +280,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			
 			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("你已經選了 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
 				print("go to photo library")
+				self.shouldDisconnectSocket = false
 				self.dismissKeyboard()
 				let controller = UIImagePickerController()
 				controller.delegate = self
@@ -357,6 +363,12 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 		dismissViewControllerAnimated(true, completion: nil)
 		sendImage(image)
+		shouldDisconnectSocket = true
+	}
+	
+	func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+		shouldDisconnectSocket = true
+		dismissViewControllerAnimated(true, completion: nil)
 	}
 }
 
@@ -370,8 +382,11 @@ extension TestChatRoomViewController : DLMessageDelegate {
 		}
 	}
 	
-	func DLMessage(didTapOnSentImageView imageView: UIImageView) {
+	func DLMessage(didTapOnSentImageView imageView: UIImageView?) {
 		print("didTapOnSentImageView")
+		if let image = imageView?.image {
+			openPhotoBrowserWithURL(image)
+		}
 	}
 }
 
