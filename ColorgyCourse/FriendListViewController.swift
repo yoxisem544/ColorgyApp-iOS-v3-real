@@ -14,6 +14,8 @@ class FriendListViewController: UIViewController {
 	var historyChatrooms: [HistoryChatroom] = []
 	var userId: String = ""
 	
+	private var renewTimer: NSTimer!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,11 +31,23 @@ class FriendListViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		loadFriend()
+		renewChatroom(every: 12.0)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
 		super.viewWillDisappear(animated)
 		hidesBottomBarWhenPushed = false
+		renewTimer.invalidate()
+	}
+	
+	func renewChatroom(every second: NSTimeInterval) {
+		renewTimer = NSTimer(timeInterval: second, target: self, selector: "refreshChatroom", userInfo: nil, repeats: true)
+		renewTimer.fire()
+		NSRunLoop.currentRunLoop().addTimer(renewTimer, forMode: NSRunLoopCommonModes)
+	}
+	
+	func refreshChatroom() {
+		loadFriend()
 	}
 	
 	func loadFriend() {
@@ -44,7 +58,10 @@ class FriendListViewController: UIViewController {
 			print("自己的id")
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
 				print(targets)
-				self.historyChatrooms = targets
+				let sortedTargets = targets.sort({ (room1: HistoryChatroom, room2: HistoryChatroom) -> Bool in
+					return room1.updatedAt.timeIntervalSince1970() > room2.updatedAt.timeIntervalSince1970()
+				})
+				self.historyChatrooms = sortedTargets
 				self.friendListTableView.reloadData()
 				}, failure: { () -> Void in
 					
