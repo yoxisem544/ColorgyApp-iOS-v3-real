@@ -856,6 +856,27 @@ class ColorgyChatAPI : NSObject {
 			})
 	}
 	
+	class func getHistoryTarget(userId: String, gender: Gender, fromPage: Int, toPage: Int, complete: (targets: [HistoryChatroom]) -> Void) {
+		var pagesToGet = toPage - fromPage + 1
+		var targets = [HistoryChatroom]()
+		for page in fromPage...toPage {
+			getHistoryTarget(userId, gender: gender, page: page, success: { (_targets) -> Void in
+				for t in _targets {
+					targets.append(t)
+				}
+				pagesToGet -= 1
+				if pagesToGet == 0 {
+					complete(targets: targets)
+				}
+				}, failure: { () -> Void in
+					pagesToGet -= 1
+					if pagesToGet == 0 {
+						complete(targets: targets)
+					}
+			})
+		}
+	}
+	
     class func checkImageType(data: NSData) {
         var c = UInt8()
         data.getBytes(&c, length: 1)

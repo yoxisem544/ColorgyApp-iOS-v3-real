@@ -15,6 +15,8 @@ class FriendListViewController: UIViewController {
 	var userId: String = ""
 	let refreshContorl = UIRefreshControl()
 	
+	var currentPage = 0
+	
 	private var renewTimer: NSTimer!
 	
 	// MARK: Life Cycle
@@ -30,6 +32,7 @@ class FriendListViewController: UIViewController {
 		friendListTableView.backgroundColor = ColorgyColor.BackgroundColor
 		
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		refreshContorl.tintColor = ColorgyColor.MainOrange
 		friendListTableView.addSubview(refreshContorl)
     }
 	
@@ -142,5 +145,25 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		hidesBottomBarWhenPushed = true
 		performSegueWithIdentifier(Storyboard.GotoChatroomSegueIdentifier, sender: historyChatrooms[indexPath.row])
+	}
+}
+
+extension FriendListViewController : UIScrollViewDelegate {
+	func scrollViewDidScroll(scrollView: UIScrollView) {
+		if scrollView == friendListTableView {
+			if (scrollView.contentOffset.y + scrollView.frame.height) >= scrollView.contentSize.height {
+//				print("scrolling at the end of scrollView")
+			}
+		}
+	}
+	
+	func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+		if scrollView == friendListTableView {
+			print("scrollViewWillBeginDecelerating")
+			if (scrollView.contentOffset.y + scrollView.frame.height) >= scrollView.contentSize.height {
+				print("need more data, loading page \(currentPage + 1)")
+				
+			}
+		}
 	}
 }

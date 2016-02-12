@@ -26,6 +26,7 @@ class SayHelloViewController: UIViewController {
 		sayHelloTableView.backgroundColor = ColorgyColor.BackgroundColor
 		
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		refreshContorl.tintColor = ColorgyColor.MainOrange
 		sayHelloTableView.addSubview(refreshContorl)
     }
 	
