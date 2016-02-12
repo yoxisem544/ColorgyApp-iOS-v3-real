@@ -112,7 +112,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 					self.messages.append(m)
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
-					print(m.createdAt.timeIntervalSince1970())
+					print(m.createdAt.timeStampString())
 				}
 				self.recievingABunchMessages()
 				print(messages)

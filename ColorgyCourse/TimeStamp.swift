@@ -110,4 +110,38 @@ class TimeStamp : NSObject {
 			return nil
 		}
 	}
+	
+	func timeStampString() -> String {
+		let now = NSDate()
+		if let dateCreated = self.nsdateValue() {
+			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970
+			if timeInterval < 60.0 {
+				// seconds
+				let seconds = Int(timeInterval % 60)
+				return "\(seconds)秒前"
+			} else if timeInterval < (60.0 * 60) {
+				// minute，1~59分鐘
+				// 60秒 x 60分鐘
+				let minutes = Int((timeInterval / 60.0) % 60.0)
+				return "\(minutes)分鐘前"
+			} else if timeInterval < (60.0 * 60 * 24) {
+				// hour，1~23小時
+				// 60秒 x 60分鐘 x 24小時
+				let hours = Int(((timeInterval / 60.0) / 60.0) % 24.0)
+				return "\(hours)小時前"
+			} else if timeInterval < (60.0 * 60 * 24 * 5) {
+				// day，1~5天前
+				// 60秒 x 60分鐘 x 24小時 x 5天
+				let days = Int((((timeInterval / 60.0) / 60.0) / 24.0) % 5)
+				return "\(days)天前"
+			} else {
+				// 日期顯示
+				let formatter = NSDateFormatter()
+				formatter.dateFormat = "MMMdd"
+				return formatter.stringFromDate(dateCreated)
+			}
+		} else {
+			return "未知時間"
+		}
+	}
 }
