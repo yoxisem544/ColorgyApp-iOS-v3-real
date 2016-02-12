@@ -14,6 +14,13 @@ class DLIncomingPhotoBubble: UITableViewCell {
 	@IBOutlet weak var contentImageView: UIImageView!
 	
 	var delegate: DLMessageDelegate?
+	var message: ChatMessage! {
+		didSet {
+			if message.content.isValidURLString {
+				self.contentImageView.sd_setImageWithURL(message.content.url, placeholderImage: nil)
+			}
+		}
+	}
 	
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,7 +47,7 @@ class DLIncomingPhotoBubble: UITableViewCell {
 	
 	func tapOnUserImageView() {
 		print("tapOnUserImageView")
-		delegate?.DLMessage(didTapOnUserImageView: userImageView.image)
+		delegate?.DLMessage(didTapOnUserImageView: userImageView.image, message: message)
 	}
 	
 	func tapOnImageView() {

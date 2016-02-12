@@ -83,7 +83,7 @@ class UserDetailInformationView: UIView {
 				percenageLabel.text = "0%"
 			} else {
 				// ok!
-				percenageLabel.text = "\(percentage))%"
+				percenageLabel.text = "\(percentage)%"
 			}
 		} else {
 			// error on percentage

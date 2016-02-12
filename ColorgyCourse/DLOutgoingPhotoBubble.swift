@@ -13,6 +13,13 @@ class DLOutgoingPhotoBubble: UITableViewCell {
 	@IBOutlet weak var contentImageView: UIImageView!
 	
 	var delegate: DLMessageDelegate?
+	var message: ChatMessage! {
+		didSet {
+			if message.content.isValidURLString {
+				self.contentImageView.sd_setImageWithURL(message.content.url, placeholderImage: nil)
+			}
+		}
+	}
 	
     override func awakeFromNib() {
         super.awakeFromNib()

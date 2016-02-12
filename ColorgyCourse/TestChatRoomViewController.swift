@@ -221,59 +221,65 @@ class TestChatRoomViewController: DLMessagesViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if messages[indexPath.row].userId != userId {
 			// incoming
-			if messages[indexPath.row].type == "text" {
+			if messages[indexPath.row].type == ChatMessage.MessageType.Text {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
 				
-				cell.textlabel.text = messages[indexPath.row].content
 				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				
 				return cell
-			} else if messages[indexPath.row].type == "image" {
+			} else if messages[indexPath.row].type == ChatMessage.MessageType.Image {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingPhotoBubble
 				
-				if messages[indexPath.row].content.isValidURLString {
-					cell.contentImageView.sd_setImageWithURL(messages[indexPath.row].content.url, placeholderImage: nil)
-				}
 				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				
 				return cell
-			} else if messages[indexPath.row].type == "sticker" {
+			} else if messages[indexPath.row].type == ChatMessage.MessageType.Sticker {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
+				
+				cell.message = messages[indexPath.row]
 				cell.delegate = self
+				
 				return cell
 			} else {
 				print(messages[indexPath.row].type)
 				print(messages)
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
+				
+				cell.message = messages[indexPath.row]
 				cell.delegate = self
+				
 				return cell
 			}
 		} else {
-			if messages[indexPath.row].type == "text" {
+			if messages[indexPath.row].type == ChatMessage.MessageType.Text {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingMessageBubble
 				
-				cell.textlabel.text = messages[indexPath.row].content
+				cell.message = messages[indexPath.row]
 				
 				return cell
-			} else if messages[indexPath.row].type == "image" {
+			} else if messages[indexPath.row].type == ChatMessage.MessageType.Image {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
 
-				if messages[indexPath.row].content.isValidURLString {
-					cell.contentImageView.sd_setImageWithURL(messages[indexPath.row].content.url, placeholderImage: nil)
-				}
+				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				
 				return cell
-			} else if messages[indexPath.row].type == "sticker" {
+			} else if messages[indexPath.row].type == ChatMessage.MessageType.Sticker {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
+				
+				cell.message = messages[indexPath.row]
 				
 				return cell
 			} else {
 				print(messages[indexPath.row].type)
 				print(messages)
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
+				
+				cell.message = messages[indexPath.row]
 				
 				return cell
 			}
