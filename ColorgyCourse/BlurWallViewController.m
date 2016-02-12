@@ -165,9 +165,8 @@
     
     // set Image
     UIImageView *blurImageView = [[UIImageView alloc] initWithFrame:cell.bounds];
-    
-    NSDictionary *tempDic = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
-    NSString *imageUrl = [tempDic objectForKey:PHOTO_KEY];
+    AvailableTarget *availableTarget = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
+    NSString *imageUrl = availableTarget.avatarBlur2XURL;
     
     if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
         blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
@@ -211,7 +210,7 @@
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 10)];
     
-    messageLabel.text = [[self.blurWallDataMutableArray objectAtIndex:indexPath.item] objectForKey:MESSAGE_KEY];
+    messageLabel.text = availableTarget.name;
     messageLabel.numberOfLines = 2;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:12.0];
@@ -360,21 +359,21 @@
     
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-//        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:[NSString stringWithFormat:@"%d", currentPage] success:^(NSDictionary *response) {
-//            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:[response objectForKey:@"result"]];
-//            // Tell the collectionView to reload.
-//            [self.blurWallCollectionView reloadData];
-//            [self.blurWallRefreshControl endRefreshing];
-//            if (callbackBlock) {
-//                callbackBlock();
-//            }
-//        } failure:^() {
-//            [self.blurWallCollectionView reloadData];
-//            [self.blurWallRefreshControl endRefreshing];
-//            if (callbackBlock) {
-//                callbackBlock();
-//            }
-//        }];
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
+            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+            // Tell the collectionView to reload.
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+            if (callbackBlock) {
+                callbackBlock();
+            }
+        } failure:^() {
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+            if (callbackBlock) {
+                callbackBlock();
+            }
+        }];
     } failure:^() {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         

@@ -829,19 +829,19 @@
         // 檢查名字 尚需修改
         if (self.nameTextField.text.length) {
             [self showChecking];
-//            [ColorgyChatAPI checkNameExists:self.nameTextField.text success:^(NSDictionary *response) {
-//                if ([[response valueForKey:@"result"] isEqualToString:@"ok"]) {
-//                    [self showCheck];
-//                } else {
-//                    [self dismissCheck];
-//                }
-//            } failure:^() {
-//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-//                
-//                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-//                }]];
-//                [self presentViewController:alertController animated:YES completion:nil];
-//            }];
+            [ColorgyChatAPI checkNameExists:self.nameTextField.text success:^(NSString *status) {
+                if ([status isEqualToString:@"ok"]) {
+                    [self showCheck];
+                } else {
+                    [self dismissCheck];
+                }
+            } failure:^() {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
         }
     }
     return YES;

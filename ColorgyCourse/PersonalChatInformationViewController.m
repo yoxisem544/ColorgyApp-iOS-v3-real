@@ -23,18 +23,18 @@
     UIView *checkedView;
     BOOL nameIsOk;
     UIActivityIndicatorView *checkingView;
-    UILabel *zodiacLabel;
-    UITextField *zodiacTextField;
-    UILabel *schoolLabel;
-    UITextField *schoolTextField;
-    UILabel *addressLabel;
-    UITextField *addressTextField;
-    UILabel *topicLabel;
-    UITextView *topicTextView;
-    UILabel *interestingLabel;
-    UITextView *interestingTextView;
-    UILabel *goodAtThingsLabel;
-    UITextView *goodAtThingsTextView;
+    UILabel *aboutHoroscopeLabel;
+    UITextField *aboutHoroscopeTextField;
+    UILabel *aboutSchoolLabel;
+    UITextField *aboutSchoolTextField;
+    UILabel *aboutHabitancyLabel;
+    UITextField *aboutHabitancyTextField;
+    UILabel *aboutConversationLabel;
+    UITextView *aboutConversationTextView;
+    UILabel *aboutPassionLabel;
+    UITextView *aboutPassionTextView;
+    UILabel *aboutExpertiseLabel;
+    UITextView *aboutExpertiseTextView;
 }
 
 @end
@@ -139,133 +139,129 @@
     nameIsOk = NO;
     
     
-    zodiacLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(nameTextField.frame) + sectionY, width, 32)];
-    zodiacLabel.text = @"星座";
-    zodiacLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    zodiacLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    [scrollView addSubview:zodiacLabel];
+    aboutHoroscopeLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(nameTextField.frame) + sectionY, width, 32)];
+    aboutHoroscopeLabel.text = @"星座";
+    aboutHoroscopeLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutHoroscopeLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    [scrollView addSubview:aboutHoroscopeLabel];
     
-    zodiacTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(zodiacLabel.frame) + marginY, width, height)];
-    [zodiacTextField setDelegate:self];
-    zodiacTextField.backgroundColor = [UIColor whiteColor];
-    zodiacTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    zodiacTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
-    zodiacTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
-    zodiacTextField.leftViewMode = UITextFieldViewModeAlways;
-    [zodiacTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    [zodiacTextField.layer setBorderWidth:1];
-    [zodiacTextField.layer setCornerRadius:3];
-    [zodiacTextField.layer setMasksToBounds:YES];
-    [scrollView addSubview:zodiacTextField];
+    aboutHoroscopeTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHoroscopeLabel.frame) + marginY, width, height)];
+    [aboutHoroscopeTextField setDelegate:self];
+    aboutHoroscopeTextField.backgroundColor = [UIColor whiteColor];
+    aboutHoroscopeTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutHoroscopeTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    aboutHoroscopeTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
+    aboutHoroscopeTextField.leftViewMode = UITextFieldViewModeAlways;
+    [aboutHoroscopeTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    [aboutHoroscopeTextField.layer setBorderWidth:1];
+    [aboutHoroscopeTextField.layer setCornerRadius:3];
+    [aboutHoroscopeTextField.layer setMasksToBounds:YES];
+    [scrollView addSubview:aboutHoroscopeTextField];
     
-    schoolLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(zodiacTextField.frame) + sectionY, width, 32)];
-    schoolLabel.text = @"學校";
-    schoolLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    schoolLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    [scrollView addSubview:schoolLabel];
+    aboutSchoolLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHoroscopeTextField.frame) + sectionY, width, 32)];
+    aboutSchoolLabel.text = @"學校";
+    aboutSchoolLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutSchoolLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    [scrollView addSubview:aboutSchoolLabel];
     
-    schoolTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(schoolLabel.frame) + marginY, width, height)];
-    //schoolTextField.backgroundColor = [UIColor whiteColor];
-    schoolTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    schoolTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    schoolTextField.placeholder = [UserSetting UserOrganization];
-    schoolTextField.enabled = NO;
-    schoolTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
-    schoolTextField.leftViewMode = UITextFieldViewModeAlways;
-    //    [schoolTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    //    [schoolTextField.layer setBorderWidth:1];
-    //    [schoolTextField.layer setCornerRadius:3];
-    //    [schoolTextField.layer setMasksToBounds:YES];
-    [scrollView addSubview:schoolTextField];
+    aboutSchoolTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutSchoolLabel.frame) + marginY, width, height)];
+    //aboutSchoolTextField.backgroundColor = [UIColor whiteColor];
+    aboutSchoolTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutSchoolTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    aboutSchoolTextField.placeholder = [UserSetting UserOrganization];
+    aboutSchoolTextField.enabled = NO;
+    aboutSchoolTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
+    aboutSchoolTextField.leftViewMode = UITextFieldViewModeAlways;
+    //    [aboutSchoolTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    //    [aboutSchoolTextField.layer setBorderWidth:1];
+    //    [aboutSchoolTextField.layer setCornerRadius:3];
+    //    [aboutSchoolTextField.layer setMasksToBounds:YES];
+    [scrollView addSubview:aboutSchoolTextField];
     
-    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(schoolTextField.frame) + sectionY, width, 32)];
-    addressLabel.text = @"居住地";
-    addressLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    addressLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    [scrollView addSubview:addressLabel];
+    aboutHabitancyLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutSchoolTextField.frame) + sectionY, width, 32)];
+    aboutHabitancyLabel.text = @"居住地";
+    aboutHabitancyLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutHabitancyLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    [scrollView addSubview:aboutHabitancyLabel];
     
-    addressTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(addressLabel.frame) + marginY, width, height)];
-    [addressTextField setDelegate:self];
-    addressTextField.backgroundColor = [UIColor whiteColor];
-    addressTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    addressTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
-    addressTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
-    addressTextField.leftViewMode = UITextFieldViewModeAlways;
-    [addressTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    [addressTextField.layer setBorderWidth:1];
-    [addressTextField.layer setCornerRadius:3];
-    [addressTextField.layer setMasksToBounds:YES];
-    [scrollView addSubview:addressTextField];
+    aboutHabitancyTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHabitancyLabel.frame) + marginY, width, height)];
+    [aboutHabitancyTextField setDelegate:self];
+    aboutHabitancyTextField.backgroundColor = [UIColor whiteColor];
+    aboutHabitancyTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutHabitancyTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    aboutHabitancyTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
+    aboutHabitancyTextField.leftViewMode = UITextFieldViewModeAlways;
+    [aboutHabitancyTextField.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    [aboutHabitancyTextField.layer setBorderWidth:1];
+    [aboutHabitancyTextField.layer setCornerRadius:3];
+    [aboutHabitancyTextField.layer setMasksToBounds:YES];
+    [scrollView addSubview:aboutHabitancyTextField];
     
-    topicLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(addressTextField.frame) + sectionY, width, height)];
-    topicLabel.text = @"想聊的話題";
-    topicLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    topicLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHabitancyTextField.frame) + sectionY, width, height)];
+    aboutConversationLabel.text = @"想聊的話題";
+    aboutConversationLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
     
-    topicTextView = [[UITextView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(topicLabel.frame) + marginY, width, height * 2.5)];
-    topicTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    topicTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
-    [topicTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    [topicTextView.layer setBorderWidth:1];
-    [topicTextView.layer setCornerRadius:3];
-    [topicTextView.layer setMasksToBounds:YES];
-    [topicTextView setDelegate:self];
-    [scrollView addSubview:topicLabel];
-    [scrollView addSubview:topicTextView];
+    aboutConversationTextView = [[UITextView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutConversationLabel.frame) + marginY, width, height * 2.5)];
+    aboutConversationTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutConversationTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    [aboutConversationTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    [aboutConversationTextView.layer setBorderWidth:1];
+    [aboutConversationTextView.layer setCornerRadius:3];
+    [aboutConversationTextView.layer setMasksToBounds:YES];
+    [aboutConversationTextView setDelegate:self];
+    [scrollView addSubview:aboutConversationLabel];
+    [scrollView addSubview:aboutConversationTextView];
     
-    interestingLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(topicTextView.frame) + sectionY, width, height)];
-    interestingLabel.text = @"現在熱衷的事情";
-    interestingLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    interestingLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    [scrollView addSubview:interestingLabel];
+    aboutPassionLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutConversationTextView.frame) + sectionY, width, height)];
+    aboutPassionLabel.text = @"現在熱衷的事情";
+    aboutPassionLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutPassionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    [scrollView addSubview:aboutPassionLabel];
     
-    interestingTextView = [[UITextView alloc] initWithFrame:
-                           CGRectMake(marginX, CGRectGetMaxY(interestingLabel.frame) + marginY, width, height  *2.5)];
-    interestingTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    interestingTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
-    [interestingTextView setDelegate:self];
-    [interestingTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    [interestingTextView.layer setBorderWidth:1];
-    [interestingTextView.layer setCornerRadius:3];
-    [interestingTextView.layer setMasksToBounds:YES];
-    [scrollView addSubview:interestingTextView];
+    aboutPassionTextView = [[UITextView alloc] initWithFrame:
+                            CGRectMake(marginX, CGRectGetMaxY(aboutPassionLabel.frame) + marginY, width, height  *2.5)];
+    aboutPassionTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutPassionTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    [aboutPassionTextView setDelegate:self];
+    [aboutPassionTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    [aboutPassionTextView.layer setBorderWidth:1];
+    [aboutPassionTextView.layer setCornerRadius:3];
+    [aboutPassionTextView.layer setMasksToBounds:YES];
+    [scrollView addSubview:aboutPassionTextView];
     
-    goodAtThingsLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(interestingTextView.frame) + sectionY, width, height)];
-    goodAtThingsLabel.text = @"專精的事情";
-    goodAtThingsLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    goodAtThingsLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    [scrollView addSubview:goodAtThingsLabel];
+    aboutExpertiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutPassionTextView.frame) + sectionY, width, height)];
+    aboutExpertiseLabel.text = @"專精的事情";
+    aboutExpertiseLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutExpertiseLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
+    [scrollView addSubview:aboutExpertiseLabel];
     
-    goodAtThingsTextView = [[UITextView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(goodAtThingsLabel.frame) + marginY, width, height * 2.5)];
-    goodAtThingsTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    goodAtThingsTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
-    [goodAtThingsTextView setDelegate:self];
-    [goodAtThingsTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
-    [goodAtThingsTextView.layer setBorderWidth:1];
-    [goodAtThingsTextView.layer setCornerRadius:3];
-    [goodAtThingsTextView.layer setMasksToBounds:YES];
-    [scrollView addSubview:goodAtThingsTextView];
+    aboutExpertiseTextView = [[UITextView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutExpertiseLabel.frame) + marginY, width, height * 2.5)];
+    aboutExpertiseTextView.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutExpertiseTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
+    [aboutExpertiseTextView setDelegate:self];
+    [aboutExpertiseTextView.layer setBorderColor:[self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor];
+    [aboutExpertiseTextView.layer setBorderWidth:1];
+    [aboutExpertiseTextView.layer setCornerRadius:3];
+    [aboutExpertiseTextView.layer setMasksToBounds:YES];
+    [scrollView addSubview:aboutExpertiseTextView];
     
-    scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(goodAtThingsTextView.frame) + 50);
+    scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(aboutExpertiseTextView.frame) + 50);
+    [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
+        nameTextField.text = information.name;
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        
+        [ud setObject:information.name forKey:@"nickyname"];
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
+        [self showCheck];
+        aboutConversationTextView.text = information.aboutConversation;
+        aboutExpertiseTextView.text = information.aboutExpertise;
+        aboutHabitancyTextField.text = information.aboutHabitancy;
+        aboutHoroscopeTextField.text = information.aboutHoroscope;
+        aboutPassionTextView.text = information.aboutPassion;
+        aboutSchoolTextField.text = information.aboutSchool;
+    } failure:^() {}];
     
-//    [ColorgyChatAPI me:^(NSDictionary *response) {
-//        if (response) {
-//            NSDictionary *about = [[response objectForKey:@"result"] objectForKey:@"about"];
-//            
-//            nameTextField.text = [[response objectForKey:@"result"] objectForKey:@"name"];
-//            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-//            [ud setObject:[[response objectForKey:@"result"] objectForKey:@"name"] forKey:@"nickyName"];
-//            textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
-//            [self showCheck];
-//            topicTextView.text = [about objectForKey:@"conversation"];
-//            goodAtThingsTextView.text = [about objectForKey:@"expertise"];
-//            addressTextField.text = [about objectForKey:@"habitancy"];
-//            zodiacTextField.text = [about objectForKey:@"horoscope"];
-//            interestingTextView.text = [about objectForKey:@"passion"];
-//            schoolTextField.text = [about objectForKey:@"school"];
-//        }
-//    } failure:^() {}];
-	
 }
 
 - (void)didReceiveMemoryWarning {
@@ -278,16 +274,7 @@
 - (void)submitMethod {
     if (nameIsOk) {
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-            NSDictionary *dic = @{
-                                  @"conversation" : topicTextView.text,
-                                  @"expertise" : goodAtThingsTextView.text,
-                                  @"habitancy" : addressTextField.text,
-                                  @"horoscope" : zodiacTextField.text,
-                                  @"passion" : interestingTextView.text,
-                                  @"school" : schoolTextField.text
-                                  };
-//            [ColorgyChatAPI updateAbout:dic userId:chatUser.userId success:^() {
-//            } failure:^() {}];
+            [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {} failure:^() {}];
             [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
             } failure:^() {}];
         } failure:^() {
@@ -353,19 +340,19 @@
                 [self showCheck];
                 return YES;
             }
-//            [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSDictionary *response) {
-//                if ([[response valueForKey:@"result"] isEqualToString:@"ok"]) {
-//                    [self showCheck];
-//                } else {
-//                    [self dismissCheck];
-//                }
-//            } failure:^() {
-//                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-//                
-//                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-//                }]];
-//                [self presentViewController:alertController animated:YES completion:nil];
-//            }];
+            [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSString *status) {
+                if ([status isEqualToString:@"ok"]) {
+                    [self showCheck];
+                } else {
+                    [self dismissCheck];
+                }
+            } failure:^() {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
         }
     }
     return YES;
