@@ -32,12 +32,19 @@ class DLIncomingPhotoBubble: UITableViewCell {
 		contentImageView.backgroundColor = UIColor.lightGrayColor()
 		userImageView.userInteractionEnabled = true
 		
+		contentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnImageView"))
+		contentImageView.userInteractionEnabled = true
+		
 		self.selectionStyle = .None
     }
 	
 	func tapOnUserImageView() {
 		print("tapOnUserImageView")
 		delegate?.DLMessage(didTapOnUserImageView: userImageView.image)
+	}
+	
+	func tapOnImageView() {
+		delegate?.DLMessage(didTapOnSentImageView: contentImageView)
 	}
 
     override func setSelected(selected: Bool, animated: Bool) {

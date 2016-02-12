@@ -361,7 +361,8 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 }
 
 extension TestChatRoomViewController : DLMessageDelegate {
-	func DLIncomingMessageDidTapOnUserImageView(image: UIImage?) {
+	
+	func DLMessage(didTapOnUserImageView image: UIImage?) {
 		if let image = image {
 			print("did tap on user image \(image)")
 			self.dismissKeyboard()
@@ -369,7 +370,9 @@ extension TestChatRoomViewController : DLMessageDelegate {
 		}
 	}
 	
-	
+	func DLMessage(didTapOnSentImageView imageView: UIImageView) {
+		print("didTapOnSentImageView")
+	}
 }
 
 extension TestChatRoomViewController : SKPhotoBrowserDelegate {
