@@ -17,7 +17,7 @@ class UserDetailInformationView: UIView {
         // Drawing code
     }
     */
-	convenience init(withBlurPercentage percentage: Double, withUserImage image: UIImage?, user: ChatUserInformation?) {
+	convenience init(withBlurPercentage percentage: Int?, withUserImage image: UIImage?, user: ChatUserInformation?) {
 		self.init()
 		
 		// dismiss
@@ -74,15 +74,20 @@ class UserDetailInformationView: UIView {
 		self.addSubview(percenageLabel)
 		
 		// adjust blur percentage
-		if percentage > 1.0 {
-			// set to 100%
-			percenageLabel.text = "100%"
-		} else if percentage < 0.0 {
-			// set to 0%
-			percenageLabel.text = "0%"
+		if let percentage = percentage {
+			if percentage > 100 {
+				// set to 100%
+				percenageLabel.text = "100%"
+			} else if percentage < 0 {
+				// set to 0%
+				percenageLabel.text = "0%"
+			} else {
+				// ok!
+				percenageLabel.text = "\(percentage))%"
+			}
 		} else {
-			// ok!
-			percenageLabel.text = "\(Int(percentage * 100))%"
+			// error on percentage
+			percenageLabel.text = "???%"
 		}
 	}
 	

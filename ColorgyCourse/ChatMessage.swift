@@ -15,6 +15,7 @@ class ChatMessage: NSObject {
 	var content: String
 	var userId: String
 	var createdAt: TimeStamp
+	var chatProgress: Int?
 	
 	var mediaImage: UIImage!
 	
@@ -30,20 +31,16 @@ class ChatMessage: NSObject {
 		static let Sticker = "stickerId"
 	}
 	
-	override var description: String { return "message: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n}" }
-	
-	class func fakeData() -> ChatMessage? {
-		let m = ChatMessage(id: "i", type: "text", content: "yoyoyoyo馬英九給你握握手", userId: "123", createdAt: "223")
-		return m
-	}
+	override var description: String { return "message: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n\tchatProgress -> \(chatProgress)\n}" }
 	
 	convenience init?(onMessage json: JSON) {
-		
+		print(json)
 		var id: String?
 		var type: String?
 		var content: String?
 		var userId: String?
 		var createdAt: String?
+		var chatProgress: Int?
 		
 		if json["id"].string != nil {
 			id = json["id"].string!
@@ -75,16 +72,20 @@ class ChatMessage: NSObject {
 		if json["data"]["createdAt"].string != nil {
 			createdAt = json["data"]["createdAt"].string!
 		}
+		chatProgress = json["data"]["chatProgress"].int
 		
-		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt)
+		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt, chatProgress: chatProgress)
 	}
 	
 	convenience init?(onConnect json: JSON) {
+
 		var id: String?
 		var type: String?
 		var content: String?
 		var userId: String?
 		var createdAt: String?
+		var chatProgress: Int?
+		
 		if json["id"].string != nil {
 			id = json["id"].string!
 		}
@@ -118,17 +119,19 @@ class ChatMessage: NSObject {
 		if json["createdAt"].string != nil {
 			createdAt = json["createdAt"].string!
 		}
+		chatProgress = json["data"]["chatProgress"].int
 		
-		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt)
+		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt, chatProgress: chatProgress)
 	}
 	
-	internal init?(id: String?, type: String?, content: String?, userId: String?, createdAt: String?) {
+	internal init?(id: String?, type: String?, content: String?, userId: String?, createdAt: String?, chatProgress: Int?) {
 		
 		self.id = ""
 		self.type = ""
 		self.content = ""
 		self.userId = ""
 		self.createdAt = TimeStamp()
+		self.chatProgress = Int()
 		
 		super.init()
 		
@@ -144,6 +147,7 @@ class ChatMessage: NSObject {
 		self.content = content!
 		self.userId = userId!
 		self.createdAt = createdAtTimeStamp
+		self.chatProgress = chatProgress
 	}
 	
 	class func generateMessages(json: JSON) -> [ChatMessage] {

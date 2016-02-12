@@ -32,6 +32,8 @@ class TestChatRoomViewController: DLMessagesViewController {
 	var userId: String!
 	/// **Need uuid to create chatroom**
 	var uuid: String!
+	/// **Need history chatroom to check blur percentage
+	var historyChatroom: HistoryChatroom!
 	
 	// You can track user's current chatrom by this property.
 	private var chatroom: Chatroom?
@@ -165,6 +167,8 @@ class TestChatRoomViewController: DLMessagesViewController {
 					self.messages.append(m)
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
+					// get percentage
+					m.chatProgress = self.historyChatroom.chatProgress
 					if m.type == ChatMessage.MessageType.Image {
 						self.downloadImage(m)
 					}
@@ -383,7 +387,9 @@ extension TestChatRoomViewController : DLMessageDelegate {
 		if let image = image {
 			print("did tap on user image \(image)")
 			self.dismissKeyboard()
-			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.59, withUserImage: image, user: yourFriend))
+			if let lastMessage = messages.last {
+				navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: lastMessage.chatProgress, withUserImage: image, user: yourFriend))
+			}
 		}
 	}
 	

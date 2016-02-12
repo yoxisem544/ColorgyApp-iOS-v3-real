@@ -844,10 +844,9 @@ class ColorgyChatAPI : NSObject {
 				"gender": gender.rawValue,
 				"page": page.stringValue
 			]
-			print(params)
+
 			afManager.POST(serverURL + "/users/get_history_target", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
 				let json = JSON(response)
-				print(json)
 				let rooms = HistoryChatroom.generateHistoryChatrooms(json)
 				success(targets: rooms)
 				}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
@@ -860,7 +859,9 @@ class ColorgyChatAPI : NSObject {
 		var pagesToGet = toPage - fromPage + 1
 		var targets = [HistoryChatroom]()
 		for page in fromPage...toPage {
+			print("getting page \(page)")
 			getHistoryTarget(userId, gender: gender, page: page, success: { (_targets) -> Void in
+				print(_targets)
 				for t in _targets {
 					targets.append(t)
 				}

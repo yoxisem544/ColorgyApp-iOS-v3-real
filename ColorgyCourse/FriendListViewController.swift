@@ -111,6 +111,7 @@ class FriendListViewController: UIViewController {
 			if let historyChatroom = sender as? HistoryChatroom {
 				vc.userId = userId
 				vc.friendId = historyChatroom.friendId
+				vc.historyChatroom = historyChatroom
 				if let accessToken = UserSetting.UserAccessToken() {
 					vc.accessToken = accessToken
 				} else {
@@ -162,7 +163,13 @@ extension FriendListViewController : UIScrollViewDelegate {
 			print("scrollViewWillBeginDecelerating")
 			if (scrollView.contentOffset.y + scrollView.frame.height) >= scrollView.contentSize.height {
 				print("need more data, loading page \(currentPage + 1)")
-				
+				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+					ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, fromPage: 0, toPage: 10, complete: { (targets) -> Void in
+						print(targets.count)
+					})
+					}, failure: { () -> Void in
+						print("fail to refresh friend list")
+				})
 			}
 		}
 	}
