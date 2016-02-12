@@ -25,8 +25,8 @@ class CourseNotification {
 						}
 					}
 				}
-				print(UIApplication.sharedApplication().scheduledLocalNotifications)
-				print("")
+//				print(UIApplication.sharedApplication().scheduledLocalNotifications)
+//				print("")
 				LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
 					if let localCourses = localCourses {
 						// get out all course stored in db
@@ -38,8 +38,8 @@ class CourseNotification {
 							}
 						}
 					}
-					print(UIApplication.sharedApplication().scheduledLocalNotifications)
-					print("")
+//					print(UIApplication.sharedApplication().scheduledLocalNotifications)
+//					print("")
 				})
 			})
         }

@@ -31,7 +31,9 @@ class FriendListTableViewCell: UITableViewCell {
 		}
 		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
 		userQuestionLabel.text = " "
-		userLastMessageLabel.text = (historyChatroom.lastContent != "" ? historyChatroom.lastContent : " ")
+		let prefixString = (userId == historyChatroom.lastSpeaker ? "你：" : "")
+		let lastMessage = (historyChatroom.lastContent != "" ? historyChatroom.lastContent : " ") ?? " "
+		userLastMessageLabel.text = prefixString + lastMessage
 		timeStampLabel.text = historyChatroom.updatedAt?.timeStampString()
 		print(historyChatroom.lastAnsweredDate?.timeStampString())
 		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
