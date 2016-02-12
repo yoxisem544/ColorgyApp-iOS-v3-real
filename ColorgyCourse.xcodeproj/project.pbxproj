@@ -51,6 +51,14 @@
 		633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C41C5F2ECF009370B4 /* SpinContentView.swift */; };
 		633D11C91C5F2F09009370B4 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C81C5F2F09009370B4 /* NumberExtensions.swift */; };
 		633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */; };
+		633D7ED01C6DCC2C00683AFD /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */; };
+		633D7ED11C6DCC2C00683AFD /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */; };
+		633D7ED21C6DCC2C00683AFD /* SKDetectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */; };
+		633D7ED31C6DCC2C00683AFD /* SKIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */; };
+		633D7ED41C6DCC2C00683AFD /* SKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */; };
+		633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */; };
+		633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */; };
+		633D7ED71C6DCC2C00683AFD /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -266,6 +274,15 @@
 		633D11C41C5F2ECF009370B4 /* SpinContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinContentView.swift; sourceTree = "<group>"; };
 		633D11C81C5F2F09009370B4 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersLogEvent.swift; sourceTree = "<group>"; };
+		633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCaptionView.swift; sourceTree = "<group>"; };
+		633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKDetectingImageView.swift; sourceTree = "<group>"; };
+		633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKDetectingView.swift; sourceTree = "<group>"; };
+		633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKIndicatorView.swift; sourceTree = "<group>"; };
+		633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhoto.swift; sourceTree = "<group>"; };
+		633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKPhotoBrowser.bundle; sourceTree = "<group>"; };
+		633D7ECC1C6DCC2C00683AFD /* SKPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPhotoBrowser.h; sourceTree = "<group>"; };
+		633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowser.swift; sourceTree = "<group>"; };
+		633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKZoomingScrollView.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -459,6 +476,22 @@
 				63B5FB0C1C53346000C45CF2 /* Server Course Data Base */,
 			);
 			name = "Core data";
+			sourceTree = "<group>";
+		};
+		633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */,
+				633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */,
+				633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */,
+				633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */,
+				633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */,
+				633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */,
+				633D7ECC1C6DCC2C00683AFD /* SKPhotoBrowser.h */,
+				633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */,
+				633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */,
+			);
+			path = SKPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		63B5FB051C5333D200C45CF2 /* For Course */ = {
@@ -922,6 +955,7 @@
 				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
 				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
+				633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */,
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
@@ -1091,6 +1125,7 @@
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
+				633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */,
 				63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */,
@@ -1208,6 +1243,7 @@
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
 				63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */,
 				63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */,
+				633D7ED01C6DCC2C00683AFD /* SKCaptionView.swift in Sources */,
 				633D11C61C5F2ECF009370B4 /* DismissGuideButton.swift in Sources */,
 				63C7A7A61C607B74004DF000 /* UserDetailInformationView.swift in Sources */,
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
@@ -1237,6 +1273,7 @@
 				6311D2101C3A4B2A00812934 /* CreateCourseTableViewCell.swift in Sources */,
 				63306E791C6838AE00D5D57C /* Hello.swift in Sources */,
 				63BB30101C5617390055BA19 /* SocketStringReader.swift in Sources */,
+				633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */,
 				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,
@@ -1257,6 +1294,7 @@
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
 				63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */,
+				633D7ED71C6DCC2C00683AFD /* SKZoomingScrollView.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
 				633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */,
 				63B942A21C59DEAB0060A097 /* AnimationController.swift in Sources */,
@@ -1276,6 +1314,7 @@
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
+				633D7ED21C6DCC2C00683AFD /* SKDetectingView.swift in Sources */,
 				63306E831C68AEEA00D5D57C /* HistoryChatroom.swift in Sources */,
 				63BB30081C5617390055BA19 /* SocketEventHandler.swift in Sources */,
 				63BB300F1C5617390055BA19 /* SocketParsable.swift in Sources */,
@@ -1295,6 +1334,7 @@
 				63BB30131C5617390055BA19 /* WebSocket.swift in Sources */,
 				633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */,
 				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
+				633D7ED31C6DCC2C00683AFD /* SKIndicatorView.swift in Sources */,
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
 				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
@@ -1331,9 +1371,11 @@
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
 				4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
+				633D7ED41C6DCC2C00683AFD /* SKPhoto.swift in Sources */,
 				63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */,
 				63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */,
 				4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */,
+				633D7ED11C6DCC2C00683AFD /* SKDetectingImageView.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */,
 				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,

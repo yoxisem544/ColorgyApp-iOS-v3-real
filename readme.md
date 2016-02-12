@@ -37,6 +37,7 @@ Flurry.startSession(SecretKey.FlurryDevelopmentKey)
 8. [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 9. [ImagePickerSheetController](https://github.com/larcus94/ImagePickerSheetController)
 10. [DLMessageViewController](https://github.com/yoxisem544/DLChatView)(自己講)
+11. [SKPhotoBrowser](https://github.com/suzuki-0000/SKPhotoBrowser)
 
 ## Chatroom usage
 ### 怎麼串

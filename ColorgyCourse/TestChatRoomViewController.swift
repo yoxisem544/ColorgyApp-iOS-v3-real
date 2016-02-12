@@ -16,7 +16,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 	private let colorgySocket = ColorgySocket()
 	/// messages of this controller
 	/// just append a new message to it if you recieved a new message
-	private var messages = [ChatMessage]()
+	private var messages: [ChatMessage] = [ChatMessage]()
+	/// image cache
+	private var imagesCache: [UIImage] = [UIImage]()
 	/// Parameter to create a new Chatroom
 	private var params: [String : NSObject]!
 	
@@ -67,6 +69,22 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	func tt() {
 		print("tt")
+		
+		var images = [SKPhoto]()
+		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
+		for img in imagesCache {
+			images.append(SKPhoto.photoWithImage(img))
+		}
+		images.append(photo)
+		images.append(photo)
+		images.append(photo)
+		
+		// create PhotoBrowser Instance, and present.
+		let browser = SKPhotoBrowser(photos: images)
+		browser.initializePageIndex(0)
+		browser.delegate = self
+		presentViewController(browser, animated: true, completion: {})
+		
 		if floatingOptionView.isShown {
 			// hide it
 			floatingOptionView.isShown = false
@@ -80,6 +98,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 				self.floatingOptionView.frame.origin.y += self.floatingOptionView.frame.height
 				}, completion: nil)
 		}
+	}
+	
+	func openPhotoBrowser() {
+		
 	}
 	
 	func checkAndStartSocket() {
@@ -127,7 +149,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 					self.messages.append(m)
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
-					print(m.createdAt.timeStampString())
+					if m.type == ChatMessage.MessageType.Image {
+						self.downloadImage(m)
+					}
 				}
 				self.recievingABunchMessages()
 				print(messages)
@@ -144,6 +168,17 @@ class TestChatRoomViewController: DLMessagesViewController {
 		}
 		
 		colorgySocket.connect()
+	}
+	
+	func downloadImage(message: ChatMessage) {
+		let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+		dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+			if let data = NSData(contentsOfURL: message.content.url) {
+				if let image = UIImage(data: data) {
+					self.imagesCache.append(image)
+				}
+			}
+		})
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -332,5 +367,11 @@ extension TestChatRoomViewController : DLIncomingMessageDelegate {
 			self.dismissKeyboard()
 			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.59, withUserImage: image, user: yourFriend))
 		}
+	}
+}
+
+extension TestChatRoomViewController : SKPhotoBrowserDelegate {
+	func didShowPhotoAtIndex(index: Int) {
+		print(index)
 	}
 }
