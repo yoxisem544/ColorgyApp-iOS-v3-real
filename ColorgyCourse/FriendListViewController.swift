@@ -31,6 +31,11 @@ class FriendListViewController: UIViewController {
 		loadFriend()
 	}
 	
+	override func viewWillDisappear(animated: Bool) {
+		super.viewWillDisappear(animated)
+		hidesBottomBarWhenPushed = false
+	}
+	
 	func loadFriend() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			// get userId
@@ -51,6 +56,27 @@ class FriendListViewController: UIViewController {
 	
 	struct Storyboard {
 		static let FriendListCellIdentifier = "Friend List Cell"
+		static let GotoChatroomSegueIdentifier = "goto chatroom"
+	}
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == Storyboard.GotoChatroomSegueIdentifier {
+			let vc = segue.destinationViewController as! TestChatRoomViewController
+			if let historyChatroom = sender as? HistoryChatroom {
+				vc.userId = userId
+				vc.friendId = historyChatroom.friendId
+				if let accessToken = UserSetting.UserAccessToken() {
+					vc.accessToken = accessToken
+				} else {
+					print("enter chatroom without accesstoken")
+				}
+				if let uuid = UserSetting.UserUUID() {
+					vc.uuid = uuid
+				} else {
+					print("enter chatroom without uuid")
+				}
+			}
+		}
 	}
 }
 
@@ -69,5 +95,10 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 		
 		
 		return cell
+	}
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		hidesBottomBarWhenPushed = true
+		performSegueWithIdentifier(Storyboard.GotoChatroomSegueIdentifier, sender: historyChatrooms[indexPath.row])
 	}
 }

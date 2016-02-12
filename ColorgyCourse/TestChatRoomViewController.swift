@@ -130,7 +130,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
@@ -291,10 +290,6 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 		print(message)
 		if let message = message {
 			colorgySocket.sendTextMessage(message, withUserId: userId)
-		}
-		if let m = ChatMessage.fakeData() {
-			self.messages.append(m)
-			self.messageRecieved()
 		}
 	}
 	

@@ -2906,6 +2906,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="Mub-rK-o6x"/>
                     <connections>
                         <outlet property="friendListTableView" destination="9da-Q6-7km" id="TeM-dr-TWM"/>
+                        <segue destination="1hP-AF-A0w" kind="show" identifier="goto chatroom" id="ypF-3y-Hte"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V6M-S5-zcP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2961,6 +2962,7 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ypF-3y-Hte"/>
         <segue reference="sYP-VR-PPv"/>
     </inferredMetricsTieBreakers>
 </document>
