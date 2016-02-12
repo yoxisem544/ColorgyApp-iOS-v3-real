@@ -183,7 +183,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			for m in messages {
 				self.messages.append(m)
 				self.messageRecieved()
-				print(m.createdAt.timeStampString())
+				print(m)
 			}
 		}
 		
@@ -245,8 +245,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 				
 				return cell
 			} else {
-				print(messages[indexPath.row].type)
-				print(messages)
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
 				
 				cell.message = messages[indexPath.row]
@@ -275,8 +273,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 				
 				return cell
 			} else {
-				print(messages[indexPath.row].type)
-				print(messages)
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
 				
 				cell.message = messages[indexPath.row]
@@ -389,13 +385,11 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 
 // MARK: - DLMessageDelegate
 extension TestChatRoomViewController : DLMessageDelegate {
-	func DLMessage(didTapOnUserImageView image: UIImage?) {
+	func DLMessage(didTapOnUserImageView image: UIImage?, message: ChatMessage) {
 		if let image = image {
 			print("did tap on user image \(image)")
 			self.dismissKeyboard()
-			if let lastMessage = messages.last {
-				navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: lastMessage.chatProgress, withUserImage: image, user: yourFriend))
-			}
+			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: message.chatProgress, withUserImage: image, user: yourFriend))
 		}
 	}
 	

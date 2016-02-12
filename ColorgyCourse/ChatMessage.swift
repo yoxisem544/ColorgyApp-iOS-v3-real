@@ -31,10 +31,10 @@ class ChatMessage: NSObject {
 		static let Sticker = "stickerId"
 	}
 	
-	override var description: String { return "message: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n\tchatProgress -> \(chatProgress)\n}" }
+	override var description: String { return "ChatMessage: {\n\tid => \(id)\n\ttype => \(type)\n\tcontent => \(content)\n\tuserId => \(userId)\n\tcreatedAt => \(createdAt)\n\tchatProgress => \(chatProgress)\n}" }
 	
 	convenience init?(onMessage json: JSON) {
-		print(json)
+
 		var id: String?
 		var type: String?
 		var content: String?

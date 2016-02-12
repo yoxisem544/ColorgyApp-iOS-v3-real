@@ -785,7 +785,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/users/check_answered_latest，參數包含uuid,accessToken,userId
 	///2. 成功的會會回傳{ result: 'answered' }以及{ result: 'not answered'  }
-	class func checkAnsweredLatestQuestion(userId: String, success: () -> Void, failure: () -> Void) {
+	class func checkAnsweredLatestQuestion(userId: String, success: (answeredLastestQuestion: Bool) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -807,8 +807,15 @@ class ColorgyChatAPI : NSObject {
 		]
 		
 		afManager.POST(serverURL + "/users/check_answered_latest", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-			print(JSON(response))
-			success()
+			let json = JSON(response)
+			if json["result"].string == "answerd" {
+				success(answeredLastestQuestion: true)
+			} else if json["result"].string == "not answerd" {
+				success(answeredLastestQuestion: false)
+			} else {
+				print("check answer lastest fail, unknown type")
+				failure()
+			}
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
