@@ -28,7 +28,7 @@ class HistoryChatroom : NSObject {
 	}
 	
 	convenience init?(json: JSON) {
-
+		print(json)
 		var _chatProgress: Int?
 		var _gender: String?
 		var _friendId: String?
