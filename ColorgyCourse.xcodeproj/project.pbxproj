@@ -157,7 +157,6 @@
 		63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */; };
 		63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776641B9720C800B15AF0 /* LogoutHelper.swift */; };
 		63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */; };
-		63EDDD2F1C6D8A2400E63B92 /* TimeStampTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EDDD2E1C6D8A2400E63B92 /* TimeStampTransformer.swift */; };
 		63EDDD311C6D8A4800E63B92 /* TimeStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */; };
 		63F718681C3D07C200870C5F /* CourseTimePickerKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */; };
 		63F7186A1C3D17B800870C5F /* OneWayInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718691C3D17B800870C5F /* OneWayInputTextField.swift */; };
@@ -377,7 +376,6 @@
 		63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityWebViewController.swift; sourceTree = "<group>"; };
 		63E776641B9720C800B15AF0 /* LogoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
 		63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLoginViewController.swift; sourceTree = "<group>"; };
-		63EDDD2E1C6D8A2400E63B92 /* TimeStampTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStampTransformer.swift; sourceTree = "<group>"; };
 		63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStamp.swift; sourceTree = "<group>"; };
 		63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTimePickerKeyboardView.swift; sourceTree = "<group>"; };
 		63F718691C3D17B800870C5F /* OneWayInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneWayInputTextField.swift; sourceTree = "<group>"; };
@@ -911,7 +909,6 @@
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
-				63EDDD2E1C6D8A2400E63B92 /* TimeStampTransformer.swift */,
 				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
 				63C7A7A51C607B74004DF000 /* UserDetailInformationView.swift */,
 				637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */,
@@ -1332,7 +1329,6 @@
 				63FBCC521B9346D900B3084F /* ColorgyAPIResults.swift in Sources */,
 				631746711C04110400F612B9 /* School.swift in Sources */,
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
-				63EDDD2F1C6D8A2400E63B92 /* TimeStampTransformer.swift in Sources */,
 				4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
 				63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */,

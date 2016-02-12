@@ -124,6 +124,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			for m in messages {
 				self.messages.append(m)
 				self.messageRecieved()
+				print(m.createdAt.timeStampString())
 			}
 		}
 		

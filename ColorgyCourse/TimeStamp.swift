@@ -100,7 +100,6 @@ class TimeStamp : NSObject {
 		let formatter = NSDateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss-SSS"
 		let dateString = "\(year)-\(month)-\(date)-\(hour)-\(minute)-\(second)-\(millisecond)"
-		print(dateString)
 		return formatter.dateFromString(dateString)
 	}
 	
@@ -115,7 +114,11 @@ class TimeStamp : NSObject {
 	func timeStampString() -> String {
 		let now = NSDate()
 		if let dateCreated = self.nsdateValue() {
-			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970
+			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8) + 10
+			print("now \(now.timeIntervalSince1970)")
+			print("dateCreated \(dateCreated.timeIntervalSince1970)")
+			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970)")
+			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8))")
 			if timeInterval < 60.0 {
 				// seconds
 				let seconds = Int(timeInterval % 60)
