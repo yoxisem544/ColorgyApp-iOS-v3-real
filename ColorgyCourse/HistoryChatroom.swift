@@ -16,7 +16,7 @@ class HistoryChatroom : NSObject {
 	var chatroomId: String
 	var image: String?
 	var lastAnswer: String?
-	var lastAnswerDate: String?
+	var lastAnswerDate: TimeStamp?
 	var name: String
 	
 	override var description: String {
@@ -54,7 +54,7 @@ class HistoryChatroom : NSObject {
 		self.chatroomId = String()
 		self.image = String()
 		self.lastAnswer = String()
-		self.lastAnswerDate = String()
+		self.lastAnswerDate = TimeStamp()
 		self.name = String()
 		
 		super.init()
@@ -78,7 +78,7 @@ class HistoryChatroom : NSObject {
 		// optional
 		self.image = image
 		self.lastAnswer = lastAnswer
-		self.lastAnswerDate = lastAnswerDate
+		self.lastAnswerDate = TimeStamp(timeStampString: lastAnswerDate!)
 	}
 	
 	class func generateHistoryChatrooms(json: JSON) -> [HistoryChatroom] {
