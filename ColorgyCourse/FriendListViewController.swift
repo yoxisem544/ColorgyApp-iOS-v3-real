@@ -107,7 +107,7 @@ class FriendListViewController: UIViewController {
 	// MARK: Navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == Storyboard.GotoChatroomSegueIdentifier {
-			let vc = segue.destinationViewController as! TestChatRoomViewController
+			let vc = segue.destinationViewController as! ChatRoomViewController
 			if let historyChatroom = sender as? HistoryChatroom {
 				vc.userId = userId
 				vc.friendId = historyChatroom.friendId

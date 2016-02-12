@@ -238,7 +238,7 @@ class TestChatLoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
 		if segue.identifier == "to chat room" {
 			hidesBottomBarWhenPushed = true
-			let vc = segue.destinationViewController as! TestChatRoomViewController
+			let vc = segue.destinationViewController as! ChatRoomViewController
 			vc.userId = self.userId
 			vc.uuid = self.uuid
 			vc.friendId = self.friendId

@@ -817,10 +817,10 @@
             </objects>
             <point key="canvasLocation" x="334" y="1717"/>
         </scene>
-        <!--Test Chat Room View Controller-->
+        <!--Chat Room View Controller-->
         <scene sceneID="3MS-uj-D8J">
             <objects>
-                <viewController id="1hP-AF-A0w" customClass="TestChatRoomViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1hP-AF-A0w" customClass="ChatRoomViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BHS-3O-LXN"/>
                         <viewControllerLayoutGuide type="bottom" id="5Rg-Ed-luO"/>

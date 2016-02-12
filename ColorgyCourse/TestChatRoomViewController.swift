@@ -1,5 +1,5 @@
 //
-//  TestChatRoomViewController.swift
+//  ChatRoomViewController.swift
 //  ColorgyCourse
 //
 //  Created by David on 2016/1/25.
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class TestChatRoomViewController: DLMessagesViewController {
+class ChatRoomViewController: DLMessagesViewController {
 	
 	/// Will be initialize once only, when enter this controller
 	/// This socket will save the connection state.
@@ -44,12 +44,12 @@ class TestChatRoomViewController: DLMessagesViewController {
 	// for user profile image
 	private var userProfileImageString: String = ""
 	private var yourFriend: ChatUserInformation?
-
+	
 	// MARK: Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// Do any additional setup after loading the view.
 		// the delegate here is from DLMessageView
 		// set it to current class
 		self.delegate = self
@@ -61,7 +61,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 		checkAndStartSocket()
 		
 		self.bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tt"))
-    }
+	}
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
@@ -106,13 +106,13 @@ class TestChatRoomViewController: DLMessagesViewController {
 	func openPhotoBrowserWithURL(image: UIImage) {
 		var images = [SKPhoto]()
 		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
-//		for img in imagesCache {
-//			images.append(SKPhoto.photoWithImage(img))
-//		}
-//		SKPhoto.photoWithImageURL("")
-//		images.append(photo)
-//		images.append(photo)
-//		images.append(photo)
+		//    for img in imagesCache {
+		//      images.append(SKPhoto.photoWithImage(img))
+		//    }
+		//    SKPhoto.photoWithImageURL("")
+		//    images.append(photo)
+		//    images.append(photo)
+		//    images.append(photo)
 		images.append(SKPhoto.photoWithImage(image))
 		
 		// create PhotoBrowser Instance, and present.
@@ -165,7 +165,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				print(messages)
 				for m in messages {
 					self.messages.append(m)
-					//				self.messageRecieved()
+					//        self.messageRecieved()
 					self.messageRecievedButDontReload()
 					// get percentage
 					m.chatProgress = self.historyChatroom.chatProgress
@@ -200,7 +200,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 			}
 		})
 	}
-
+	
 	func configureFloatingOptionView() {
 		let barHeight = (navigationController != nil ? navigationController!.navigationBar.frame.height : 0) + 20
 		print(barHeight)
@@ -261,7 +261,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				return cell
 			} else if messages[indexPath.row].type == ChatMessage.MessageType.Image {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLOutgoingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLOutgoingPhotoBubble
-
+				
 				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				
@@ -301,7 +301,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 						
 						let options = PHImageRequestOptions()
 						options.deliveryMode = .FastFormat
-							
+						
 						PHImageManager.defaultManager().requestImageDataForAsset(asset, options: options, resultHandler: { (data: NSData?, string: String?, orientation: UIImageOrientation, info: [NSObject : AnyObject]?) -> Void in
 							print(string)
 							print(orientation)
@@ -324,9 +324,9 @@ class TestChatRoomViewController: DLMessagesViewController {
 		} else if PHPhotoLibrary.authorizationStatus() == .NotDetermined {
 			PHPhotoLibrary.requestAuthorization({ (status: PHAuthorizationStatus) -> Void in
 				let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
-                dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-                    self.openImagePicker()
-                })
+				dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+					self.openImagePicker()
+				})
 			})
 		} else {
 			needPermission()
@@ -356,7 +356,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 }
 
 // MARK: - DLMessagesViewControllerDelegate
-extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
+extension ChatRoomViewController : DLMessagesViewControllerDelegate {
 	func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?) {
 		print(message)
 		if let message = message {
@@ -370,7 +370,7 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 }
 
 // MARK: - UIImagePickerControllerDelegate
-extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ChatRoomViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 		dismissViewControllerAnimated(true, completion: nil)
 		sendImage(image)
@@ -384,7 +384,7 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 }
 
 // MARK: - DLMessageDelegate
-extension TestChatRoomViewController : DLMessageDelegate {
+extension ChatRoomViewController : DLMessageDelegate {
 	func DLMessage(didTapOnUserImageView image: UIImage?, message: ChatMessage) {
 		if let image = image {
 			print("did tap on user image \(image)")
@@ -402,7 +402,7 @@ extension TestChatRoomViewController : DLMessageDelegate {
 }
 
 // MARK: - SKPhotoBrowserDelegate
-extension TestChatRoomViewController : SKPhotoBrowserDelegate {
+extension ChatRoomViewController : SKPhotoBrowserDelegate {
 	func didShowPhotoAtIndex(index: Int) {
 		print(index)
 	}
