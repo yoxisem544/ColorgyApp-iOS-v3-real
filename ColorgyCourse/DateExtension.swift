@@ -29,4 +29,25 @@ extension NSDate {
 		formatter.dateFormat = "dd"
 		return formatter.stringFromDate(self)
 	}
+	
+	var hour: String {
+		let formatter = NSDateFormatter()
+		//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+		formatter.dateFormat = "HH"
+		return formatter.stringFromDate(self)
+	}
+	
+	var minute: String {
+		let formatter = NSDateFormatter()
+		//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+		formatter.dateFormat = "mm"
+		return formatter.stringFromDate(self)
+	}
+	
+	var second: String {
+		let formatter = NSDateFormatter()
+		//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss ZZZ"
+		formatter.dateFormat = "ss"
+		return formatter.stringFromDate(self)
+	}
 }

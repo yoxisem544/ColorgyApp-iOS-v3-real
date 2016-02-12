@@ -23,4 +23,8 @@ extension String {
         }
         return "no user device name".stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
     }
+	
+	var intValue: Int? {
+		return Int(self)
+	}
 }

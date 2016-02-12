@@ -16,15 +16,18 @@ class HistoryChatroom : NSObject {
 	var chatroomId: String
 	var image: String?
 	var lastAnswer: String?
-	var lastAnswerDate: TimeStamp?
+	var lastAnsweredDate: TimeStamp?
 	var name: String
+	var lastContent: String?
+	var lastSpeaker: String
+	var updatedAt: TimeStamp?
 	
 	override var description: String {
-		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnswerDate)\n\tname -> \(name)\n}"
+		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n}"
 	}
 	
 	convenience init?(json: JSON) {
-		
+		print(json)
 		var _chatProgress: Int?
 		var _gender: String?
 		var _friendId: String?
@@ -33,20 +36,26 @@ class HistoryChatroom : NSObject {
 		var _lastAnswer: String?
 		var _lastAnswerDate: String?
 		var _name: String?
-
+		var _lastContent: String?
+		var _lastSpeaker: String?
+		var _updatedAt: String?
+		
 		_chatProgress = json["chatProgress"].int
 		_gender = json["gender"].string
 		_friendId = json["friendId"].string
 		_chatroomId = json["chatroomId"].string
 		_image = json["image"].string
 		_lastAnswer = json["lastAnswer"].string
-		_lastAnswerDate = json["lastAnswerDate"].string
+		_lastAnswerDate = json["lastAnsweredDate"].string
 		_name = json["name"].string
+		_lastContent = json["lastContent"].string
+		_lastSpeaker = json["lastSpeaker"].string
+		_updatedAt = json["updatedAt"].string
 		
-		self.init(chatProgress: _chatProgress, gender: _gender, friendId: _friendId, chatroomId: _chatroomId, image: _image, lastAnswer: _lastAnswer, lastAnswerDate: _lastAnswerDate, name: _name)
+		self.init(chatProgress: _chatProgress, gender: _gender, friendId: _friendId, chatroomId: _chatroomId, image: _image, lastAnswer: _lastAnswer, lastAnsweredDate: _lastAnswerDate, name: _name, lastContent: _lastContent, lastSpeaker: _lastSpeaker, updatedAt: _updatedAt)
 	}
 	
-	init?(chatProgress: Int?, gender: String?, friendId: String?, chatroomId: String?, image: String?, lastAnswer: String?, lastAnswerDate: String?, name: String?) {
+	init?(chatProgress: Int?, gender: String?, friendId: String?, chatroomId: String?, image: String?, lastAnswer: String?, lastAnsweredDate: String?, name: String?, lastContent: String?, lastSpeaker: String?, updatedAt: String?) {
 		
 		self.chatProgress = Int()
 		self.gender = String()
@@ -54,8 +63,9 @@ class HistoryChatroom : NSObject {
 		self.chatroomId = String()
 		self.image = String()
 		self.lastAnswer = String()
-		self.lastAnswerDate = TimeStamp()
+		self.lastAnsweredDate = TimeStamp()
 		self.name = String()
+		self.lastSpeaker = String()
 		
 		super.init()
 		
@@ -66,6 +76,7 @@ class HistoryChatroom : NSObject {
 		guard friendId != nil else { return nil }
 		guard chatroomId != nil else { return nil }
 		guard name != nil else { return nil }
+		guard lastSpeaker != nil else { return nil }
 		
 		// required
 		self.chatProgress = chatProgress!
@@ -74,11 +85,14 @@ class HistoryChatroom : NSObject {
 		self.friendId = friendId!
 		self.chatroomId = chatroomId!
 		self.name = name!
+		self.lastSpeaker = lastSpeaker!
 		
 		// optional
 		self.image = image
 		self.lastAnswer = lastAnswer
-		self.lastAnswerDate = TimeStamp(timeStampString: lastAnswerDate!)
+		self.lastAnsweredDate = TimeStamp(timeStampString: lastAnsweredDate ?? "") ?? TimeStamp()
+		self.lastContent = lastContent
+		self.updatedAt = TimeStamp(timeStampString: updatedAt ?? "") ?? TimeStamp()
 	}
 	
 	class func generateHistoryChatrooms(json: JSON) -> [HistoryChatroom] {

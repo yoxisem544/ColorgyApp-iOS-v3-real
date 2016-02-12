@@ -23,13 +23,14 @@ class TimeStamp : NSObject {
 	}
 	
 	override init() {
-		self.year = Int()
-		self.month = Int()
-		self.date = Int()
-		self.hour = Int()
-		self.minute = Int()
-		self.second = Int()
-		self.millisecond = Int()
+		let now = NSDate()
+		self.year = now.year.intValue ?? 0
+		self.month = now.month.intValue ?? 0
+		self.date = now.day.intValue ?? 0
+		self.hour = now.hour.intValue ?? 0
+		self.minute = now.minute.intValue ?? 0
+		self.second = now.second.intValue ?? 0
+		self.millisecond = 0
 		super.init()
 	}
 	
