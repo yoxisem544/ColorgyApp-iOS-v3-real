@@ -34,6 +34,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	// Floating option view
 	private let floatingOptionView = FloatingOptionView()
+	
+	// for user profile image
+	private var userProfileImageString: String = ""
+	private var yourFriend: ChatUserInformation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +47,23 @@ class TestChatRoomViewController: DLMessagesViewController {
 		// set it to current class
 		self.delegate = self
 		
+		loadUserProfileImage()
+		
 		configureFloatingOptionView()
 		
 		checkAndStartSocket()
 		
 		self.bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tt"))
     }
+	
+	func loadUserProfileImage() {
+		ColorgyChatAPI.getUser(friendId, success: { (user: ChatUserInformation) -> Void in
+			self.userProfileImageString = user.avatarBlur2XURL ?? ""
+			self.yourFriend = user
+			}) { () -> Void in
+				
+		}
+	}
 	
 	func tt() {
 		print("tt")
@@ -165,7 +180,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
 				
 				cell.textlabel.text = messages[indexPath.row].content
-				cell.userImageView.image = UIImage(named: "ching.jpg")
+				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
 				cell.delegate = self
 				
 				return cell
@@ -175,7 +190,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 				if messages[indexPath.row].content.isValidURLString {
 					cell.contentImageView.sd_setImageWithURL(NSURL(string: messages[indexPath.row].content)!, placeholderImage: nil)
 				}
-				cell.userImageView.image = UIImage(named: "ching.jpg")
+				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
 				cell.delegate = self
 				
 				return cell
@@ -315,7 +330,7 @@ extension TestChatRoomViewController : DLIncomingMessageDelegate {
 		if let image = image {
 			print("did tap on user image \(image)")
 			self.dismissKeyboard()
-			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.59, withUserImage: image))
+			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: 0.59, withUserImage: image, user: yourFriend))
 		}
 	}
 }

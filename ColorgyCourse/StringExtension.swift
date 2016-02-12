@@ -27,4 +27,12 @@ extension String {
 	var intValue: Int? {
 		return Int(self)
 	}
+	
+	var url: NSURL {
+		if self.isValidURLString {
+			return NSURL(string: self)!
+		} else {
+			return NSURL(string: "")!
+		}
+	}
 }

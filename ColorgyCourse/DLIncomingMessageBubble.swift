@@ -29,6 +29,7 @@ class DLIncomingMessageBubble: UITableViewCell {
         userImageView.layer.cornerRadius = userImageView.bounds.width / 2
         userImageView.clipsToBounds = true
         userImageView.contentMode = .ScaleAspectFill
+		userImageView.backgroundColor = UIColor.lightGrayColor()
 		
 		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnUserImageView"))
 		userImageView.userInteractionEnabled = true

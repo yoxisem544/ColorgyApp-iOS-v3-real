@@ -14,13 +14,13 @@ class HistoryChatroom : NSObject {
 	var gender: String
 	var friendId: String
 	var chatroomId: String
-	var image: String?
+	var image: String
 	var lastAnswer: String?
 	var lastAnsweredDate: TimeStamp?
 	var name: String
-	var lastContent: String?
+	var lastContent: String
 	var lastSpeaker: String
-	var updatedAt: TimeStamp?
+	var updatedAt: TimeStamp
 	
 	override var description: String {
 		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n}"
@@ -66,6 +66,9 @@ class HistoryChatroom : NSObject {
 		self.lastAnsweredDate = TimeStamp()
 		self.name = String()
 		self.lastSpeaker = String()
+		self.image = String()
+		self.lastContent = String()
+		self.updatedAt = TimeStamp()
 		
 		super.init()
 		
@@ -77,6 +80,10 @@ class HistoryChatroom : NSObject {
 		guard chatroomId != nil else { return nil }
 		guard name != nil else { return nil }
 		guard lastSpeaker != nil else { return nil }
+		guard image != nil else { return nil }
+		guard lastContent != nil else { return nil }
+		guard updatedAt != nil else { return nil }
+		guard let updatedAtTimeStamp = TimeStamp(timeStampString: updatedAt!) else { return nil }
 		
 		// required
 		self.chatProgress = chatProgress!
@@ -86,13 +93,13 @@ class HistoryChatroom : NSObject {
 		self.chatroomId = chatroomId!
 		self.name = name!
 		self.lastSpeaker = lastSpeaker!
+		self.image = image!
+		self.lastContent = lastContent!
+		self.updatedAt = updatedAtTimeStamp
 		
 		// optional
-		self.image = image
 		self.lastAnswer = lastAnswer
-		self.lastAnsweredDate = TimeStamp(timeStampString: lastAnsweredDate ?? "") ?? TimeStamp()
-		self.lastContent = lastContent
-		self.updatedAt = TimeStamp(timeStampString: updatedAt ?? "") ?? TimeStamp()
+		self.lastAnsweredDate = TimeStamp(timeStampString: lastAnsweredDate ?? "")
 	}
 	
 	class func generateHistoryChatrooms(json: JSON) -> [HistoryChatroom] {

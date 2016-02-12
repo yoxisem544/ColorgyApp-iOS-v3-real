@@ -117,10 +117,10 @@ class TimeStamp : NSObject {
 			// apple's clock is 10 second behind aws's
 			let awsAppleClockDifference = 10.0
 			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8) + awsAppleClockDifference
-			print("now \(now.timeIntervalSince1970)")
-			print("dateCreated \(dateCreated.timeIntervalSince1970)")
-			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970)")
-			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8))")
+//			print("now \(now.timeIntervalSince1970)")
+//			print("dateCreated \(dateCreated.timeIntervalSince1970)")
+//			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970)")
+//			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8))")
 			if timeInterval < 60.0 {
 				// seconds
 				let seconds = Int(timeInterval % 60)

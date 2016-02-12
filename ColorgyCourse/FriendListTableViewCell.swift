@@ -24,17 +24,15 @@ class FriendListTableViewCell: UITableViewCell {
 	}
 	
 	func updateUI() {
-		if let imageurl = historyChatroom.image {
-			if imageurl.isValidURLString {
-				userProfileImageView.sd_setImageWithURL(NSURL(string: imageurl)!, placeholderImage: nil)
-			}
+		if historyChatroom.image.isValidURLString {
+			userProfileImageView.sd_setImageWithURL(NSURL(string: historyChatroom.image)!, placeholderImage: nil)
 		}
 		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
 		userQuestionLabel.text = " "
 		let prefixString = (userId == historyChatroom.lastSpeaker ? "你：" : "")
 		let lastMessage = (historyChatroom.lastContent != "" ? historyChatroom.lastContent : " ") ?? " "
 		userLastMessageLabel.text = prefixString + lastMessage
-		timeStampLabel.text = historyChatroom.updatedAt?.timeStampString()
+		timeStampLabel.text = historyChatroom.updatedAt.timeStampString()
 		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
 			print(user)
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
