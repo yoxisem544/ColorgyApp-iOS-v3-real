@@ -43,6 +43,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 	private var userProfileImageString: String = ""
 	private var yourFriend: ChatUserInformation?
 
+	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +61,19 @@ class TestChatRoomViewController: DLMessagesViewController {
 		self.bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tt"))
     }
 	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		colorgySocket.connect()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		if shouldDisconnectSocket {
+			colorgySocket.disconnect()
+		}
+	}
+	
+	// MARK: Configuration
 	func loadUserProfileImage() {
 		ColorgyChatAPI.getUser(friendId, success: { (user: ChatUserInformation) -> Void in
 			self.userProfileImageString = user.avatarBlur2XURL ?? ""
@@ -182,18 +196,6 @@ class TestChatRoomViewController: DLMessagesViewController {
 			}
 		})
 	}
-	
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-		colorgySocket.connect()
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		if shouldDisconnectSocket {
-			colorgySocket.disconnect()
-		}
-	}
 
 	func configureFloatingOptionView() {
 		let barHeight = (navigationController != nil ? navigationController!.navigationBar.frame.height : 0) + 20
@@ -274,6 +276,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
+	// MARK: - UIImagePickerController
 	func openImagePicker() {
 		if PHPhotoLibrary.authorizationStatus() == .Authorized {
 			let imagePickerController = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
@@ -346,6 +349,7 @@ class TestChatRoomViewController: DLMessagesViewController {
 	}
 }
 
+// MARK: - DLMessagesViewControllerDelegate
 extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 	func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?) {
 		print(message)
@@ -359,6 +363,7 @@ extension TestChatRoomViewController : DLMessagesViewControllerDelegate {
 	}
 }
 
+// MARK: - UIImagePickerControllerDelegate
 extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 		dismissViewControllerAnimated(true, completion: nil)
@@ -372,8 +377,8 @@ extension TestChatRoomViewController : UIImagePickerControllerDelegate, UINaviga
 	}
 }
 
+// MARK: - DLMessageDelegate
 extension TestChatRoomViewController : DLMessageDelegate {
-	
 	func DLMessage(didTapOnUserImageView image: UIImage?) {
 		if let image = image {
 			print("did tap on user image \(image)")
@@ -390,6 +395,7 @@ extension TestChatRoomViewController : DLMessageDelegate {
 	}
 }
 
+// MARK: - SKPhotoBrowserDelegate
 extension TestChatRoomViewController : SKPhotoBrowserDelegate {
 	func didShowPhotoAtIndex(index: Int) {
 		print(index)

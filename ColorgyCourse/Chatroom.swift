@@ -16,7 +16,7 @@ class Chatroom : NSObject {
 	override var description: String { return "Chatroom: {\n\tchatroomId -> \(chatroomId)\n\tsocketId -> \(socketId)\n}" }
 	
 	convenience init?(json: JSON) {
-		print(json)
+
 		var chatroomId = String()
 		var socketId = String()
 		for (_, json) : (String, JSON) in json {

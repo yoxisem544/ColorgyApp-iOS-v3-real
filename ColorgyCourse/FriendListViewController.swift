@@ -13,9 +13,11 @@ class FriendListViewController: UIViewController {
 	@IBOutlet weak var friendListTableView: UITableView!
 	var historyChatrooms: [HistoryChatroom] = []
 	var userId: String = ""
+	let refreshContorl = UIRefreshControl()
 	
 	private var renewTimer: NSTimer!
 	
+	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,12 +28,15 @@ class FriendListViewController: UIViewController {
 		friendListTableView.rowHeight = UITableViewAutomaticDimension
 		friendListTableView.separatorStyle = .None
 		friendListTableView.backgroundColor = ColorgyColor.BackgroundColor
+		
+		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		friendListTableView.addSubview(refreshContorl)
     }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		loadFriend()
-		renewChatroom(every: 12.0)
+		renewChatroom(every: 18.0)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -40,6 +45,7 @@ class FriendListViewController: UIViewController {
 		renewTimer.invalidate()
 	}
 	
+	// MARK: Refresh
 	func renewChatroom(every second: NSTimeInterval) {
 		renewTimer = NSTimer(timeInterval: second, target: self, selector: "refreshChatroom", userInfo: nil, repeats: true)
 		renewTimer.fire()
@@ -59,23 +65,43 @@ class FriendListViewController: UIViewController {
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
 				print(targets)
 				let sortedTargets = targets.sort({ (room1: HistoryChatroom, room2: HistoryChatroom) -> Bool in
-					return room1.updatedAt.timeIntervalSince1970() > room2.updatedAt.timeIntervalSince1970()
+					return room1.updatedAt.timeIntervalSince1970() < room2.updatedAt.timeIntervalSince1970()
 				})
 				self.historyChatrooms = sortedTargets
 				self.friendListTableView.reloadData()
 				}, failure: { () -> Void in
 					
 			})
-			}) { () -> Void in
+			}, failure: { () -> Void in
 				
-		}
+		})
 	}
 	
+	func pullToRefreshHi(refresh: UIRefreshControl) {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			self.userId = user.userId
+			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
+				let sortedTargets = targets.sort({ (room1: HistoryChatroom, room2: HistoryChatroom) -> Bool in
+					return room1.updatedAt.timeIntervalSince1970() < room2.updatedAt.timeIntervalSince1970()
+				})
+				self.historyChatrooms = sortedTargets
+				self.friendListTableView.reloadData()
+				refresh.endRefreshing()
+				}, failure: { () -> Void in
+					refresh.endRefreshing()
+			})
+		}, failure: { () -> Void in
+			refresh.endRefreshing()
+		})
+	}
+	
+	// MARK: Storyboard
 	struct Storyboard {
 		static let FriendListCellIdentifier = "Friend List Cell"
 		static let GotoChatroomSegueIdentifier = "goto chatroom"
 	}
 	
+	// MARK: Navigation
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == Storyboard.GotoChatroomSegueIdentifier {
 			let vc = segue.destinationViewController as! TestChatRoomViewController
@@ -97,7 +123,7 @@ class FriendListViewController: UIViewController {
 	}
 }
 
-
+// MARK: - Table View Delegate and DataSource
 extension FriendListViewController : UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,7 +135,6 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 		
 		cell.userId = userId
 		cell.historyChatroom = historyChatrooms[indexPath.row]
-		
 		
 		return cell
 	}

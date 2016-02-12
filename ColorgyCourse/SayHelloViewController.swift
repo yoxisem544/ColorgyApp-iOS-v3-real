@@ -12,6 +12,7 @@ class SayHelloViewController: UIViewController {
 	
 	@IBOutlet weak var sayHelloTableView: UITableView!
 	var hiList: [Hello] = []
+	let refreshContorl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,9 @@ class SayHelloViewController: UIViewController {
 		sayHelloTableView.rowHeight = UITableViewAutomaticDimension
 		sayHelloTableView.separatorStyle = .None
 		sayHelloTableView.backgroundColor = ColorgyColor.BackgroundColor
+		
+		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		sayHelloTableView.addSubview(refreshContorl)
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -58,6 +62,20 @@ class SayHelloViewController: UIViewController {
 			})
 			}) { () -> Void in
 				
+		}
+	}
+	
+	func pullToRefreshHi(refresh: UIRefreshControl) {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				self.hiList = hiList
+				self.sayHelloTableView.reloadData()
+				refresh.endRefreshing()
+				}, failure: { () -> Void in
+					refresh.endRefreshing()
+			})
+			}) { () -> Void in
+				refresh.endRefreshing()
 		}
 	}
 }
