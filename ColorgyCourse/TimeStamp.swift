@@ -103,18 +103,20 @@ class TimeStamp : NSObject {
 		return formatter.dateFromString(dateString)
 	}
 	
-	func timeIntervalSince1970() -> NSTimeInterval? {
+	func timeIntervalSince1970() -> NSTimeInterval {
 		if let nsdate = self.nsdateValue() {
 			return nsdate.timeIntervalSince1970
 		} else {
-			return nil
+			return NSTimeIntervalSince1970
 		}
 	}
 	
 	func timeStampString() -> String {
 		let now = NSDate()
 		if let dateCreated = self.nsdateValue() {
-			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8) + 10
+			// apple's clock is 10 second behind aws's
+			let awsAppleClockDifference = 10.0
+			let timeInterval = now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970 - (60.0 * 60 * 8) + awsAppleClockDifference
 			print("now \(now.timeIntervalSince1970)")
 			print("dateCreated \(dateCreated.timeIntervalSince1970)")
 			print("difference \(now.timeIntervalSince1970 - dateCreated.timeIntervalSince1970)")
