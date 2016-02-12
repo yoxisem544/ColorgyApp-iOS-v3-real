@@ -112,8 +112,10 @@ class TestChatRoomViewController: DLMessagesViewController {
 					self.messages.append(m)
 					//				self.messageRecieved()
 					self.messageRecievedButDontReload()
+					print(m.createdAt.timeIntervalSince1970())
 				}
 				self.recievingABunchMessages()
+				print(messages)
 		})
 		
 		// register for recieving message event
@@ -130,10 +132,12 @@ class TestChatRoomViewController: DLMessagesViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
+		colorgySocket.connect()
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
+		colorgySocket.disconnect()
 	}
 	
 	func configureFloatingOptionView() {

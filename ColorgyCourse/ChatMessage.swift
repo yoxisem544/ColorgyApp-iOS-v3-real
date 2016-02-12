@@ -14,7 +14,7 @@ class ChatMessage: NSObject {
 	var type: String
 	var content: String
 	var userId: String
-	var createdAt: String
+	var createdAt: TimeStamp
 	
 	var mediaImage: UIImage!
 	
@@ -128,7 +128,7 @@ class ChatMessage: NSObject {
 		self.type = ""
 		self.content = ""
 		self.userId = ""
-		self.createdAt = ""
+		self.createdAt = TimeStamp()
 		
 		super.init()
 		
@@ -137,12 +137,13 @@ class ChatMessage: NSObject {
 		guard content != nil else { return nil }
 		guard userId != nil else { return nil }
 		guard createdAt != nil else { return nil }
+		guard let createdAtTimeStamp = TimeStamp(timeStampString: createdAt!) else { return nil }
 		
 		self.id = id!
 		self.type = type!
 		self.content = content!
 		self.userId = userId!
-		self.createdAt = createdAt!
+		self.createdAt = createdAtTimeStamp
 	}
 	
 	class func generateMessages(json: JSON) -> [ChatMessage] {
