@@ -20,4 +20,6 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
+#import "Mixpanel/Mixpanel.h"
+
 #endif

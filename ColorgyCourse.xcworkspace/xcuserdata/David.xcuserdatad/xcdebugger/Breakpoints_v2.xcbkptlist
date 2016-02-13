@@ -97,6 +97,38 @@
             endingLineNumber = "22"
             landmarkName = "test()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ColorgyCourse.DevelopmentTestingMethods.(test (ColorgyCourse.DevelopmentTestingMethods.Type) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/DevelopmentTestingMethods.swift"
+                  timestampString = "477062192.223459"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "255">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ColorgyCourse.DevelopmentTestingMethods.(test (ColorgyCourse.DevelopmentTestingMethods.Type) -&gt; () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/DevelopmentTestingMethods.swift"
+                  timestampString = "477062192.223606"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "26">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -113,6 +145,38 @@
             endingLineNumber = "96"
             landmarkName = "FBloginButtonClicked(_:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ColorgyCourse.FBLoginViewController.(FBloginButtonClicked (ColorgyCourse.FBLoginViewController) -&gt; (__ObjC.UIButton) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/FBLoginViewController.swift"
+                  timestampString = "477062192.225391"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "950">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ColorgyCourse.FBLoginViewController.(FBloginButtonClicked (ColorgyCourse.FBLoginViewController) -&gt; (__ObjC.UIButton) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/ColorgyCourse/FBLoginViewController.swift"
+                  timestampString = "477062192.225663"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "1091">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
