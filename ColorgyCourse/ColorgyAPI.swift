@@ -323,7 +323,9 @@ class ColorgyAPI : NSObject {
 						})
 					}
 				} else {
-					failure(failInfo: "轉換response失敗")
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						failure(failInfo: "轉換response失敗")
+					})
 				}
 			})
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in

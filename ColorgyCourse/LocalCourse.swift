@@ -110,17 +110,17 @@ class LocalCourse : NSObject {
     
     convenience init?(localCourseDBManagedObject: LocalCourseDBManagedObject?) {
         if let lcObject = localCourseDBManagedObject {
-            var code: String? = lcObject.code
-            var name: String? = lcObject.name
-            var year: Int? = Int(lcObject.year)
-            var term: Int? = Int(lcObject.term)
-            var lecturer: String? = lcObject.lecturer
-            var credits: Int? = Int(lcObject.credits)
-            var _type: String? = lcObject.type
+			let code: String? = lcObject.code
+			let name: String? = lcObject.name
+			let year: Int? = Int(lcObject.year)
+			let term: Int? = Int(lcObject.term)
+			let lecturer: String? = lcObject.lecturer
+			let credits: Int? = Int(lcObject.credits)
+			let _type: String? = lcObject.type
 //            var days: [Int]? = lcObject.days
 //            var periods: [Int]? = lcObject.periods
 //            var locations: [String] = lcObject.locations
-            var general_code: String? = lcObject.general_code
+            let general_code: String? = lcObject.general_code
             
             var days = [Int]()
             var periods = [Int]()

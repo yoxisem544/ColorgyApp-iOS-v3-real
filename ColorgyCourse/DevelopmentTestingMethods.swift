@@ -21,9 +21,7 @@ class DevelopmentTestingMethods {
             print(token)
             if let token = token {
                 ColorgyLogin.loginToColorgyWithToken(token, handler: { (response, error) -> Void in
-                    if let res = response {
-                        
-                    }
+                    
                 })
             }
         }

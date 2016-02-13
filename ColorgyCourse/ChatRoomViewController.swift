@@ -105,7 +105,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	func openPhotoBrowserWithImage(image: UIImage) {
 		var images = [SKPhoto]()
-		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
+//		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
 		//    for img in imagesCache {
 		//      images.append(SKPhoto.photoWithImage(img))
 		//    }
