@@ -5,7 +5,6 @@ target 'ColorgyCourse' do
   pod "AFNetworking"
   pod "Fabric"
   pod 'Crashlytics'
-  #pod "Answers"
   pod 'SDWebImage', '~>3.7'
 end
 
