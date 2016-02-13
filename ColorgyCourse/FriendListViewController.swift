@@ -38,7 +38,7 @@ class FriendListViewController: UIViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		loadFriend()
+//		loadFriend()
 		renewChatroom(every: 18.0)
 	}
 	
@@ -66,12 +66,7 @@ class FriendListViewController: UIViewController {
 			print(self.userId)
 			print("自己的id")
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
-				print(targets)
-				let sortedTargets = targets.sort({ (room1: HistoryChatroom, room2: HistoryChatroom) -> Bool in
-					return room1.updatedAt.timeIntervalSince1970() < room2.updatedAt.timeIntervalSince1970()
-				})
-				self.historyChatrooms = sortedTargets
-				self.friendListTableView.reloadData()
+				self.reloadFriendList(targets)
 				}, failure: { () -> Void in
 					
 			})
@@ -84,11 +79,7 @@ class FriendListViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			self.userId = user.userId
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
-				let sortedTargets = targets.sort({ (room1: HistoryChatroom, room2: HistoryChatroom) -> Bool in
-					return room1.updatedAt.timeIntervalSince1970() < room2.updatedAt.timeIntervalSince1970()
-				})
-				self.historyChatrooms = sortedTargets
-				self.friendListTableView.reloadData()
+				self.reloadFriendList(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
@@ -96,6 +87,137 @@ class FriendListViewController: UIViewController {
 		}, failure: { () -> Void in
 			refresh.endRefreshing()
 		})
+	}
+	
+	func reloadFriendList(list: [HistoryChatroom]) {
+		var mappedOldList = list
+		print("not sorted")
+		for l in list {
+			print(l.name)
+			print(l.lastContentTime.timeStampString())
+		}
+		print("sorted")
+		let sortedList = list.sort { (r1: HistoryChatroom, r2: HistoryChatroom) -> Bool in
+			print("time of r1 \(r1.lastContentTime.timeIntervalSince1970())")
+			print("time of r2 \(r2.lastContentTime.timeIntervalSince1970())")
+			// 越新的秒數越多，所以應該由大到小排列才會是從新到舊
+			return r1.lastContentTime.timeIntervalSince1970() > r2.lastContentTime.timeIntervalSince1970()
+		}
+		for l in sortedList {
+			print(l.name)
+			print(l.lastContentTime.timeStampString())
+		}
+		// check the count of two arrays
+		if doesRooms(sortedList, equalsTo: historyChatrooms) {
+			print("sortedList")
+			print(sortedList)
+			print("historyChatrooms")
+			print(historyChatrooms)
+		}
+		if historyChatrooms.count != sortedList.count {
+			for room in sortedList {
+				if !doesContainsRoom(room, inRooms: historyChatrooms).doesContain {
+					historyChatrooms.append(room)
+					let rows = friendListTableView.numberOfRowsInSection(0)
+					friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+				}
+//				if !historyChatrooms.contains(room) {
+//					historyChatrooms.append(room)
+//					let rows = friendListTableView.numberOfRowsInSection(0)
+//					friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+//				}
+			}
+		}
+		if historyChatrooms.count != sortedList.count {
+			print("still not same length")
+			// sort the current one
+			reloadFriendList(historyChatrooms)
+		} else {
+			print("number of rows \(friendListTableView.numberOfRowsInSection(0))")
+			if sortedList != historyChatrooms {
+				print("sortedList")
+				print(sortedList)
+				print("historyChatrooms")
+				print(historyChatrooms)
+			}
+			while !doesRooms(sortedList, equalsTo: historyChatrooms) {
+				for (index, oldRoom) : (Int, HistoryChatroom) in historyChatrooms.enumerate() {
+					if let newIndex = doesContainsRoom(oldRoom, inRooms: sortedList).atIndex {
+						// get new index, check if its the same
+						if index != newIndex {
+							print("need to move")
+							print("\(index) need to move to \(newIndex)")
+							historyChatrooms.removeAtIndex(index)
+							friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+							historyChatrooms.insert(oldRoom, atIndex: newIndex)
+							friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+							break
+						}
+					}
+				}
+			}
+	//		while sortedList != historyChatrooms {
+	//			for (index, oldRoom) : (Int, HistoryChatroom) in historyChatrooms.enumerate() {
+	//				if let newIndex = doesContainsRoom(oldRoom, inRooms: sortedList).atIndex {
+	//					// get new index, check if its the same
+	//					if index != newIndex {
+	//						print("need to move")
+	//						print("\(index) need to move to \(newIndex)")
+	//						historyChatrooms.removeAtIndex(index)
+	//						friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+	//						historyChatrooms.insert(oldRoom, atIndex: newIndex)
+	//						friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+	//						break
+	//					}
+	//				}
+	//			}
+	//			for (index, oldRoom) : (Int, HistoryChatroom) in historyChatrooms.enumerate() {
+	//				if let newIndex = sortedList.indexOf(oldRoom) {
+	//					// get new index, check if its the same
+	//					if index != newIndex {
+	//						print("need to move")
+	//						print("\(index) need to move to \(newIndex)")
+	//						historyChatrooms.removeAtIndex(index)
+	//						friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+	//						historyChatrooms.insert(oldRoom, atIndex: newIndex)
+	//						friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+	//						break
+	//					}
+	//				}
+	//			}
+	//		}
+		}
+		historyChatrooms = sortedList
+		friendListTableView.reloadData()
+	}
+	
+	func doesContainsRoom(room: HistoryChatroom, inRooms rooms: [HistoryChatroom]) -> (doesContain: Bool, atIndex: Int?) {
+		
+		for (index, roomToMatch) : (Int, HistoryChatroom) in rooms.enumerate() {
+			if roomToMatch.chatroomId == room.chatroomId {
+				return (true, index)
+			}
+		}
+		
+		return (false, nil)
+	}
+	
+	func doesRooms(rooms: [HistoryChatroom], equalsTo anotherRooms: [HistoryChatroom]) -> Bool {
+		
+		var isEqual = true
+		
+		if rooms.count != anotherRooms.count {
+			isEqual = false
+		} else {
+			// if length is equal, check chatroom id
+			for (index, room) : (Int, HistoryChatroom) in rooms.enumerate() {
+				if room.chatroomId != anotherRooms[index].chatroomId {
+					isEqual = false
+				}
+			}
+		}
+		
+		return isEqual
 	}
 	
 	// MARK: Storyboard

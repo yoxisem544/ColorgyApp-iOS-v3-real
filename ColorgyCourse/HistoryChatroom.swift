@@ -28,7 +28,7 @@ class HistoryChatroom : NSObject {
 	}
 	
 	convenience init?(json: JSON) {
-		print(json)
+
 		var _chatProgress: Int?
 		var _gender: String?
 		var _friendId: String?
@@ -91,7 +91,6 @@ class HistoryChatroom : NSObject {
 		guard lastContentTime != nil else { return nil }
 		
 		// required
-		self.chatProgress = chatProgress!
 		self.chatProgress = chatProgress!
 		self.gender = gender!
 		self.friendId = friendId!

@@ -354,10 +354,9 @@ class ColorgyChatAPI : NSObject {
         let params = [
             "userId": userId
         ]
-        print(params)
+
         afManager.POST(serverURL + "/users/get_user", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             let json = JSON(response)["result"]
-			print(json)
 			if let u = ChatUserInformation(json: json) {
 				success(user: u)
 			} else {

@@ -103,7 +103,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	func openPhotoBrowserWithURL(image: UIImage) {
+	func openPhotoBrowserWithImage(image: UIImage) {
 		var images = [SKPhoto]()
 		let photo = SKPhoto.photoWithImage(UIImage(named: "1.jpg")!)// add some UIImage
 		//    for img in imagesCache {
@@ -169,9 +169,6 @@ class ChatRoomViewController: DLMessagesViewController {
 					self.messageRecievedButDontReload()
 					// get percentage
 					m.chatProgress = self.historyChatroom.chatProgress
-					if m.type == ChatMessage.MessageType.Image {
-						self.downloadImage(m)
-					}
 				}
 				self.recievingABunchMessages()
 				print(messages)
@@ -188,17 +185,6 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 		
 		colorgySocket.connect()
-	}
-	
-	func downloadImage(message: ChatMessage) {
-		let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-		dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-			if let data = NSData(contentsOfURL: message.content.url) {
-				if let image = UIImage(data: data) {
-					self.imagesCache.append(image)
-				}
-			}
-		})
 	}
 	
 	func configureFloatingOptionView() {
@@ -396,7 +382,7 @@ extension ChatRoomViewController : DLMessageDelegate {
 	func DLMessage(didTapOnSentImageView imageView: UIImageView?) {
 		print("didTapOnSentImageView")
 		if let image = imageView?.image {
-			openPhotoBrowserWithURL(image)
+			openPhotoBrowserWithImage(image)
 		}
 	}
 }
