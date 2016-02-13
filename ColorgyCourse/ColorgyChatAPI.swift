@@ -921,7 +921,7 @@ class ColorgyChatAPI : NSObject {
 		var targets = [HistoryChatroom]()
 		for page in fromPage...toPage {
 			print("getting page \(page)")
-			getHistoryTarget(userId, gender: gender, page: page, progress: nil, success: { (_targets) -> Void in
+			getHistoryTarget(userId, gender: gender, page: page, success: { (_targets) -> Void in
 				print(_targets)
 				for t in _targets {
 					targets.append(t)
