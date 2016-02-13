@@ -61,7 +61,7 @@ class ColorgyAPI : NSObject {
 			print(accesstoken)
 			// queue job
 			ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-			afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+			afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 				print("Success")
 				// job ended
 				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
@@ -102,21 +102,25 @@ class ColorgyAPI : NSObject {
 		// queue job
 		ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
 		let url = "https://colorgy.io:443/api/v1/me/devices.json?access_token=\(accesstoken)"
-		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+		afManager.GET(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			// job ended
 			ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-			let json = JSON(response)
-			var devices = [[String : String]]()
-			
-			for (_, json) : (String, JSON) in json {
-				if let name = json["name"].string {
-					if let uuid = json["uuid"].string {
-						devices.append(["name": name, "uuid": uuid])
+			if let response = response {
+				let json = JSON(response)
+				var devices = [[String : String]]()
+				
+				for (_, json) : (String, JSON) in json {
+					if let name = json["name"].string {
+						if let uuid = json["uuid"].string {
+							devices.append(["name": name, "uuid": uuid])
+						}
 					}
 				}
+				
+				success(devices: devices)
+			} else {
+				failure()
 			}
-			
-			success(devices: devices)
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				// job ended
 				ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
@@ -159,7 +163,7 @@ class ColorgyAPI : NSObject {
         print(uuid)
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-        afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             success()
@@ -203,7 +207,7 @@ class ColorgyAPI : NSObject {
         print(uuid)
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-        afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             success()
@@ -266,7 +270,7 @@ class ColorgyAPI : NSObject {
 //        processing(processState: "正在下載資料...")
 		processing(processTitle: "資料要吐出來囉！", processState: "正在下載資料...")
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // check header
             //                            print(task.response)
             
@@ -278,46 +282,49 @@ class ColorgyAPI : NSObject {
             
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
 				
-                // then handle response
-                let json = JSON(response)
-                let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
-					processing(processTitle: "吐了！", processState: state)
-                })
-				processing(processTitle: "在一下下就好了！", processState: "正在儲存資料到手機上...")
-                var dicts = [[String : AnyObject]]()
-                // this dic can use to generate [course]
-                if courseRawDataArray.objects != nil {
-                    // processing all the data....
-                    for (_, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
-                        dicts.append(object.dictionary)
-                    }
-                    // successfully get a dicts
-                    // generate [cours]
-                    let courses = Course.generateCourseArrayWithDictionaries(dicts)
-                    // return to main queue
-                    if let courses = courses {
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            success(courses: courses, json: json)
-                        })
-                    } else {
-                        // fail to generate objects
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            failure(failInfo: nil)
-                        })
-                    }
-                } else {
-                    // fail to generate objects
-                    // no course data
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        let semester = Semester.currentSemesterAndYear() as (year: Int, term: Int)
-                        failure(failInfo: "你的學校還沒有這個學期(\(semester.year)-\(semester.term))的課程資料喔！我們已經將您的學校記錄下來了，請等待資料更新！")
-						let params: [String : AnyObject] = ["user_id": "\(UserSetting.UserId())", "organization": "\(UserSetting.UserPossibleOrganization())", "department": "\(UserSetting.UserPossibleDepartment())", "year": semester.year, "term": semester.term]
-                        Flurry.logEvent("v3.0: Organization Course Data Missing", withParameters: params as [NSObject : AnyObject])
-						Answers.logCustomEventWithName(AnswersLogEvents.organizationCourseDataMissing, customAttributes: params)
-                    })
-                }
-                
+				if let response = response {
+					// then handle response
+					let json = JSON(response)
+					let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
+						processing(processTitle: "吐了！", processState: state)
+					})
+					processing(processTitle: "在一下下就好了！", processState: "正在儲存資料到手機上...")
+					var dicts = [[String : AnyObject]]()
+					// this dic can use to generate [course]
+					if courseRawDataArray.objects != nil {
+						// processing all the data....
+						for (_, object) : (Int, CourseRawDataObject) in courseRawDataArray.objects!.enumerate() {
+							dicts.append(object.dictionary)
+						}
+						// successfully get a dicts
+						// generate [cours]
+						let courses = Course.generateCourseArrayWithDictionaries(dicts)
+						// return to main queue
+						if let courses = courses {
+							
+							dispatch_async(dispatch_get_main_queue(), { () -> Void in
+								success(courses: courses, json: json)
+							})
+						} else {
+							// fail to generate objects
+							dispatch_async(dispatch_get_main_queue(), { () -> Void in
+								failure(failInfo: nil)
+							})
+						}
+					} else {
+						// fail to generate objects
+						// no course data
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							let semester = Semester.currentSemesterAndYear() as (year: Int, term: Int)
+							failure(failInfo: "你的學校還沒有這個學期(\(semester.year)-\(semester.term))的課程資料喔！我們已經將您的學校記錄下來了，請等待資料更新！")
+							let params: [String : AnyObject] = ["user_id": "\(UserSetting.UserId())", "organization": "\(UserSetting.UserPossibleOrganization())", "department": "\(UserSetting.UserPossibleDepartment())", "year": semester.year, "term": semester.term]
+							Flurry.logEvent("v3.0: Organization Course Data Missing", withParameters: params as [NSObject : AnyObject])
+							Answers.logCustomEventWithName(AnswersLogEvents.organizationCourseDataMissing, customAttributes: params)
+						})
+					}
+				} else {
+					failure(failInfo: "轉換response失敗")
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -380,7 +387,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -388,17 +395,22 @@ class ColorgyAPI : NSObject {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
-                //                                print(response)
-                let json = JSON(response)
-                let object = CourseRawDataObject(json: json)
-                // return to main queue
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if let object = object {
-                        success(courseRawDataObject: object)
-                    } else {
-                        failure()
-                    }
-                })
+				if let response = response {
+					let json = JSON(response)
+					let object = CourseRawDataObject(json: json)
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						if let object = object {
+							success(courseRawDataObject: object)
+						} else {
+							failure()
+						}
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						failure()
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -442,7 +454,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -450,17 +462,25 @@ class ColorgyAPI : NSObject {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
-                let json = JSON(response)
-                print(json)
-                if let objects = UserCourseObjectArray(json: json).objects {
-                    print(objects)
-                    // return to main queue
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        success(userCourseObjects: objects)
-                    })
-                } else {
-                    failure()
-                }
+				if let response = response {
+					let json = JSON(response)
+					print(json)
+					if let objects = UserCourseObjectArray(json: json).objects {
+						print(objects)
+						// return to main queue
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							success(userCourseObjects: objects)
+						})
+					} else {
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							failure()
+						})
+					}
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						failure()
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -508,7 +528,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -516,13 +536,19 @@ class ColorgyAPI : NSObject {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
-                let json = JSON(response)
-                let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
-                UserSetting.storePeriodsData(resultObjects)
-                // return to main queue
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completionHandler(periodDataObjects: resultObjects)
-                })
+				if let response = response {
+					let json = JSON(response)
+					let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
+					UserSetting.storePeriodsData(resultObjects)
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(periodDataObjects: resultObjects)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(periodDataObjects: nil)
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -569,7 +595,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -577,13 +603,19 @@ class ColorgyAPI : NSObject {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
-                let json = JSON(response)
-                let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
-                //                                UserSetting.storePeriodsData(resultObjects)
-                // return to main queue
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completionHandler(periodDataObjects: resultObjects)
-                })
+				if let response = response {
+					let json = JSON(response)
+					let resultObjects = PeriodDataObject.generatePeriodDataObjects(json)
+					//                                UserSetting.storePeriodsData(resultObjects)
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(periodDataObjects: resultObjects)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(periodDataObjects: nil)
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -624,7 +656,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -634,20 +666,26 @@ class ColorgyAPI : NSObject {
                 // then handle response
                 print("me API successfully get")
                 // will pass in a json, then generate a result
-                let json = JSON(response)
-                print("user \(user_id) get!")
-                if let result = ColorgyAPIUserResult(json: json) {
-                    // return to main queue
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        // ok
-                        success(result: result)
-                    })
-                } else {
-                    // return to main queue
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        failure()
-                    })
-                }
+				if let response = response {
+					let json = JSON(response)
+					print("user \(user_id) get!")
+					if let result = ColorgyAPIUserResult(json: json) {
+						// return to main queue
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							// ok
+							success(result: result)
+						})
+					} else {
+						// return to main queue
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							failure()
+						})
+					}
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						failure()
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -691,7 +729,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -701,22 +739,28 @@ class ColorgyAPI : NSObject {
                 // then handle response
                 print("me API successfully get")
                 // will pass in a json, then generate a result
-                let json = JSON(response)
-                print("ME get!")
-                if let result = ColorgyAPIMeResult(json: json) {
-					print(result)
-					// store
-					UserSetting.storeAPIMeResult(result: result)
-                    // return to main queue
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        completionHandler(result: result)
-                    })
-                } else {
-                    // return to main queue
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        failure()
-                    })
-                }
+				if let response = response {
+					let json = JSON(response)
+					print("ME get!")
+					if let result = ColorgyAPIMeResult(json: json) {
+						print(result)
+						// store
+						UserSetting.storeAPIMeResult(result: result)
+						// return to main queue
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							completionHandler(result: result)
+						})
+					} else {
+						// return to main queue
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							failure()
+						})
+					}
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						failure()
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -772,7 +816,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -781,12 +825,18 @@ class ColorgyAPI : NSObject {
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
                 // will return a array of courses
-                let json = JSON(response)
-                let userCourseObjects = UserCourseObjectArray(json: json).objects
-                // return to main queue
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completionHandler(userCourseObjects: userCourseObjects)
-                })
+				if let response = response {
+					let json = JSON(response)
+					let userCourseObjects = UserCourseObjectArray(json: json).objects
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: userCourseObjects)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: nil)
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -842,7 +892,7 @@ class ColorgyAPI : NSObject {
 		// queue job
 		ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
 		// then start job
-		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			// job ended
 			ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 			// into background
@@ -851,12 +901,18 @@ class ColorgyAPI : NSObject {
 			dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
 				// then handle response
 				// will return a array of courses
-				let json = JSON(response)
-				let userCourseObjects = UserCourseObjectArray(json: json).objects
-				// return to main queue
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
-					completionHandler(userCourseObjects: userCourseObjects)
-				})
+				if let response = response {
+					let json = JSON(response)
+					let userCourseObjects = UserCourseObjectArray(json: json).objects
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: userCourseObjects)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: nil)
+					})
+				}
 			})
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				// job ended
@@ -906,7 +962,7 @@ class ColorgyAPI : NSObject {
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
         // then start job
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
             // into background
@@ -915,12 +971,18 @@ class ColorgyAPI : NSObject {
             dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
                 // then handle response
                 // will return a array of courses
-                let json = JSON(response)
-                let userCourseObjects = UserCourseObjectArray(json: json).objects
-                // return to main queue
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completionHandler(userCourseObjects: userCourseObjects)
-                })
+				if let response = response {
+					let json = JSON(response)
+					let userCourseObjects = UserCourseObjectArray(json: json).objects
+					// return to main queue
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: userCourseObjects)
+					})
+				} else {
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						completionHandler(userCourseObjects: nil)
+					})
+				}
             })
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 // job ended
@@ -978,7 +1040,7 @@ class ColorgyAPI : NSObject {
         
         // queue job
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-        afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.PUT(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             // job ended
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -1034,7 +1096,7 @@ class ColorgyAPI : NSObject {
 					print(courseCode)
 					// queue job
 					ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-					afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+					afManager.DELETE(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 						// job ended
 						ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
 						dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -1084,10 +1146,14 @@ class ColorgyAPI : NSObject {
         }
         
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
-            let json = JSON(response)
-            success(schools: School.generateSchoolsWithJSON(json))
+			if let response = response {
+				let json = JSON(response)
+				success(schools: School.generateSchoolsWithJSON(json))
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 ColorgyAPITrafficControlCenter.unqueueBackgroundJob()
                 failure()
@@ -1118,15 +1184,20 @@ class ColorgyAPI : NSObject {
         }
         
         ColorgyAPITrafficControlCenter.queueNewBackgroundJob()
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            let json = JSON(response)
-            let departments = Department.generateDepartments(json)
-            print(departments)
-            success(departments: departments)
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				let departments = Department.generateDepartments(json)
+				print(departments)
+				success(departments: departments)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
         })
     }
+	
     class func PATCHUserInfo(organization: String, department: String, year: String, success: () -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)
@@ -1158,7 +1229,7 @@ class ColorgyAPI : NSObject {
             ]
         ]
         
-        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("PATCH OK")
             print(response)
             success()
@@ -1191,19 +1262,23 @@ class ColorgyAPI : NSObject {
             return
         }
         
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            let json = JSON(response)
-            var isTimeTablePublic = false
-            if json.isArray {
-                if let visibility = json[0]["courses_table_visibility"].bool {
-                    isTimeTablePublic = visibility
-                }
-            } else {
-                if let visibility = json["courses_table_visibility"].bool {
-                    isTimeTablePublic = visibility
-                }
-            }
-            success(isTimeTablePublic: isTimeTablePublic)
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				var isTimeTablePublic = false
+				if json.isArray {
+					if let visibility = json[0]["courses_table_visibility"].bool {
+						isTimeTablePublic = visibility
+					}
+				} else {
+					if let visibility = json["courses_table_visibility"].bool {
+						isTimeTablePublic = visibility
+					}
+				}
+				success(isTimeTablePublic: isTimeTablePublic)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
         })
@@ -1237,19 +1312,23 @@ class ColorgyAPI : NSObject {
             return
         }
         
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            let json = JSON(response)
-            var isTimeTablePublic = false
-            if json.isArray {
-                if let visibility = json[0]["courses_table_visibility"].bool {
-                    isTimeTablePublic = visibility
-                }
-            } else {
-                if let visibility = json["courses_table_visibility"].bool {
-                    isTimeTablePublic = visibility
-                }
-            }
-            success(isTimeTablePublic: isTimeTablePublic)
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				var isTimeTablePublic = false
+				if json.isArray {
+					if let visibility = json[0]["courses_table_visibility"].bool {
+						isTimeTablePublic = visibility
+					}
+				} else {
+					if let visibility = json["courses_table_visibility"].bool {
+						isTimeTablePublic = visibility
+					}
+				}
+				success(isTimeTablePublic: isTimeTablePublic)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
         })
@@ -1288,7 +1367,7 @@ class ColorgyAPI : NSObject {
                 "courses_table_visibility": on
             ]
         ]
-        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             success()
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
@@ -1332,7 +1411,7 @@ class ColorgyAPI : NSObject {
 			]
 		]
 		
-		afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+		afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			print(response)
 			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
@@ -1370,9 +1449,13 @@ class ColorgyAPI : NSObject {
             ]
         ]
         
-        afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.POST(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print(response)
-            success(response)
+			if let response = response {
+				success(response)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(error.localizedDescription)
                 failure()
@@ -1413,10 +1496,14 @@ class ColorgyAPI : NSObject {
             ]
         ]
         
-        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            print("PATCH OK")
-            print(response)
-            success(response: response)
+        afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				print("PATCH OK")
+				print(response)
+				success(response: response)
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print("fail to patch")
                 failure()
