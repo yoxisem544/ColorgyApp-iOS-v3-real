@@ -84,6 +84,7 @@
 		639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D45121B9612230053870D /* TestStretchyViewController.swift */; };
 		639D45151B96A75D0053870D /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45141B96A75D0053870D /* 4.jpg */; };
 		63A50ACC1C6F610500B3F119 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A50ACB1C6F610500B3F119 /* SecretKeys.swift */; };
+		63A50AD01C6F615000B3F119 /* libFlurry_7.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */; };
 		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
 		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
@@ -202,7 +203,6 @@
 		63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */; };
 		63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */; };
 		63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */; };
-		63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */; };
 		63FBCC711B934D3000B3084F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC701B934D3000B3084F /* Reachability.m */; };
 		63FBCC731B935C0100B3084F /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC721B935C0100B3084F /* Mode.swift */; };
 		63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */; };
@@ -312,6 +312,9 @@
 		639D45121B9612230053870D /* TestStretchyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStretchyViewController.swift; sourceTree = "<group>"; };
 		639D45141B96A75D0053870D /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
 		63A50ACB1C6F610500B3F119 /* SecretKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
+		63A50ACD1C6F615000B3F119 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		63A50ACE1C6F615000B3F119 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.3.0.a; sourceTree = "<group>"; };
 		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
@@ -437,9 +440,6 @@
 		63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		63FBCC691B93470700B3084F /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
-		63FBCC6B1B934CCB00B3084F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.0.0.a; sourceTree = "<group>"; };
 		63FBCC6F1B934D3000B3084F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		63FBCC701B934D3000B3084F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		63FBCC721B935C0100B3084F /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
@@ -451,12 +451,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A50AD01C6F615000B3F119 /* libFlurry_7.3.0.a in Frameworks */,
 				63C2BA361C5F0D8E00C8D289 /* SystemConfiguration.framework in Frameworks */,
 				63C2BA341C5F0D8400C8D289 /* Security.framework in Frameworks */,
 				63C2BA321C5F0D1500C8D289 /* libc++.tbd in Frameworks */,
 				63C2BA301C5F0D0C00C8D289 /* libz.tbd in Frameworks */,
 				63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */,
-				63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */,
 				63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */,
 				5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */,
 			);
@@ -496,6 +496,16 @@
 				633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */,
 			);
 			path = SKPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		63A50AD11C6F615600B3F119 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				63A50ACD1C6F615000B3F119 /* Flurry.h */,
+				63A50ACE1C6F615000B3F119 /* FlurryWatch.h */,
+				63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */,
+			);
+			name = Flurry;
 			sourceTree = "<group>";
 		};
 		63B5FB051C5333D200C45CF2 /* For Course */ = {
@@ -981,6 +991,7 @@
 				639D450A1B95E5F60053870D /* 3.jpg */,
 				639D45081B95E5E00053870D /* 2.jpg */,
 				63ABBBFA1B9477930077580D /* 1.jpg */,
+				63A50AD11C6F615600B3F119 /* Flurry */,
 				63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */,
 				63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */,
 				63FBCC0E1B9345B800B3084F /* Supporting Files */,
@@ -991,9 +1002,6 @@
 		63FBCC0E1B9345B800B3084F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				63FBCC6B1B934CCB00B3084F /* Flurry.h */,
-				63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */,
-				63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */,
 				63FBCC0F1B9345B800B3084F /* Info.plist */,
 			);
 			name = "Supporting Files";
