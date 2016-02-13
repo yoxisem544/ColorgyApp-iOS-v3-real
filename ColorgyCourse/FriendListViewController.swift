@@ -66,6 +66,7 @@ class FriendListViewController: UIViewController {
 			print(self.userId)
 			print("自己的id")
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
+				print("房間數 \(targets.count)")
 				self.reloadFriendList(targets)
 				}, failure: { () -> Void in
 					

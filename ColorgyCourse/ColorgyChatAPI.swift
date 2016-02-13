@@ -643,6 +643,11 @@ class ColorgyChatAPI : NSObject {
 			failure()
 			return
 		}
+		guard userId != targetId else {
+			failure()
+			print("sayHi API error, userId and targetId cannot be same")
+			return
+		}
 		
 		let params = [
 			"uuid": uuid,

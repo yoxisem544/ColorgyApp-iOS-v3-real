@@ -36,8 +36,8 @@ class ColorgyLogin {
         afManager.POST("https://colorgy.io/oauth/token", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
             let json = JSON(response)
             if let result = ColorgyLoginResult(response: json) {
+				UserSetting.storeLoginResult(result: result)
                 success(result: result)
-                UserSetting.storeLoginResult(result: result)
             } else {
                 failure()
             }
