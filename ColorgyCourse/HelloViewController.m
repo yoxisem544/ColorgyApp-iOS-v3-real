@@ -11,7 +11,7 @@
 
 @interface HelloViewController ()
 
-@property ChatUserInformation *imformation;
+@property ChatUserInformation *information;
 
 @end
 
@@ -20,7 +20,7 @@
 - (instancetype)initWithInformaion:(ChatUserInformation *)information {
     self = [super init];
     if (self) {
-        self.imformation = information;
+        self.information = information;
     }
     return self;
 }
@@ -92,9 +92,22 @@
     [self.helloButton.layer setCornerRadius:2.5];
     [self.helloButton.layer setBorderColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor];
     [self.helloButton.layer setBorderWidth:1.5];
-    [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
-    [self.helloButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
-    [self.buttonView addSubview:self.helloButton];
+    
+    // Cheack hi
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
+            if (can) {
+                [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
+                [self.helloButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+                [self.buttonView addSubview:self.helloButton];
+                [self.helloButton addTarget:self action:@selector(helloButton) forControlEvents:UIControlEventTouchUpInside];
+            } else {
+                [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
+                [self.helloButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [self.buttonView addSubview:self.helloButton];
+            }
+        } failure:^() {}];
+    } failure:^() {}];
     
     // scrollView
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength - 64, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height + 64)];
@@ -104,6 +117,15 @@
 }
 
 - (void)scrollViewLayout {
+}
+
+#pragma mark - Hello Action
+- (void)helloAction {
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:@"你好美女！！" success:^() {
+            
+        } failure:^() {}];
+    } failure:^() {}];
 }
 
 #pragma mark - UIColor
