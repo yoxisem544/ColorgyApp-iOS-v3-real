@@ -1089,6 +1089,7 @@
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -1568,7 +1569,7 @@
 					"$(PROJECT_DIR)/ColorgyCourse",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "32109bb0-65ed-48b2-9030-d9fa4645b2f2";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
