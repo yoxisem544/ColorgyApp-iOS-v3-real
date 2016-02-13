@@ -11,6 +11,7 @@ import UIKit
 class TestChatLoginViewController: UIViewController {
 	
 	@IBAction func  test_yuntech_student_ca62() {
+		self.statusLabel.text = "切換中..."
 		ColorgyLogin.loginToColorgyWithUsername(username: "test-yzu-student-f478@test.colorgy.io", password: "test-yzu-student-f478", success: { (result) -> Void in
 			ColorgyAPI.me({ (result) -> Void in
 				UserSetting.storeAPIMeResult(result: result)
@@ -24,6 +25,7 @@ class TestChatLoginViewController: UIViewController {
 	}
 	
 	@IBAction func test_yzu_student_f478() {
+		self.statusLabel.text = "切換中..."
 		ColorgyLogin.loginToColorgyWithUsername(username: "test-yuntech-student-ca62@test.colorgy.io", password: "test-yuntech-student-ca62", success: { (result) -> Void in
 			ColorgyAPI.me({ (result) -> Void in
 				UserSetting.storeAPIMeResult(result: result)
@@ -37,6 +39,7 @@ class TestChatLoginViewController: UIViewController {
 	}
 	
 	func generalLogin(n: String, p: String) {
+		self.statusLabel.text = "切換中..."
 		ColorgyLogin.loginToColorgyWithUsername(username: n, password: p, success: { (result) -> Void in
 			ColorgyAPI.me({ (result) -> Void in
 				UserSetting.storeAPIMeResult(result: result)
@@ -166,15 +169,12 @@ class TestChatLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-		testAccountTableView = UITableView()
-		testAccountTableView.frame.size = CGSize(width: UIScreen.mainScreen().bounds.width, height: 44*4)
-		testAccountTableView.frame.origin.y = UIScreen.mainScreen().bounds.height / 2
-		view.addSubview(testAccountTableView)
 		testAccountTableView.delegate = self
 		testAccountTableView.dataSource = self
     }
 	
 	@IBAction func goBackToMainAccount() {
+		self.statusLabel.text = "切換中..."
 		ColorgyLogin.loginToFacebook { (token) -> Void in
 			if let token = token {
 				ColorgyLogin.loginToColorgyWithToken(token, handler: { (response, error) -> Void in
