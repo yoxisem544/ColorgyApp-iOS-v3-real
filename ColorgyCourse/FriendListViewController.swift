@@ -113,6 +113,16 @@ class FriendListViewController: UIViewController {
 //						})
 					}
 				}
+				// 檢查多餘的，把他去除
+				for room in historyChatrooms {
+					if doesContainsRoom(room, inRooms: sortedList).doesContain {
+						// 新的表中，沒有舊的的話，移除
+						if let index = historyChatrooms.indexOf(room) {
+							historyChatrooms.removeAtIndex(index)
+							self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+						}
+					}
+				}
 			}
 			// 再次確定長度一不一樣
 			if self.historyChatrooms.count != sortedList.count {
@@ -154,14 +164,23 @@ class FriendListViewController: UIViewController {
 //		})
 	}
 	
+	func trimRooms(withNewRooms newRooms: [HistoryChatroom]) {
+		for room in historyChatrooms {
+			if doesContainsRoom(room, inRooms: newRooms).doesContain {
+				// 新的表中，沒有舊的的話，移除
+				if let index = historyChatrooms.indexOf(room) {
+					historyChatrooms.removeAtIndex(index)
+				}
+			}
+		}
+	}
+	
 	func updateRooms(withNewRooms newRooms: [HistoryChatroom]) {
 		for (index, oldRoom) : (Int, HistoryChatroom) in historyChatrooms.enumerate() {
 			for newRoom in newRooms {
 				if oldRoom.chatroomId == newRoom.chatroomId {
 					// update content
-					let lastAnswer = historyChatrooms[index].lastAnswer
 					historyChatrooms[index] = newRoom
-					historyChatrooms[index].lastAnswer = lastAnswer
 					friendListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
 				}
 			}

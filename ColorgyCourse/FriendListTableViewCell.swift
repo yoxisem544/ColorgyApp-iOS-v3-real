@@ -33,13 +33,7 @@ class FriendListTableViewCell: UITableViewCell {
 		let lastMessage = (historyChatroom.lastContent != "" ? historyChatroom.lastContent : " ") ?? " "
 		userLastMessageLabel.text = prefixString + lastMessage
 		timeStampLabel.text = historyChatroom.lastContentTime.timeStampString()
-		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.userQuestionLabel.text = (user.lastAnswer != "" ? user.lastAnswer : " ")
-			})
-			}) { () -> Void in
-				
-		}
+		userQuestionLabel.text = historyChatroom.lastAnswer
 	}
 	
     override func awakeFromNib() {

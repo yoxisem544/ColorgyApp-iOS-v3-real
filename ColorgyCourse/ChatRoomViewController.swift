@@ -192,6 +192,8 @@ class ChatRoomViewController: DLMessagesViewController {
 				self.messages.append(m)
 				self.messageRecieved()
 				print(m)
+				print("訊息延遲....")
+				print(m.createdAt.timeStampString())
 			}
 		}
 		
