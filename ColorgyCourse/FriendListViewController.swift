@@ -68,7 +68,7 @@ class FriendListViewController: UIViewController {
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
 				print(targets)
 				print("房間數 \(targets.count)")
-				self.reloadFriendList(targets)
+				self.reloadFriendListV2(targets)
 				}, failure: { () -> Void in
 					
 			})
@@ -81,7 +81,7 @@ class FriendListViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			self.userId = user.userId
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
-				self.reloadFriendList(targets)
+				self.reloadFriendListV2(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
@@ -89,6 +89,75 @@ class FriendListViewController: UIViewController {
 		}, failure: { () -> Void in
 			refresh.endRefreshing()
 		})
+	}
+	
+	func reloadFriendListV2(list: [HistoryChatroom]) {
+		let sortedList = list.sort { (r1: HistoryChatroom, r2: HistoryChatroom) -> Bool in
+			// 越新的秒數越多，所以應該由大到小排列才會是從新到舊
+			return r1.lastContentTime.timeIntervalSince1970() > r2.lastContentTime.timeIntervalSince1970()
+		}
+//		更新邏輯 ->
+//		看new list 有沒有old沒有的，加入
+		for room in sortedList {
+			// 跟舊的比較
+			if !self.doesContainsRoom(room, inRooms: self.historyChatrooms).doesContain {
+				// 如果沒有，就加入
+				//						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+				self.historyChatrooms.append(room)
+				let rows = self.friendListTableView.numberOfRowsInSection(0)
+				self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+				//						})
+			}
+		}
+//		看old有沒有多餘的，刪除
+		// 檢查多餘的，把他去除
+		for room in historyChatrooms {
+			if !doesContainsRoom(room, inRooms: sortedList).doesContain {
+				// 新的表中，沒有舊的的話，移除
+				if let index = historyChatrooms.indexOf(room) {
+					historyChatrooms.removeAtIndex(index)
+					self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+				}
+			}
+		}
+		// 更新內容
+		self.updateRooms(withNewRooms: sortedList)
+//		檢查長度，兩者應該要一樣
+		if sortedList.count == historyChatrooms.count {
+//		一樣->
+//		開始移動
+			// 先檢查id是否有衝突
+			if doesRoomsHaveDifferentRooms(sortedList, otherRooms: historyChatrooms) {
+				// 如果一樣，則開始比較兩個list的chatroomId是不是完全一樣
+				while !self.doesRooms(sortedList, equalsTo: self.historyChatrooms) {
+					for (index, oldRoom) : (Int, HistoryChatroom) in self.historyChatrooms.enumerate() {
+						// 找出新的index
+						if let newIndex = self.doesContainsRoom(oldRoom, inRooms: sortedList).atIndex {
+							// get new index, check if its the same
+							// 如果新的跟舊的不一樣，表示需要移動
+							if index != newIndex {
+								//								dispatch_async(dispatch_get_main_queue(), { () -> Void in
+								print("need to move")
+								print("\(index) need to move to \(newIndex)")
+								self.historyChatrooms.removeAtIndex(index)
+								self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+								self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
+								self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+								//								})
+								// 移動後重新開始
+								break
+							}
+						}
+					}
+				}
+			} else {
+				// TODO: id 有衝突怎麼辦？
+			}
+			
+		} else {
+//		重新下載，或者取消，不要遞回
+		}
+
 	}
 	
 	func reloadFriendList(list: [HistoryChatroom]) {
@@ -162,6 +231,21 @@ class FriendListViewController: UIViewController {
 //				self.friendListTableView.reloadData()
 //			})
 //		})
+	}
+	
+	func doesRoomsHaveDifferentRooms(rooms: [HistoryChatroom], otherRooms: [HistoryChatroom]) -> Bool {
+		if rooms.count != otherRooms.count {
+			return false
+		} else {
+			// same length
+			var isTheSame = true
+			for room in rooms {
+				if !doesContainsRoom(room, inRooms: otherRooms).doesContain {
+					isTheSame = false
+				}
+			}
+			return isTheSame
+		}
 	}
 	
 	func trimRooms(withNewRooms newRooms: [HistoryChatroom]) {
