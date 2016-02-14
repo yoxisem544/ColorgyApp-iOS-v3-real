@@ -193,6 +193,38 @@
             endingLineNumber = "124"
             landmarkName = "getAllStoredCourses(complete:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ColorgyCourse.LocalCourseDB.(getAllStoredCourses (ColorgyCourse.LocalCourseDB.Type) -&gt; (complete : (localCourses : Swift.Optional&lt;Swift.Array&lt;ColorgyCourse.LocalCourse&gt;&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/LocalCourseDB.swift"
+                  timestampString = "477105402.567829"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "2028">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ColorgyCourse.LocalCourseDB.(getAllStoredCourses (ColorgyCourse.LocalCourseDB.Type) -&gt; (complete : (localCourses : Swift.Optional&lt;Swift.Array&lt;ColorgyCourse.LocalCourse&gt;&gt;) -&gt; ()) -&gt; ()).(closure #1).(closure #3)"
+                  moduleName = "ColorgyCourse"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyCourse/LocalCourseDB.swift"
+                  timestampString = "477105402.567955"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
+                  offsetFromSymbolStart = "224">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
