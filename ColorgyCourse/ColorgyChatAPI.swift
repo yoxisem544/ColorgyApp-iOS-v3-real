@@ -31,6 +31,11 @@ enum NameStatus: String {
 	case AlreadyExists = "exists"
 }
 
+enum AnsweredLatestQuestionStatus:String {
+    case Answered = "answered"
+    case notAnswered = "not answered"
+}
+
 class ColorgyChatAPI : NSObject {
 	
 	static let serverURL = "http://chat.colorgy.io"
@@ -833,7 +838,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/users/check_answered_latest，參數包含uuid,accessToken,userId
 	///2. 成功的會會回傳{ result: 'answered' }以及{ result: 'not answered'  }
-	class func checkAnsweredLatestQuestion(userId: String, success: (answeredLastestQuestion: Bool) -> Void, failure: () -> Void) {
+    class func checkAnsweredLatestQuestion(userId: String, success: (answered :Bool) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -853,14 +858,16 @@ class ColorgyChatAPI : NSObject {
 			"accessToken": accessToken,
 			"userId": userId
 		]
-		
+        
+        print(params)
+        
 		afManager.POST(serverURL + "/users/check_answered_latest", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
 				let json = JSON(response)
 				if json["result"].string == "answered" {
-					success(answeredLastestQuestion: true)
+					success(answered: true)
 				} else if json["result"].string == "not answered" {
-					success(answeredLastestQuestion: false)
+					success(answered: false)
 				} else {
 					print("check answer lastest fail, unknown type")
 					failure()
