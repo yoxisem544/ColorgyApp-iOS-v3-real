@@ -114,7 +114,7 @@ class ColorgyChatAPI : NSObject {
 		}
 		
 		let params = ["uuid": uuid, "accessToken": accessToken]
-		//        print(params)
+
 		afManager.POST(serverURL + "/users/check_user_available", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			//            print(response)
 			if let response = response {
