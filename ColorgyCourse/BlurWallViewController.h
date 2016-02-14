@@ -26,6 +26,7 @@
 @property UIView *cleanAskAlertView;
 @property UITextView *cleanAskTextView;
 @property NSString *cleanAskString;
+@property NSString *questionDate;
 @property UIWindow *currentWindow;
 @property UILabel *cleanAskTitleLabel;
 @property UILabel *cleanAskMessageLabel;

@@ -19,6 +19,21 @@
 @property UIView *buttonView;
 @property UIButton *helloButton;
 @property UIScrollView *scrollView;
+// CleanAskView
+@property UIView *cleanAskView;
+@property UIView *cleanAskMaskView;
+@property UIView *cleanAskAlertView;
+@property UITextView *cleanAskTextView;
+@property NSString *cleanAskString;
+@property NSString *cleanAskDate;
+@property UIWindow *currentWindow;
+@property UILabel *cleanAskTitleLabel;
+@property UILabel *cleanAskMessageLabel;
+@property UIButton *cancelButton;
+@property UIButton *submitButton;
+@property UIView *line1;
+@property UIView *line2;
+@property UILabel *textNumberCounterLabel;
 
 - (instancetype)initWithInformaion:(ChatUserInformation *)information;
 

@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OpeningViewController.h"
 #import "ColorgyCourse-Swift.h"
-#import "BlurWallSwitchViewController.h"
 #import "HelloViewController.h"
 #import "PersonalChatInformationViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -95,29 +94,7 @@
     
     [self.loadingView start];
     [self refreshData:^() {
-        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-            [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
-                [self.loadingView finished:^() {
-                    // 取得清晰問
-                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
-                    if (self.cleanAskString && !answered) {
-                        if ([self.cleanAskString length]) {
-                            [self cleanAskViewLayout];
-                        }
-                    }
-                }];
-            } failure:^() {
-                [self.loadingView finished:^() {
-                    // 取得清晰問
-                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
-                    if (self.cleanAskString) {
-                        if ([self.cleanAskString length]) {
-                            [self cleanAskViewLayout];
-                        }
-                    }
-                }];
-            }];
-        } failure:^() {}];
+        [self.loadingView finished:^() {}];
     }];
     
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
@@ -125,12 +102,37 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    //    // 檢查是否回答清晰問
-    //    if (NO) {
-    //
-    //    } else {
-    //        // [self cleanAskViewLayout];
-    //    }
+    // 檢查是否回答清晰問
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
+            [self.loadingView finished:^() {
+                // 取得清晰問
+                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+                    self.questionDate = date;
+                    self.cleanAskString = question;
+                    if (self.cleanAskString && !answered) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                } failure:^() {}];
+            }];
+        } failure:^() {
+            [self.loadingView finished:^() {
+                // 取得清晰問
+                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+                    self.cleanAskString = question;
+                    self.questionDate = date;
+                    if (self.cleanAskString) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    
+                    }
+                } failure:^() {}];
+            }];
+        }];
+    } failure:^() {}];
 }
 
 #pragma mark - UIColor
@@ -695,7 +697,7 @@
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController.parentViewController questionDate] success:^() {
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
         } failure:^() {}];
     } failure:^() {}];
 }

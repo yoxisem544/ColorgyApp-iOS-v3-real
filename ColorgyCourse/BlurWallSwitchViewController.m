@@ -52,7 +52,7 @@
 - (void)switchViewController {
     
     // 檢查信箱認證
-    if ([self isEmailOkCheck]) {
+    if (YES || [self isEmailOkCheck]) {
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];

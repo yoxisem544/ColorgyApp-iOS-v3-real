@@ -909,7 +909,18 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
-    self.questionString = [(BlurWallSwitchViewController *)self.parentViewController lastestQuestion];
+    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+        self.questionString = question;
+        self.cleanAskQuestionLabel.text = self.questionString;
+        self.questionDate = date;
+        
+        CGSize size = [self.questionString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+        
+        if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
+            [self.cleanAskQuestionLabel sizeToFit];
+        }
+
+    } failure:^() {}];
     
     [self.view addSubview:self.scrollView];
     [self.tabBarController.tabBar setHidden:YES];
@@ -919,15 +930,8 @@
     self.cleanAskQuestionLabel.center = CGPointMake(self.view.center.x, self.view.center.y - 120);
     self.cleanAskQuestionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
     self.cleanAskQuestionLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-    self.cleanAskQuestionLabel.text = self.questionString;
     self.cleanAskQuestionLabel.textAlignment = NSTextAlignmentCenter;
     self.cleanAskQuestionLabel.numberOfLines = 0;
-    
-    CGSize size = [self.questionString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    
-    if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
-        [self.cleanAskQuestionLabel sizeToFit];
-    }
     
     [self.scrollView addSubview:self.cleanAskQuestionLabel];
     
@@ -1010,7 +1014,7 @@
 
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController questionDate] success:^() {
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:self.questionDate success:^() {
             // 開啟模糊牆
             [self removeCleanAskLayout];
             [self.view removeFromSuperview];
