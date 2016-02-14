@@ -88,6 +88,16 @@ class ChatRoomViewController: DLMessagesViewController {
 	func tt() {
 		print("tt")
 		
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.updateOthersNickName(user.userId, chatroomId: self.historyChatroom.chatroomId, nickname: "安安給虧嗎", success: { () -> Void in
+				print("成功更新")
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
+		
 		if floatingOptionView.isShown {
 			// hide it
 			floatingOptionView.isShown = false
