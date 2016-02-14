@@ -93,62 +93,41 @@ class FriendListViewController: UIViewController {
 	func reloadFriendList(list: [HistoryChatroom]) {
 		let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
 		dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-			var mappedOldList = list
-			print("not sorted")
-			for l in list {
-				print(l.name)
-				print(l.lastContentTime.timeStampString())
-			}
-			print("sorted")
+			// 先來一個整理過時間的list
 			let sortedList = list.sort { (r1: HistoryChatroom, r2: HistoryChatroom) -> Bool in
-				print("time of r1 \(r1.lastContentTime.timeIntervalSince1970())")
-				print("time of r2 \(r2.lastContentTime.timeIntervalSince1970())")
 				// 越新的秒數越多，所以應該由大到小排列才會是從新到舊
 				return r1.lastContentTime.timeIntervalSince1970() > r2.lastContentTime.timeIntervalSince1970()
 			}
-			for l in sortedList {
-				print(l.name)
-				print(l.lastContentTime.timeStampString())
-			}
-			// check the count of two arrays
-			if self.doesRooms(sortedList, equalsTo: self.historyChatrooms) {
-				print("sortedList")
-				print(sortedList)
-				print("self.historyChatrooms")
-				print(self.historyChatrooms)
-			}
+			// 先確定兩個的長度一不一樣，不一樣就找出來，加入舊的list
 			if self.historyChatrooms.count != sortedList.count {
+				// 從新的找
 				for room in sortedList {
+					// 跟舊的比較
 					if !self.doesContainsRoom(room, inRooms: self.historyChatrooms).doesContain {
+						// 如果沒有，就加入
 						dispatch_async(dispatch_get_main_queue(), { () -> Void in
 							self.historyChatrooms.append(room)
 							let rows = self.friendListTableView.numberOfRowsInSection(0)
 							self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
 						})
 					}
-					//        if !self.historyChatrooms.contains(room) {
-					//          self.historyChatrooms.append(room)
-					//          let rows = friendListTableView.numberOfRowsInSection(0)
-					//          friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-					//        }
 				}
 			}
+			// 再次確定長度一不一樣
 			if self.historyChatrooms.count != sortedList.count {
+				// 如果不一樣，再遞回一次
 				print("still not same length")
+				// 只用舊的list去重新做一次。
 				// sort the current one
 				self.reloadFriendList(self.historyChatrooms)
 			} else {
-				print("number of rows \(self.friendListTableView.numberOfRowsInSection(0))")
-				if sortedList != self.historyChatrooms {
-					print("sortedList")
-					print(sortedList)
-					print("self.historyChatrooms")
-					print(self.historyChatrooms)
-				}
+				// 如果一樣，則開始比較兩個list的chatroomId是不是完全一樣
 				while !self.doesRooms(sortedList, equalsTo: self.historyChatrooms) {
 					for (index, oldRoom) : (Int, HistoryChatroom) in self.historyChatrooms.enumerate() {
+						// 找出新的index
 						if let newIndex = self.doesContainsRoom(oldRoom, inRooms: sortedList).atIndex {
 							// get new index, check if its the same
+							// 如果新的跟舊的不一樣，表示需要移動
 							if index != newIndex {
 								dispatch_async(dispatch_get_main_queue(), { () -> Void in
 									print("need to move")
@@ -158,41 +137,12 @@ class FriendListViewController: UIViewController {
 									self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
 									self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
 								})
+								// 移動後重新開始
 								break
 							}
 						}
 					}
 				}
-				//    while sortedList != self.historyChatrooms {
-				//      for (index, oldRoom) : (Int, HistoryChatroom) in self.historyChatrooms.enumerate() {
-				//        if let newIndex = doesContainsRoom(oldRoom, inRooms: sortedList).atIndex {
-				//          // get new index, check if its the same
-				//          if index != newIndex {
-				//            print("need to move")
-				//            print("\(index) need to move to \(newIndex)")
-				//            self.historyChatrooms.removeAtIndex(index)
-				//            friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-				//            self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
-				//            friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-				//            break
-				//          }
-				//        }
-				//      }
-				//      for (index, oldRoom) : (Int, HistoryChatroom) in self.historyChatrooms.enumerate() {
-				//        if let newIndex = sortedList.indexOf(oldRoom) {
-				//          // get new index, check if its the same
-				//          if index != newIndex {
-				//            print("need to move")
-				//            print("\(index) need to move to \(newIndex)")
-				//            self.historyChatrooms.removeAtIndex(index)
-				//            friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-				//            self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
-				//            friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-				//            break
-				//          }
-				//        }
-				//      }
-				//    }
 			}
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
 				self.historyChatrooms = sortedList

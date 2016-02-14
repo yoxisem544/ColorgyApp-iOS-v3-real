@@ -615,11 +615,13 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
 	
+	///檢查打招呼：(simple test passed)
+	///
 	///用途：檢查是否已經打過招呼。如果有打過回傳打招呼的結果。
 	///使用方式：
 	///
-	/// 1. 傳一個http post給/hi/check_hi，參數包含的userId,targetId,uuid,accessToken
-	/// 2. 回傳打招呼的結果，有兩種狀況可以繼續打招呼：(1) 從沒打過招呼 (2) 被拒絕可以再打一次
+	///1. 傳一個http post給/hi/check_hi，參數包含的userId,targetId,uuid,accessToken
+	///2. 回傳打招呼的結果，有兩種狀況可以繼續打招呼：(1) 從沒打過招呼 (2) 被拒絕可以再打一次，兩者的結果都是一樣的status 200：{ result: 'ok, you can say hi' }，若是已經(1)打過招呼然後成功過 (2)打過招呼還在等候回應，回傳status 200：{ result: 'already said hi' }
 	class func checkHi(userId: String, targetId: String, success: (canSayHi: Bool) -> Void, failure: () -> Void) {
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -855,9 +857,9 @@ class ColorgyChatAPI : NSObject {
 		afManager.POST(serverURL + "/users/check_answered_latest", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
 				let json = JSON(response)
-				if json["result"].string == "answerd" {
+				if json["result"].string == "answered" {
 					success(answeredLastestQuestion: true)
-				} else if json["result"].string == "not answerd" {
+				} else if json["result"].string == "not answered" {
 					success(answeredLastestQuestion: false)
 				} else {
 					print("check answer lastest fail, unknown type")
@@ -938,6 +940,134 @@ class ColorgyChatAPI : NSObject {
 			})
 		}
 	}
+	
+	///刪除聊天室：
+	///
+	///用途：提供一個刪除聊天室的api，而聊天室將會從此從自己的聊天列表消失
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/remove_chatroom，參數包括：uuid,accessToken,userId,chatroomId
+	///2. 若成功的話，會回傳一個{ result: success }
+	class func removeChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId
+		]
+		
+		afManager.POST(serverURL + "/users/remove_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				if json["result"].string == "success" {
+					success()
+				} else {
+					failure()
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+		})
+	}
+	
+	///離開聊天室：
+	///
+	///用途：提供一個離開聊天室的api，對方將會收到一個來自系統的訊息，而聊天室將會從此從自己的聊天列表消失
+	///使用方式：
+	///
+	///1. 傳一個http post給/chatroom/leave_chatroom，參數包括：uuid,accessToken,userId,chatroomId
+	///2. 若成功的話，會回傳一個{ result: success }
+	class func leaveChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId
+		]
+		
+		afManager.POST(serverURL + "/chatroom/leave_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				if json["result"].string == "success" {
+					success()
+				} else {
+					failure()
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+		})
+	}
+	
+	///更新對方稱呼：
+	///
+	///用途：更新對方的暱稱，並不會讓對方知道
+	///使用方式：
+	///
+	///1. 傳一個http post給/chatroom/update_target_alias，參數包括uuid,accessToken,userId,chatroomId,alias
+	///2. 若成功之後的establish connection後就會回傳對方的alias
+	class func updateOthersNickName(userId: String, chatroomId: String, nickname: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId,
+			"alias": nickname
+		]
+		
+		afManager.POST(serverURL + "/chatroom/update_target_alias", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			success()
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+		})
+	}
+
 	
 	class func checkImageType(data: NSData) {
 		var c = UInt8()
