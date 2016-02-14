@@ -28,7 +28,9 @@ class Chatroom : NSObject {
 		}
 	}
 	
-	override var description: String { return "Chatroom: {\n\tchatroomId -> \(chatroomId)\n\tsocketId -> \(socketId)\n}" }
+	override var description: String {
+		return "Chatroom: {\n\tchatroomId -> \(chatroomId)\n\tsocketId -> \(socketId)\n\ttotalMessageLength -> \(totalMessageLength)\n\tchatProgress -> \(chatProgress)\n\tmoreMessage -> \(moreMessage)\n\ttargetAlias -> \(targetAlias)\n\tothersNickName -> \(othersNickName)\n\ttargetImage -> \(targetImage)\n\tothersProfileImage -> \(othersProfileImage)\n}"
+	}
 	
 	convenience init?(json: JSON) {
 		print(json)

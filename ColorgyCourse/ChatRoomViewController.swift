@@ -132,6 +132,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		presentViewController(browser, animated: true, completion: {})
 	}
 	
+	// MARK: Socket
 	func checkAndStartSocket() {
 		
 		guard accessToken != nil else {
