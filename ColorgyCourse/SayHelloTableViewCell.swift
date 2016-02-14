@@ -32,7 +32,11 @@ class SayHelloTableViewCell: UITableViewCell {
 	func updateUI() {
 		nameLabel.text = hello.name
 		lastMessageLabel.text = nil
-		profileImageView.image = nil
+		if let urlString = hello.imageURL {
+			if let url = NSURL(string: urlString) {
+				profileImageView.sd_setImageWithURL(url, placeholderImage: nil)
+			}
+		}
 		messageLabel.text = hello.message
 	}
 	
