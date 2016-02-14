@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ColorgyCourse-Swift.h"
 
 @interface HelloViewController : UIViewController
 
@@ -18,5 +19,7 @@
 @property UIView *buttonView;
 @property UIButton *helloButton;
 @property UIScrollView *scrollView;
+
+- (instancetype)initWithInformaion:(ChatUserInformation *)information;
 
 @end

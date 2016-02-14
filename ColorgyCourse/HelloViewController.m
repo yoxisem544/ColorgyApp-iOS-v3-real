@@ -8,6 +8,7 @@
 
 #import "HelloViewController.h"
 #import "ColorgyCourse-Swift.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface HelloViewController ()
 
@@ -56,8 +57,10 @@
     // UserImageView
     CGFloat userImageViewLength = self.view.bounds.size.width;
     
-    self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -64, userImageViewLength, userImageViewLength)];
-    [self.userImageView setImage:[UIImage imageNamed:@"2.jpg"]];
+    self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, userImageViewLength, userImageViewLength)];
+    [self.userImageView sd_setImageWithURL:[NSURL URLWithString:self.information.avatarBlur2XURL]];
+    self.userImageView.contentMode = UIViewContentModeScaleAspectFit;
+    NSLog(@"%@", [self.information description]);
     [self.view addSubview:self.userImageView];
     
     // set gradient
@@ -93,24 +96,26 @@
     [self.helloButton.layer setBorderColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor];
     [self.helloButton.layer setBorderWidth:1.5];
     
+    
+    [self.helloButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+    [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
+    [self.buttonView addSubview:self.helloButton];
+    
     // Cheack hi
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
             if (can) {
                 [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
-                [self.helloButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
-                [self.buttonView addSubview:self.helloButton];
-                [self.helloButton addTarget:self action:@selector(helloButton) forControlEvents:UIControlEventTouchUpInside];
+                [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
             } else {
                 [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
-                [self.helloButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [self.buttonView addSubview:self.helloButton];
             }
         } failure:^() {}];
     } failure:^() {}];
     
     // scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength - 64, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height + 64)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height)];
     self.scrollView.contentSize = CGSizeMake(1000, 1000);
     self.scrollView.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:self.scrollView];
@@ -123,7 +128,8 @@
 - (void)helloAction {
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:@"你好美女！！" success:^() {
-            
+            [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
+            [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
         } failure:^() {}];
     } failure:^() {}];
 }

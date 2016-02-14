@@ -25,7 +25,6 @@
 #define PRELOAD_NUMBER 10
 
 @implementation BlurWallViewController {
-    ChatUser *chatUser;
     int currentPage;
 }
 
@@ -96,15 +95,29 @@
     
     [self.loadingView start];
     [self refreshData:^() {
-        [self.loadingView finished:^() {
-            // 取得清晰問
-            self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
-            if (self.cleanAskString) {
-                if ([self.cleanAskString length]) {
-                    [self cleanAskViewLayout];
-                }
-            }
-        }];
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+            [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
+                [self.loadingView finished:^() {
+                    // 取得清晰問
+                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
+                    if (self.cleanAskString && !answered) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                }];
+            } failure:^() {
+                [self.loadingView finished:^() {
+                    // 取得清晰問
+                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
+                    if (self.cleanAskString) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                }];
+            }];
+        } failure:^() {}];
     }];
     
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
@@ -314,7 +327,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"You Touch: %ld, %ld -> %ld", indexPath.row / self.numberOfColumn, indexPath.row % self.numberOfColumn, indexPath.item);
-    HelloViewController *vc = [[HelloViewController alloc] init];
+    HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
     //ViewController *vc = [[UIViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -681,6 +694,10 @@
 
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController.parentViewController questionDate] success:^() {
+        } failure:^() {}];
+    } failure:^() {}];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
