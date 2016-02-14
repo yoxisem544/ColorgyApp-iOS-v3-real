@@ -22,11 +22,11 @@ class Hello: NSObject {
 	var lastAnswer: String?
 	
 	override var description: String {
-		return "Hello: {\n\tuserId -> \(userId)\n\ttargetId -> \(targetId)\n\tmessage -> \(message)\n\tstatus -> \(status)\n\tid -> \(id)\n\tname -> \(name)\n\timageURL -> \(imageURL)\n}"
+		return "Hello: {\n\tuserId -> \(userId)\n\ttargetId -> \(targetId)\n\tmessage -> \(message)\n\tstatus -> \(status)\n\tid -> \(id)\n\tname -> \(name)\n\timageURL -> \(imageURL)\n\tupdatedAt -> \(updatedAt)\n\tcreatedAt -> \(createdAt)\n\tlastAnsweredDate -> \(lastAnsweredDate)\n\tlastAnswer -> \(lastAnswer)\n}"
 	}
 	
 	convenience init?(json: JSON) {
-		print(json)
+
 		var _userId: String?
 		var _targetId: String?
 		var _message: String?

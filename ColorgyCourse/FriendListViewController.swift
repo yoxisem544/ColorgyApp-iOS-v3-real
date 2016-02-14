@@ -39,7 +39,7 @@ class FriendListViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 //		loadFriend()
-		renewChatroom(every: 18.0)
+		renewChatroom(every: 6.0)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -115,7 +115,7 @@ class FriendListViewController: UIViewController {
 				}
 				// 檢查多餘的，把他去除
 				for room in historyChatrooms {
-					if doesContainsRoom(room, inRooms: sortedList).doesContain {
+					if !doesContainsRoom(room, inRooms: sortedList).doesContain {
 						// 新的表中，沒有舊的的話，移除
 						if let index = historyChatrooms.indexOf(room) {
 							historyChatrooms.removeAtIndex(index)
