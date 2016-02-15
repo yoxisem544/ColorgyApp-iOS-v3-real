@@ -35,6 +35,8 @@
     UITextView *aboutPassionTextView;
     UILabel *aboutExpertiseLabel;
     UITextView *aboutExpertiseTextView;
+    
+    ChatMeUserInformation *userInformation;
 }
 
 @end
@@ -44,6 +46,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [ColorgyChatAPI me:^(ChatMeUserInformation *informaion) {
+        userInformation = informaion;
+        [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
+        nameTextField.text = userInformation.name;
+        aboutSchoolTextField.placeholder = informaion.organizationCode;
+        [self showCheck];
+    } failure:^() {}];
     
     [self.tabBarController.tabBar setHidden:YES];
     
@@ -73,7 +82,7 @@
     CGFloat imageViewLength = 150;
     
     userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2 - imageViewLength / 2, self.view.bounds.origin.y + 100, imageViewLength, imageViewLength)];
-    [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
+    //    [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
     [userImageView.layer setCornerRadius:imageViewLength / 2];
     [userImageView.layer setBorderColor:[UIColor whiteColor].CGColor];
     [userImageView.layer setBorderWidth:3];
@@ -106,7 +115,7 @@
     nameTextField = [[UITextField alloc] initWithFrame: CGRectMake(marginX, CGRectGetMaxY(nameLabel.frame) + marginY, width, height)];
     nameTextField.backgroundColor = [UIColor whiteColor];
     nameTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    nameTextField.text = [UserSetting UserNickyName];
+    //    nameTextField.text = [UserSetting UserNickyName];
     nameTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
     nameTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
     nameTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -168,7 +177,7 @@
     //aboutSchoolTextField.backgroundColor = [UIColor whiteColor];
     aboutSchoolTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     aboutSchoolTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    aboutSchoolTextField.placeholder = [UserSetting UserOrganization];
+    //    aboutSchoolTextField.placeholder = [UserSetting UserOrganization];
     aboutSchoolTextField.enabled = NO;
     aboutSchoolTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
     aboutSchoolTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -277,6 +286,7 @@
             [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {} failure:^() {}];
             [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
             } failure:^() {}];
+            [ColorgyChatAPI updateFromCore:^() {} failure:^() {}];
         } failure:^() {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
@@ -336,7 +346,7 @@
         // 檢查名字 尚需修改
         if (nameTextField.text.length) {
             [self showChecking];
-            if ([nameTextField.text isEqualToString:[UserSetting UserNickyName]]) {
+            if ([nameTextField.text isEqualToString:userInformation.organizationCode]) {
                 [self showCheck];
                 return YES;
             }

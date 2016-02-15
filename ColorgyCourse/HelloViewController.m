@@ -12,13 +12,13 @@
 
 @interface HelloViewController ()
 
-@property ChatUserInformation *information;
+@property AvailableTarget *information;
 
 @end
 
 @implementation HelloViewController
 
-- (instancetype)initWithInformaion:(ChatUserInformation *)information {
+- (instancetype)initWithInformaion:(AvailableTarget *)information {
     self = [super init];
     if (self) {
         self.information = information;
@@ -77,6 +77,24 @@
     gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil]; // 由上到下的漸層顏色
     [gradientView.layer insertSublayer:gradient atIndex:0];
     
+    // set messageRect
+    UIImageView *messageRect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageRect2"]];
+    
+    messageRect.frame = CGRectMake(0, 0, userImageViewLength - 100, 60);
+    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
+    
+    [self.userImageView addSubview:messageRect];
+    
+    // set message
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 15, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 20)];
+    messageLabel.text = self.information.lastAnswer;
+    messageLabel.numberOfLines = 2;
+    //messageLabel.backgroundColor = [UIColor yellowColor];
+    messageLabel.textColor = [UIColor whiteColor];
+    messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+    
+    [messageRect addSubview:messageLabel];
+    
     // ButtonView
     CGFloat buttonViewHeight = 64;
     
@@ -117,11 +135,121 @@
     // scrollView
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height)];
     self.scrollView.contentSize = CGSizeMake(1000, 1000);
-    self.scrollView.backgroundColor = [UIColor orangeColor];
+    self.scrollView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
     [self.view addSubview:self.scrollView];
+    
+    [self scrollViewLayout];
 }
 
 - (void)scrollViewLayout {
+    CGFloat marginY = 10;
+    CGFloat marginX = 30;
+    UIView *aboutView = [[UIView alloc] initWithFrame:CGRectMake(marginX, marginY, self.scrollView.bounds.size.width - 2 * marginX, 44)];
+    aboutView.backgroundColor = [UIColor whiteColor];
+    [self.scrollView addSubview:aboutView];
+    CGFloat paddingX = 40;
+    CGFloat paddingY = 10;
+    UILabel *aboutLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, paddingY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+    aboutLabel.center = CGPointMake(aboutView.bounds.size.width / 2, aboutView.bounds.size.height / 2);
+    
+    NSString *aboutLabelString = nil;
+    
+    if (self.information.aboutSchool) {
+        aboutLabelString = self.information.aboutSchool;
+    }
+    if (self.information.aboutHabitancy) {
+        [aboutLabelString stringByAppendingString:@" . "];
+        [aboutLabelString stringByAppendingString:self.information.aboutHabitancy];
+    }
+    if (self.information.aboutHoroscope) {
+        [aboutLabelString stringByAppendingString:@" . "];
+        [aboutLabelString stringByAppendingString:self.information.aboutHoroscope];
+    }
+    
+    //    if (self.information.organizationCode) {
+    //        organizationCodeLabel.text = self.information.organizationCode;
+    //    } else {
+    aboutLabel.text = aboutLabelString;
+    //    }
+    aboutLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
+    aboutLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    [aboutView addSubview:aboutLabel];
+    
+    // about infromation layout
+    UIView *aboutInformationView = [[UIView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, 1000)];
+    
+    aboutInformationView.backgroundColor = [UIColor whiteColor];
+    [self.scrollView addSubview:aboutInformationView];
+    
+    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
+    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
+    CGFloat sectionY = 30;
+    CGFloat currentY = paddingY;
+    
+    if (self.information.aboutConversation.length || self.information.aboutPassion.length || self.information.aboutExpertise.length) {
+        if (self.information.aboutExpertise.length) {
+            UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            
+            aboutExpertiseTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutExpertiseTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
+            aboutExpertiseTitleLabel.text = @"專精的事情";
+            [aboutInformationView addSubview:aboutExpertiseTitleLabel];
+            currentY = CGRectGetMaxY(aboutExpertiseTitleLabel.frame);
+            currentY += paddingY;
+            UILabel *aboutExpertiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            
+            aboutExpertiseLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutExpertiseLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+            aboutExpertiseLabel.text = self.information.aboutExpertise;
+            aboutExpertiseLabel.numberOfLines = 0;
+            [aboutExpertiseLabel sizeToFit];
+            [aboutInformationView addSubview:aboutExpertiseLabel];
+            currentY = CGRectGetMaxY(aboutExpertiseLabel.frame);
+            currentY += sectionY;
+        }
+        if (self.information.aboutPassion.length) {
+            UILabel *aboutPassionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            aboutPassionTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutPassionTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
+            aboutPassionTitleLabel.text = @"最近熱衷的事物";
+            [aboutInformationView addSubview:aboutPassionTitleLabel];
+            currentY = CGRectGetMaxY(aboutPassionTitleLabel.frame);
+            currentY += paddingY;
+            UILabel *aboutPassionLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            
+            aboutPassionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutPassionLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+            aboutPassionLabel.numberOfLines = 0;
+            aboutPassionLabel.text = self.information.aboutPassion;
+            [aboutPassionLabel sizeToFit];
+            [aboutInformationView addSubview:aboutPassionLabel];
+            currentY = CGRectGetMaxY(aboutPassionLabel.frame);
+            currentY += sectionY;
+        }
+        if (self.information.aboutConversation.length) {
+            UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutConversationTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
+            aboutConversationTitleLabel.text = @"想聊的話題";
+            [aboutInformationView addSubview:aboutConversationTitleLabel];
+            currentY = CGRectGetMaxY(aboutConversationTitleLabel.frame);
+            currentY += paddingY;
+            UILabel *aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            
+            aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutConversationLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+            aboutConversationLabel.text = self.information.aboutConversation;
+            aboutConversationLabel.numberOfLines = 0;
+            [aboutConversationLabel sizeToFit];
+            [aboutInformationView addSubview:aboutConversationLabel];
+            currentY = CGRectGetMaxY(aboutConversationLabel.frame);
+            currentY += sectionY;
+        }
+    }
+    aboutInformationView.frame = CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, currentY);
+    currentY += marginY;
+    self.scrollView.contentSize = CGSizeMake(10, CGRectGetMaxY(aboutInformationView.frame) + marginY);
 }
 
 #pragma mark - Hello Action
@@ -302,7 +430,7 @@
     if (textView == self.cleanAskTextView) {
         self.cleanAskTextView.text = [self stringCounterTo:textView.text number:40.0];
     }
-
+    
     return YES;
 }
 

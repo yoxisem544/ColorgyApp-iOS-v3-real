@@ -350,6 +350,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"尚未認證" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                [self removeCheckEmailLayout];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -802,6 +803,7 @@
                 [self removeNameLayout];
                 [self cleanAskLayout];
             } failure:^() {}];
+            [ColorgyChatAPI updateFromCore:^() {} failure:^() {}];
         } failure:^() {}];
     }
 }

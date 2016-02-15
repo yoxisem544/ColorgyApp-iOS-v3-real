@@ -35,6 +35,6 @@
 @property UIView *line2;
 @property UILabel *textNumberCounterLabel;
 
-- (instancetype)initWithInformaion:(ChatUserInformation *)information;
+- (instancetype)initWithInformaion:(AvailableTarget *)information;
 
 @end

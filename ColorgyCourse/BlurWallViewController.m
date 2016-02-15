@@ -225,7 +225,7 @@
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 10)];
     
-    messageLabel.text = availableTarget.name;
+    messageLabel.text = availableTarget.lastAnswer;
     messageLabel.numberOfLines = 2;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:12.0];
@@ -342,6 +342,10 @@
 #pragma mark - RefreshData
 
 - (void)refreshDataBySegment {
+    // LoadinView Customized
+    self.loadingView = [[LoadingView alloc] init];
+    self.loadingView.loadingString = @"載入中";
+    self.loadingView.finishedString = @"完成";
     [self.loadingView start];
     [self.blurWallDataMutableArray removeAllObjects];
     [self refreshData:^() {
