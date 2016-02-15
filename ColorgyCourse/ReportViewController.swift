@@ -40,6 +40,7 @@ class ReportViewController: UIViewController {
 	}
 	
 	@IBAction func sendButtonClicked() {
+		Mixpanel.sharedInstance().track(MixpanelEvents.SubmitFeedbackForm)
 		if reportProblemType != nil {
 			ColorgyAPI.POSTUserFeedBack(reportEmail ?? "no email", feedbackType: reportProblemType!, feedbackDescription: reportProblemDescription ?? "no description", success: { () -> Void in
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
@@ -56,11 +57,13 @@ class ReportViewController: UIViewController {
 						Flurry.logEvent("v3.0: User Send Feedback", withParameters: params as [NSObject : AnyObject])
 						Answers.logCustomEventWithName(AnswersLogEvents.userSendFeedback, customAttributes: params)
 					}
+					Mixpanel.sharedInstance().track(MixpanelEvents.SubmitFeedbackFormSuccess)
 					self.delegate?.reportViewControllerSuccessfullySentReport()
 				})
 				}, failure: { () -> Void in
 					let alert = ErrorAlertView.alertUserWithError("傳送失敗，請檢查您的網路是否暢通！")
 					self.presentViewController(alert, animated: true, completion: nil)
+					Mixpanel.sharedInstance().track(MixpanelEvents.SubmitFeedbackFormFail)
 			})
 		} else {
 			let alert = UIAlertController(title: "阿呀！", message: "要選擇遇到的問題喔！", preferredStyle: UIAlertControllerStyle.Alert)
@@ -69,6 +72,7 @@ class ReportViewController: UIViewController {
 			dispatch_async(dispatch_get_main_queue(), { () -> Void in
 				self.presentViewController(alert, animated: true, completion: nil)
 			})
+			Mixpanel.sharedInstance().track(MixpanelEvents.SubmitFeedbackFormFail)
 		}
 	}
 	
@@ -96,6 +100,8 @@ class ReportViewController: UIViewController {
 		reportView.keyboardDismissMode = .OnDrag
 		
 		reportView.formDelegate = self
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoFeedbackForm)
 	}
 	
 	override func viewDidAppear(animated: Bool) {

@@ -100,7 +100,8 @@ class SearchCourseViewController: UIViewController {
         
         // configure successful add course view
         configureSuccessfullyAddCourseView()
-        
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoCourseManagementView)
     }
     
     override func viewDidDisappear(animated: Bool) {

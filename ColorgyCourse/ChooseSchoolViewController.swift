@@ -60,6 +60,7 @@ class ChooseSchoolViewController: UIViewController {
         searchControl.searchBar.placeholder = "搜尋學校"
 		
 		title = "選擇學校"
+		Mixpanel.sharedInstance().track(MixpanelEvents.SelectSchool)
     }
     
     override func viewDidAppear(animated: Bool) {

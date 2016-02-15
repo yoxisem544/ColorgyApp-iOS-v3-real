@@ -92,6 +92,8 @@ class DetailCourseViewController: UIViewController {
         
         
         downloadCourseInfo()
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoCourseShowView)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -123,6 +125,7 @@ class DetailCourseViewController: UIViewController {
                     self.classmatesView.userCourseObjects = userCourseObjects
                     // adjust content size height
                     self.contentScrollView.contentSize.height = self.courseDetailView.frame.height + self.classmatesView.bounds.size.height
+					Mixpanel.sharedInstance().track(MixpanelEvents.showCourseInfoSuccess)
                     }, failure: { () -> Void in
                         // retry
                         if self.retryCounter > 0 {
@@ -133,6 +136,7 @@ class DetailCourseViewController: UIViewController {
                                 self.downloadCourseInfo()
                             })
                         }
+						Mixpanel.sharedInstance().track(MixpanelEvents.showCourseInfoFail)
                 })
             })
         } else if localCourse != nil {
@@ -178,6 +182,7 @@ extension DetailCourseViewController : ClassmatesContainerViewDelegate {
         if Release().mode {
             Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo", withParameters: ["user_id": userCourseObject.user_id])
         }
+		Mixpanel.sharedInstance().track(MixpanelEvents.clickOthersProfileImage)
         self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }
 }

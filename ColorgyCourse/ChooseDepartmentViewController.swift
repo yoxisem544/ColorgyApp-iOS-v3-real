@@ -55,6 +55,7 @@ class ChooseDepartmentViewController: UIViewController {
         searchControl.searchBar.placeholder = "搜尋系所"
 		
 		title = "選擇系所"
+		Mixpanel.sharedInstance().track(MixpanelEvents.SelectDepartment)
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -72,6 +72,7 @@
 		635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */; };
 		636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */; };
 		636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */; };
+		637210A91C71EA9500CFFB25 /* MixpanelEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */; };
 		637AA2A11C61DCA50074BDBB /* FloatingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */; };
 		638D64F91C045F1F00EACEC0 /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D64F81C045F1F00EACEC0 /* Department.swift */; };
 		638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */; };
@@ -299,6 +300,7 @@
 		635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyColor.swift; sourceTree = "<group>"; };
 		636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalSettingsTableViewController.swift; sourceTree = "<group>"; };
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
+		637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixpanelEvents.swift; sourceTree = "<group>"; };
 		637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingOptionView.swift; sourceTree = "<group>"; };
 		638D64F81C045F1F00EACEC0 /* Department.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
 				63FBCC721B935C0100B3084F /* Mode.swift */,
 				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
+				637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -1419,6 +1422,7 @@
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
 				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
+				637210A91C71EA9500CFFB25 /* MixpanelEvents.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
 				6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */,
 				6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */,

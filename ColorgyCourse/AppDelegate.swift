@@ -39,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
         // Flurry setup
 		setupFlurry()
+		
+		// Mixpanel
+		setupMixpanel()
         
         // register for notification
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil))
@@ -80,6 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
 			}
 		}
+	}
+	
+	func setupMixpanel() {
+		let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
+		mixpanel.track(MixpanelEvents.OpenApp)
 	}
 	
 	func setupFlurry() {

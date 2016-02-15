@@ -49,10 +49,12 @@ class CreateCourseTableViewController: UIViewController {
             } else {
                 confirmCreateLocalCourse(lc)
             }
+			Mixpanel.sharedInstance().track(MixpanelEvents.addCustomCourseSuccess)
         } else {
             if courseName == nil || courseName == "" {
                 // no name of course
                 alertError("資料有問題", error: "建立課程需要最少輸入課程的名稱！")
+				Mixpanel.sharedInstance().track(MixpanelEvents.addCustomCourseFail)
             }
         }
     }
@@ -129,6 +131,8 @@ class CreateCourseTableViewController: UIViewController {
         initializeContents()
         
         createCourseTableView.keyboardDismissMode = .OnDrag
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoCustomCourseView)
     }
     
     func initializeContents() {

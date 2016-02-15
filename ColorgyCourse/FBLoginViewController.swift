@@ -15,6 +15,7 @@ class FBLoginViewController: UIViewController {
     
     @IBOutlet weak var FBloginButton: UIButton!
     @IBAction func FBloginButtonClicked(sender: UIButton) {
+		Mixpanel.sharedInstance().track(MixpanelEvents.ClickFacebookLogin)
         // hide buttons
         hideButtons()
         // contiune login
@@ -38,7 +39,8 @@ class FBLoginViewController: UIViewController {
                                 UserSetting.generateAndStoreDeviceUUID()
                                 // set state refresh can use
                                 ColorgyAPITrafficControlCenter.setRefreshStateToCanRefresh()
-                                
+								
+								Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginSuccess)
                                 // get period data
                                 ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
                                     if let periodDataObjects = periodDataObjects {
@@ -87,6 +89,7 @@ class FBLoginViewController: UIViewController {
                                 let alert = ErrorAlertView.alertUserWithError("讀取個人資料錯誤，請重新登入。如果你是第一次登入，請至Colorgy網頁填寫你的學校！如果有不清楚的地方請到粉專詢問！")
                                 self.presentViewController(alert, animated: true, completion: nil)
                                 self.showButtons()
+								Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFail)
                         })
                     } else {
 //                        self.statusLabel.text = "login colorgy fail, \(error)"
@@ -94,10 +97,12 @@ class FBLoginViewController: UIViewController {
 							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，錯誤代碼：\(code)。請給我們一點時間修復！造成您的不便我們深感抱歉！😖")
 							self.presentViewController(alert, animated: true, completion: nil)
 							self.showButtons()
+							Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFail)
 						} else {
 							let alert = ErrorAlertView.alertUserWithError("登入Colorgy錯誤，請重新登入。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。")
 							self.presentViewController(alert, animated: true, completion: nil)
 							self.showButtons()
+							Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFail)
 						}
                     }
                 })
@@ -106,6 +111,7 @@ class FBLoginViewController: UIViewController {
                 let alert = ErrorAlertView.alertUserWithError("登入Facebook錯誤。\n如果一直無法登入，請嘗試按兩下Home鍵，把APP退出後重新開啟APP。")
                 self.presentViewController(alert, animated: true, completion: nil)
                 self.showButtons()
+				Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFail)
             }
         }
     }

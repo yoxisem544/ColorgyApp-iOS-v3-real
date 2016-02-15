@@ -70,7 +70,7 @@ class ClassmateTimeTableViewController: UIViewController {
             self.loadUserImage()
             self.loadUserCourse()
         })
-
+		Mixpanel.sharedInstance().track(MixpanelEvents.showOthersTable)
     }
     
     override func viewDidAppear(animated: Bool) {
