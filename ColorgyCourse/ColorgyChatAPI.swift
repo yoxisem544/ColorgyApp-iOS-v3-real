@@ -976,7 +976,7 @@ class ColorgyChatAPI : NSObject {
 			"userId": userId,
 			"chatroomId": chatroomId
 		]
-		
+		print(params)
 		afManager.POST(serverURL + "/users/remove_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
 				let json = JSON(response)
@@ -989,6 +989,7 @@ class ColorgyChatAPI : NSObject {
 				failure()
 			}
 			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
 				failure()
 		})
 	}
