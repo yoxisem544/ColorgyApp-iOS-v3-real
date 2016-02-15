@@ -180,10 +180,10 @@
     
     aboutInformationView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:aboutInformationView];
-    
-    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
-    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
+//    
+//    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+//    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
+//    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
     CGFloat sectionY = 30;
     CGFloat currentY = paddingY;
     

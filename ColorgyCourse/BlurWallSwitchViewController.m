@@ -52,7 +52,7 @@
 - (void)switchViewController {
     
     // 檢查信箱認證
-    if (YES || [self isEmailOkCheck]) {
+    if ([self isEmailOkCheck]) {
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];
@@ -69,7 +69,8 @@
                 self.activityViewController = self.openingViewController;
                 //[self didMoveToParentViewController:self];
             } else {
-                self.activityViewController = self.navigationBlurWallViewController;            }
+                self.activityViewController = self.navigationBlurWallViewController;
+            }
         }];
     }
 }
