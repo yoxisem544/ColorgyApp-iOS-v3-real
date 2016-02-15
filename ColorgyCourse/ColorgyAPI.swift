@@ -288,7 +288,7 @@ class ColorgyAPI : NSObject {
 					let courseRawDataArray = CourseRawDataArray(json: json, process: { (state) -> Void in
 						processing(processTitle: "吐了！", processState: state)
 					})
-					processing(processTitle: "在一下下就好了！", processState: "正在儲存資料到手機上...")
+					processing(processTitle: "再一下下就好了！", processState: "正在儲存資料到手機上...")
 					var dicts = [[String : AnyObject]]()
 					// this dic can use to generate [course]
 					if courseRawDataArray.objects != nil {

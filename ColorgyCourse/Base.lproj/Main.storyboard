@@ -182,6 +182,12 @@
                                     <action selector="closeButtonClicked:" destination="aOb-er-GlL" eventType="touchUpInside" id="uIz-9q-Gjx"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Email登入僅限於以前註冊過的會員使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6p-KS-dCp">
+                                <rect key="frame" x="183" y="380" width="234.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -190,7 +196,9 @@
                             <constraint firstAttribute="centerY" secondItem="WDn-iY-pui" secondAttribute="centerY" multiplier="1.3" id="4lN-gy-p2x"/>
                             <constraint firstAttribute="centerX" secondItem="c34-9k-REc" secondAttribute="centerX" constant="-0.5" id="Ege-Vq-6EG"/>
                             <constraint firstItem="ffQ-Gw-7GU" firstAttribute="leading" secondItem="sNP-h5-G8j" secondAttribute="leadingMargin" id="Kjc-DC-Ly7"/>
+                            <constraint firstItem="x6p-KS-dCp" firstAttribute="top" secondItem="HfG-WX-RwI" secondAttribute="bottom" constant="8" id="LD7-pc-ZXR"/>
                             <constraint firstItem="usR-Bm-a3q" firstAttribute="top" secondItem="ZOR-yh-2Lu" secondAttribute="bottom" constant="8" id="NNa-wD-ctM"/>
+                            <constraint firstItem="x6p-KS-dCp" firstAttribute="centerX" secondItem="HfG-WX-RwI" secondAttribute="centerX" id="Qc5-CI-djB"/>
                             <constraint firstItem="HfG-WX-RwI" firstAttribute="top" secondItem="usR-Bm-a3q" secondAttribute="bottom" constant="8" id="W5e-Cy-viK"/>
                             <constraint firstItem="ZOR-yh-2Lu" firstAttribute="top" secondItem="WDn-iY-pui" secondAttribute="bottom" constant="8" id="fIl-0A-OKz"/>
                             <constraint firstAttribute="centerX" secondItem="usR-Bm-a3q" secondAttribute="centerX" constant="-0.5" id="gJ1-7i-sWb"/>
@@ -1662,7 +1670,7 @@
                                         <barButtonItem key="leftBarButtonItem" image="backButton" id="S5b-As-MUm">
                                             <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <action selector="backButtonClicked:" destination="Bgc-mQ-wie" id="2pk-Bb-9Fa"/>
+                                                <action selector="backButtonClicked" destination="Bgc-mQ-wie" id="pmf-ZC-inX"/>
                                             </connections>
                                         </barButtonItem>
                                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ajT-Vd-K0P">
