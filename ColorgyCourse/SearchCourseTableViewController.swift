@@ -438,7 +438,8 @@ extension SearchCourseViewController : UISearchResultsUpdating {
         if searchText != "" {
             //            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+			let main = dispatch_get_main_queue()
+            dispatch_async(main, { () -> Void in
                 
                 for localCachingObject in self.localCachingObjects {
                     var isMatch: Bool = false
