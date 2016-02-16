@@ -24,24 +24,16 @@ class FriendListTableViewCell: UITableViewCell {
 	}
 	
 	func updateUI() {
-		if let imageurl = historyChatroom.image {
-			if imageurl.isValidURLString {
-				userProfileImageView.sd_setImageWithURL(NSURL(string: imageurl)!, placeholderImage: nil)
-			}
+		if historyChatroom.image.isValidURLString {
+			userProfileImageView.sd_setImageWithURL(NSURL(string: historyChatroom.image)!, placeholderImage: nil)
 		}
 		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
 		userQuestionLabel.text = " "
-		userLastMessageLabel.text = (historyChatroom.lastAnswer != "" ? historyChatroom.lastAnswer : " ")
-		timeStampLabel.text = (historyChatroom.lastAnswerDate != "" ? historyChatroom.lastAnswerDate : " ")
-		
-		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
-			print(user)
-			dispatch_async(dispatch_get_main_queue(), { () -> Void in
-				self.userQuestionLabel.text = (user.lastAnswer != "" ? user.lastAnswer : " ")
-			})
-			}) { () -> Void in
-				
-		}
+		let prefixString = (userId == historyChatroom.lastSpeaker ? "你：" : "")
+		let lastMessage = (historyChatroom.lastContent != "" ? historyChatroom.lastContent : " ") ?? " "
+		userLastMessageLabel.text = prefixString + lastMessage
+		timeStampLabel.text = historyChatroom.lastContentTime.timeStampString()
+		userQuestionLabel.text = historyChatroom.lastAnswer
 	}
 	
     override func awakeFromNib() {

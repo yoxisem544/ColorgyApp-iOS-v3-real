@@ -15,7 +15,7 @@ class SearchCourseViewController: UIViewController {
     @IBOutlet weak var searchCourseTableView: UITableView!
     @IBOutlet weak var courseSegementedControl: UISegmentedControl!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    var searchControl = UISearchController()
+	var searchControl = UISearchController()
     var processAlertController: UIAlertController!
     var createCourseCellView: CreateCourseTableViewCell?
     
@@ -100,7 +100,8 @@ class SearchCourseViewController: UIViewController {
         
         // configure successful add course view
         configureSuccessfullyAddCourseView()
-        
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoCourseManagementView)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -259,7 +260,7 @@ class SearchCourseViewController: UIViewController {
         self.searchCourseTableView.reloadData()
     }
     
-    @IBAction func backButtonClicked(sender: AnyObject) {
+    @IBAction func backButtonClicked() {
         self.searchControl.searchBar.resignFirstResponder()
         self.searchControl.dismissViewControllerAnimated(false, completion: nil)
         self.navigationController?.popViewControllerAnimated(true)
@@ -311,6 +312,15 @@ class SearchCourseViewController: UIViewController {
 
 // MARK: - AlertDeleteCourseViewDelegate
 extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
+	
+	func removeCourse(course: Course) {
+		if enrolledCourses.contains(course) {
+			if let index = enrolledCourses.indexOf(course) {
+				enrolledCourses.removeAtIndex(index)
+			}
+		}
+	}
+	
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
         print("didTapDeleteCourseAlertDeleteCourseView")
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
@@ -321,7 +331,8 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
             // change state
             cell.hasEnrolledState = false
             CourseUpdateHelper.needUpdateCourse()
-			self.loadEnrolledCourses()
+//			self.loadEnrolledCourses()
+			self.removeCourse(course)
 			self.searchCourseTableView.reloadData()
             // Flurry
             if Release().mode {
@@ -427,7 +438,8 @@ extension SearchCourseViewController : UISearchResultsUpdating {
         if searchText != "" {
             //            let qos = Int(QOS_CLASS_USER_INTERACTIVE.value)
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-            dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+			let main = dispatch_get_main_queue()
+            dispatch_async(main, { () -> Void in
                 
                 for localCachingObject in self.localCachingObjects {
                     var isMatch: Bool = false
@@ -480,33 +492,33 @@ extension SearchCourseViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if self.courseSegementedControl.selectedSegmentIndex == 0 {
-            if section == 0 {
-                if searchControl.active {
-                    // searching
-                    if searchControl.searchBar.text == "" {
-                        return 0
-                    } else {
-                        return self.filteredCourses.count
-                    }
-                } else {
-                    // dont show data if not searching
-                    //                return self.localCachingObjects.count
-                    return 0
-                }
-            } else {
-                return 1
-            }
-        } else {
-            if section == 0 {
-                // server
-                return self.enrolledCourses.count
-            } else {
-                // local
-                return self.enrolledLocalCourse.count
-            }
-        }
+		
+		if self.courseSegementedControl.selectedSegmentIndex == 0 {
+			if section == 0 {
+				if searchControl.active {
+					// searching
+					if searchControl.searchBar.text == "" {
+						return 0
+					} else {
+						return self.filteredCourses.count
+					}
+				} else {
+					// dont show data if not searching
+					//                return self.localCachingObjects.count
+					return 0
+				}
+			} else {
+				return 1
+			}
+		} else {
+			if section == 0 {
+				// server
+				return self.enrolledCourses.count
+			} else {
+				// local
+				return self.enrolledLocalCourse.count
+			}
+		}
     }
     
     
@@ -550,67 +562,67 @@ extension SearchCourseViewController : UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if self.courseSegementedControl.selectedSegmentIndex == 0 {
-            // searching
-            if indexPath.section == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
-
-                if searchControl.active {
-                    // searching
-                    cell.course = filteredCourses[indexPath.row]
-                    cell.delegate = self
-                    cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                        cell.hasEnrolledState = ifEnrolled
-                    })
-                } else {
-                    cell.course = localCachingObjects[indexPath.row]
-                    cell.delegate = self
-                    cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-                    checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                        cell.hasEnrolledState = ifEnrolled
-                    })
-                }
-                
-                return cell
-            } else {
-                // create course section
-                if createCourseCellView == nil {
-                    createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
-                }
-                createCourseCellView?.courseName = searchControl.searchBar.text
-                createCourseCellView?.delegate = self
-                
-                return createCourseCellView!
-            }
-        } else {
-           // viewing enrolled courses
-            let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
-            
-            if indexPath.section == 0 {
-                cell.localCourse = nil
-                cell.course = enrolledCourses[indexPath.row]
-                cell.delegate = self
-                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-//                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
-                checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
-                    print(ifEnrolled)
-                    cell.hasEnrolledState = ifEnrolled
-                })
-            } else {
-                cell.course = nil
-                cell.localCourse = enrolledLocalCourse[indexPath.row]
-                cell.delegate = self
-                cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
-            }
-            
-            return cell
-        }
+		
+		if self.courseSegementedControl.selectedSegmentIndex == 0 {
+			// searching
+			if indexPath.section == 0 {
+				let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
+				
+				if searchControl.active {
+					// searching
+					cell.course = filteredCourses[indexPath.row]
+					cell.delegate = self
+					cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+					//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+					checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+						cell.hasEnrolledState = ifEnrolled
+					})
+				} else {
+					cell.course = localCachingObjects[indexPath.row]
+					cell.delegate = self
+					cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+					//                    cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+					checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+						cell.hasEnrolledState = ifEnrolled
+					})
+				}
+				
+				return cell
+			} else {
+				// create course section
+				if createCourseCellView == nil {
+					createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
+				}
+				createCourseCellView?.courseName = searchControl.searchBar.text
+				createCourseCellView?.delegate = self
+				
+				return createCourseCellView!
+			}
+		} else {
+			// viewing enrolled courses
+			let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
+			
+			if indexPath.section == 0 {
+				cell.localCourse = nil
+				cell.course = enrolledCourses[indexPath.row]
+				cell.delegate = self
+				cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+				//                cell.hasEnrolledState = checkIfEnrolled(cell.course.code)
+				checkIfEnrolled(cell.course.code, complete: { (ifEnrolled) -> Void in
+					print(ifEnrolled)
+					cell.hasEnrolledState = ifEnrolled
+				})
+			} else {
+				cell.course = nil
+				cell.localCourse = enrolledLocalCourse[indexPath.row]
+				cell.delegate = self
+				cell.sideColorHintView.backgroundColor = cellColors[indexPath.row % cellColors.count]
+			}
+			
+			return cell
+		}
     }
-    
+	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if self.courseSegementedControl.selectedSegmentIndex == 0 {
             if indexPath.section == 0 {

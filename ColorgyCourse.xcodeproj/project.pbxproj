@@ -51,6 +51,15 @@
 		633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C41C5F2ECF009370B4 /* SpinContentView.swift */; };
 		633D11C91C5F2F09009370B4 /* NumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11C81C5F2F09009370B4 /* NumberExtensions.swift */; };
 		633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */; };
+		633D7ED01C6DCC2C00683AFD /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */; };
+		633D7ED11C6DCC2C00683AFD /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */; };
+		633D7ED21C6DCC2C00683AFD /* SKDetectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */; };
+		633D7ED31C6DCC2C00683AFD /* SKIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */; };
+		633D7ED41C6DCC2C00683AFD /* SKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */; };
+		633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */; };
+		633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */; };
+		633D7ED71C6DCC2C00683AFD /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */; };
+		633D7ED91C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ED81C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -63,6 +72,7 @@
 		635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */; };
 		636FE3851B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */; };
 		636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */; };
+		637210A91C71EA9500CFFB25 /* MixpanelEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */; };
 		637AA2A11C61DCA50074BDBB /* FloatingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */; };
 		638D64F91C045F1F00EACEC0 /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638D64F81C045F1F00EACEC0 /* Department.swift */; };
 		638E16571B9DC9CF00F6CEC2 /* AppLaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */; };
@@ -74,6 +84,8 @@
 		639D45111B95FAA30053870D /* CourseCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D45101B95FAA30053870D /* CourseCommentViewController.swift */; };
 		639D45131B9612230053870D /* TestStretchyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639D45121B9612230053870D /* TestStretchyViewController.swift */; };
 		639D45151B96A75D0053870D /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45141B96A75D0053870D /* 4.jpg */; };
+		63A50ACC1C6F610500B3F119 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A50ACB1C6F610500B3F119 /* SecretKeys.swift */; };
+		63A50AD01C6F615000B3F119 /* libFlurry_7.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */; };
 		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
 		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
@@ -121,7 +133,7 @@
 		63BB30121C5617390055BA19 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FFC1C5617390055BA19 /* SwiftRegex.swift */; };
 		63BB30131C5617390055BA19 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2FFD1C5617390055BA19 /* WebSocket.swift */; };
 		63BB30161C561E240055BA19 /* TestChatLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */; };
-		63BB30181C561F0A0055BA19 /* TestChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */; };
+		63BB30181C561F0A0055BA19 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30171C561F0A0055BA19 /* ChatRoomViewController.swift */; };
 		63BB30221C561F280055BA19 /* ATrickyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB30191C561F280055BA19 /* ATrickyView.swift */; };
 		63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */; };
 		63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */; };
@@ -157,6 +169,7 @@
 		63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */; };
 		63E776651B9720C800B15AF0 /* LogoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776641B9720C800B15AF0 /* LogoutHelper.swift */; };
 		63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */; };
+		63EDDD311C6D8A4800E63B92 /* TimeStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */; };
 		63F718681C3D07C200870C5F /* CourseTimePickerKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */; };
 		63F7186A1C3D17B800870C5F /* OneWayInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718691C3D17B800870C5F /* OneWayInputTextField.swift */; };
 		63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC101B9345B800B3084F /* AppDelegate.swift */; };
@@ -191,7 +204,6 @@
 		63FBCC641B9346D900B3084F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */; };
 		63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */; };
 		63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */; };
-		63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */; };
 		63FBCC711B934D3000B3084F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC701B934D3000B3084F /* Reachability.m */; };
 		63FBCC731B935C0100B3084F /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC721B935C0100B3084F /* Mode.swift */; };
 		63FBCC751B93673200B3084F /* AddCourseSuccessfulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC741B93673200B3084F /* AddCourseSuccessfulView.swift */; };
@@ -265,6 +277,16 @@
 		633D11C41C5F2ECF009370B4 /* SpinContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinContentView.swift; sourceTree = "<group>"; };
 		633D11C81C5F2F09009370B4 /* NumberExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberExtensions.swift; sourceTree = "<group>"; };
 		633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswersLogEvent.swift; sourceTree = "<group>"; };
+		633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCaptionView.swift; sourceTree = "<group>"; };
+		633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKDetectingImageView.swift; sourceTree = "<group>"; };
+		633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKDetectingView.swift; sourceTree = "<group>"; };
+		633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKIndicatorView.swift; sourceTree = "<group>"; };
+		633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhoto.swift; sourceTree = "<group>"; };
+		633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKPhotoBrowser.bundle; sourceTree = "<group>"; };
+		633D7ECC1C6DCC2C00683AFD /* SKPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPhotoBrowser.h; sourceTree = "<group>"; };
+		633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowser.swift; sourceTree = "<group>"; };
+		633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKZoomingScrollView.swift; sourceTree = "<group>"; };
+		633D7ED81C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLPhotoMessageDelegate.swift; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +300,7 @@
 		635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyColor.swift; sourceTree = "<group>"; };
 		636FE3841B9CBB1B003DF3F5 /* PersonalSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalSettingsTableViewController.swift; sourceTree = "<group>"; };
 		636FE3861B9CD5C5003DF3F5 /* ClassmateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassmateHeaderView.swift; sourceTree = "<group>"; };
+		637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixpanelEvents.swift; sourceTree = "<group>"; };
 		637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingOptionView.swift; sourceTree = "<group>"; };
 		638D64F81C045F1F00EACEC0 /* Department.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Department.swift; sourceTree = "<group>"; };
 		638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLaunchHelper.swift; sourceTree = "<group>"; };
@@ -290,6 +313,10 @@
 		639D45101B95FAA30053870D /* CourseCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseCommentViewController.swift; sourceTree = "<group>"; };
 		639D45121B9612230053870D /* TestStretchyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestStretchyViewController.swift; sourceTree = "<group>"; };
 		639D45141B96A75D0053870D /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
+		63A50ACB1C6F610500B3F119 /* SecretKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretKeys.swift; sourceTree = "<group>"; };
+		63A50ACD1C6F615000B3F119 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		63A50ACE1C6F615000B3F119 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.3.0.a; sourceTree = "<group>"; };
 		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
@@ -337,7 +364,7 @@
 		63BB2FFC1C5617390055BA19 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		63BB2FFD1C5617390055BA19 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestChatLoginViewController.swift; sourceTree = "<group>"; };
-		63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestChatRoomViewController.swift; sourceTree = "<group>"; };
+		63BB30171C561F0A0055BA19 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		63BB30191C561F280055BA19 /* ATrickyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ATrickyView.swift; sourceTree = "<group>"; };
 		63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLIncomingMessageBubble.swift; sourceTree = "<group>"; };
 		63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DLIncomingMessageBubble.xib; sourceTree = "<group>"; };
@@ -375,6 +402,7 @@
 		63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityWebViewController.swift; sourceTree = "<group>"; };
 		63E776641B9720C800B15AF0 /* LogoutHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutHelper.swift; sourceTree = "<group>"; };
 		63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLoginViewController.swift; sourceTree = "<group>"; };
+		63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStamp.swift; sourceTree = "<group>"; };
 		63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTimePickerKeyboardView.swift; sourceTree = "<group>"; };
 		63F718691C3D17B800870C5F /* OneWayInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneWayInputTextField.swift; sourceTree = "<group>"; };
 		63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorgyCourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,9 +442,6 @@
 		63FBCC651B9346FC00B3084F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		63FBCC661B9346FC00B3084F /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		63FBCC691B93470700B3084F /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
-		63FBCC6B1B934CCB00B3084F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
-		63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.0.0.a; sourceTree = "<group>"; };
 		63FBCC6F1B934D3000B3084F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		63FBCC701B934D3000B3084F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		63FBCC721B935C0100B3084F /* Mode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
@@ -428,12 +453,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A50AD01C6F615000B3F119 /* libFlurry_7.3.0.a in Frameworks */,
 				63C2BA361C5F0D8E00C8D289 /* SystemConfiguration.framework in Frameworks */,
 				63C2BA341C5F0D8400C8D289 /* Security.framework in Frameworks */,
 				63C2BA321C5F0D1500C8D289 /* libc++.tbd in Frameworks */,
 				63C2BA301C5F0D0C00C8D289 /* libz.tbd in Frameworks */,
 				63FBCC681B9346FC00B3084F /* FBSDKLoginKit.framework in Frameworks */,
-				63FBCC6E1B934CCB00B3084F /* libFlurry_7.0.0.a in Frameworks */,
 				63FBCC671B9346FC00B3084F /* FBSDKCoreKit.framework in Frameworks */,
 				5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */,
 			);
@@ -459,9 +484,122 @@
 			name = "Core data";
 			sourceTree = "<group>";
 		};
+		633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				633D7EC61C6DCC2C00683AFD /* SKCaptionView.swift */,
+				633D7EC71C6DCC2C00683AFD /* SKDetectingImageView.swift */,
+				633D7EC81C6DCC2C00683AFD /* SKDetectingView.swift */,
+				633D7EC91C6DCC2C00683AFD /* SKIndicatorView.swift */,
+				633D7ECA1C6DCC2C00683AFD /* SKPhoto.swift */,
+				633D7ECB1C6DCC2C00683AFD /* SKPhotoBrowser.bundle */,
+				633D7ECC1C6DCC2C00683AFD /* SKPhotoBrowser.h */,
+				633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */,
+				633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */,
+			);
+			path = SKPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		63A50AD11C6F615600B3F119 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				63A50ACD1C6F615000B3F119 /* Flurry.h */,
+				63A50ACE1C6F615000B3F119 /* FlurryWatch.h */,
+				63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */,
+			);
+			name = Flurry;
+			sourceTree = "<group>";
+		};
+		63A50AD21C6F756E00B3F119 /* Chat Models */ = {
+			isa = PBXGroup;
+			children = (
+				63306E781C6838AE00D5D57C /* Hello.swift */,
+				63A50AD71C6F761100B3F119 /* User */,
+				63A50AD61C6F75F900B3F119 /* Message */,
+				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
+				63BB30301C5624E10055BA19 /* Chatroom.swift */,
+			);
+			name = "Chat Models";
+			sourceTree = "<group>";
+		};
+		63A50AD31C6F758C00B3F119 /* Chat Views */ = {
+			isa = PBXGroup;
+			children = (
+				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
+				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
+				63C7A7A51C607B74004DF000 /* UserDetailInformationView.swift */,
+				637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */,
+			);
+			name = "Chat Views";
+			sourceTree = "<group>";
+		};
+		63A50AD41C6F759C00B3F119 /* Chat Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
+				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
+				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
+				63BB30171C561F0A0055BA19 /* ChatRoomViewController.swift */,
+			);
+			name = "Chat Controllers";
+			sourceTree = "<group>";
+		};
+		63A50AD51C6F75C600B3F119 /* Chat Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				63AFACA81C57107100405EC3 /* ColorgySocket.swift */,
+				632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */,
+			);
+			name = "Chat Utilities";
+			sourceTree = "<group>";
+		};
+		63A50AD61C6F75F900B3F119 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
+				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
+		63A50AD71C6F761100B3F119 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
+				63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */,
+				6323726A1C5B442F00C9FC27 /* ChatUser.swift */,
+				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
+				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		63A50AD81C6F766400B3F119 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63A50AD11C6F615600B3F119 /* Flurry */,
+				633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */,
+				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
+				63BB302B1C561F300055BA19 /* DLMessageView */,
+				63BB30141C56173F0055BA19 /* SocketIO_Client */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63A50AD91C6F769E00B3F119 /* Spin Introduction View */ = {
+			isa = PBXGroup;
+			children = (
+				633D11C21C5F2ECF009370B4 /* SpinView.swift */,
+				633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */,
+				633D11C41C5F2ECF009370B4 /* SpinContentView.swift */,
+			);
+			name = "Spin Introduction View";
+			sourceTree = "<group>";
+		};
 		63B5FB051C5333D200C45CF2 /* For Course */ = {
 			isa = PBXGroup;
 			children = (
+				63C2B9821C116331007740DB /* Semester.swift */,
 				635959421B9DA07B00371AE7 /* CourseNotification.swift */,
 				638E16581B9EAF5C00F6CEC2 /* CourseUpdateHelper.swift */,
 			);
@@ -471,6 +609,7 @@
 		63B5FB061C5333E200C45CF2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
 				63FBCC3B1B9346D800B3084F /* NetwrokQualityDetector.swift */,
 				63FBCC3A1B9346D800B3084F /* ColorgyAPITrafficControlCenter.swift */,
 			);
@@ -480,6 +619,7 @@
 		63B5FB071C5333FD00C45CF2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				633D11C81C5F2F09009370B4 /* NumberExtensions.swift */,
 				63FBCC331B9346D800B3084F /* StringExtension.swift */,
 				63FBCC4A1B9346D900B3084F /* SwiftyJSONExtension.swift */,
 				6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */,
@@ -499,8 +639,14 @@
 		63B5FB091C53342100C45CF2 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
+				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
+				63A50ACB1C6F610500B3F119 /* SecretKeys.swift */,
+				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
+				633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */,
+				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
 				63FBCC721B935C0100B3084F /* Mode.swift */,
 				638E16561B9DC9CF00F6CEC2 /* AppLaunchHelper.swift */,
+				637210A81C71EA9500CFFB25 /* MixpanelEvents.swift */,
 			);
 			name = Setup;
 			sourceTree = "<group>";
@@ -646,6 +792,7 @@
 		63B5FB181C53388800C45CF2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */,
 				634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */,
 				6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */,
 				634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */,
@@ -759,6 +906,7 @@
 				63BB30191C561F280055BA19 /* ATrickyView.swift */,
 				63BB301A1C561F280055BA19 /* DLIncomingMessageBubble.swift */,
 				63C7A7A31C606161004DF000 /* DLIncomingMessageDelegate.swift */,
+				633D7ED81C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift */,
 				63BB301B1C561F280055BA19 /* DLIncomingMessageBubble.xib */,
 				63B9428B1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib */,
 				63B9428F1C59D6650060A097 /* DLOutgoingPhotoBubble.xib */,
@@ -786,8 +934,9 @@
 		63C2B9841C155A39007740DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6311D20E1C3A417000812934 /* Core data */,
 				63FBCC391B9346D800B3084F /* ColorgyAPIResults.swift */,
+				63A50AD21C6F756E00B3F119 /* Chat Models */,
+				6311D20E1C3A417000812934 /* Core data */,
 				63B5FB0E1C5334BD00C45CF2 /* Courses For Local Usage */,
 				63B5FB0F1C5334DD00C45CF2 /* For Login */,
 				63B5FB0D1C53347500C45CF2 /* For New Registers */,
@@ -799,17 +948,14 @@
 		63C2B9851C155A57007740DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
+				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
+				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
+				63A50AD41C6F759C00B3F119 /* Chat Controllers */,
 				63B5FB1B1C5338D800C45CF2 /* About Course */,
 				63B5FB1A1C5338AA00C45CF2 /* Settings */,
 				63B5FB191C53389000C45CF2 /* Test */,
 				63B5FB181C53388800C45CF2 /* Login */,
-				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
-				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
-				633D11C01C5F2EB7009370B4 /* LaunchNavigationViewController.swift */,
-				633D11C21C5F2ECF009370B4 /* SpinView.swift */,
-				633D11C81C5F2F09009370B4 /* NumberExtensions.swift */,
-				633D11C31C5F2ECF009370B4 /* DismissGuideButton.swift */,
-				633D11C41C5F2ECF009370B4 /* SpinContentView.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -817,6 +963,8 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				63A50AD91C6F769E00B3F119 /* Spin Introduction View */,
+				63A50AD31C6F758C00B3F119 /* Chat Views */,
 				63B5FB111C53351C00C45CF2 /* Report View */,
 				63B5FB121C53357600C45CF2 /* Creating Local Course */,
 				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
@@ -833,16 +981,13 @@
 		63C2B9871C155AE3007740DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				63A50AD51C6F75C600B3F119 /* Chat Utilities */,
 				63B5FB091C53342100C45CF2 /* Setup */,
 				63B5FB081C53341300C45CF2 /* Login */,
 				63B5FB071C5333FD00C45CF2 /* Extensions */,
 				63B5FB061C5333E200C45CF2 /* Network */,
 				63B5FB051C5333D200C45CF2 /* For Course */,
-				635B5BC91C3CE9DF00261D13 /* ColorgyColor.swift */,
-				63C2B9821C116331007740DB /* Semester.swift */,
-				63FBCC381B9346D800B3084F /* ColorgyAPI.swift */,
 				63FBCC351B9346D800B3084F /* UserSettings.swift */,
-				633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */,
 				63FBCC361B9346D800B3084F /* ColorgyErrorType.swift */,
 				63FBCC4B1B9346D900B3084F /* SwiftyJSON.swift */,
 			);
@@ -898,7 +1043,6 @@
 				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
-				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
 				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
@@ -922,6 +1066,7 @@
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
+				63A50AD81C6F766400B3F119 /* Frameworks */,
 				63C2B9871C155AE3007740DB /* Utilities */,
 				63C2B9841C155A39007740DB /* Models */,
 				63C2B9861C155A6D007740DB /* Views */,
@@ -948,9 +1093,6 @@
 		63FBCC0E1B9345B800B3084F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				63FBCC6B1B934CCB00B3084F /* Flurry.h */,
-				63FBCC6C1B934CCB00B3084F /* FlurryWatch.h */,
-				63FBCC6D1B934CCB00B3084F /* libFlurry_7.0.0.a */,
 				63FBCC0F1B9345B800B3084F /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1049,6 +1191,7 @@
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -1088,6 +1231,7 @@
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
+				633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */,
 				63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */,
@@ -1205,6 +1349,7 @@
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
 				63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */,
 				63AFACA91C57107100405EC3 /* ColorgySocket.swift in Sources */,
+				633D7ED01C6DCC2C00683AFD /* SKCaptionView.swift in Sources */,
 				633D11C61C5F2ECF009370B4 /* DismissGuideButton.swift in Sources */,
 				63C7A7A61C607B74004DF000 /* UserDetailInformationView.swift in Sources */,
 				6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */,
@@ -1220,6 +1365,7 @@
 				6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */,
 				63BB30231C561F280055BA19 /* DLIncomingMessageBubble.swift in Sources */,
 				63BB30001C5617390055BA19 /* SocketAnyEvent.swift in Sources */,
+				633D7ED91C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift in Sources */,
 				63C7A7A41C606161004DF000 /* DLIncomingMessageDelegate.swift in Sources */,
 				63FBCC4F1B9346D900B3084F /* ColorgyErrorType.swift in Sources */,
 				6323726B1C5B443000C9FC27 /* ChatUser.swift in Sources */,
@@ -1227,13 +1373,14 @@
 				63B942A41C59DEAB0060A097 /* ImagePickerSheetController.swift in Sources */,
 				63BB30221C561F280055BA19 /* ATrickyView.swift in Sources */,
 				6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */,
-				63BB30181C561F0A0055BA19 /* TestChatRoomViewController.swift in Sources */,
+				63BB30181C561F0A0055BA19 /* ChatRoomViewController.swift in Sources */,
 				63BDC9FB1C521FE3001A84D3 /* OneWayInputReportTextField.swift in Sources */,
 				636FE3871B9CD5C5003DF3F5 /* ClassmateHeaderView.swift in Sources */,
 				63BB30051C5617390055BA19 /* SocketEnginePollable.swift in Sources */,
 				6311D2101C3A4B2A00812934 /* CreateCourseTableViewCell.swift in Sources */,
 				63306E791C6838AE00D5D57C /* Hello.swift in Sources */,
 				63BB30101C5617390055BA19 /* SocketStringReader.swift in Sources */,
+				633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */,
 				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,
@@ -1254,6 +1401,7 @@
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
 				63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */,
+				633D7ED71C6DCC2C00683AFD /* SKZoomingScrollView.swift in Sources */,
 				635B5BC81C3CE8C300261D13 /* ContinueAddTimeAndLocationTableViewCell.swift in Sources */,
 				633D11CD1C5F49B7009370B4 /* AnswersLogEvent.swift in Sources */,
 				63B942A21C59DEAB0060A097 /* AnimationController.swift in Sources */,
@@ -1273,6 +1421,7 @@
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
+				633D7ED21C6DCC2C00683AFD /* SKDetectingView.swift in Sources */,
 				63306E831C68AEEA00D5D57C /* HistoryChatroom.swift in Sources */,
 				63BB30081C5617390055BA19 /* SocketEventHandler.swift in Sources */,
 				63BB300F1C5617390055BA19 /* SocketParsable.swift in Sources */,
@@ -1291,10 +1440,13 @@
 				63BDC9F91C5200EC001A84D3 /* ReportViewController.swift in Sources */,
 				63BB30131C5617390055BA19 /* WebSocket.swift in Sources */,
 				633D11C71C5F2ECF009370B4 /* SpinContentView.swift in Sources */,
+				63A50ACC1C6F610500B3F119 /* SecretKeys.swift in Sources */,
 				631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */,
+				633D7ED31C6DCC2C00683AFD /* SKIndicatorView.swift in Sources */,
 				632E0A6E1C4FB9C10063B941 /* PrivacyTableViewController.swift in Sources */,
 				63BDC9F71C51D9D3001A84D3 /* ReportFormTextField.swift in Sources */,
 				63C9A97E1B9ECDA300B2D5A2 /* ActivityWebViewController.swift in Sources */,
+				637210A91C71EA9500CFFB25 /* MixpanelEvents.swift in Sources */,
 				6348F87E1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift in Sources */,
 				6348F87C1B9A0902005E4D37 /* ClassmatesContainerView.swift in Sources */,
 				6348F87A1B9A040E005E4D37 /* DetailCourseViewController.swift in Sources */,
@@ -1328,15 +1480,18 @@
 				6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */,
 				4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */,
 				63FBCC5B1B9346D900B3084F /* UserCourseObjectArray.swift in Sources */,
+				633D7ED41C6DCC2C00683AFD /* SKPhoto.swift in Sources */,
 				63B942AC1C59DEAB0060A097 /* SheetController.swift in Sources */,
 				63BDC9F51C51D47A001A84D3 /* ReportFormKeyboard.swift in Sources */,
 				4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */,
+				633D7ED11C6DCC2C00683AFD /* SKDetectingImageView.swift in Sources */,
 				63FBCC5D1B9346D900B3084F /* ColorgyLogin.swift in Sources */,
 				639AD58D1C4393DC002F70DD /* CourseDetailView.swift in Sources */,
 				63FBCC5C1B9346D900B3084F /* CourseDBManagedObject.swift in Sources */,
 				63306E7B1C684A8600D5D57C /* UnmatchedUser.swift in Sources */,
 				63BB300E1C5617390055BA19 /* SocketPacket.swift in Sources */,
 				638D64F91C045F1F00EACEC0 /* Department.swift in Sources */,
+				63EDDD311C6D8A4800E63B92 /* TimeStamp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1486,7 +1641,7 @@
 					"$(PROJECT_DIR)/ColorgyCourse",
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "misk.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = misk.ColorgyCourse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;
@@ -1517,6 +1672,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ColorgyCourse",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = misk.ColorgyCourse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ./Header.h;

@@ -202,10 +202,14 @@ class CourseDetailView: UIView {
                         self.addSubview(containerView)
                     }
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
-                    self.frame.size.height = classmatesView!.frame.maxY
+					if classmatesView != nil {
+						self.frame.size.height = classmatesView!.frame.maxY
+					}
                 } else {
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
-                    self.frame.size.height = classmatesView!.frame.maxY
+					if classmatesView != nil {
+						self.frame.size.height = classmatesView!.frame.maxY
+					}
                 }
             }
         } else if localCourse != nil {
@@ -235,10 +239,14 @@ class CourseDetailView: UIView {
                         self.addSubview(containerView)
                     }
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 * 2 + CGFloat(days.count) * 45
-                    self.frame.size.height = classmatesView!.frame.maxY
+					if classmatesView != nil {
+						self.frame.size.height = classmatesView!.frame.maxY
+					}
                 } else {
                     classmatesView?.frame.origin.y = 90 + 45 * 3 + 16 + CGFloat(days.count) * 45
-                    self.frame.size.height = classmatesView!.frame.maxY
+					if classmatesView != nil {
+						self.frame.size.height = classmatesView!.frame.maxY
+					}
                 }
             }
         }

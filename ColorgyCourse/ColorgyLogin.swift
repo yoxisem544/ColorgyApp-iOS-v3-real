@@ -33,14 +33,18 @@ class ColorgyLogin {
             "scope": "public account offline_access"
         ]
         
-        afManager.POST("https://colorgy.io/oauth/token", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
-            let json = JSON(response)
-            if let result = ColorgyLoginResult(response: json) {
-                success(result: result)
-                UserSetting.storeLoginResult(result: result)
-            } else {
-                failure()
-            }
+        afManager.POST("https://colorgy.io/oauth/token", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				if let result = ColorgyLoginResult(response: json) {
+					UserSetting.storeLoginResult(result: result)
+					success(result: result)
+				} else {
+					failure()
+				}
+			} else {
+				failure()
+			}
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 failure()
         })
@@ -99,16 +103,20 @@ class ColorgyLogin {
             "scope": "public account offline_access"
         ]
         
-        afManager.POST("https://colorgy.io/oauth/token", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+        afManager.POST("https://colorgy.io/oauth/token", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("ok 200 from colorgy")
-            let json = JSON(response)
-            if let result = ColorgyLoginResult(response: json) {
-                UserSetting.storeLoginResult(result: result)
-                handler(response: result, error: nil)
-            } else {
-                handler(response: nil, error: "fail to parse login result")
-            }
-            
+			if let response = response {
+				let json = JSON(response)
+				if let result = ColorgyLoginResult(response: json) {
+					UserSetting.storeLoginResult(result: result)
+					handler(response: result, error: nil)
+				} else {
+					handler(response: nil, error: "fail to parse login result")
+				}
+			} else {
+				handler(response: nil, error: "fail to pase login result")
+			}
+			
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                 print(ColorgyErrorType.failToLoginColorgy)
                 print(error.localizedDescription)

@@ -38,6 +38,7 @@ class ChooseDepartmentViewController: UIViewController {
         }
     }
     var choosedDepartment: String!
+	var shouldShowReport: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,12 +50,14 @@ class ChooseDepartmentViewController: UIViewController {
         searchControl = UISearchController(searchResultsController: nil)
         searchControl.searchResultsUpdater = self
         searchControl.searchBar.sizeToFit()
+		searchControl.searchBar.delegate = self
         searchControl.dimsBackgroundDuringPresentation = false
         
         departmentTableView.tableHeaderView = searchControl.searchBar
         searchControl.searchBar.placeholder = "搜尋系所"
 		
 		title = "選擇系所"
+		Mixpanel.sharedInstance().track(MixpanelEvents.SelectDepartment)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -152,7 +155,10 @@ class ChooseDepartmentViewController: UIViewController {
 		reportController.reportProblemInitialSelectionTitle = "沒有我的系所"
 		reportController.problemDescription = "請填入您尊貴的系所"
 		reportController.delegate = self
-		presentViewController(reportController, animated: true, completion: nil)
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			self.presentViewController(reportController, animated: true, completion: nil)
+		})
 	}
 }
 
@@ -223,6 +229,7 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         if !searchControl.active {
             if indexPath.row == 0 {
                 print("dep need implement perform fro segue")
+				searchControl.active = false
 				showReportController()
             } else {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -249,6 +256,7 @@ extension ChooseDepartmentViewController : UITableViewDataSource, UITableViewDel
         } else {
             if indexPath.row == 0 {
                 print("dep need implement perform fro segue")
+				searchControl.searchBar.endEditing(true)
 				showReportController()
             } else {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -328,5 +336,15 @@ extension ChooseDepartmentViewController : UISearchResultsUpdating {
 extension ChooseDepartmentViewController : ReportViewControllerDelegate {
 	func reportViewControllerSuccessfullySentReport() {
 		self.performSegueWithIdentifier(Storyboard.showIntentedTimeSegue, sender: "null")
+	}
+}
+
+extension ChooseDepartmentViewController : UISearchBarDelegate {
+	func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+		print("end editing!!")
+		if shouldShowReport {
+			shouldShowReport = false
+			showReportController()
+		}
 	}
 }

@@ -182,6 +182,12 @@
                                     <action selector="closeButtonClicked:" destination="aOb-er-GlL" eventType="touchUpInside" id="uIz-9q-Gjx"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Email登入僅限於以前註冊過的會員使用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6p-KS-dCp">
+                                <rect key="frame" x="183" y="380" width="234.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.7843137255" green="0.78039215689999997" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -190,7 +196,9 @@
                             <constraint firstAttribute="centerY" secondItem="WDn-iY-pui" secondAttribute="centerY" multiplier="1.3" id="4lN-gy-p2x"/>
                             <constraint firstAttribute="centerX" secondItem="c34-9k-REc" secondAttribute="centerX" constant="-0.5" id="Ege-Vq-6EG"/>
                             <constraint firstItem="ffQ-Gw-7GU" firstAttribute="leading" secondItem="sNP-h5-G8j" secondAttribute="leadingMargin" id="Kjc-DC-Ly7"/>
+                            <constraint firstItem="x6p-KS-dCp" firstAttribute="top" secondItem="HfG-WX-RwI" secondAttribute="bottom" constant="8" id="LD7-pc-ZXR"/>
                             <constraint firstItem="usR-Bm-a3q" firstAttribute="top" secondItem="ZOR-yh-2Lu" secondAttribute="bottom" constant="8" id="NNa-wD-ctM"/>
+                            <constraint firstItem="x6p-KS-dCp" firstAttribute="centerX" secondItem="HfG-WX-RwI" secondAttribute="centerX" id="Qc5-CI-djB"/>
                             <constraint firstItem="HfG-WX-RwI" firstAttribute="top" secondItem="usR-Bm-a3q" secondAttribute="bottom" constant="8" id="W5e-Cy-viK"/>
                             <constraint firstItem="ZOR-yh-2Lu" firstAttribute="top" secondItem="WDn-iY-pui" secondAttribute="bottom" constant="8" id="fIl-0A-OKz"/>
                             <constraint firstAttribute="centerX" secondItem="usR-Bm-a3q" secondAttribute="centerX" constant="-0.5" id="gJ1-7i-sWb"/>
@@ -759,57 +767,67 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arq-Pk-5sb">
-                                <rect key="frame" x="193" y="111" width="215" height="30"/>
-                                <state key="normal" title="Login as test-yzu-student-f478"/>
+                                <rect key="frame" x="219" y="111" width="163" height="30"/>
+                                <state key="normal" title="切換至 NTUST 測式帳號"/>
                                 <connections>
                                     <action selector="test_yzu_student_f478" destination="hgm-h5-9n1" eventType="touchUpInside" id="lEU-L6-A3P"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UdK-Y0-9OJ">
-                                <rect key="frame" x="176" y="184" width="249" height="30"/>
-                                <state key="normal" title="Login as test-yuntech-student-ca62"/>
+                                <rect key="frame" x="228" y="184" width="144" height="30"/>
+                                <state key="normal" title="切換至 YZU 測式帳號"/>
                                 <connections>
                                     <action selector="test_yuntech_student_ca62" destination="hgm-h5-9n1" eventType="touchUpInside" id="it7-s5-S0y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHD-1v-6SD">
-                                <rect key="frame" x="277" y="266" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Tj-oN-M38">
+                                <rect key="frame" x="255" y="240" width="90" height="30"/>
+                                <state key="normal" title="切換回主帳號"/>
                                 <connections>
-                                    <action selector="testAPI" destination="hgm-h5-9n1" eventType="touchUpInside" id="zIC-Ha-IAk"/>
+                                    <action selector="goBackToMainAccount" destination="hgm-h5-9n1" eventType="touchUpInside" id="ySf-sg-Bvt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CvR-xR-jsd">
-                                <rect key="frame" x="254" y="329" width="92" height="30"/>
-                                <state key="normal" title="say hello to 8"/>
-                                <connections>
-                                    <action selector="helloto8" destination="hgm-h5-9n1" eventType="touchUpInside" id="W2k-dO-FjC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epP-xZ-2gE">
-                                <rect key="frame" x="245" y="367" width="110" height="30"/>
-                                <state key="normal" title="Say hello to test"/>
-                                <connections>
-                                    <action selector="hellototest" destination="hgm-h5-9n1" eventType="touchUpInside" id="M9i-3W-K5U"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3N-oG-fIQ">
+                                <rect key="frame" x="279" y="82" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gRY-rA-jEc">
+                                <rect key="frame" x="0.0" y="278" width="600" height="273"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="test account" id="5YV-vO-IuB">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5YV-vO-IuB" id="nI8-g2-UCT">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="BFG-3d-Umq"/>
-                            <constraint firstItem="DHD-1v-6SD" firstAttribute="centerX" secondItem="UdK-Y0-9OJ" secondAttribute="centerX" id="FQY-fy-Kc7"/>
-                            <constraint firstItem="DHD-1v-6SD" firstAttribute="top" secondItem="UdK-Y0-9OJ" secondAttribute="bottom" constant="52" id="Nrp-3j-n0q"/>
-                            <constraint firstItem="CvR-xR-jsd" firstAttribute="top" secondItem="DHD-1v-6SD" secondAttribute="bottom" constant="33" id="WCD-GG-S50"/>
-                            <constraint firstItem="epP-xZ-2gE" firstAttribute="centerX" secondItem="CvR-xR-jsd" secondAttribute="centerX" id="Z8o-GA-7bS"/>
+                            <constraint firstItem="CLU-Dd-6Xg" firstAttribute="top" secondItem="gRY-rA-jEc" secondAttribute="bottom" id="C4t-bE-yXH"/>
+                            <constraint firstItem="g3N-oG-fIQ" firstAttribute="centerX" secondItem="arq-Pk-5sb" secondAttribute="centerX" id="Yi0-KQ-ehG"/>
+                            <constraint firstItem="gRY-rA-jEc" firstAttribute="top" secondItem="7Tj-oN-M38" secondAttribute="bottom" constant="8" id="YqS-xJ-Wc2"/>
+                            <constraint firstItem="gRY-rA-jEc" firstAttribute="leading" secondItem="IjE-B9-Ga2" secondAttribute="leading" id="YvU-12-0Pc"/>
                             <constraint firstItem="arq-Pk-5sb" firstAttribute="top" secondItem="vNV-9E-Oy5" secondAttribute="bottom" constant="47" id="Zuu-El-vl0"/>
-                            <constraint firstItem="epP-xZ-2gE" firstAttribute="top" secondItem="CvR-xR-jsd" secondAttribute="bottom" constant="8" id="cMg-tQ-vbv"/>
+                            <constraint firstItem="7Tj-oN-M38" firstAttribute="centerX" secondItem="UdK-Y0-9OJ" secondAttribute="centerX" id="cvS-yF-qfn"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="centerX" secondItem="IjE-B9-Ga2" secondAttribute="centerX" id="gbL-yY-YFI"/>
+                            <constraint firstAttribute="trailing" secondItem="gRY-rA-jEc" secondAttribute="trailing" id="gf8-Ac-e0f"/>
+                            <constraint firstItem="7Tj-oN-M38" firstAttribute="top" secondItem="UdK-Y0-9OJ" secondAttribute="bottom" constant="26" id="heE-qR-1ea"/>
+                            <constraint firstItem="arq-Pk-5sb" firstAttribute="top" secondItem="g3N-oG-fIQ" secondAttribute="bottom" constant="8" id="pBa-cP-l2a"/>
                             <constraint firstItem="UdK-Y0-9OJ" firstAttribute="top" secondItem="arq-Pk-5sb" secondAttribute="bottom" constant="43" id="t3o-fm-QRN"/>
-                            <constraint firstItem="CvR-xR-jsd" firstAttribute="centerX" secondItem="DHD-1v-6SD" secondAttribute="centerX" id="uU6-Pt-gS0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eVf-fZ-QiO"/>
                     <connections>
+                        <outlet property="statusLabel" destination="g3N-oG-fIQ" id="smu-nB-Fdx"/>
+                        <outlet property="testAccountTableView" destination="gRY-rA-jEc" id="iR1-YG-ix5"/>
                         <segue destination="1hP-AF-A0w" kind="show" identifier="to chat room" id="eC1-ts-q6b"/>
                     </connections>
                 </viewController>
@@ -817,10 +835,10 @@
             </objects>
             <point key="canvasLocation" x="334" y="1717"/>
         </scene>
-        <!--Test Chat Room View Controller-->
+        <!--Chat Room View Controller-->
         <scene sceneID="3MS-uj-D8J">
             <objects>
-                <viewController id="1hP-AF-A0w" customClass="TestChatRoomViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1hP-AF-A0w" customClass="ChatRoomViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BHS-3O-LXN"/>
                         <viewControllerLayoutGuide type="bottom" id="5Rg-Ed-luO"/>
@@ -1652,7 +1670,7 @@
                                         <barButtonItem key="leftBarButtonItem" image="backButton" id="S5b-As-MUm">
                                             <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
-                                                <action selector="backButtonClicked:" destination="Bgc-mQ-wie" id="2pk-Bb-9Fa"/>
+                                                <action selector="backButtonClicked" destination="Bgc-mQ-wie" id="pmf-ZC-inX"/>
                                             </connections>
                                         </barButtonItem>
                                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ajT-Vd-K0P">
@@ -2906,6 +2924,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="Mub-rK-o6x"/>
                     <connections>
                         <outlet property="friendListTableView" destination="9da-Q6-7km" id="TeM-dr-TWM"/>
+                        <segue destination="1hP-AF-A0w" kind="show" identifier="goto chatroom" id="ypF-3y-Hte"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V6M-S5-zcP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2961,6 +2980,7 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eC1-ts-q6b"/>
         <segue reference="sYP-VR-PPv"/>
     </inferredMetricsTieBreakers>
 </document>

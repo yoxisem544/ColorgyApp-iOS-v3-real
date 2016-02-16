@@ -11,6 +11,11 @@ import UIKit
 class DLOutgoingMessageBubble: UITableViewCell {
     
     @IBOutlet weak var textlabel: UILabel!
+	var message: ChatMessage! {
+		didSet {
+			self.textlabel.text = message.content
+		}
+	}
 
     override func awakeFromNib() {
         super.awakeFromNib()

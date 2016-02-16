@@ -113,6 +113,8 @@ class TimeTableViewController: UIViewController {
 		if !HintViewSettings.isTimetableHintViewShown() {
 			showHintView()
 		}
+		
+		Mixpanel.sharedInstance().track(MixpanelEvents.GetIntoTableView)
 //		for i in 1...100 {
 //			print("firing \(i)")
 //			dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_DEFAULT.rawValue), 0), { () -> Void in
@@ -199,6 +201,7 @@ class TimeTableViewController: UIViewController {
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					print(self.timetableView.courses?.count)
 					self.timetableView.courses = courses
+					Mixpanel.sharedInstance().track(MixpanelEvents.SuccessShowTableCourses)
 				})
 			})
 			LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
@@ -213,6 +216,7 @@ class TimeTableViewController: UIViewController {
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					print(self.timetableView.localCourse?.count)
 					self.timetableView.localCourse = localCourses
+					Mixpanel.sharedInstance().track(MixpanelEvents.SuccessShowTableCourses)
 				})
 				//					CourseNotification.registerForCourseNotification()
 			})

@@ -10,7 +10,7 @@ import Foundation
 
 class ColorgySocket : NSObject {
 	
-	internal let socket = SocketIOClient(socketURL: "http://chat.colorgy.io:80", options: [.Log(true), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
+	internal let socket = SocketIOClient(socketURL: "http://chat.colorgy.io:80", options: [.Log(false), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
 	internal var chatroom: Chatroom?
 	internal var didConnectToSocketOnce: Bool = false
 	
@@ -29,21 +29,25 @@ class ColorgySocket : NSObject {
 		}
 	}
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
 
 				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
-					let chatroom = Chatroom(json: JSON(responseOnEmit))
-					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						self.chatroom = chatroom
-						registerToChatroom(chatroom: self.chatroom)
-					})
-					
-					if chatroom != nil {
+					if let _chatroom = Chatroom(json: JSON(responseOnEmit)) {
+						dispatch_async(dispatch_get_main_queue(), { () -> Void in
+							self.chatroom = _chatroom
+							registerToChatroom(chatroom: _chatroom)
+						})
+						
 						if !self.didConnectToSocketOnce {
 							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
-								withMessages(messages: messages)
+								// sort message with timestamp
+								let sortedMessages = messages.sort({ (m1: ChatMessage, m2: ChatMessage) -> Bool in
+									return m1.createdAt.timeIntervalSince1970() < m2.createdAt.timeIntervalSince1970()
+								})
+								// complete
+								withMessages(messages: sortedMessages)
 							})
 							self.didConnectToSocketOnce = true
 						}

@@ -133,16 +133,20 @@ class ColorgyAPITrafficControlCenter : NSObject {
                 // change to refresing state
                 ColorgyAPITrafficControlCenter.changeRefreshingState()
                 
-                afManager.POST("https://colorgy.io/oauth/token?", parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject) -> Void in
+                afManager.POST("https://colorgy.io/oauth/token?", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
                     // change to refresing finish state
                     ColorgyAPITrafficControlCenter.changeRefreshingState()
-                    let json = JSON(response)
-                    if let result = ColorgyLoginResult(response: json) {
-                        UserSetting.storeLoginResult(result: result)
-                        completionHandler(loginResult: result)
-                    } else {
-                        failure()
-                    }
+					if let response = response {
+						let json = JSON(response)
+						if let result = ColorgyLoginResult(response: json) {
+							UserSetting.storeLoginResult(result: result)
+							completionHandler(loginResult: result)
+						} else {
+							failure()
+						}
+					} else {
+						failure()
+					}
                     print("refresk okok")
                     }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
                         // change to refresing finish state

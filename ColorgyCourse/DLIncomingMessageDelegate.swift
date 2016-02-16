@@ -8,6 +8,7 @@
 
 import Foundation
 
-protocol DLIncomingMessageDelegate {
-	func DLIncomingMessageDidTapOnUserImageView(image: UIImage?)
+protocol DLMessageDelegate {
+	func DLMessage(didTapOnUserImageView image: UIImage?, message: ChatMessage)
+	func DLMessage(didTapOnSentImageView imageView: UIImageView?)
 }

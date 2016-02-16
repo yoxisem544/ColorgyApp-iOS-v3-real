@@ -94,6 +94,7 @@ class EmailLoginViewController: UIViewController {
         emailLoginButton.layer.cornerRadius = 2.0
     }
     @IBAction func emailLoginButtonClicked(sender: AnyObject) {
+		Mixpanel.sharedInstance().track(MixpanelEvents.ClickEmailLogin)
         // hide keyboard
         emailLoginTextField.resignFirstResponder()
         passwordLoginTextField.resignFirstResponder()

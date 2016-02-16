@@ -12,7 +12,7 @@ import Foundation
 ///
 /// - Must use CourseRawData to create
 ///
-class Course: CustomStringConvertible {
+class Course: NSObject {
 
     // properties
     // what do we need of a course?
@@ -40,7 +40,7 @@ class Course: CustomStringConvertible {
     /// general code of this course, might be nil
     var general_code: String?
     
-    var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
+    override var description: String { return "{\n\tcode: \(code)\n\tname: \(name)\n\tyear: \(year)\n\tterm: \(term)\n\tlecturer: \(lecturer)\n\tcredits: \(credits)\n\t_type: \(_type)\n\tdays: \(days)\n\tperiods: \(periods)\n\tlocations: \(locations)\n\tgeneral_code: \(general_code)\n}" }
     
     private init?(code: String?, name: String?, year: Int?, term: Int?, lecturer: String?, credits: Int?, _type: String?, days: [Int]?, periods: [Int]?, locations: [String]?, general_code: String?) {
         // optional part
@@ -57,6 +57,9 @@ class Course: CustomStringConvertible {
         self.name = ""
         self.year = Int()
         self.term = Int()
+		
+		super.init()
+		
         if let code = code {
             self.code = code
         } else {

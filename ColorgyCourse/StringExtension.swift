@@ -23,4 +23,16 @@ extension String {
         }
         return "no user device name".stringByReplacingOccurrencesOfString(" ", withString: "").stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "")
     }
+	
+	var intValue: Int? {
+		return Int(self)
+	}
+	
+	var url: NSURL {
+		if self.isValidURLString {
+			return NSURL(string: self)!
+		} else {
+			return NSURL(string: "")!
+		}
+	}
 }
