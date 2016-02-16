@@ -111,9 +111,12 @@
                             [self cleanAskViewLayout];
                         }
                     }
-                } failure:^() {}];
+                } failure:^() {
+                    NSLog(@"getQuestion error");
+                }];
             }];
         } failure:^() {
+            NSLog(@"checkAnswered error");
             [self.loadingView finished:^() {
                 // 取得清晰問
                 [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
@@ -123,12 +126,15 @@
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
                         }
-                        
                     }
-                } failure:^() {}];
+                } failure:^() {
+                    NSLog(@"getquestion error");
+                }];
             }];
         }];
-    } failure:^() {}];
+    } failure:^() {
+        NSLog(@"check user error");
+    }];
 }
 
 #pragma mark - UIColor
@@ -383,19 +389,26 @@
                 callbackBlock();
             }
         } failure:^() {
+            NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
             [self.blurWallRefreshControl endRefreshing];
             if (callbackBlock) {
+                [self.loadingView dismiss:nil];
+                self.loadingView = nil;
                 callbackBlock();
             }
         }];
     } failure:^() {
+        NSLog(@"check user fail");
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
         if (callbackBlock) {
+            [self.loadingView dismiss:nil];
+            self.loadingView = nil;
             callbackBlock();
         }
     }];
@@ -698,8 +711,18 @@
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
-        } failure:^() {}];
-    } failure:^() {}];
+        } failure:^() {
+            NSLog(@"answerQuestion error");
+        }];
+    } failure:^() {
+        NSLog(@"check user error");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {

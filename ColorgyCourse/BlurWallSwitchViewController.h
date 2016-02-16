@@ -16,8 +16,10 @@
 @property BOOL isEmailOK;
 @property UIViewController *activityViewController;
 @property OpeningViewController *openingViewController;
+@property BlurWallViewController *blurWallViewController;
 @property UINavigationController *navigationBlurWallViewController;
 @property NSString *lastestQuestion;
+@property UIButton *refreshButton;
 @property NSString *questionDate;
 @property ChatUser *chatUser;
 

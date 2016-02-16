@@ -20,32 +20,54 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     
+    // View Customized
+    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
+    self.isEmailOK = NO;
+    [self childViewLayoutInitializing];
+}
+
+- (void)childViewLayoutInitializing {
+    self.openingViewController = [[OpeningViewController alloc] init];
+    [self addChildViewController:self.openingViewController];
+    
+    self.blurWallViewController = [[BlurWallViewController alloc] init];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:self.blurWallViewController];
+    [self addChildViewController:self.navigationBlurWallViewController];
+    
+    self.activityViewController = self.openingViewController;
+    
     // Do any additional setup after loading the view.
     [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
         self.lastestQuestion = question;
         self.questionDate = date;
-        
-        // View Customized
-        self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-        self.isEmailOK = NO;
-        
-        self.openingViewController = [[OpeningViewController alloc] init];
-        [self addChildViewController:self.openingViewController];
-        
-        BlurWallViewController *blurWallViewController = [[BlurWallViewController alloc] init];
-        
-        self.navigationController.navigationBarHidden = YES;
-        
-        self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:blurWallViewController];
-        [self addChildViewController:self.navigationBlurWallViewController];
-        
-        self.activityViewController = self.openingViewController;
-        
         [self switchViewController];
     } failure:^() {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常，使用模糊聊需要完整的網路功能" preferredStyle:UIAlertControllerStyleAlert];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"重試" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            [self childViewLayoutInitializing];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"瞭解" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            // SubmitNameButtom Customized
+            self.refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.refreshButton.frame = CGRectMake(141, 440, 120, 41);
+            self.refreshButton.backgroundColor = [UIColor clearColor];
+            self.refreshButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
+            self.refreshButton.layer.borderWidth = 2.5;
+            self.refreshButton.layer.cornerRadius = 2.5;
+            self.refreshButton.center = self.view.center;
+            
+            // SubmitNameButtom Customized
+            [self.refreshButton setTitle:@"重試" forState:UIControlStateNormal];
+            [self.refreshButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+            [self.refreshButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
+
+            [self.refreshButton addTarget:self action:@selector(childViewLayoutInitializing) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self.view addSubview:self.refreshButton];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }];

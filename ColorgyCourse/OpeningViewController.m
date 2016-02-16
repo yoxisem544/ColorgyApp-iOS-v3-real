@@ -812,9 +812,20 @@
                 // CleanAskLayout
                 [self removeNameLayout];
                 [self cleanAskLayout];
-            } failure:^() {}];
-            [ColorgyChatAPI updateFromCore:^() {} failure:^() {}];
-        } failure:^() {}];
+            } failure:^() {
+                NSLog(@"update name error");
+            }];
+            [ColorgyChatAPI updateFromCore:^() {} failure:^() {
+                NSLog(@"update core error");
+            }];
+        } failure:^() {
+            NSLog(@"check user error");
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
     }
 }
 
@@ -932,7 +943,9 @@
             [self.cleanAskQuestionLabel sizeToFit];
         }
 
-    } failure:^() {}];
+    } failure:^() {
+        NSLog(@"get question error");
+    }];
     
     [self.view addSubview:self.scrollView];
     [self.tabBarController.tabBar setHidden:YES];
@@ -1033,7 +1046,9 @@
             [self.navigationController.navigationBar setHidden:YES];
             [self.tabBarController.tabBar setHidden:NO];
             [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
-        } failure:^() {}];
+        } failure:^() {
+            NSLog(@"get answer error");
+        }];
     }
 }
 

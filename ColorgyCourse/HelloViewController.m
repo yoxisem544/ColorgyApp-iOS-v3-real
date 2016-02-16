@@ -129,8 +129,18 @@
                 [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
                 [self.buttonView addSubview:self.helloButton];
             }
-        } failure:^() {}];
-    } failure:^() {}];
+        } failure:^() {
+            NSLog(@"check hi 失敗");
+        }];
+    } failure:^() {
+        NSLog(@"check user 失敗");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
     
     // scrollView
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height)];
@@ -176,18 +186,22 @@
     [aboutView addSubview:aboutLabel];
     
     // about infromation layout
-    UIView *aboutInformationView = [[UIView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, 1000)];
+    UIView *aboutInformationView = [[UIView alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, 100)];
     
     aboutInformationView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:aboutInformationView];
-//    
-//    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-//    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
-//    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
+    //
+    //    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    //    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
+    //    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
     CGFloat sectionY = 30;
-    CGFloat currentY = paddingY;
+    CGFloat currentY = paddingY; // 計算現在偏移位置
     
+    
+    // 檢查有無留下資料
     if (self.information.aboutConversation.length || self.information.aboutPassion.length || self.information.aboutExpertise.length) {
+        
+        // 檢查各個about有的話會顯示，沒有的話會自動隱藏
         if (self.information.aboutExpertise.length) {
             UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
@@ -208,6 +222,7 @@
             currentY = CGRectGetMaxY(aboutExpertiseLabel.frame);
             currentY += sectionY;
         }
+        
         if (self.information.aboutPassion.length) {
             UILabel *aboutPassionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             aboutPassionTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
@@ -227,6 +242,7 @@
             currentY = CGRectGetMaxY(aboutPassionLabel.frame);
             currentY += sectionY;
         }
+        
         if (self.information.aboutConversation.length) {
             UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
@@ -246,7 +262,23 @@
             currentY = CGRectGetMaxY(aboutConversationLabel.frame);
             currentY += sectionY;
         }
+    } else {
+        UIImageView *showNoneInfotmationImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PersonalInformationNone"]];
+        
+        showNoneInfotmationImageView.center = CGPointMake(aboutInformationView.bounds.size.width / 2, aboutInformationView.bounds.size.height / 2);
+        [aboutInformationView addSubview:showNoneInfotmationImageView];
+        
+        UILabel *noneInformationLabel = [[UILabel alloc] initWithFrame:CGRectMake(showNoneInfotmationImageView.center.x - 60, CGRectGetMaxY(showNoneInfotmationImageView.frame) + 5, 120, 15)];
+        
+        noneInformationLabel.text = @"神秘的他沒留下簡介";
+        noneInformationLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+        noneInformationLabel.textAlignment = NSTextAlignmentCenter;
+        noneInformationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+        [aboutInformationView addSubview:noneInformationLabel];
+        
+        currentY = aboutInformationView.bounds.size.height;
     }
+    
     aboutInformationView.frame = CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, currentY);
     currentY += marginY;
     self.scrollView.contentSize = CGSizeMake(10, CGRectGetMaxY(aboutInformationView.frame) + marginY);
@@ -254,22 +286,54 @@
 
 #pragma mark - Hello Action
 - (void)helloAction {
+    
+    // 檢查使用者
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        
+        // 檢查是否回答最新問題
         [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
             if (answered) {
-                [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:@"你好美女！！" success:^() {
-                    [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
-                    [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
-                } failure:^() {}];
+                
+                // 已回答
+                UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"打招呼" message:@"簡單地跟對方問候ㄧ下吧～" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                }];
+                
+                [alertView addAction:[UIAlertAction actionWithTitle:@"離開" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }]];
+                
+                [alertView addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                    [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:alertView.textFields.firstObject.text success:^() {
+                        [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
+                        [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
+                    } failure:^() {
+                        NSLog(@"打招呼失敗");
+                    }];
+                }]];
+                
+                [self presentViewController:alertView animated:YES completion:nil];
             } else {
-                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
-                    self.cleanAskDate = date;
-                    self.cleanAskString = question;
-                    [self cleanAskViewLayout];
-                } failure:^() {}];
+                
+                // 尚未回答
+                NSLog(@"尚未回答");
+                [self cleanAskViewLayout];
             }
-        } failure:^() {}];
-    } failure:^() {}];
+        } failure:^() {
+            
+            // 檢查使用者失敗
+            NSLog(@"檢查是否回答最新問題");
+        }];
+    } failure:^() {
+        NSLog(@"檢查使用者失敗");
+        // 檢查使用者失敗，可能無此帳號，或是網路出問題
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - cleanAskView
@@ -405,8 +469,17 @@
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.cleanAskDate success:^() {
-        } failure:^() {}];
-    } failure:^() {}];
+        } failure:^() {
+            NSLog(@"回答問題失敗");
+        }];
+    } failure:^() {
+        NSLog(@"檢查使用者失敗");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
