@@ -97,7 +97,10 @@ class ChooseSchoolViewController: UIViewController {
 		reportController.reportProblemInitialSelectionTitle = "沒有我的學校"
 		reportController.problemDescription = "請填入您尊貴的學校"
 		reportController.delegate = self
-		presentViewController(reportController, animated: true, completion: nil)
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			self.presentViewController(reportController, animated: true, completion: nil)
+		})
 	}
 
 }
@@ -171,6 +174,7 @@ extension ChooseSchoolViewController : UITableViewDataSource, UITableViewDelegat
         } else {
             if indexPath.row == 0 {
                 print("need to perform segue.....")
+				searchControl.active = false
 				showReportController()
 				tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
