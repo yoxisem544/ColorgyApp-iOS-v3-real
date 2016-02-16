@@ -9,6 +9,7 @@
 #import "PersonalChatInformationViewController.h"
 #import "ColorgyCourse-Swift.h"
 #import "UIImage+GaussianBlurUIImage.h"
+#import "ColorgyChatAPIOC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface PersonalChatInformationViewController () {
@@ -35,6 +36,8 @@
     UITextView *aboutPassionTextView;
     UILabel *aboutExpertiseLabel;
     UITextView *aboutExpertiseTextView;
+    
+    ChatMeUserInformation *userInformation;
 }
 
 @end
@@ -44,6 +47,55 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
+        userInformation = information;
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        activityIndicatorView.center = CGPointMake(userImageView.bounds.size.width / 2, userImageView.bounds.size.height / 2);
+        [userImageView addSubview:activityIndicatorView];
+        
+        [activityIndicatorView startAnimating];
+        [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
+        nameTextField.text = userInformation.name;
+        aboutSchoolTextField.placeholder = information.organizationCode;
+        [self showCheck];
+        
+        nameTextField.text = information.name;
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
+        [self showCheck];
+        aboutConversationTextView.text = information.aboutConversation;
+        aboutExpertiseTextView.text = information.aboutExpertise;
+        aboutHabitancyTextField.text = information.aboutHabitancy;
+        aboutHoroscopeTextField.text = information.aboutHoroscope;
+        aboutPassionTextView.text = information.aboutPassion;
+        aboutSchoolTextField.text = information.aboutSchool;
+        
+        
+        
+        submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(submitMethod)];
+        self.navigationItem.rightBarButtonItem = submitBarButtonItem;
+        
+        
+        
+        CGFloat buttonHeight = 16;
+        
+        editUserImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [editUserImageButton setFrame:CGRectMake(userImageView.frame.origin.x, CGRectGetMaxY(userImageView.frame) - buttonHeight * 2, userImageView.bounds.size.width, buttonHeight)];
+        [editUserImageButton setTitle:@"編輯" forState:UIControlStateNormal];
+        [editUserImageButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
+        [editUserImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [editUserImageButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
+        [scrollView addSubview:editUserImageButton];
+    } failure:^() {
+        NSLog(@"get me error");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
     
     [self.tabBarController.tabBar setHidden:YES];
     
@@ -58,8 +110,6 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
     [self.navigationController.navigationBar setTintColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100]];
     [self setTitle:@"個人資料"];
-    submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(submitMethod)];
-    self.navigationItem.rightBarButtonItem = submitBarButtonItem;
     
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     scrollView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
@@ -73,22 +123,12 @@
     CGFloat imageViewLength = 150;
     
     userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2 - imageViewLength / 2, self.view.bounds.origin.y + 100, imageViewLength, imageViewLength)];
-    [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
+    //    [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
     [userImageView.layer setCornerRadius:imageViewLength / 2];
     [userImageView.layer setBorderColor:[UIColor whiteColor].CGColor];
     [userImageView.layer setBorderWidth:3];
     [userImageView.layer setMasksToBounds:YES];
     [scrollView addSubview:userImageView];
-    
-    CGFloat buttonHeight = 16;
-    
-    editUserImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [editUserImageButton setFrame:CGRectMake(userImageView.frame.origin.x, CGRectGetMaxY(userImageView.frame) - buttonHeight * 2, userImageView.bounds.size.width, buttonHeight)];
-    [editUserImageButton setTitle:@"編輯" forState:UIControlStateNormal];
-    [editUserImageButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
-    [editUserImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [editUserImageButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:editUserImageButton];
     
     CGFloat sectionY = 30;
     CGFloat marginX = 25;
@@ -106,7 +146,7 @@
     nameTextField = [[UITextField alloc] initWithFrame: CGRectMake(marginX, CGRectGetMaxY(nameLabel.frame) + marginY, width, height)];
     nameTextField.backgroundColor = [UIColor whiteColor];
     nameTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    nameTextField.text = [UserSetting UserNickyName];
+    //    nameTextField.text = [UserSetting UserNickyName];
     nameTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
     nameTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
     nameTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -168,7 +208,7 @@
     //aboutSchoolTextField.backgroundColor = [UIColor whiteColor];
     aboutSchoolTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     aboutSchoolTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
-    aboutSchoolTextField.placeholder = [UserSetting UserOrganization];
+    //    aboutSchoolTextField.placeholder = [UserSetting UserOrganization];
     aboutSchoolTextField.enabled = NO;
     aboutSchoolTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
     aboutSchoolTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -247,21 +287,11 @@
     [scrollView addSubview:aboutExpertiseTextView];
     
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(aboutExpertiseTextView.frame) + 50);
-    [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
-        nameTextField.text = information.name;
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        
-        [ud setObject:information.name forKey:@"nickyname"];
-        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
-        [self showCheck];
-        aboutConversationTextView.text = information.aboutConversation;
-        aboutExpertiseTextView.text = information.aboutExpertise;
-        aboutHabitancyTextField.text = information.aboutHabitancy;
-        aboutHoroscopeTextField.text = information.aboutHoroscope;
-        aboutPassionTextView.text = information.aboutPassion;
-        aboutSchoolTextField.text = information.aboutSchool;
-    } failure:^() {}];
-    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -272,19 +302,69 @@
 #pragma mark - Submit
 
 - (void)submitMethod {
+    
+    // 檢查名字可不可用
     if (nameIsOk) {
+        
+        // 開始上傳
+        self.loadingView = [[LoadingView alloc] init];
+        self.loadingView.loadingString = @"上傳中";
+        self.loadingView.finishedString = @"成功";
+        [self.loadingView start];
+        
+        // 檢查使用者
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-            [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {} failure:^() {}];
+            
+            // Update about
+            [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {
+            } failure:^() {
+                NSLog(@"updateabout error");
+                // 使用者檢查失敗，尚未註冊或是網路連線不正常，通常為後者
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
+            
+            // Update name
             [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
-            } failure:^() {}];
+                [self.loadingView finished:^() {}];
+                [ColorgyChatAPI updateFromCore:^() {
+                    [self.navigationController popViewControllerAnimated:YES];
+                } failure:^() {
+                    NSLog(@"updatefrom core error");
+                    [self.loadingView finished:^() {}];
+                }];
+            } failure:^() {
+                NSLog(@"update name error");
+                // 上傳名字失敗
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }];
         } failure:^() {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            NSLog(@"check use error");
+            // 使用者檢查失敗，尚未註冊或是網路連線不正常，通常為後者
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }];
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        // 結束Loading
+        [self.loadingView finished:^() {}];
+    } else {
+        
+        // 名字是重複的
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"名字不可用Q_Q" message:@"請換個新名字吧！！" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -336,7 +416,7 @@
         // 檢查名字 尚需修改
         if (nameTextField.text.length) {
             [self showChecking];
-            if ([nameTextField.text isEqualToString:[UserSetting UserNickyName]]) {
+            if ([nameTextField.text isEqualToString:userInformation.name]) {
                 [self showCheck];
                 return YES;
             }
@@ -347,6 +427,7 @@
                     [self dismissCheck];
                 }
             } failure:^() {
+                NSLog(@"check name exists");
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
                 
                 [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
@@ -518,11 +599,32 @@
 #pragma mark - ImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    self.loadingView = [[LoadingView alloc] init];
+    self.loadingView.loadingString = @"上傳中";
+    self.loadingView.finishedString = @"成功";
+    [self.loadingView start];
     [self dismissViewControllerAnimated:YES completion:^{
     }];
     self.uploadImage = [info objectForKey:UIImagePickerControllerEditedImage];
     self.uploadImage = [self reSizeImage:self.uploadImage toSize:CGSizeMake(512, 512)];
-    userImageView.image = [self.uploadImage gaussianBlurImage:self.uploadImage andInputRadius:4];;
+    userImageView.image = [self.uploadImage gaussianBlurImage:self.uploadImage andInputRadius:4];
+    ColorgyChatAPIOC *chatapioc = [[ColorgyChatAPIOC alloc] init];
+    // 這裡上傳
+    CGRect chopRect = CGRectMake(0, 0, self.uploadImage.size.width, self.uploadImage.size.height);
+    
+    [chatapioc patchUserImage:self.uploadImage chopRect:chopRect success:^(NSDictionary *response) {
+        NSLog(@"%@", [response valueForKey:@"avatar_url"]);
+        [self.loadingView finished:^() {}];
+        [ColorgyChatAPI updateFromCore:^() {
+            [self.loadingView finished:^() {}];
+        } failure:^() {
+            NSLog(@"update from core error");
+            [self.loadingView finished:^() {}];
+        }];
+    } failure:^() {
+        NSLog(@"patch user image error");
+        [self.loadingView finished:^() {}];
+    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

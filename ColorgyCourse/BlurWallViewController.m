@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OpeningViewController.h"
 #import "ColorgyCourse-Swift.h"
-#import "BlurWallSwitchViewController.h"
 #import "HelloViewController.h"
 #import "PersonalChatInformationViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -30,13 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.tabBarController setHidesBottomBarWhenPushed:YES];
-    [self.tabBarController.tabBar setHidden:NO];
     currentPage = 0;
     // self.cachedImages = [[NSMutableDictionary alloc] init];
-    [self.navigationController.navigationBar setHidden:NO];
-    self.navigationItem.hidesBackButton = YES;
     
     // Make RightBarButtonItem
     UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -95,42 +89,52 @@
     
     [self.loadingView start];
     [self refreshData:^() {
-        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-            [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
-                [self.loadingView finished:^() {
-                    // 取得清晰問
-                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
-                    if (self.cleanAskString && !answered) {
-                        if ([self.cleanAskString length]) {
-                            [self cleanAskViewLayout];
-                        }
-                    }
-                }];
-            } failure:^() {
-                [self.loadingView finished:^() {
-                    // 取得清晰問
-                    self.cleanAskString = [(BlurWallSwitchViewController *)self.parentViewController.parentViewController lastestQuestion];
-                    if (self.cleanAskString) {
-                        if ([self.cleanAskString length]) {
-                            [self cleanAskViewLayout];
-                        }
-                    }
-                }];
-            }];
-        } failure:^() {}];
+        [self.loadingView finished:^() {}];
     }];
     
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    //    // 檢查是否回答清晰問
-    //    if (NO) {
-    //
-    //    } else {
-    //        // [self cleanAskViewLayout];
-    //    }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // 檢查是否回答清晰問
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
+            [self.loadingView finished:^() {
+                // 取得清晰問
+                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+                    self.questionDate = date;
+                    self.cleanAskString = question;
+                    if (self.cleanAskString && !answered) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                } failure:^() {
+                    NSLog(@"getQuestion error");
+                }];
+            }];
+        } failure:^() {
+            NSLog(@"checkAnswered error");
+            [self.loadingView finished:^() {
+                // 取得清晰問
+                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+                    self.cleanAskString = question;
+                    self.questionDate = date;
+                    if (self.cleanAskString) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                } failure:^() {
+                    NSLog(@"getquestion error");
+                }];
+            }];
+        }];
+    } failure:^() {
+        NSLog(@"check user error");
+    }];
 }
 
 #pragma mark - UIColor
@@ -181,9 +185,9 @@
     AvailableTarget *availableTarget = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
     NSString *imageUrl = availableTarget.avatarBlur2XURL;
     
-    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
-        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
-    } else {
+//    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
+//        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
+//    } else {
         blurImageView.image = nil;
         [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
         /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
@@ -193,7 +197,7 @@
          [cell setNeedsLayout];
          });
          }];*/
-    }
+//    }
     
     blurImageView.center = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
     [cell addSubview:blurImageView];
@@ -223,7 +227,7 @@
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 10)];
     
-    messageLabel.text = availableTarget.name;
+    messageLabel.text = availableTarget.lastAnswer;
     messageLabel.numberOfLines = 2;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:12.0];
@@ -340,6 +344,10 @@
 #pragma mark - RefreshData
 
 - (void)refreshDataBySegment {
+    // LoadinView Customized
+    self.loadingView = [[LoadingView alloc] init];
+    self.loadingView.loadingString = @"載入中";
+    self.loadingView.finishedString = @"完成";
     [self.loadingView start];
     [self.blurWallDataMutableArray removeAllObjects];
     [self refreshData:^() {
@@ -381,19 +389,26 @@
                 callbackBlock();
             }
         } failure:^() {
+            NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
             [self.blurWallRefreshControl endRefreshing];
             if (callbackBlock) {
+                [self.loadingView dismiss:nil];
+                self.loadingView = nil;
                 callbackBlock();
             }
         }];
     } failure:^() {
+        NSLog(@"check user fail");
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
         if (callbackBlock) {
+            [self.loadingView dismiss:nil];
+            self.loadingView = nil;
             callbackBlock();
         }
     }];
@@ -487,7 +502,6 @@
             if (!error) {
                 UIImage *downloadedImage = [UIImage imageWithData:data];
                 // Add the image to the cache
-                [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
                 handler(downloadedImage); // pass back the image in a block
             } else {
                 NSLog(@"%@", [error localizedDescription]);
@@ -695,9 +709,19 @@
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController.parentViewController questionDate] success:^() {
-        } failure:^() {}];
-    } failure:^() {}];
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
+        } failure:^() {
+            NSLog(@"answerQuestion error");
+        }];
+    } failure:^() {
+        NSLog(@"check user error");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {

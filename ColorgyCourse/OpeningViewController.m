@@ -11,7 +11,6 @@
 #import "NSString+Email.h"
 #import "ColorgyCourse-Swift.h"
 #import "ColorgyChatAPIOC.h"
-#import "ImageCache.h"
 #import "BlurWallSwitchViewController.h"
 
 @implementation OpeningViewController {
@@ -24,7 +23,6 @@
     [super viewDidLoad];
     
     self.chatApiOC = [[ColorgyChatAPIOC alloc] init];
-    self.navigationItem.hidesBackButton = YES;
     
     // nameScrollView Customized
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -46,6 +44,19 @@
     
     [self.view addGestureRecognizer:tapGestureRecognizer];
     [self.scrollView addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationItem.hidesBackButton = YES;
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
 #pragma mark - UIColor
@@ -139,9 +150,6 @@
 #pragma mark - OpeningLayout
 
 - (void)openingLayout {
-    
-    [self.tabBarController.tabBar setHidden:NO];
-    [self.navigationController.navigationBar setHidden:YES];
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
@@ -350,6 +358,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"尚未認證" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                [self removeCheckEmailLayout];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -527,6 +536,7 @@
     self.uploadImage = [info objectForKey:UIImagePickerControllerEditedImage];
     self.uploadImage = [self reSizeImage:self.uploadImage toSize:CGSizeMake(512, 512)];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
     [self uploadPreviewLayout];
 }
 
@@ -637,7 +647,7 @@
         }];
     } failure:^() {
         [self.loadingView dismiss:^() {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"頭貼傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];
@@ -801,8 +811,20 @@
                 // CleanAskLayout
                 [self removeNameLayout];
                 [self cleanAskLayout];
-            } failure:^() {}];
-        } failure:^() {}];
+            } failure:^() {
+                NSLog(@"update name error");
+            }];
+            [ColorgyChatAPI updateFromCore:^() {} failure:^() {
+                NSLog(@"update core error");
+            }];
+        } failure:^() {
+            NSLog(@"check user error");
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
     }
 }
 
@@ -909,7 +931,20 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
-    self.questionString = [(BlurWallSwitchViewController *)self.parentViewController lastestQuestion];
+    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+        self.questionString = question;
+        self.cleanAskQuestionLabel.text = self.questionString;
+        self.questionDate = date;
+        
+        CGSize size = [self.questionString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
+        
+        if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
+            [self.cleanAskQuestionLabel sizeToFit];
+        }
+
+    } failure:^() {
+        NSLog(@"get question error");
+    }];
     
     [self.view addSubview:self.scrollView];
     [self.tabBarController.tabBar setHidden:YES];
@@ -919,15 +954,8 @@
     self.cleanAskQuestionLabel.center = CGPointMake(self.view.center.x, self.view.center.y - 120);
     self.cleanAskQuestionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
     self.cleanAskQuestionLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-    self.cleanAskQuestionLabel.text = self.questionString;
     self.cleanAskQuestionLabel.textAlignment = NSTextAlignmentCenter;
     self.cleanAskQuestionLabel.numberOfLines = 0;
-    
-    CGSize size = [self.questionString sizeWithAttributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    
-    if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
-        [self.cleanAskQuestionLabel sizeToFit];
-    }
     
     [self.scrollView addSubview:self.cleanAskQuestionLabel];
     
@@ -1010,14 +1038,16 @@
 
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:[(BlurWallSwitchViewController *)self.parentViewController questionDate] success:^() {
+        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:self.questionDate success:^() {
             // 開啟模糊牆
             [self removeCleanAskLayout];
             [self.view removeFromSuperview];
             [self.navigationController.navigationBar setHidden:YES];
             [self.tabBarController.tabBar setHidden:NO];
             [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
-        } failure:^() {}];
+        } failure:^() {
+            NSLog(@"get answer error");
+        }];
     }
 }
 
@@ -1067,7 +1097,6 @@
         if (!error) {
             UIImage *downloadedImage = [UIImage imageWithData:data];
             // Add the image to the cache
-            [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
             handler(downloadedImage); // pass back the image in a block
         } else {
             NSLog(@"%@", [error localizedDescription]);

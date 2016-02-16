@@ -51,6 +51,7 @@
 @property UITextView *cleanAskReplyTextView;
 @property UIButton *openChatButton;
 @property NSString *questionString;
+@property NSString *questionDate;
 @property UIView *progressBarView2;
 
 //
