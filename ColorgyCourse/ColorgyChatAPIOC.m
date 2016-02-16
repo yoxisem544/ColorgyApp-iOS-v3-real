@@ -13,32 +13,6 @@
 
 @implementation ColorgyChatAPIOC
 
-- (void)test {
-}
-
-- (void)getQuestion:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
-//    [ColorgyChatAPI getQuestion:^(NSDictionary *response) {
-//        self.lastestQuestion = [response valueForKey:@"question"];
-//        self.questionDate = [response valueForKey:@"date"];
-//        
-//        if (success) {
-//            success(response);
-//        }
-//    } failure:failure];
-}
-
-- (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
-    [ColorgyAPI POSTUserEmail:email success:^(NSDictionary *response) {
-        if(success) {
-            success(response);
-        }
-    } failure:^() {
-        if(failure) {
-            failure();
-        }
-    }];
-}
-
 - (void)patchUserImage:(UIImage *)image chopRect:(CGRect)chopRect success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
     NSString *avatar = [NSString stringWithFormat:@"data:image/png;base64,%@", [self encodeToBase64String:image]];
     
