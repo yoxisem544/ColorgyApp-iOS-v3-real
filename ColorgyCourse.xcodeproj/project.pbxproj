@@ -514,10 +514,9 @@
 			isa = PBXGroup;
 			children = (
 				63306E781C6838AE00D5D57C /* Hello.swift */,
+				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63A50AD71C6F761100B3F119 /* User */,
 				63A50AD61C6F75F900B3F119 /* Message */,
-				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
-				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 			);
 			name = "Chat Models";
 			sourceTree = "<group>";
@@ -536,10 +535,10 @@
 		63A50AD41C6F759C00B3F119 /* Chat Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63BB30171C561F0A0055BA19 /* ChatRoomViewController.swift */,
+				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 			);
 			name = "Chat Controllers";
 			sourceTree = "<group>";
@@ -556,8 +555,9 @@
 		63A50AD61C6F75F900B3F119 /* Message */ = {
 			isa = PBXGroup;
 			children = (
-				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
+				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
+				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -565,11 +565,11 @@
 		63A50AD71C6F761100B3F119 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */,
 				6323726A1C5B442F00C9FC27 /* ChatUser.swift */,
 				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
 				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
+				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -579,9 +579,6 @@
 			children = (
 				63A50AD11C6F615600B3F119 /* Flurry */,
 				633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */,
-				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
-				63BB302B1C561F300055BA19 /* DLMessageView */,
-				63BB30141C56173F0055BA19 /* SocketIO_Client */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -630,6 +627,7 @@
 		63B5FB081C53341300C45CF2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				63E776641B9720C800B15AF0 /* LogoutHelper.swift */,
 				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
 			);
@@ -639,7 +637,6 @@
 		63B5FB091C53342100C45CF2 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				63A50ACB1C6F610500B3F119 /* SecretKeys.swift */,
 				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
 				633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */,
@@ -1039,30 +1036,9 @@
 				4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */,
 				4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */,
 				4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */,
-				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
-				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
-				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
-				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
-				63306E781C6838AE00D5D57C /* Hello.swift */,
-				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
-				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
-				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
-				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
-				63C7A7A51C607B74004DF000 /* UserDetailInformationView.swift */,
-				637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */,
-				63AFACA81C57107100405EC3 /* ColorgySocket.swift */,
-				632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */,
-				63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */,
-				6323726A1C5B442F00C9FC27 /* ChatUser.swift */,
-				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
-				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
-				63BB30301C5624E10055BA19 /* Chatroom.swift */,
-				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
-				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
-				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
