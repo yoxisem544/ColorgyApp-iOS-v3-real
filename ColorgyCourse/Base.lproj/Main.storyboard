@@ -2551,15 +2551,15 @@
                     <connections>
                         <segue destination="WeL-yU-op6" kind="relationship" relationship="viewControllers" id="2pv-XB-sXO"/>
                         <segue destination="bWU-kc-GY7" kind="relationship" relationship="viewControllers" id="tYs-z5-QfK"/>
+                        <segue destination="ZCD-Qg-Jcn" kind="relationship" relationship="viewControllers" id="DGb-zW-qTU"/>
                         <segue destination="mdb-Ri-nKp" kind="relationship" relationship="viewControllers" id="iMD-Pd-GMA"/>
                         <segue destination="Cf5-y4-OPf" kind="relationship" relationship="viewControllers" id="ylJ-M6-6Qd"/>
                         <segue destination="41U-8t-JMB" kind="relationship" relationship="viewControllers" id="MVx-ev-jGN"/>
-                        <segue destination="ZCD-Qg-Jcn" kind="relationship" relationship="viewControllers" id="DGb-zW-qTU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="795"/>
+            <point key="canvasLocation" x="263" y="799"/>
         </scene>
         <!--Choose School View Controller-->
         <scene sceneID="GIg-8I-dhg">

@@ -24,7 +24,6 @@
     [super viewDidLoad];
     
     self.chatApiOC = [[ColorgyChatAPIOC alloc] init];
-    self.navigationItem.hidesBackButton = YES;
     
     // nameScrollView Customized
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
@@ -46,6 +45,19 @@
     
     [self.view addGestureRecognizer:tapGestureRecognizer];
     [self.scrollView addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationItem.hidesBackButton = YES;
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:NO];
 }
 
 #pragma mark - UIColor
@@ -139,9 +151,6 @@
 #pragma mark - OpeningLayout
 
 - (void)openingLayout {
-    
-    [self.tabBarController.tabBar setHidden:NO];
-    [self.navigationController.navigationBar setHidden:YES];
     
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
@@ -528,6 +537,7 @@
     self.uploadImage = [info objectForKey:UIImagePickerControllerEditedImage];
     self.uploadImage = [self reSizeImage:self.uploadImage toSize:CGSizeMake(512, 512)];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
     [self uploadPreviewLayout];
 }
 
@@ -638,7 +648,7 @@
         }];
     } failure:^() {
         [self.loadingView dismiss:^() {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"頭貼傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];

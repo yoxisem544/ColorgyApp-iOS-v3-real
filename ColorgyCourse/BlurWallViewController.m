@@ -29,13 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.tabBarController setHidesBottomBarWhenPushed:YES];
-    [self.tabBarController.tabBar setHidden:NO];
     currentPage = 0;
     // self.cachedImages = [[NSMutableDictionary alloc] init];
-    [self.navigationController.navigationBar setHidden:NO];
-    self.navigationItem.hidesBackButton = YES;
     
     // Make RightBarButtonItem
     UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,8 +95,9 @@
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     // 檢查是否回答清晰問
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
@@ -127,7 +123,7 @@
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
                         }
-                    
+                        
                     }
                 } failure:^() {}];
             }];

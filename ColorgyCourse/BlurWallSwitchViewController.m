@@ -18,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = YES;
+    
     // Do any additional setup after loading the view.
     [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
         self.lastestQuestion = question;
@@ -31,6 +33,8 @@
         [self addChildViewController:self.openingViewController];
         
         BlurWallViewController *blurWallViewController = [[BlurWallViewController alloc] init];
+        
+        self.navigationController.navigationBarHidden = YES;
         
         self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:blurWallViewController];
         [self addChildViewController:self.navigationBlurWallViewController];
@@ -53,6 +57,7 @@
     
     // 檢查信箱認證
     if ([self isEmailOkCheck]) {
+        // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.navigationBlurWallViewController.view];
@@ -63,6 +68,7 @@
             }
         }];
     } else {
+        // 信箱認證
         [self transitionFromViewController:self.activityViewController toViewController:self.openingViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
                 [self.view addSubview:self.openingViewController.view];
