@@ -11,7 +11,6 @@
 #import "NSString+Email.h"
 #import "ColorgyCourse-Swift.h"
 #import "ColorgyChatAPIOC.h"
-#import "ImageCache.h"
 #import "BlurWallSwitchViewController.h"
 
 @implementation OpeningViewController {
@@ -1098,7 +1097,6 @@
         if (!error) {
             UIImage *downloadedImage = [UIImage imageWithData:data];
             // Add the image to the cache
-            [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
             handler(downloadedImage); // pass back the image in a block
         } else {
             NSLog(@"%@", [error localizedDescription]);

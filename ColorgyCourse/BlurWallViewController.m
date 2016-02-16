@@ -185,9 +185,9 @@
     AvailableTarget *availableTarget = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
     NSString *imageUrl = availableTarget.avatarBlur2XURL;
     
-    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
-        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
-    } else {
+//    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
+//        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
+//    } else {
         blurImageView.image = nil;
         [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
         /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
@@ -197,7 +197,7 @@
          [cell setNeedsLayout];
          });
          }];*/
-    }
+//    }
     
     blurImageView.center = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
     [cell addSubview:blurImageView];
@@ -502,7 +502,6 @@
             if (!error) {
                 UIImage *downloadedImage = [UIImage imageWithData:data];
                 // Add the image to the cache
-                [[ImageCache sharedImageCache] addImage:imageURL image:downloadedImage];
                 handler(downloadedImage); // pass back the image in a block
             } else {
                 NSLog(@"%@", [error localizedDescription]);

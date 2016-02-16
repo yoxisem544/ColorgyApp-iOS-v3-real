@@ -15,7 +15,6 @@
 		4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */; };
 		4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */; };
 		4EB5A9B61C575B00009BA61B /* UIImage+GaussianBlurUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */; };
-		4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9BB1C576F70009BA61B /* ImageCache.m */; };
 		4EE325721C5A19D500880D68 /* ColorgyChatAPIOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */; };
 		4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */; };
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
@@ -226,8 +225,6 @@
 		4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurWallViewController.m; sourceTree = "<group>"; };
 		4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GaussianBlurUIImage.h"; sourceTree = "<group>"; };
 		4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GaussianBlurUIImage.m"; sourceTree = "<group>"; };
-		4EB5A9BA1C576F70009BA61B /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
-		4EB5A9BB1C576F70009BA61B /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorgyChatAPIOC.h; sourceTree = "<group>"; };
 		4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorgyChatAPIOC.m; sourceTree = "<group>"; };
 		4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalChatInformationViewController.h; sourceTree = "<group>"; };
@@ -449,6 +446,109 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4EB221B51C7318C800F6F641 /* ChatViews */ = {
+			isa = PBXGroup;
+			children = (
+				4E3D74EE1C560071002812F4 /* LoadingView.h */,
+				4E3D74EF1C560071002812F4 /* LoadingView.m */,
+			);
+			name = ChatViews;
+			sourceTree = "<group>";
+		};
+		4EB221B61C7318E000F6F641 /* NSString+Email */ = {
+			isa = PBXGroup;
+			children = (
+				4E3D74F01C560071002812F4 /* NSString+Email.h */,
+				4E3D74F11C560071002812F4 /* NSString+Email.m */,
+			);
+			name = "NSString+Email";
+			sourceTree = "<group>";
+		};
+		4EB221B71C73197400F6F641 /* OpeningViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4E3D74F21C560071002812F4 /* OpeningViewController.h */,
+				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
+			);
+			name = OpeningViewController;
+			sourceTree = "<group>";
+		};
+		4EB221B81C73198600F6F641 /* BlurWallViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
+				4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */,
+			);
+			name = BlurWallViewController;
+			sourceTree = "<group>";
+		};
+		4EB221B91C73199500F6F641 /* HelloViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4E71E0161C5F4DBE00A9A694 /* HelloViewController.h */,
+				4E71E0171C5F4DBE00A9A694 /* HelloViewController.m */,
+			);
+			name = HelloViewController;
+			sourceTree = "<group>";
+		};
+		4EB221BA1C7319A100F6F641 /* PersonalChatInformationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */,
+				4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */,
+			);
+			name = PersonalChatInformationViewController;
+			sourceTree = "<group>";
+		};
+		4EB221BB1C7319A800F6F641 /* UIImage+GaussianBlurUIImage */ = {
+			isa = PBXGroup;
+			children = (
+				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
+				4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */,
+			);
+			name = "UIImage+GaussianBlurUIImage";
+			sourceTree = "<group>";
+		};
+		4EB221BC1C7319AE00F6F641 /* BlurWallSwitchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
+				4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */,
+			);
+			name = BlurWallSwitchViewController;
+			sourceTree = "<group>";
+		};
+		4EB221BD1C7319B900F6F641 /* ColorgyChatAPIOC */ = {
+			isa = PBXGroup;
+			children = (
+				4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */,
+				4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */,
+			);
+			name = ColorgyChatAPIOC;
+			sourceTree = "<group>";
+		};
+		4EB221BE1C7319E100F6F641 /* ChatHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4EB221BD1C7319B900F6F641 /* ColorgyChatAPIOC */,
+				4EB221BB1C7319A800F6F641 /* UIImage+GaussianBlurUIImage */,
+				4EB221B61C7318E000F6F641 /* NSString+Email */,
+			);
+			name = ChatHelper;
+			sourceTree = "<group>";
+		};
+		4EB221BF1C7319F900F6F641 /* ChatControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4EB221B71C73197400F6F641 /* OpeningViewController */,
+				4EB221B81C73198600F6F641 /* BlurWallViewController */,
+				4EB221B91C73199500F6F641 /* HelloViewController */,
+				4EB221BA1C7319A100F6F641 /* PersonalChatInformationViewController */,
+				4EB221BC1C7319AE00F6F641 /* BlurWallSwitchViewController */,
+			);
+			name = ChatControllers;
+			sourceTree = "<group>";
+		};
 		6311D20E1C3A417000812934 /* Core data */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,6 +899,7 @@
 		63C2B9851C155A57007740DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4EB221BF1C7319F900F6F641 /* ChatControllers */,
 				63B5FB1B1C5338D800C45CF2 /* About Course */,
 				63B5FB1A1C5338AA00C45CF2 /* Settings */,
 				63B5FB191C53389000C45CF2 /* Test */,
@@ -817,6 +918,7 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4EB221B51C7318C800F6F641 /* ChatViews */,
 				63B5FB111C53351C00C45CF2 /* Report View */,
 				63B5FB121C53357600C45CF2 /* Creating Local Course */,
 				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
@@ -833,6 +935,7 @@
 		63C2B9871C155AE3007740DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4EB221BE1C7319E100F6F641 /* ChatHelper */,
 				63B5FB091C53342100C45CF2 /* Setup */,
 				63B5FB081C53341300C45CF2 /* Login */,
 				63B5FB071C5333FD00C45CF2 /* Extensions */,
@@ -874,26 +977,6 @@
 		63FBCC0D1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXGroup;
 			children = (
-				4E3D74EE1C560071002812F4 /* LoadingView.h */,
-				4E3D74EF1C560071002812F4 /* LoadingView.m */,
-				4EB5A9BA1C576F70009BA61B /* ImageCache.h */,
-				4EB5A9BB1C576F70009BA61B /* ImageCache.m */,
-				4E3D74F01C560071002812F4 /* NSString+Email.h */,
-				4E3D74F11C560071002812F4 /* NSString+Email.m */,
-				4E3D74F21C560071002812F4 /* OpeningViewController.h */,
-				4E3D74F31C560071002812F4 /* OpeningViewController.m */,
-				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
-				4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */,
-				4E71E0161C5F4DBE00A9A694 /* HelloViewController.h */,
-				4E71E0171C5F4DBE00A9A694 /* HelloViewController.m */,
-				4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */,
-				4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */,
-				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
-				4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */,
-				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
-				4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */,
-				4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */,
-				4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */,
 				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
@@ -1236,7 +1319,6 @@
 				63BB30101C5617390055BA19 /* SocketStringReader.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */,
-				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,
 				63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */,
 				4EE325721C5A19D500880D68 /* ColorgyChatAPIOC.m in Sources */,
 				632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */,
