@@ -165,7 +165,8 @@
     if (indexPath.item < self.blurWallDataMutableArray.count) {
         
         // pre-fetch the next 'page' of data.
-        if(indexPath.item == (self.blurWallDataMutableArray.count - PRELOAD_NUMBER)){
+        if(self.blurWallDataMutableArray.count > 10 && indexPath.item == (self.blurWallDataMutableArray.count - PRELOAD_NUMBER)){
+            NSLog(@"%d == %d", indexPath.item, self.blurWallDataMutableArray.count);
             [self loadMoreData];
         }
         
@@ -333,7 +334,8 @@
     NSLog(@"You Touch: %ld, %ld -> %ld", indexPath.row / self.numberOfColumn, indexPath.row % self.numberOfColumn, indexPath.item);
     HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
     //ViewController *vc = [[UIViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    //[self.navigationController pushViewController:vc animated:YES];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -456,6 +458,40 @@
 - (void)loadMoreData {
     // 載入更多
     currentPage += 1;
+    NSString *currentGender;
+    switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            currentGender = @"unspecified";
+            break;
+        case 1:
+            currentGender = @"male";
+            break;
+        case 2:
+            currentGender = @"female";
+            break;
+    }
+    
+    // 重新整理最新的數據
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
+            [self.blurWallDataMutableArray addObjectsFromArray:response];
+            // Tell the collectionView to reload.
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+        } failure:^() {
+            NSLog(@"get AvailableTarget fail");
+            [self.blurWallCollectionView reloadData];
+            [self.blurWallRefreshControl endRefreshing];
+        }];
+    } failure:^() {
+        NSLog(@"check user fail");
+        
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+//        }]];
+//        [self presentViewController:alertController animated:YES completion:nil];
+    }];
     
     // Simulate an async load...
     

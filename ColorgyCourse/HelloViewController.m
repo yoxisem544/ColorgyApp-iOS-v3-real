@@ -34,7 +34,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
+    //[self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
     self.navigationController.navigationBar.translucent = NO;
@@ -52,7 +52,7 @@
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController.navigationBar setTintColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100]];
-    [self.tabBarController.tabBar setHidden:YES];
+    //[self.tabBarController.tabBar setHidden:YES];
     
     // UserImageView
     CGFloat userImageViewLength = self.view.bounds.size.width;
@@ -149,6 +149,17 @@
     [self.view addSubview:self.scrollView];
     
     [self scrollViewLayout];
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 24, 40)];
+    
+    [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+//    backButton.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:backButton];
+    [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)goBack {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)scrollViewLayout {

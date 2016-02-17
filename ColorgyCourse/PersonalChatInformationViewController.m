@@ -54,7 +54,7 @@
         activityIndicatorView.center = CGPointMake(userImageView.bounds.size.width / 2, userImageView.bounds.size.height / 2);
         [userImageView addSubview:activityIndicatorView];
         
-        [activityIndicatorView startAnimating];
+        // [activityIndicatorView startAnimating];
         [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
         nameTextField.text = userInformation.name;
         aboutSchoolTextField.placeholder = information.organizationCode;
