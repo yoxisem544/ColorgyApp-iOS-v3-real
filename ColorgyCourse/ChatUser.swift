@@ -22,8 +22,6 @@ class ChatUser : NSObject {
 		var _status: String?
 		var _userId: String?
 		
-		print(json)
-		
 		for (key, json) in json {
 			if key == "status" {
 				if let s = json.string {

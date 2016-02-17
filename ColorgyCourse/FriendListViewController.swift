@@ -73,8 +73,8 @@ class FriendListViewController: UIViewController {
 			print("自己的id")
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
 				print(targets)
-				self.removeChatroom(targets)
 				print("房間數 \(targets.count)")
+//				self.removeChatroom(targets)
 				self.reloadFriendListV2(targets)
 				}, failure: { () -> Void in
 					
@@ -138,10 +138,13 @@ class FriendListViewController: UIViewController {
 						if !self.doesContainsRoom(room, inRooms: self.historyChatrooms).doesContain {
 							// 如果沒有，就加入
 							dispatch_async(dispatch_get_main_queue(), { () -> Void in
+								self.friendListTableView.beginUpdates()
 								self.historyChatrooms.append(room)
 								let rows = self.friendListTableView.numberOfRowsInSection(0)
 								self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+								self.friendListTableView.endUpdates()
 							})
+							NSThread.sleepForTimeInterval(0.1)
 						}
 					}
 					//		看old有沒有多餘的，刪除
@@ -150,11 +153,16 @@ class FriendListViewController: UIViewController {
 						if !self.doesContainsRoom(room, inRooms: sortedList).doesContain {
 							// 新的表中，沒有舊的的話，移除
 							if let index = self.historyChatrooms.indexOf(room) {
-								self.historyChatrooms.removeAtIndex(index)
 								dispatch_async(dispatch_get_main_queue(), { () -> Void in
-								self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+									self.friendListTableView.beginUpdates()
+									self.historyChatrooms.removeAtIndex(index)
+									dispatch_async(dispatch_get_main_queue(), { () -> Void in
+									self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+										self.friendListTableView.endUpdates()
+									})
 								})
 							}
+							NSThread.sleepForTimeInterval(0.1)
 						}
 					}
 					// 更新內容
@@ -176,16 +184,15 @@ class FriendListViewController: UIViewController {
 											//								dispatch_async(dispatch_get_main_queue(), { () -> Void in
 											print("need to move")
 											print("\(index) need to move to \(newIndex)")
-											self.historyChatrooms.removeAtIndex(index)
 											dispatch_async(dispatch_get_main_queue(), { () -> Void in
+												self.historyChatrooms.removeAtIndex(index)
 												self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-											})
-											self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
-											dispatch_async(dispatch_get_main_queue(), { () -> Void in
+												self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
 												self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
 											})
 											//								})
 											// 移動後重新開始
+											NSThread.sleepForTimeInterval(0.1)
 											break
 										}
 									}
@@ -418,13 +425,13 @@ extension FriendListViewController : UIScrollViewDelegate {
 			print("scrollViewWillBeginDecelerating")
 			if (scrollView.contentOffset.y + scrollView.frame.height) >= scrollView.contentSize.height {
 				print("need more data, loading page \(currentPage + 1)")
-				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-					ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, fromPage: 0, toPage: 10, complete: { (targets) -> Void in
-						print(targets.count)
-					})
-					}, failure: { () -> Void in
-						print("fail to refresh friend list")
-				})
+//				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+//					ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, fromPage: 0, toPage: 10, complete: { (targets) -> Void in
+//						print(targets.count)
+//					})
+//					}, failure: { () -> Void in
+//						print("fail to refresh friend list")
+//				})
 			}
 		}
 	}
