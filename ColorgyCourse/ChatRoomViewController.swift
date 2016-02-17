@@ -27,7 +27,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	/// **Need accesstoken to create chatroom**
 	var accessToken: String!
 	/// **Need friendId to create chatroom**
-	var friendId: String!
+	var chatroomId: String!
 	/// **Need userId to create chatroom**
 	var userId: String!
 	/// **Need uuid to create chatroom**
@@ -77,7 +77,8 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// MARK: Configuration
 	func loadUserProfileImage() {
-		ColorgyChatAPI.getUser(friendId, success: { (user: ChatUserInformation) -> Void in
+		// TODO: 檢查friend是否正確
+		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user: ChatUserInformation) -> Void in
 			self.userProfileImageString = user.avatarBlur2XURL ?? ""
 			self.yourFriend = user
 			}) { () -> Void in
@@ -139,8 +140,8 @@ class ChatRoomViewController: DLMessagesViewController {
 			print("fail to initialize chat room, no accesstoken")
 			return
 		}
-		guard friendId != nil else {
-			print("fail to initialize chat room, no friendId")
+		guard chatroomId != nil else {
+			print("fail to initialize chat room, no chatroomId")
 			return
 		}
 		guard userId != nil else {
@@ -158,7 +159,7 @@ class ChatRoomViewController: DLMessagesViewController {
 			"headers": [],
 			"data": [
 				"accessToken": accessToken,
-				"friendId": friendId,
+				"chatroomId": chatroomId,
 				"userId": userId,
 				"uuid": uuid
 			],

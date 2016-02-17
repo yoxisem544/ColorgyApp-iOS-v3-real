@@ -372,7 +372,7 @@ class FriendListViewController: UIViewController {
 			let vc = segue.destinationViewController as! ChatRoomViewController
 			if let historyChatroom = sender as? HistoryChatroom {
 				vc.userId = userId
-				vc.friendId = historyChatroom.friendId
+				vc.chatroomId = historyChatroom.chatroomId
 				vc.historyChatroom = historyChatroom
 				if let accessToken = UserSetting.UserAccessToken() {
 					vc.accessToken = accessToken
