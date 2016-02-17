@@ -10,7 +10,7 @@
 #import "LoadingView.h"
 #import "ImageCache.h"
 
-@interface BlurWallViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface BlurWallViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 @property UICollectionView *blurWallCollectionView;
 @property UICollectionViewFlowLayout *blurWallCollectionViewFlowLayout;
