@@ -651,12 +651,15 @@ class ColorgyChatAPI : NSObject {
 		afManager.POST(serverURL + "/hi/check_hi", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
 				let json = JSON(response)
+				print(json)
 				if json["result"].string == "already said hi" {
 					// can't say hi, return false
 					success(canSayHi: false)
 				} else if json["result"].string == "ok, you can say hi" {
 					// can say hi, return true
 					success(canSayHi: true)
+				} else if json["result"].string == "target already said hi" {
+					success(canSayHi: false)
 				} else {
 					print("fail to check say hi, unknown result")
 					failure()
@@ -709,6 +712,15 @@ class ColorgyChatAPI : NSObject {
 			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
+				print(error.localizedDescription)
+				print(task?.response)
+				print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				do {
+					try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
+				} catch {
+					
+				}
 				failure()
 		})
 	}
@@ -789,6 +801,20 @@ class ColorgyChatAPI : NSObject {
 			success()
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
+				print(error.localizedDescription)
+				print(task?.response)
+				print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				do {
+					try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
+				} catch {
+					
+				}
+				if let a = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] {
+					print(JSON(a))
+				} else {
+					print("false")
+				}
 				failure()
 		})
 	}
@@ -990,6 +1016,14 @@ class ColorgyChatAPI : NSObject {
 			}
 			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
+				print(operation?.response)
+				print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				do {
+					try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
+				} catch {
+					
+				}
 				failure()
 		})
 	}

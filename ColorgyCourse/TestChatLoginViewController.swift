@@ -69,21 +69,21 @@ class TestChatLoginViewController: UIViewController {
 	var friendId: String!
 	var uuid: String!
 
-	var testAccounts: [[String]] = [["test-yzu-student-f478@test.colorgy.io", "test-yzu-student-f478", "元智 學生"],
-		["test-yuntech-student-ca62@test.colorgy.io", "test-yuntech-student-ca62", "雲科 學生"],
-		["test-yuhing-student-44b4@test.colorgy.io", "test-yuhing-student-44b4", " 育英 學生"],
-		["test-ytit-student-cfa1@test.colorgy.io", "test-ytit-student-cfa1", " 永達 學生"],
-		["test-ypu-student-5f3d@test.colorgy.io", "test-ypu-student-5f3d", "元培科大 學生"],
-		["test-ym-student-bfe6@test.colorgy.io", "test-ym-student-bfe6", " 陽明 學生"],
-		["test-ydu-student-7a4e@test.colorgy.io", "test-ydu-student-7a4e", "育達 學生"],
+	var testAccounts: [[String]] = [["test-yzu-student-f478@test.colorgy.io", "test-yzu-student-f478", "❌元智 學生"],
+		["test-yuntech-student-ca62@test.colorgy.io", "test-yuntech-student-ca62", "❌雲科 學生"],
+		["test-yuhing-student-44b4@test.colorgy.io", "test-yuhing-student-44b4", " ❌育英 學生"],
+		["test-ytit-student-cfa1@test.colorgy.io", "test-ytit-student-cfa1", "❌ 永達 學生"],
+		["test-ypu-student-5f3d@test.colorgy.io", "test-ypu-student-5f3d", "❌元培科大 學生"],
+		["test-ym-student-bfe6@test.colorgy.io", "test-ym-student-bfe6", "❌ 陽明 學生"],
+		["test-ydu-student-7a4e@test.colorgy.io", "test-ydu-student-7a4e", "❌育達 學生"],
 		["test-wzu-student-b565@test.colorgy.io", "test-wzu-student-b565", "文藻 學生"],
 		["test-wfu-student-23d8@test.colorgy.io", "test-wfu-student-23d8", "吳鳳科大 學生"],
-		["test-vnu-student-0f6f@test.colorgy.io", "test-vnu-student-0f6f", "萬能科大 學生"],
-		["test-utaipei-student-b364@test.colorgy.io", "test-utaipei-student-b364", "市北大 學生"],
-		["test-usckh-student-72fe@test.colorgy.io", "test-usckh-student-72fe", "實踐高雄 學生"],
-		["test-usc-student-22be@test.colorgy.io", "test-usc-student-22be", "實踐 學生"],
-		["test-ukn-student-8776@test.colorgy.io", "test-ukn-student-8776", "康寧 學生"],
-		["test-twu-student-f165@test.colorgy.io", "test-twu-student-f165", "環球科大 學生"],
+		["test-vnu-student-0f6f@test.colorgy.io", "test-vnu-student-0f6f", "❌萬能科大 學生"],
+		["test-utaipei-student-b364@test.colorgy.io", "test-utaipei-student-b364", "❌市北大 學生"],
+		["test-usckh-student-72fe@test.colorgy.io", "test-usckh-student-72fe", "❌實踐高雄 學生"],
+		["test-usc-student-22be@test.colorgy.io", "test-usc-student-22be", "❌實踐 學生"],
+		["test-ukn-student-8776@test.colorgy.io", "test-ukn-student-8776", "❌康寧 學生"],
+		["test-twu-student-f165@test.colorgy.io", "test-twu-student-f165", "❌環球科大 學生"],
 		["test-tut-student-c911@test.colorgy.io", "test-tut-student-c911", "南應 學生"],
 		["test-tust-student-7dde@test.colorgy.io", "test-tust-student-7dde", " 大華 學生"],
 		["test-ttu-student-0b07@test.colorgy.io", "test-ttu-student-0b07", "大同 學生"],
@@ -201,7 +201,7 @@ class TestChatLoginViewController: UIViewController {
 			let vc = segue.destinationViewController as! ChatRoomViewController
 			vc.userId = self.userId
 			vc.uuid = self.uuid
-			vc.friendId = self.friendId
+//			vc.friendId = self.friendId
 			vc.accessToken = self.accesstoken
 		}
     }

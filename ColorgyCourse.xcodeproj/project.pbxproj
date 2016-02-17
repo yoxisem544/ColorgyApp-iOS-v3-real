@@ -15,6 +15,7 @@
 		4EB5A9B01C575AD4009BA61B /* BlurWallSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9AF1C575AD4009BA61B /* BlurWallSwitchViewController.m */; };
 		4EB5A9B51C575B00009BA61B /* BlurWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */; };
 		4EB5A9B61C575B00009BA61B /* UIImage+GaussianBlurUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */; };
+		4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB5A9BB1C576F70009BA61B /* ImageCache.m */; };
 		4EE325721C5A19D500880D68 /* ColorgyChatAPIOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */; };
 		4EEF97701C6093AB00DD3C4E /* PersonalChatInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEF976F1C6093AB00DD3C4E /* PersonalChatInformationViewController.m */; };
 		5B7F524367AD1F42140DED44 /* libPods-ColorgyCourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */; };
@@ -237,6 +238,8 @@
 		4EB5A9B21C575B00009BA61B /* BlurWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurWallViewController.m; sourceTree = "<group>"; };
 		4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GaussianBlurUIImage.h"; sourceTree = "<group>"; };
 		4EB5A9B41C575B00009BA61B /* UIImage+GaussianBlurUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GaussianBlurUIImage.m"; sourceTree = "<group>"; };
+		4EB5A9BA1C576F70009BA61B /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
+		4EB5A9BB1C576F70009BA61B /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorgyChatAPIOC.h; sourceTree = "<group>"; };
 		4EE325711C5A19D500880D68 /* ColorgyChatAPIOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorgyChatAPIOC.m; sourceTree = "<group>"; };
 		4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalChatInformationViewController.h; sourceTree = "<group>"; };
@@ -471,16 +474,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4EB221B51C7318C800F6F641 /* ChatViews */ = {
+		4E89D0F61C73429E002B7993 /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
 				4E3D74EE1C560071002812F4 /* LoadingView.h */,
 				4E3D74EF1C560071002812F4 /* LoadingView.m */,
 			);
-			name = ChatViews;
+			name = LoadingView;
 			sourceTree = "<group>";
 		};
-		4EB221B61C7318E000F6F641 /* NSString+Email */ = {
+		4E89D0F71C7342A6002B7993 /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				4EB5A9BA1C576F70009BA61B /* ImageCache.h */,
+				4EB5A9BB1C576F70009BA61B /* ImageCache.m */,
+			);
+			name = ImageCache;
+			sourceTree = "<group>";
+		};
+		4E89D0F81C7342AC002B7993 /* NSString+Email */ = {
 			isa = PBXGroup;
 			children = (
 				4E3D74F01C560071002812F4 /* NSString+Email.h */,
@@ -489,7 +501,7 @@
 			name = "NSString+Email";
 			sourceTree = "<group>";
 		};
-		4EB221B71C73197400F6F641 /* OpeningViewController */ = {
+		4E89D0F91C7342B2002B7993 /* OpeningViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4E3D74F21C560071002812F4 /* OpeningViewController.h */,
@@ -498,7 +510,7 @@
 			name = OpeningViewController;
 			sourceTree = "<group>";
 		};
-		4EB221B81C73198600F6F641 /* BlurWallViewController */ = {
+		4E89D0FA1C7342BC002B7993 /* BlurWallViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4EB5A9B11C575B00009BA61B /* BlurWallViewController.h */,
@@ -507,7 +519,7 @@
 			name = BlurWallViewController;
 			sourceTree = "<group>";
 		};
-		4EB221B91C73199500F6F641 /* HelloViewController */ = {
+		4E89D0FB1C7342C3002B7993 /* HelloViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4E71E0161C5F4DBE00A9A694 /* HelloViewController.h */,
@@ -516,7 +528,7 @@
 			name = HelloViewController;
 			sourceTree = "<group>";
 		};
-		4EB221BA1C7319A100F6F641 /* PersonalChatInformationViewController */ = {
+		4E89D0FC1C7342C8002B7993 /* PersonalChatInformationViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4EEF976E1C6093AB00DD3C4E /* PersonalChatInformationViewController.h */,
@@ -525,7 +537,7 @@
 			name = PersonalChatInformationViewController;
 			sourceTree = "<group>";
 		};
-		4EB221BB1C7319A800F6F641 /* UIImage+GaussianBlurUIImage */ = {
+		4E89D0FD1C7342CD002B7993 /* UIImage+GaussianBlurUIImage */ = {
 			isa = PBXGroup;
 			children = (
 				4EB5A9B31C575B00009BA61B /* UIImage+GaussianBlurUIImage.h */,
@@ -534,7 +546,7 @@
 			name = "UIImage+GaussianBlurUIImage";
 			sourceTree = "<group>";
 		};
-		4EB221BC1C7319AE00F6F641 /* BlurWallSwitchViewController */ = {
+		4E89D0FE1C7342D7002B7993 /* BlurWallSwitchViewController */ = {
 			isa = PBXGroup;
 			children = (
 				4EB5A9AE1C575AD4009BA61B /* BlurWallSwitchViewController.h */,
@@ -543,7 +555,7 @@
 			name = BlurWallSwitchViewController;
 			sourceTree = "<group>";
 		};
-		4EB221BD1C7319B900F6F641 /* ColorgyChatAPIOC */ = {
+		4E89D0FF1C7342DD002B7993 /* ColorgyChatAPIOC */ = {
 			isa = PBXGroup;
 			children = (
 				4EE325701C5A19D500880D68 /* ColorgyChatAPIOC.h */,
@@ -552,26 +564,35 @@
 			name = ColorgyChatAPIOC;
 			sourceTree = "<group>";
 		};
-		4EB221BE1C7319E100F6F641 /* ChatHelper */ = {
+		4E89D1001C7342EB002B7993 /* ChatContollers */ = {
 			isa = PBXGroup;
 			children = (
-				4EB221BD1C7319B900F6F641 /* ColorgyChatAPIOC */,
-				4EB221BB1C7319A800F6F641 /* UIImage+GaussianBlurUIImage */,
-				4EB221B61C7318E000F6F641 /* NSString+Email */,
+				4E89D0F91C7342B2002B7993 /* OpeningViewController */,
+				4E89D0FA1C7342BC002B7993 /* BlurWallViewController */,
+				4E89D0FB1C7342C3002B7993 /* HelloViewController */,
+				4E89D0FC1C7342C8002B7993 /* PersonalChatInformationViewController */,
+				4E89D0FE1C7342D7002B7993 /* BlurWallSwitchViewController */,
+			);
+			name = ChatContollers;
+			sourceTree = "<group>";
+		};
+		4E89D1011C7342FD002B7993 /* ChatHelper */ = {
+			isa = PBXGroup;
+			children = (
+				4E89D0F71C7342A6002B7993 /* ImageCache */,
+				4E89D0F81C7342AC002B7993 /* NSString+Email */,
+				4E89D0FD1C7342CD002B7993 /* UIImage+GaussianBlurUIImage */,
+				4E89D0FF1C7342DD002B7993 /* ColorgyChatAPIOC */,
 			);
 			name = ChatHelper;
 			sourceTree = "<group>";
 		};
-		4EB221BF1C7319F900F6F641 /* ChatControllers */ = {
+		4E89D1021C73430F002B7993 /* ChatViews */ = {
 			isa = PBXGroup;
 			children = (
-				4EB221B71C73197400F6F641 /* OpeningViewController */,
-				4EB221B81C73198600F6F641 /* BlurWallViewController */,
-				4EB221B91C73199500F6F641 /* HelloViewController */,
-				4EB221BA1C7319A100F6F641 /* PersonalChatInformationViewController */,
-				4EB221BC1C7319AE00F6F641 /* BlurWallSwitchViewController */,
+				4E89D0F61C73429E002B7993 /* LoadingView */,
 			);
-			name = ChatControllers;
+			name = ChatViews;
 			sourceTree = "<group>";
 		};
 		6311D20E1C3A417000812934 /* Core data */ = {
@@ -614,10 +635,9 @@
 			isa = PBXGroup;
 			children = (
 				63306E781C6838AE00D5D57C /* Hello.swift */,
+				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63A50AD71C6F761100B3F119 /* User */,
 				63A50AD61C6F75F900B3F119 /* Message */,
-				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
-				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 			);
 			name = "Chat Models";
 			sourceTree = "<group>";
@@ -636,10 +656,10 @@
 		63A50AD41C6F759C00B3F119 /* Chat Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
 				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
 				63BB30171C561F0A0055BA19 /* ChatRoomViewController.swift */,
+				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
 			);
 			name = "Chat Controllers";
 			sourceTree = "<group>";
@@ -656,8 +676,9 @@
 		63A50AD61C6F75F900B3F119 /* Message */ = {
 			isa = PBXGroup;
 			children = (
-				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
+				63BB30301C5624E10055BA19 /* Chatroom.swift */,
 				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
+				63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -665,11 +686,11 @@
 		63A50AD71C6F761100B3F119 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
 				63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */,
 				6323726A1C5B442F00C9FC27 /* ChatUser.swift */,
 				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
 				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
+				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -679,9 +700,6 @@
 			children = (
 				63A50AD11C6F615600B3F119 /* Flurry */,
 				633D7EC41C6DCC2C00683AFD /* SKPhotoBrowser */,
-				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
-				63BB302B1C561F300055BA19 /* DLMessageView */,
-				63BB30141C56173F0055BA19 /* SocketIO_Client */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -730,6 +748,7 @@
 		63B5FB081C53341300C45CF2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				63E776641B9720C800B15AF0 /* LogoutHelper.swift */,
 				63FBCC441B9346D800B3084F /* ColorgyLogin.swift */,
 			);
@@ -739,7 +758,6 @@
 		63B5FB091C53342100C45CF2 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				63A50ACB1C6F610500B3F119 /* SecretKeys.swift */,
 				633D11CC1C5F49B7009370B4 /* AnswersLogEvent.swift */,
 				633D11BE1C5F23CB009370B4 /* HintViewSettings.swift */,
@@ -1048,7 +1066,11 @@
 		63C2B9851C155A57007740DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4EB221BF1C7319F900F6F641 /* ChatControllers */,
+				4E89D1001C7342EB002B7993 /* ChatContollers */,
+				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
+				63C9A97D1B9ECDA300B2D5A2 /* ActivityWebViewController.swift */,
+				639D45101B95FAA30053870D /* CourseCommentViewController.swift */,
+				63A50AD41C6F759C00B3F119 /* Chat Controllers */,
 				63B5FB1B1C5338D800C45CF2 /* About Course */,
 				63B5FB1A1C5338AA00C45CF2 /* Settings */,
 				63B5FB191C53389000C45CF2 /* Test */,
@@ -1060,7 +1082,9 @@
 		63C2B9861C155A6D007740DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4EB221B51C7318C800F6F641 /* ChatViews */,
+				4E89D1021C73430F002B7993 /* ChatViews */,
+				63A50AD91C6F769E00B3F119 /* Spin Introduction View */,
+				63A50AD31C6F758C00B3F119 /* Chat Views */,
 				63B5FB111C53351C00C45CF2 /* Report View */,
 				63B5FB121C53357600C45CF2 /* Creating Local Course */,
 				6311D2171C3BAD1200812934 /* DetectableLabel.swift */,
@@ -1077,7 +1101,8 @@
 		63C2B9871C155AE3007740DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				4EB221BE1C7319E100F6F641 /* ChatHelper */,
+				4E89D1011C7342FD002B7993 /* ChatHelper */,
+				63A50AD51C6F75C600B3F119 /* Chat Utilities */,
 				63B5FB091C53342100C45CF2 /* Setup */,
 				63B5FB081C53341300C45CF2 /* Login */,
 				63B5FB071C5333FD00C45CF2 /* Extensions */,
@@ -1115,33 +1140,13 @@
 		63FBCC0D1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXGroup;
 			children = (
-				63C7A7A11C605AAF004DF000 /* FriendListViewController.swift */,
-				63BDC9FC1C5225F4001A84D3 /* SerialQueue.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
-				63C7A79F1C6059E5004DF000 /* FriendListTableViewCell.swift */,
-				63C7A79D1C605211004DF000 /* SayHelloViewController.swift */,
-				63306E781C6838AE00D5D57C /* Hello.swift */,
-				63C7A79B1C605143004DF000 /* SayHelloTableViewCell.swift */,
-				63BB30151C561E240055BA19 /* TestChatLoginViewController.swift */,
-				63306E801C687C0900D5D57C /* AvailableTarget.swift */,
-				63BB30171C561F0A0055BA19 /* TestChatRoomViewController.swift */,
-				63C7A7A51C607B74004DF000 /* UserDetailInformationView.swift */,
-				637AA2A01C61DCA50074BDBB /* FloatingOptionView.swift */,
-				63AFACA81C57107100405EC3 /* ColorgySocket.swift */,
-				632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */,
-				63306E7E1C6878AD00D5D57C /* ChatMeUserInformation.swift */,
-				6323726A1C5B442F00C9FC27 /* ChatUser.swift */,
-				63306E7A1C684A8600D5D57C /* UnmatchedUser.swift */,
-				63306E7C1C68728900D5D57C /* ChatUserInformation.swift */,
-				63BB30301C5624E10055BA19 /* Chatroom.swift */,
-				63306E821C68AEEA00D5D57C /* HistoryChatroom.swift */,
-				63BB302C1C561F680055BA19 /* ChatMessage.swift */,
-				63BDC9F81C5200EC001A84D3 /* ReportViewController.swift */,
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
+				63A50AD81C6F766400B3F119 /* Frameworks */,
 				63C2B9871C155AE3007740DB /* Utilities */,
 				63C2B9841C155A39007740DB /* Models */,
 				63C2B9861C155A6D007740DB /* Views */,
@@ -1458,6 +1463,7 @@
 				633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */,
 				63FBCC611B9346D900B3084F /* TimeTableView.swift in Sources */,
 				63306E7D1C68728900D5D57C /* ChatUserInformation.swift in Sources */,
+				4EB5A9BC1C576F70009BA61B /* ImageCache.m in Sources */,
 				63BDC9FD1C5225F4001A84D3 /* SerialQueue.swift in Sources */,
 				4EE325721C5A19D500880D68 /* ColorgyChatAPIOC.m in Sources */,
 				632E0A721C508D240063B941 /* NotificationTableViewController.swift in Sources */,
