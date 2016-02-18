@@ -1439,7 +1439,6 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="聊天回報" id="Tm5-ZF-Z6t">
-                                        <barButtonItem key="leftBarButtonItem" title="略過" id="BZs-4I-GSe"/>
                                         <barButtonItem key="rightBarButtonItem" title="送出" id="LfQ-aV-FVf"/>
                                     </navigationItem>
                                 </items>
@@ -1452,6 +1451,10 @@
                             <constraint firstItem="ogl-tf-sap" firstAttribute="leading" secondItem="aNp-hM-8b5" secondAttribute="leading" id="z04-a6-IIs"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="navItem" destination="Tm5-ZF-Z6t" id="qba-H0-twY"/>
+                        <outlet property="submitButton" destination="LfQ-aV-FVf" id="cQH-kt-yBa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PnG-T3-yXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

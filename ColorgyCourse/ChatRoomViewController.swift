@@ -102,13 +102,11 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	func showChatReportController() {
+	func showChatReportController(title: String?, canSkip: Bool) {
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
-//		reportController.headerTitle = "儘管沒有系所資料，還是可以使用喔！"
-//		reportController.reportProblemInitialSelectionTitle = "沒有我的系所"
-//		reportController.problemDescription = "請填入您尊貴的系所"
-//		reportController.delegate = self
+		reportController.canSkipContent = canSkip
+		reportController.titleOfReport = title
 		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
 		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
 			self.presentViewController(reportController, animated: true, completion: nil)
@@ -423,11 +421,12 @@ extension ChatRoomViewController : SKPhotoBrowserDelegate {
 extension ChatRoomViewController : FloatingOptionViewDelegate {
 	func floatingOptionViewShouldLeaveChatroom() {
 		print("floatingOptionViewShouldLeaveChatroom")
+		showChatReportController("檢舉用戶", canSkip: false)
 	}
 	
 	func floatingOptionViewShouldBlockUser() {
 		print("floatingOptionViewShouldBlockUser")
-		showChatReportController()
+		showChatReportController("封鎖用戶", canSkip: true)
 	}
 	
 	func floatingOptionViewShouldNameUser() {

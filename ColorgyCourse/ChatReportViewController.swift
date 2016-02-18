@@ -10,9 +10,17 @@ import UIKit
 
 class ChatReportViewController: UIViewController {
 	
+	var skipButton: UIBarButtonItem!
+	@IBOutlet weak var submitButton: UIBarButtonItem!
+	@IBOutlet weak var navItem: UINavigationItem!
+	
 	var reportView: ChatReportView!
 	
 	var encounteredProblems: [String?]!
+	
+	var canSkipContent: Bool = false
+	
+	var titleOfReport: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +34,20 @@ class ChatReportViewController: UIViewController {
 		reportView.frame.origin.y = 64
 		reportView.formDelegate = self
 		view.addSubview(reportView)
+		
+		if titleOfReport != nil {
+			navItem.title = titleOfReport
+		}
+		
+		if canSkipContent {
+			skipButton = UIBarButtonItem(title: "略過", style: UIBarButtonItemStyle.Plain, target: self, action: "skipReport")
+			navItem.leftBarButtonItem = skipButton
+		}
     }
+	
+	func skipReport() {
+		dismissViewControllerAnimated(true, completion: nil)
+	}
 }
 
 extension ChatReportViewController : ChatReportViewDelegate {
