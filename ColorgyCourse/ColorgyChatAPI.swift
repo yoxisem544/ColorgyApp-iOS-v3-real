@@ -627,7 +627,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/hi/check_hi，參數包含的userId,targetId,uuid,accessToken
 	///2. 回傳打招呼的結果，有兩種狀況可以繼續打招呼：(1) 從沒打過招呼 (2) 被拒絕可以再打一次，兩者的結果都是一樣的status 200：{ result: 'ok, you can say hi' }，若是已經(1)打過招呼然後成功過 (2)打過招呼還在等候回應，回傳status 200：{ result: 'already said hi' }
-	class func checkHi(userId: String, targetId: String, success: (canSayHi: Bool) -> Void, failure: () -> Void) {
+	class func checkHi(userId: String, targetId: String, success: (canSayHi: Bool, whoSaidHi: String?) -> Void, failure: () -> Void) {
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
 		afManager.responseSerializer = AFJSONResponseSerializer()
@@ -654,12 +654,12 @@ class ColorgyChatAPI : NSObject {
 				print(json)
 				if json["result"].string == "already said hi" {
 					// can't say hi, return false
-					success(canSayHi: false)
+					success(canSayHi: false, whoSaidHi: "you already said hi")
 				} else if json["result"].string == "ok, you can say hi" {
 					// can say hi, return true
-					success(canSayHi: true)
+					success(canSayHi: true, whoSaidHi: nil)
 				} else if json["result"].string == "target already said hi" {
-					success(canSayHi: false)
+					success(canSayHi: false, whoSaidHi: "He/She already said hi")
 				} else {
 					print("fail to check say hi, unknown result")
 					failure()
