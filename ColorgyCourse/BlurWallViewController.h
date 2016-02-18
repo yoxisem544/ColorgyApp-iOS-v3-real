@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "LoadingView.h"
-#import "ImageCache.h"
 
 @interface BlurWallViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
