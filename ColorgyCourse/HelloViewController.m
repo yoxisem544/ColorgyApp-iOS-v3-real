@@ -121,17 +121,17 @@
     
     // Cheack hi
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
-            if (can) {
-                [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
-                [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
-            } else {
-                [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
-                [self.buttonView addSubview:self.helloButton];
-            }
-        } failure:^() {
-            NSLog(@"check hi 失敗");
-        }];
+//        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
+//            if (can) {
+//                [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
+//                [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
+//            } else {
+//                [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
+//                [self.buttonView addSubview:self.helloButton];
+//            }
+//        } failure:^() {
+//            NSLog(@"check hi 失敗");
+//        }];
     } failure:^() {
         NSLog(@"check user 失敗");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
