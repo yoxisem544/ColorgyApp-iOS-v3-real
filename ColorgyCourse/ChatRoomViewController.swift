@@ -102,6 +102,19 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
+	func showChatReportController() {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
+//		reportController.headerTitle = "儘管沒有系所資料，還是可以使用喔！"
+//		reportController.reportProblemInitialSelectionTitle = "沒有我的系所"
+//		reportController.problemDescription = "請填入您尊貴的系所"
+//		reportController.delegate = self
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			self.presentViewController(reportController, animated: true, completion: nil)
+		})
+	}
+	
 	func loadUserProfileImage() {
 		// TODO: 檢查friend是否正確
 		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user: ChatUserInformation) -> Void in
@@ -414,6 +427,7 @@ extension ChatRoomViewController : FloatingOptionViewDelegate {
 	
 	func floatingOptionViewShouldBlockUser() {
 		print("floatingOptionViewShouldBlockUser")
+		showChatReportController()
 	}
 	
 	func floatingOptionViewShouldNameUser() {

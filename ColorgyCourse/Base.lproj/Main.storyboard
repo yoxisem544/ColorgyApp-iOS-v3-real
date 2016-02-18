@@ -1418,6 +1418,45 @@
             </objects>
             <point key="canvasLocation" x="816" y="2845"/>
         </scene>
+        <!--Chat Report View Controller-->
+        <scene sceneID="uhl-67-Abw">
+            <objects>
+                <viewController storyboardIdentifier="chat report" id="VeT-u6-U5r" customClass="ChatReportViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5SJ-kR-khR"/>
+                        <viewControllerLayoutGuide type="bottom" id="vNm-hi-FNs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aNp-hM-8b5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogl-tf-sap">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="4za-lW-t0C"/>
+                                </constraints>
+                                <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem title="聊天回報" id="Tm5-ZF-Z6t">
+                                        <barButtonItem key="leftBarButtonItem" title="略過" id="BZs-4I-GSe"/>
+                                        <barButtonItem key="rightBarButtonItem" title="送出" id="LfQ-aV-FVf"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ogl-tf-sap" secondAttribute="trailing" id="8xW-fs-QvO"/>
+                            <constraint firstItem="ogl-tf-sap" firstAttribute="top" secondItem="aNp-hM-8b5" secondAttribute="top" id="pb5-48-ZVN"/>
+                            <constraint firstItem="ogl-tf-sap" firstAttribute="leading" secondItem="aNp-hM-8b5" secondAttribute="leading" id="z04-a6-IIs"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PnG-T3-yXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1634" y="2864"/>
+        </scene>
         <!--Item-->
         <scene sceneID="pTw-I9-BhS">
             <objects>
