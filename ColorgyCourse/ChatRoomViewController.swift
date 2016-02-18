@@ -62,6 +62,8 @@ class ChatRoomViewController: DLMessagesViewController {
 		checkAndStartSocket()
 		
 		addRightNavButton()
+		
+		title = historyChatroom.name
 	}
 	
 	override func viewDidAppear(animated: Bool) {
