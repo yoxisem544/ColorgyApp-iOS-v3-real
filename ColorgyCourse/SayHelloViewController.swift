@@ -48,6 +48,23 @@ class SayHelloViewController: UIViewController {
 				
 		})
 	}
+	
+	func moreOptions(hi: Hello?) {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+		let block = UIAlertAction(title: "封鎖", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+			
+		}
+		let report = UIAlertAction(title: "檢舉", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+			
+		}
+		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+		alert.addAction(report)
+		alert.addAction(block)
+		alert.addAction(cancel)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
+	}
 
 	struct Storyboard {
 		static let SayHelloCellIdentifier = "Say Hello Cell"
@@ -126,7 +143,7 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 		})
 	}
 	
-	func sayHelloTableViewCellMoreActionButtonClicked() {
-		
+	func sayHelloTableViewCellMoreActionButtonClicked(hi: Hello) {
+		moreOptions(hi)
 	}
 }

@@ -11,7 +11,7 @@ import UIKit
 protocol SayHelloTableViewCellDelegate {
 	func sayHelloTableViewCellAcceptHelloButtonClicked(hi: Hello)
 	func sayHelloTableViewCellRejectHelloButtonClicked(hi: Hello)
-	func sayHelloTableViewCellMoreActionButtonClicked()
+	func sayHelloTableViewCellMoreActionButtonClicked(hi: Hello)
 }
 
 class SayHelloTableViewCell: UITableViewCell {
@@ -49,7 +49,7 @@ class SayHelloTableViewCell: UITableViewCell {
 	}
 	
 	@IBAction func moreActionButtonClicked() {
-		delegate?.sayHelloTableViewCellMoreActionButtonClicked()
+		delegate?.sayHelloTableViewCellMoreActionButtonClicked(hello)
 	}
 
     override func awakeFromNib() {

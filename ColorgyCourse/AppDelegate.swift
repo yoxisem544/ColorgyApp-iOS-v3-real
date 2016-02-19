@@ -86,8 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func setupMixpanel() {
-		let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
-		mixpanel.track(MixpanelEvents.OpenApp)
+		if Release().mode {
+			let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
+			mixpanel.track(MixpanelEvents.OpenApp)
+		}
 	}
 	
 	func setupFlurry() {

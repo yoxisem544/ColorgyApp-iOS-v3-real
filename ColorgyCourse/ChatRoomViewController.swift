@@ -40,6 +40,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// Floating option view
 	private let floatingOptionView = FloatingOptionView()
+	private var dropDownButton: UIBarButtonItem!
 	
 	// for user profile image
 	private var userProfileImageString: String = ""
@@ -60,7 +61,9 @@ class ChatRoomViewController: DLMessagesViewController {
 		
 		checkAndStartSocket()
 		
-		self.bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tt"))
+		addRightNavButton()
+		
+		title = historyChatroom.name
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -76,6 +79,40 @@ class ChatRoomViewController: DLMessagesViewController {
 	}
 	
 	// MARK: Configuration
+	func addRightNavButton() {
+		dropDownButton = UIBarButtonItem(image: UIImage(named: "chatDropDownIcon"), style: UIBarButtonItemStyle.Done, target: self, action: "toggleDropDownMenu")
+		navigationItem.rightBarButtonItem = dropDownButton
+	}
+	
+	func toggleDropDownMenu() {
+		if floatingOptionView.isShown {
+			// hide it
+			floatingOptionView.isShown = false
+			dropDownButton.image = UIImage(named: "chatDropDownIcon")
+			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+				self.floatingOptionView.frame.origin.y -= self.floatingOptionView.frame.height
+				}, completion: nil)
+		} else {
+			// show it
+			floatingOptionView.isShown = true
+			dropDownButton.image = UIImage(named: "chatPullUpIcon")
+			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+				self.floatingOptionView.frame.origin.y += self.floatingOptionView.frame.height
+				}, completion: nil)
+		}
+	}
+	
+	func showChatReportController(title: String?, canSkip: Bool) {
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
+		reportController.canSkipContent = canSkip
+		reportController.titleOfReport = title
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			self.presentViewController(reportController, animated: true, completion: nil)
+		})
+	}
+	
 	func loadUserProfileImage() {
 		// TODO: 檢查friend是否正確
 		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user: ChatUserInformation) -> Void in
@@ -83,34 +120,6 @@ class ChatRoomViewController: DLMessagesViewController {
 			self.yourFriend = user
 			}) { () -> Void in
 				
-		}
-	}
-	
-	func tt() {
-		print("tt")
-		
-//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-//			ColorgyChatAPI.updateOthersNickName(user.userId, chatroomId: self.historyChatroom.chatroomId, nickname: "安安給虧嗎", success: { () -> Void in
-//				print("成功更新")
-//				}, failure: { () -> Void in
-//					
-//			})
-//			}) { () -> Void in
-//				
-//		}
-		
-		if floatingOptionView.isShown {
-			// hide it
-			floatingOptionView.isShown = false
-			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-				self.floatingOptionView.frame.origin.y -= self.floatingOptionView.frame.height
-				}, completion: nil)
-		} else {
-			// show it
-			floatingOptionView.isShown = true
-			UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-				self.floatingOptionView.frame.origin.y += self.floatingOptionView.frame.height
-				}, completion: nil)
 		}
 	}
 	
@@ -206,6 +215,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		print(barHeight)
 		floatingOptionView.frame.origin.y = barHeight - floatingOptionView.frame.height
 		view.addSubview(floatingOptionView)
+		floatingOptionView.delegate = self
 	}
 	
 	
@@ -405,5 +415,21 @@ extension ChatRoomViewController : DLMessageDelegate {
 extension ChatRoomViewController : SKPhotoBrowserDelegate {
 	func didShowPhotoAtIndex(index: Int) {
 		print(index)
+	}
+}
+
+extension ChatRoomViewController : FloatingOptionViewDelegate {
+	func floatingOptionViewShouldLeaveChatroom() {
+		print("floatingOptionViewShouldLeaveChatroom")
+		showChatReportController("檢舉用戶", canSkip: false)
+	}
+	
+	func floatingOptionViewShouldBlockUser() {
+		print("floatingOptionViewShouldBlockUser")
+		showChatReportController("封鎖用戶", canSkip: true)
+	}
+	
+	func floatingOptionViewShouldNameUser() {
+		print("floatingOptionViewShouldNameUser")
 	}
 }
