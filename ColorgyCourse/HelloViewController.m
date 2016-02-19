@@ -30,14 +30,29 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self layout];
+    
+    [self performSegueWithIdentifier:@"to chat room" sender:nil];
+    // 跳轉
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ChatRoomViewController *vc = segue.destinationViewController;
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        [ColorgyChatAPI acceptHi:<#(NSString * _Nonnull)#> hiId:<#(NSString * _Nonnull)#> success:<#^(void)success#> failure:<#^(void)failure#>]
+        vc.userId = chatUser.userId;
+        vc.uuid = [UserSetting UserUUID];
+        vc.chatroomId = 
+    } failure:^() {}];
+    vc.uuid = [UserSetting UserUUID];
+    vc.friendId = self.information.id;
+    vc.accessToken = [UserSetting UserAccessToken];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //[self.tabBarController.tabBar setHidden:NO];
+    [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
-    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,9 +65,8 @@
 - (void)layout {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
-    self.navigationController.navigationBar.translucent = YES;
     [self.navigationController.navigationBar setTintColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100]];
-    //[self.tabBarController.tabBar setHidden:YES];
+    [self.tabBarController.tabBar setHidden:YES];
     
     // UserImageView
     CGFloat userImageViewLength = self.view.bounds.size.width;
@@ -121,7 +135,7 @@
     
     // Cheack hi
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
+        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
             if (can) {
                 [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
                 [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
@@ -153,8 +167,8 @@
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 20, 24, 40)];
     
     [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
-//    backButton.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:backButton];
+    //    backButton.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:backButton];
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -319,6 +333,35 @@
                     [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:alertView.textFields.firstObject.text success:^() {
                         [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
                         [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
+                        
+                        // Cheack hi 檢查對方說hi了嗎？
+                        
+                        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
+                            if (who) {
+                                
+                                // 對方說了，提醒，並打開聊天
+                                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"恭喜你們呼像打招呼啦！" message:@"趕快開始跟對方聊天吧！" preferredStyle:UIAlertControllerStyleAlert];
+                                
+                                [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                    [self dismissViewControllerAnimated:YES completion:nil];
+                                }]];
+                                
+                                [alertController addAction:[UIAlertAction actionWithTitle:@"前往聊天" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                                    
+                                    // 跳轉
+                                    ChatRoomViewController *vc = [[ChatRoomViewController alloc] init];
+                                    
+                                    [self.navigationController pushViewController:vc animated:YES];
+                                }]];
+                                [self presentViewController:alertController animated:YES completion:nil];
+                                
+                            } else {
+                                
+                                // 對方沒說，無動作
+                            }
+                        } failure:^() {
+                            NSLog(@"check hi 失敗");
+                        }];
                     } failure:^() {
                         NSLog(@"打招呼失敗");
                     }];
