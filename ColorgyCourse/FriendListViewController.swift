@@ -21,7 +21,7 @@ class FriendListViewController: UIViewController {
 	
 	private var isListReloading: Bool = false
 	
-	private let failToLoadDataHintView = FailToLoadDataHintView()
+	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...正在重新下載...")
 	
 	// MARK: Life Cycle
     override func viewDidLoad() {

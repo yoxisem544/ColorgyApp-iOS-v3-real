@@ -13,6 +13,8 @@ class SayHelloViewController: UIViewController {
 	@IBOutlet weak var sayHelloTableView: UITableView!
 	var hiList: [Hello] = []
 	let refreshContorl = UIRefreshControl()
+	
+	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...請下拉畫面重新讀取...")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +30,8 @@ class SayHelloViewController: UIViewController {
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		sayHelloTableView.addSubview(refreshContorl)
+		
+		view.addSubview(failToLoadDataHintView)
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -35,6 +39,26 @@ class SayHelloViewController: UIViewController {
 		loadHi()
 	}
 	
+	// MARK: hint view
+	func hideHintFailView() {
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.failToLoadDataHintView.alpha = 0.1
+			}) { (finished: Bool) -> Void in
+				if finished {
+					self.failToLoadDataHintView.hidden = true
+				}
+		}
+	}
+	
+	// MARK: hint view
+	func showHintFailView() {
+		self.failToLoadDataHintView.hidden = false
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.failToLoadDataHintView.alpha = 1.0
+		})
+	}
+	
+	// MARK: loading
 	func loadHi() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
@@ -98,7 +122,7 @@ class SayHelloViewController: UIViewController {
 	}
 }
 
-
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension SayHelloViewController : UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,6 +139,7 @@ extension SayHelloViewController : UITableViewDelegate, UITableViewDataSource {
 	}
 }
 
+// MARK: - SayHelloTableViewCellDelegate
 extension SayHelloViewController : SayHelloTableViewCellDelegate {
 	
 	func sayHelloTableViewCellAcceptHelloButtonClicked(hi: Hello) {

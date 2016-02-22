@@ -18,13 +18,13 @@ class FailToLoadDataHintView: UIView {
     }
     */
 	
-	init() {
+	init(errorTitle: String?) {
 		super.init(frame: CGRectZero)
 		
 		self.frame.size.width = UIScreen.mainScreen().bounds.width * 0.7
 		self.frame.size.height = 50
 		let label = UILabel()
-		label.text = "⚠️ 資料下載錯誤...正在重新下載..."
+		label.text = errorTitle
 		label.font = UIFont.systemFontOfSize(14)
 		label.minimumScaleFactor = 0.5
 		label.adjustsFontSizeToFitWidth = true
