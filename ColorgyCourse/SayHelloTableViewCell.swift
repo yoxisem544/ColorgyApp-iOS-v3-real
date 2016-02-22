@@ -38,6 +38,19 @@ class SayHelloTableViewCell: UITableViewCell {
 			}
 		}
 		messageLabel.text = hello.message
+		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "testCHeckhi"))
+	}
+	
+	func testCHeckhi() {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.checkHi(user.userId, targetId: "56af0ebb4bd9c5f12d613d7c", success: { (canSayHi, whoSaidHi) -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
 	}
 	
 	@IBAction func accpectHelloButtonClicked() {

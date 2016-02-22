@@ -45,6 +45,21 @@ class SayHelloViewController: UIViewController {
 		super.viewDidDisappear(animated)
 	}
 	
+	// MARK: show report view
+	func showChatReportController(title: String?, canSkip: Bool, type: String?) {
+		
+		let storyboard = UIStoryboard(name: "Main", bundle: nil)
+		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
+		reportController.canSkipContent = canSkip
+		reportController.titleOfReport = title
+		reportController.reportType = type
+		reportController.delegate = self
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			self.presentViewController(reportController, animated: true, completion: nil)
+		})
+	}
+	
 	// MARK: hint view
 	func hideHintFailView() {
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -83,10 +98,10 @@ class SayHelloViewController: UIViewController {
 	func moreOptions(hi: Hello?) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 		let block = UIAlertAction(title: "封鎖", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			
+			self.showChatReportController("封鎖用戶", canSkip: false, type: "block")
 		}
 		let report = UIAlertAction(title: "檢舉", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			
+			self.showChatReportController("檢舉用戶", canSkip: false, type: "report")
 		}
 		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
 		alert.addAction(report)
@@ -181,5 +196,15 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 	
 	func sayHelloTableViewCellMoreActionButtonClicked(hi: Hello) {
 		moreOptions(hi)
+	}
+}
+
+extension SayHelloViewController : ChatReportViewControllerDelegate {
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?) {
+		print("didSubmitReportUserContent")
+	}
+	
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?) {
+		print("didSubmitBlockUserContent")
 	}
 }

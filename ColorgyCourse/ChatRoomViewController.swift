@@ -132,25 +132,26 @@ class ChatRoomViewController: DLMessagesViewController {
 	func showUpdateNickNameView() {
 		let alert = UIAlertController(title: "幫他取名字", message: "此修改暱稱只有你看的到。", preferredStyle: UIAlertControllerStyle.Alert)
 		alert.addTextFieldWithConfigurationHandler { (tf: UITextField) -> Void in
-			tf.placeholder = "只能有五個字歐！"
+			tf.placeholder = "來個煞氣a名字‼️（最長8個字）"
 		}
 		let ok = UIAlertAction(title: "確定", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
 			if let name = alert.textFields?.first?.text {
-				if name.characters.count > 5 {
-					let errorAlert = UIAlertController(title: "哦！不行歐～", message: "長度超過五個字了！", preferredStyle: UIAlertControllerStyle.Alert)
+				if name.characters.count > 8 {
+					let errorAlert = UIAlertController(title: "哦！不行歐～", message: "名字長度最常只能是8個字歐！", preferredStyle: UIAlertControllerStyle.Alert)
 					let ok = UIAlertAction(title: "好歐", style: UIAlertActionStyle.Default, handler: nil)
 					errorAlert.addAction(ok)
 					dispatch_async(dispatch_get_main_queue()) { () -> Void in
 						self.presentViewController(errorAlert, animated: true, completion: nil)
 					}
 				} else {
-					let errorAlert = UIAlertController(title: "哦！不行歐～", message: "長度超過五個字了！", preferredStyle: UIAlertControllerStyle.Alert)
+					let errorAlert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
 					let ok = UIAlertAction(title: "好歐", style: UIAlertActionStyle.Default, handler: nil)
 					errorAlert.addAction(ok)
 					ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 						ColorgyChatAPI.updateOthersNickName(user.userId, chatroomId: self.historyChatroom.chatroomId, nickname: name, success: { () -> Void in
 							errorAlert.title = "成功！"
-							errorAlert.message = "下次進到聊天室他的名字就會改變囉！"
+							errorAlert.message = "他的暱稱現在是\(name)！"
+							self.title = name
 							dispatch_async(dispatch_get_main_queue()) { () -> Void in
 								self.presentViewController(errorAlert, animated: true, completion: nil)
 							}
