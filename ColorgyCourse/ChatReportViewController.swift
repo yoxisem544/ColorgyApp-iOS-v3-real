@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ChatReportViewControllerDelegate {
+	func chatReportViewController(didUpdateBlockUserContent title: String?, description: String?)
+	func chatReportViewController(didUpdateReportUserContent title: String?, description: String?)
+}
+
 class ChatReportViewController: UIViewController {
 	
 	var skipButton: UIBarButtonItem!
@@ -16,12 +21,17 @@ class ChatReportViewController: UIViewController {
 	
 	var reportView: ChatReportView!
 	
+	/// report or block
+	var reportType: String!
+	
 	var encounteredProblems: [String?]!
 	
 	var canSkipContent: Bool = false
 	
 	var titleOfReport: String!
 
+	var delegate: ChatReportViewControllerDelegate?
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -54,5 +64,10 @@ extension ChatReportViewController : ChatReportViewDelegate {
 	func chatReportView(contentUpdated problem: String?, description: String?) {
 		print(problem)
 		print(description)
+		if reportType == "report" {
+			delegate?.chatReportViewController(didUpdateReportUserContent: problem, description: description)
+		} else if reportType == "block" {
+			delegate?.chatReportViewController(didUpdateBlockUserContent: problem, description: description)
+		}
 	}
 }

@@ -102,11 +102,13 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	func showChatReportController(title: String?, canSkip: Bool) {
+	func showChatReportController(title: String?, canSkip: Bool, type: String?) {
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
 		reportController.canSkipContent = canSkip
 		reportController.titleOfReport = title
+		reportController.reportType = type
+		reportController.delegate = self
 		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1.0))
 		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
 			self.presentViewController(reportController, animated: true, completion: nil)
@@ -421,15 +423,25 @@ extension ChatRoomViewController : SKPhotoBrowserDelegate {
 extension ChatRoomViewController : FloatingOptionViewDelegate {
 	func floatingOptionViewShouldLeaveChatroom() {
 		print("floatingOptionViewShouldLeaveChatroom")
-		showChatReportController("檢舉用戶", canSkip: false)
+		showChatReportController("檢舉用戶", canSkip: false, type: "report")
 	}
 	
 	func floatingOptionViewShouldBlockUser() {
 		print("floatingOptionViewShouldBlockUser")
-		showChatReportController("封鎖用戶", canSkip: true)
+		showChatReportController("封鎖用戶", canSkip: true, type: "block")
 	}
 	
 	func floatingOptionViewShouldNameUser() {
 		print("floatingOptionViewShouldNameUser")
+	}
+}
+
+extension ChatRoomViewController : ChatReportViewControllerDelegate {
+	func chatReportViewController(didUpdateBlockUserContent title: String?, description: String?) {
+		print("didUpdateBlockUserContent")
+	}
+	
+	func chatReportViewController(didUpdateReportUserContent title: String?, description: String?) {
+		print("didUpdateReportUserContent")
 	}
 }

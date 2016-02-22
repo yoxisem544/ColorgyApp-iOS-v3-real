@@ -21,6 +21,8 @@ class FriendListViewController: UIViewController {
 	
 	private var isListReloading: Bool = false
 	
+	private let failToLoadDataHintView = FailToLoadDataHintView()
+	
 	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,10 @@ class FriendListViewController: UIViewController {
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		friendListTableView.addSubview(refreshContorl)
+		
+		view.addSubview(failToLoadDataHintView)
+		failToLoadDataHintView.hidden = true
+		failToLoadDataHintView.alpha = 0.1
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -52,6 +58,24 @@ class FriendListViewController: UIViewController {
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 		renewTimer.invalidate()
+	}
+	
+	// MARK: hint view
+	func hideHintFailView() {
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.failToLoadDataHintView.alpha = 0.1
+			}) { (finished: Bool) -> Void in
+				if finished {
+					self.failToLoadDataHintView.hidden = true
+				}
+		}
+	}
+	
+	func showHintFailView() {
+		self.failToLoadDataHintView.hidden = false
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.failToLoadDataHintView.alpha = 1.0
+			})
 	}
 	
 	// MARK: Refresh
@@ -75,12 +99,13 @@ class FriendListViewController: UIViewController {
 				print(targets)
 				print("房間數 \(targets.count)")
 //				self.removeChatroom(targets)
+				self.hideHintFailView()
 				self.reloadFriendListV2(targets)
 				}, failure: { () -> Void in
-					
+					self.showHintFailView()
 			})
 			}, failure: { () -> Void in
-				
+				self.showHintFailView()
 		})
 	}
 	
@@ -102,13 +127,16 @@ class FriendListViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			self.userId = user.userId
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
+				self.hideHintFailView()
 				self.reloadFriendListV2(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
+					self.showHintFailView()
 			})
 		}, failure: { () -> Void in
 			refresh.endRefreshing()
+			self.showHintFailView()
 		})
 	}
 	

@@ -16,15 +16,24 @@ class DevelopmentTestingMethods {
         }
     }
     
-    class func test() {
-        ColorgyLogin.loginToFacebook { (token) -> Void in
-            print(token)
-            if let token = token {
-                ColorgyLogin.loginToColorgyWithToken(token, handler: { (response, error) -> Void in
-                    
-                })
-            }
-        }
+	class func test(loginCounts counts: Int) {
+		var finishedCounts = 0
+		ColorgyLogin.loginToFacebook { (token) -> Void in
+			let before = NSDate()
+			print(token)
+			for i in 1...counts {
+				if let token = token {
+					ColorgyLogin.loginToColorgyWithToken(token, handler: { (response, error) -> Void in
+						finishedCounts += 1
+						print(finishedCounts)
+						if finishedCounts == counts {
+							print("\(counts) request done.")
+							print("time spent \(NSDate().timeIntervalSinceDate(before))")
+						}
+					})
+				}
+			}
+		}
     }
     
     class func enrollAllCoursesInDB() {
