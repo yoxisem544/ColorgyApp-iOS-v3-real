@@ -30,8 +30,8 @@
     self.scrollView.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
     // Layout
-    [self openingLayout];
-    // [self checkEmailLayout];
+    // [self openingLayout];
+    [self checkEmailLayout];
     // [self uploadLayout];
     // [self nameLayout];
     // [self cleanAskLayout];
@@ -283,7 +283,7 @@
     
     // alert view
     self.popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 125, 125)];
-    self.popView.center = self.view.center;
+    self.popView.center = CGPointMake(self.maskView.center.x, self.maskView.center.y - 50);
     self.popView.layer.cornerRadius = 3.54;
     self.popView.layer.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
     
@@ -291,7 +291,7 @@
     
     // message label
     self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.popView.bounds.size.width - 20, 38)];
-    self.messageLabel.center = CGPointMake(self.view.center.x, self.view.center.y + 30);
+    self.messageLabel.center = CGPointMake(self.popView.center.x, self.popView.center.y + 30);
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview:self.messageLabel];
@@ -326,6 +326,20 @@
     [self.maskView addSubview:self.checkEmailButton];
     
     [self.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
+    
+    // manual verification button
+    self.manualVerificationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.manualVerificationButton.frame = CGRectMake(141, 440, 160, 14);
+    [self.manualVerificationButton setTitleColor:[self UIColorFromRGB:250 green:247 blue:245 alpha:100] forState:UIControlStateNormal];
+    self.manualVerificationButton.center = CGPointMake(self.maskView.center.x, self.popView.center.y + 160);
+    
+    [self.manualVerificationButton setTitle:@"還是沒收到？" forState:UIControlStateNormal];
+    [self.manualVerificationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.manualVerificationButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:14.0]];
+    
+    [self.maskView addSubview:self.manualVerificationButton];
+    
+    [self.manualVerificationButton addTarget:self action:@selector(manualVerification) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)removeCheckEmailLayout {
@@ -334,6 +348,21 @@
     [self.checkEmailButton removeFromSuperview];
     [self.popView removeFromSuperview];
     [self.emailImageView removeFromSuperview];
+}
+
+#pragma mark - manual verification {
+
+- (void)manualVerification {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"前往粉專，私訊Colorgy進行人工驗證。" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]]) {
+            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]];
+        }
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - check email

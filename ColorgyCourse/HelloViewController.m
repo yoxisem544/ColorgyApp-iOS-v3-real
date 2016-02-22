@@ -31,21 +31,48 @@
     // Do any additional setup after loading the view.
     [self layout];
     
-    [self performSegueWithIdentifier:@"to chat room" sender:nil];
+    //    [self performSegueWithIdentifier:@"to chat room" sender:nil];
     // 跳轉
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ChatRoomViewController *vc = segue.destinationViewController;
-    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI acceptHi:<#(NSString * _Nonnull)#> hiId:<#(NSString * _Nonnull)#> success:<#^(void)success#> failure:<#^(void)failure#>]
-        vc.userId = chatUser.userId;
-        vc.uuid = [UserSetting UserUUID];
-        vc.chatroomId = 
-    } failure:^() {}];
-    vc.uuid = [UserSetting UserUUID];
-    vc.friendId = self.information.id;
-    vc.accessToken = [UserSetting UserAccessToken];
+    
+    //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+    //        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
+    //            if (who) {
+    //                [ColorgyChatAPI getHiList:chatUser.userId success:^(NSArray *hellos) {
+    //                    for (Hello *hello in hellos) {
+    //                        if ([hello.userId isEqualToString:chatUser.userId] && [hello.targetId isEqualToString:self.information.id]) {
+    //                            [ColorgyChatAPI acceptHi:chatUser.userId hiId:hello.id success:^() {
+    //                                [ColorgyChatAPI ]
+    //                                ChatRoomViewController *vc = [[ChatRoomViewController alloc] init];
+    //
+    //                                vc.userId = chatUser.userId;
+    //                                vc.uuid = [UserSetting UserUUID];
+    //                                vc.chatroomId = hello.
+    //                            } failure:^() {
+    //                                NSLog(@"accept HI 失敗");
+    //                            }];
+    //                        }
+    //                    }
+    //                } failure:^() {
+    //                    NSLog(@"get hi list failure");
+    //                }];
+    //            }
+    //        } failure:^() {
+    //            NSLog(@"check hi 失敗");
+    //        }];
+    //    } failure:^() {
+    //        NSLog(@"check user failure");
+    //    }];
+    
+    
+    //    "already said hi" {
+    //        // can't say hi, return false
+    //        success(canSayHi: false, whoSaidHi: "you already said hi")
+    //				} else if json["result"].string == "ok, you can say hi" {
+    //                    // can say hi, return true
+    //                    success(canSayHi: true, whoSaidHi: nil)
+    //                } else if json["result"].string == "target already said hi" {
+    //                    success(canSayHi: false, whoSaidHi: "He/She already said hi")
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -135,7 +162,6 @@
     
     // Cheack hi
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-<<<<<<< HEAD
         [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
             if (can) {
                 [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
@@ -147,19 +173,6 @@
         } failure:^() {
             NSLog(@"check hi 失敗");
         }];
-=======
-//        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can) {
-//            if (can) {
-//                [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
-//                [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
-//            } else {
-//                [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
-//                [self.buttonView addSubview:self.helloButton];
-//            }
-//        } failure:^() {
-//            NSLog(@"check hi 失敗");
-//        }];
->>>>>>> df645748b495dfc9c53ca06a57e80abd451a567b
     } failure:^() {
         NSLog(@"check user 失敗");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
@@ -182,7 +195,7 @@
     
     [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
     //    backButton.backgroundColor = [UIColor blackColor];
-//    [self.view addSubview:backButton];
+    //    [self.view addSubview:backButton];
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -344,40 +357,62 @@
                 }]];
                 
                 [alertView addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                    
+                    
+                    // say hi
                     [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:alertView.textFields.firstObject.text success:^() {
                         [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
                         [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
-                        
-                        // Cheack hi 檢查對方說hi了嗎？
-                        
-                        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
-                            if (who) {
-                                
-                                // 對方說了，提醒，並打開聊天
-                                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"恭喜你們呼像打招呼啦！" message:@"趕快開始跟對方聊天吧！" preferredStyle:UIAlertControllerStyleAlert];
-                                
-                                [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                                    [self dismissViewControllerAnimated:YES completion:nil];
-                                }]];
-                                
-                                [alertController addAction:[UIAlertAction actionWithTitle:@"前往聊天" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                                    
-                                    // 跳轉
-                                    ChatRoomViewController *vc = [[ChatRoomViewController alloc] init];
-                                    
-                                    [self.navigationController pushViewController:vc animated:YES];
-                                }]];
-                                [self presentViewController:alertController animated:YES completion:nil];
-                                
-                            } else {
-                                
-                                // 對方沒說，無動作
-                            }
-                        } failure:^() {
-                            NSLog(@"check hi 失敗");
-                        }];
                     } failure:^() {
                         NSLog(@"打招呼失敗");
+                    }];
+                    
+                    // Cheack hi 檢查對方說hi了嗎？
+                    [ColorgyChatAPI getHiList:chatUser.userId success:^(NSArray *hellos) {
+                        for (Hello *hello in hellos) {
+                            NSLog(@"\nhello.userId: %@\nchatUser.userId: %@\nhello.targertId: %@\n, informationId: %@", hello.userId, chatUser.userId, hello.targetId, self.information.id);
+                            
+                            // 逐條檢查hi list
+                            if ([hello.targetId isEqualToString:chatUser.userId] && [hello.userId isEqualToString:self.information.id]) {
+                                
+                                // 接受hi
+                                [ColorgyChatAPI acceptHiWithHistoryChatroomId:chatUser.userId hiId:hello.id success:^(NSString *chatroomId) {
+                                    
+                                    // 對方說了，提醒，並打開聊天
+                                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"恭喜你們呼像打招呼啦！" message:@"趕快開始跟對方聊天吧！" preferredStyle:UIAlertControllerStyleAlert];
+                                    
+                                    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                        [self dismissViewControllerAnimated:YES completion:nil];
+                                    }]];
+                                    
+                                    [alertController addAction:[UIAlertAction actionWithTitle:@"前往聊天" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                                        [ColorgyChatAPI getHistoryTarget:chatUser.userId complete:^(NSArray *chatrooms) {
+                                            for (HistoryChatroom *chatroom in chatrooms) {
+                                                if ([chatroom.chatroomId isEqualToString:chatroomId]) {
+                                                    // 跳轉
+                                                    ChatRoomViewController *vc = [[ChatRoomViewController alloc] init];
+                                                    
+                                                    vc.userId = chatUser.userId;
+                                                    vc.uuid = [UserSetting UserUUID];
+                                                    vc.accessToken = [UserSetting UserAccessToken];
+                                                    vc.historyChatroom = chatroom;
+                                                    vc.chatroomId = chatroomId;
+                                                    
+                                                    [self.navigationController pushViewController:vc animated:YES];
+                                                    break;
+                                                }
+                                            }
+                                        }];
+                                    }]];
+                                    [self presentViewController:alertController animated:YES completion:nil];
+                                } failure:^() {
+                                    NSLog(@"acceptHiWithChatroomId error");
+                                }];
+                                break;
+                            }
+                        }
+                    } failure:^() {
+                        NSLog(@"get hi list failure");
                     }];
                 }]];
                 

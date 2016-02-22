@@ -709,7 +709,7 @@
     [self.cleanAskAlertView addSubview:self.cleanAskTextView];
     self.cleanAskTextView.layer.borderWidth = 1;
     self.cleanAskTextView.layer.cornerRadius = 3;
-    self.cleanAskTextView.textAlignment = NSTextAlignmentCenter;
+//    self.cleanAskTextView.textAlignment = NSTextAlignmentCenter;
     self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
     self.cleanAskTextView.delegate = self;
     
