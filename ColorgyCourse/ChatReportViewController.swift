@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ChatReportViewControllerDelegate {
-	func chatReportViewController(didUpdateBlockUserContent title: String?, description: String?)
-	func chatReportViewController(didUpdateReportUserContent title: String?, description: String?)
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?)
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?)
 }
 
 class ChatReportViewController: UIViewController {
@@ -32,6 +32,9 @@ class ChatReportViewController: UIViewController {
 
 	var delegate: ChatReportViewControllerDelegate?
 	
+	private var problem: String?
+	internal var problemDescription: String?
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,6 +48,8 @@ class ChatReportViewController: UIViewController {
 		reportView.formDelegate = self
 		view.addSubview(reportView)
 		
+		reportView.keyboardDismissMode = .OnDrag
+		
 		if titleOfReport != nil {
 			navItem.title = titleOfReport
 		}
@@ -55,8 +60,47 @@ class ChatReportViewController: UIViewController {
 		}
     }
 	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		registerKeyboardNotification()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
+	func registerKeyboardNotification() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+	}
+	
+	func keyboardWillShow(notification: NSNotification) {
+		if let kbRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey])?.CGRectValue {
+			reportView.contentInset.bottom = kbRect.height
+		}
+	}
+	
+	func keyboardWillHide(notification: NSNotification) {
+		reportView.contentInset.bottom = UIEdgeInsetsZero.bottom
+	}
+	
 	func skipReport() {
 		dismissViewControllerAnimated(true, completion: nil)
+		if reportType == "report" {
+			delegate?.chatReportViewController(didSubmitReportUserContent: nil, description: nil)
+		} else if reportType == "block" {
+			delegate?.chatReportViewController(didSubmitBlockUserContent: nil, description: nil)
+		}
+	}
+	
+	@IBAction func submitReportButtonClicked() {
+		dismissViewControllerAnimated(true, completion: nil)
+		if reportType == "report" {
+			delegate?.chatReportViewController(didSubmitReportUserContent: self.problem, description: self.problemDescription)
+		} else if reportType == "block" {
+			delegate?.chatReportViewController(didSubmitBlockUserContent: self.problem, description: self.problemDescription)
+		}
 	}
 }
 
@@ -64,10 +108,7 @@ extension ChatReportViewController : ChatReportViewDelegate {
 	func chatReportView(contentUpdated problem: String?, description: String?) {
 		print(problem)
 		print(description)
-		if reportType == "report" {
-			delegate?.chatReportViewController(didUpdateReportUserContent: problem, description: description)
-		} else if reportType == "block" {
-			delegate?.chatReportViewController(didUpdateBlockUserContent: problem, description: description)
-		}
+		self.problem = problem
+		self.problemDescription = description
 	}
 }

@@ -408,7 +408,7 @@ class ColorgyChatAPI : NSObject {
 	///使用方式：
 	///
 	///1. 傳一個http post給/report/report_user，參數包含uuid, accessToken,  userId, targetId, type,reason
-	class func reportUser(userId: String, targetId: String, type: String, reason: String, success: () -> Void, failure: () -> Void) {
+	class func reportUser(userId: String, targetId: String, type: String?, reason: String?, success: () -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -428,8 +428,8 @@ class ColorgyChatAPI : NSObject {
 			"accessToken": accessToken,
 			"userId": userId,
 			"targetId": targetId,
-			"type": type,
-			"reason": reason
+			"type": type ?? "",
+			"reason": reason ?? ""
 		]
 		print(params)
 		afManager.POST(serverURL + "/report/report_user", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in

@@ -32,11 +32,17 @@ class SayHelloViewController: UIViewController {
 		sayHelloTableView.addSubview(refreshContorl)
 		
 		view.addSubview(failToLoadDataHintView)
+		failToLoadDataHintView.hidden = true
+		failToLoadDataHintView.alpha = 0.1
     }
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		loadHi()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
 	}
 	
 	// MARK: hint view
@@ -63,13 +69,14 @@ class SayHelloViewController: UIViewController {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				print(hiList)
+				self.hideHintFailView()
 				self.hiList = hiList
 				self.sayHelloTableView.reloadData()
 				}, failure: { () -> Void in
-					
+					self.showHintFailView()
 			})
 			}, failure: { () -> Void in
-				
+				self.showHintFailView()
 		})
 	}
 	
@@ -97,27 +104,31 @@ class SayHelloViewController: UIViewController {
 	func reloadHi() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				self.hideHintFailView()
 				self.hiList = hiList
 				self.sayHelloTableView.reloadData()
 				}, failure: { () -> Void in
-					
+					self.showHintFailView()
 			})
 			}) { () -> Void in
-				
+				self.showHintFailView()
 		}
 	}
 	
 	func pullToRefreshHi(refresh: UIRefreshControl) {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				self.hideHintFailView()
 				self.hiList = hiList
 				self.sayHelloTableView.reloadData()
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
+					self.showHintFailView()
 			})
 			}) { () -> Void in
 				refresh.endRefreshing()
+				self.showHintFailView()
 		}
 	}
 }

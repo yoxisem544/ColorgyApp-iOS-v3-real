@@ -437,11 +437,34 @@ extension ChatRoomViewController : FloatingOptionViewDelegate {
 }
 
 extension ChatRoomViewController : ChatReportViewControllerDelegate {
-	func chatReportViewController(didUpdateBlockUserContent title: String?, description: String?) {
-		print("didUpdateBlockUserContent")
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?) {
+		// submit a request
+//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+//			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
+//				// wait after callback
+//				
+//				}, failure: { () -> Void in
+//					<#code#>
+//			})
+//			}) { () -> Void in
+//				<#code#>
+//		}
+		
+		// wait after callback
+		navigationController?.popViewControllerAnimated(true)
 	}
 	
-	func chatReportViewController(didUpdateReportUserContent title: String?, description: String?) {
-		print("didUpdateReportUserContent")
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?) {
+		
+		// submit a request
+//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+//			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom, success: <#T##() -> Void#>, failure: <#T##() -> Void#>)
+//			}) { () -> Void in
+//				<#code#>
+//		}
+		
+		
+		// wait after callback
+		navigationController?.popViewControllerAnimated(true)
 	}
 }

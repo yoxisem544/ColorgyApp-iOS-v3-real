@@ -1439,7 +1439,11 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="聊天回報" id="Tm5-ZF-Z6t">
-                                        <barButtonItem key="rightBarButtonItem" title="送出" id="LfQ-aV-FVf"/>
+                                        <barButtonItem key="rightBarButtonItem" title="送出" id="LfQ-aV-FVf">
+                                            <connections>
+                                                <action selector="submitReportButtonClicked" destination="VeT-u6-U5r" id="NO7-a7-hPM"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
