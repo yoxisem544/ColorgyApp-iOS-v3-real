@@ -103,6 +103,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	}
 	
 	func showChatReportController(title: String?, canSkip: Bool, type: String?) {
+		
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
 		reportController.canSkipContent = canSkip
@@ -113,6 +114,69 @@ class ChatRoomViewController: DLMessagesViewController {
 		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
 			self.presentViewController(reportController, animated: true, completion: nil)
 		})
+	}
+	
+	func showAlertWithTitle(title: String?, message: String?, confirmHandler: () -> Void) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+		let ok = UIAlertAction(title: "確定", style: UIAlertActionStyle.Destructive) { (action: UIAlertAction) -> Void in
+			confirmHandler()
+		}
+		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+		alert.addAction(cancel)
+		alert.addAction(ok)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
+	}
+	
+	func showUpdateNickNameView() {
+		let alert = UIAlertController(title: "幫他取名字", message: "此修改暱稱只有你看的到。", preferredStyle: UIAlertControllerStyle.Alert)
+		alert.addTextFieldWithConfigurationHandler { (tf: UITextField) -> Void in
+			tf.placeholder = "只能有五個字歐！"
+		}
+		let ok = UIAlertAction(title: "確定", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+			if let name = alert.textFields?.first?.text {
+				if name.characters.count > 5 {
+					let errorAlert = UIAlertController(title: "哦！不行歐～", message: "長度超過五個字了！", preferredStyle: UIAlertControllerStyle.Alert)
+					let ok = UIAlertAction(title: "好歐", style: UIAlertActionStyle.Default, handler: nil)
+					errorAlert.addAction(ok)
+					dispatch_async(dispatch_get_main_queue()) { () -> Void in
+						self.presentViewController(errorAlert, animated: true, completion: nil)
+					}
+				} else {
+					let errorAlert = UIAlertController(title: "哦！不行歐～", message: "長度超過五個字了！", preferredStyle: UIAlertControllerStyle.Alert)
+					let ok = UIAlertAction(title: "好歐", style: UIAlertActionStyle.Default, handler: nil)
+					errorAlert.addAction(ok)
+					ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+						ColorgyChatAPI.updateOthersNickName(user.userId, chatroomId: self.historyChatroom.chatroomId, nickname: name, success: { () -> Void in
+							errorAlert.title = "成功！"
+							errorAlert.message = "下次進到聊天室他的名字就會改變囉！"
+							dispatch_async(dispatch_get_main_queue()) { () -> Void in
+								self.presentViewController(errorAlert, animated: true, completion: nil)
+							}
+							}, failure: { () -> Void in
+								errorAlert.title = "失敗！"
+								errorAlert.message = "請檢查網路是否暢通～"
+								dispatch_async(dispatch_get_main_queue()) { () -> Void in
+									self.presentViewController(errorAlert, animated: true, completion: nil)
+								}
+						})
+						}, failure: { () -> Void in
+							errorAlert.title = "失敗！"
+							errorAlert.message = "請檢查網路是否暢通～"
+							dispatch_async(dispatch_get_main_queue()) { () -> Void in
+								self.presentViewController(errorAlert, animated: true, completion: nil)
+							}
+					})
+				}
+			}
+		})
+		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
+		alert.addAction(ok)
+		alert.addAction(cancel)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
 	}
 	
 	func loadUserProfileImage() {
@@ -423,16 +487,22 @@ extension ChatRoomViewController : SKPhotoBrowserDelegate {
 extension ChatRoomViewController : FloatingOptionViewDelegate {
 	func floatingOptionViewShouldLeaveChatroom() {
 		print("floatingOptionViewShouldLeaveChatroom")
-		showChatReportController("檢舉用戶", canSkip: false, type: "report")
+//		showChatReportController("檢舉用戶", canSkip: false, type: "report")
+		showAlertWithTitle("你確定要離開他？", message: "不再收到對方訊息，聊天記錄也將消失。", confirmHandler: { () -> Void in
+			self.navigationController?.popViewControllerAnimated(true)
+		})
 	}
 	
 	func floatingOptionViewShouldBlockUser() {
 		print("floatingOptionViewShouldBlockUser")
-		showChatReportController("封鎖用戶", canSkip: true, type: "block")
+		showAlertWithTitle("你確定要封鎖他？", message: "封鎖後再也遇不到對方，所有的聊天紀錄都將刪除。", confirmHandler: { () -> Void in
+			self.showChatReportController("封鎖用戶", canSkip: true, type: "block")
+		})
 	}
 	
 	func floatingOptionViewShouldNameUser() {
 		print("floatingOptionViewShouldNameUser")
+		showUpdateNickNameView()
 	}
 }
 
