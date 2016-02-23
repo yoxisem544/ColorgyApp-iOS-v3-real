@@ -16,7 +16,9 @@
 
 @end
 
-@implementation HelloViewController
+@implementation HelloViewController {
+    BOOL hidenTabbar;
+}
 
 - (instancetype)initWithInformaion:(AvailableTarget *)information {
     self = [super init];
@@ -30,6 +32,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self layout];
+    self.tabBarController.tabBarController.hidesBottomBarWhenPushed = YES;
     
     //    [self performSegueWithIdentifier:@"to chat room" sender:nil];
     // 跳轉
@@ -75,9 +78,16 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    hidenTabbar = YES;
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.tabBarController.tabBar setHidden:NO];
+    if (hidenTabbar) {
+        [self.tabBarController.tabBar setHidden:NO];
+    }
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
 }
@@ -398,7 +408,10 @@
                                                     vc.historyChatroom = chatroom;
                                                     vc.chatroomId = chatroomId;
                                                     
+                                                    hidenTabbar = NO;
+                                                    
                                                     [self.navigationController pushViewController:vc animated:YES];
+                                                    
                                                     break;
                                                 }
                                             }
@@ -430,6 +443,7 @@
         }];
     } failure:^() {
         NSLog(@"檢查使用者失敗");
+        
         // 檢查使用者失敗，可能無此帳號，或是網路出問題
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
