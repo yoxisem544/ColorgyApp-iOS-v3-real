@@ -127,7 +127,7 @@ class ChatReportView: UIScrollView {
 		self.backgroundColor = ColorgyColor.BackgroundColor
 		
 		// expand scroll view content
-		self.contentSize = CGSize(width: self.frame.width, height: problemDescriptionView.frame.maxY)
+		self.contentSize = CGSize(width: self.frame.width, height: UIScreen.mainScreen().bounds.height)
 	}
 	
 	internal func emailTextFieldValueChanged(textField: UITextField) {

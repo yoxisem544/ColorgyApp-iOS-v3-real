@@ -53,11 +53,16 @@ self.performSegueWithIdentifier("to chat room", sender: nil)
 let vc = segue.destinationViewController as! TestChatRoomViewController
 vc.userId = self.userId
 vc.uuid = self.uuid
-vc.friendId = self.friendId
+vc.chatroomId = self.chatroomId
 vc.accessToken = self.accesstoken
+vc.historyChatroom = HistoryChatroom()
 ```
 
-開啟聊天必須要附上這四個值。
+開啟聊天必須要附上這五個值。
+
+這邊有改動的是原本`vc.friendId`改成`vc.chatroomId`，
+
+然後另外需要傳入一個`HistoryChatroom`，聊天時會需要用到期中的一些值。
 
 ### Delegate 解說
 聊天室的delegate是`DLMessagesViewControllerDelegate`

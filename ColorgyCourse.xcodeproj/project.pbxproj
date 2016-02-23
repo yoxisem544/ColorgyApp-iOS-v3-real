@@ -30,6 +30,7 @@
 		6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */; };
 		6311D2161C3A812A00812934 /* TimeAndLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */; };
 		6311D2181C3BAD1200812934 /* DetectableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2171C3BAD1200812934 /* DetectableLabel.swift */; };
+		6313B2281C7AB5AB0075A00E /* FailToLoadDataHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313B2271C7AB5AB0075A00E /* FailToLoadDataHintView.swift */; };
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
@@ -258,6 +259,7 @@
 		6311D2131C3A69AA00812934 /* CreateCourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCourseTableViewController.swift; sourceTree = "<group>"; };
 		6311D2151C3A812A00812934 /* TimeAndLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAndLocationTableViewCell.swift; sourceTree = "<group>"; };
 		6311D2171C3BAD1200812934 /* DetectableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectableLabel.swift; sourceTree = "<group>"; };
+		6313B2271C7AB5AB0075A00E /* FailToLoadDataHintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailToLoadDataHintView.swift; sourceTree = "<group>"; };
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
@@ -1146,6 +1148,7 @@
 		63FBCC0D1B9345B800B3084F /* ColorgyCourse */ = {
 			isa = PBXGroup;
 			children = (
+				6313B2271C7AB5AB0075A00E /* FailToLoadDataHintView.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
@@ -1427,6 +1430,7 @@
 				63FBCC601B9346D900B3084F /* PopView.swift in Sources */,
 				63BB30261C561F280055BA19 /* DLMessageLabel.swift in Sources */,
 				63FBCC631B9346D900B3084F /* SwiftyJSONExtension.swift in Sources */,
+				6313B2281C7AB5AB0075A00E /* FailToLoadDataHintView.swift in Sources */,
 				63FBCC5F1B9346D900B3084F /* ViewController.swift in Sources */,
 				63B942A61C59DEAB0060A097 /* PreviewCollectionViewCell.swift in Sources */,
 				63C7A7A01C6059E5004DF000 /* FriendListTableViewCell.swift in Sources */,
