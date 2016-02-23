@@ -230,12 +230,12 @@
         aboutLabelString = self.information.aboutSchool;
     }
     if (self.information.aboutHabitancy) {
-        [aboutLabelString stringByAppendingString:@" . "];
-        [aboutLabelString stringByAppendingString:self.information.aboutHabitancy];
+        aboutLabelString = [aboutLabelString stringByAppendingString:@" . "];
+        aboutLabelString = [aboutLabelString stringByAppendingString:self.information.aboutHabitancy];
     }
     if (self.information.aboutHoroscope) {
-        [aboutLabelString stringByAppendingString:@" . "];
-        [aboutLabelString stringByAppendingString:self.information.aboutHoroscope];
+        aboutLabelString = [aboutLabelString stringByAppendingString:@" . "];
+        aboutLabelString = [aboutLabelString stringByAppendingString:self.information.aboutHoroscope];
     }
     
     //    if (self.information.organizationCode) {
@@ -434,7 +434,18 @@
                 
                 // 尚未回答
                 NSLog(@"尚未回答");
-                [self cleanAskViewLayout];
+                // 取得清晰問
+                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+                    self.cleanAskDate = date;
+                    self.cleanAskString = question;
+                    if (self.cleanAskString && !answered) {
+                        if ([self.cleanAskString length]) {
+                            [self cleanAskViewLayout];
+                        }
+                    }
+                } failure:^() {
+                    NSLog(@"getQuestion error");
+                }];
             }
         } failure:^() {
             
@@ -455,16 +466,35 @@
 
 #pragma mark - cleanAskView
 
+#pragma mark - cleanAskView
+
 - (void)cleanAskViewLayout {
     
-    //    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:@"你最喜歡的電影是？" preferredStyle:UIAlertControllerStyleAlert];
+    //    if (self.cleanAskString) {
+    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:self.cleanAskString preferredStyle:UIAlertControllerStyleAlert];
     //
-    //    [alertController addAction:[UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
-    //    [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {}]];
-    //    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-    //    }];
+    //        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
+    //        [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    //            [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+    //                [ColorgyChatAPI answerQuestion:chatUser.userId answer:alertController.textFields.firstObject.text date:self.questionDate success:^() {
+    //                } failure:^() {
+    //                    NSLog(@"answerQuestion error");
+    //                }];
+    //            } failure:^() {
+    //                NSLog(@"check user error");
     //
-    //    [self presentViewController:alertController animated:YES completion:nil];
+    //                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+    //
+    //                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    //                }]];
+    //                [self presentViewController:alertController animated:YES completion:nil];
+    //            }];
+    //        }]];
+    //        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+    //        }];
+    //
+    //        [self presentViewController:alertController animated:YES completion:nil];
+    //    }
     
     // currentWindow
     self.currentWindow = [UIApplication sharedApplication].keyWindow;
@@ -506,7 +536,9 @@
     [self.cleanAskAlertView addSubview:self.cleanAskTextView];
     self.cleanAskTextView.layer.borderWidth = 1;
     self.cleanAskTextView.layer.cornerRadius = 3;
+    //    self.cleanAskTextView.textAlignment = NSTextAlignmentCenter;
     self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
+    self.cleanAskTextView.delegate = self;
     
     CGSize size;
     if (self.cleanAskString) {
@@ -519,8 +551,8 @@
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    self.cancelButton.frame = CGRectMake(CGRectGetMinX(self.cleanAskAlertView.frame), CGRectGetMaxY(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
-    self.submitButton.frame = CGRectMake(CGRectGetMidX(self.cleanAskAlertView.frame), CGRectGetMaxY(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    self.cancelButton.frame = CGRectMake(0, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    self.submitButton.frame = CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
     //    cancelButton.backgroundColor = [UIColor orangeColor];
     //    submitButton.backgroundColor = [UIColor blueColor];
     [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -545,26 +577,35 @@
     maskLayer.path = maskPath.CGPath;
     self.submitButton.layer.mask = maskLayer;
     
-    [self.currentWindow addSubview:self.cancelButton];
-    [self.currentWindow addSubview:self.submitButton];
+    [self.cleanAskAlertView addSubview:self.cancelButton];
+    [self.cleanAskAlertView addSubview:self.submitButton];
     
     [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
     [self.submitButton addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
     
     self.line1 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.cancelButton.frame), CGRectGetMinY(self.cancelButton.frame), self.cleanAskAlertView.frame.size.width, 1)];
     [self.line1 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
-    [self.currentWindow addSubview:self.line1];
+    [self.cleanAskAlertView addSubview:self.line1];
     
-    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.cleanAskAlertView.frame), CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
+    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
     [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
-    [self.currentWindow addSubview:self.line2];
+    [self.cleanAskAlertView addSubview:self.line2];
     
     // textNumberCunter Customized
-    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cleanAskTextView.frame) - 45, CGRectGetMaxY(self.cleanAskTextView.frame) - 30, 45, 30)];
+    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskTextView.bounds.size.width - 45, self.cleanAskTextView.bounds.size.height - 30, 45, 30)];
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
     self.textNumberCounterLabel.text = @"0/20";
     [self.cleanAskTextView addSubview:self.textNumberCounterLabel];
+    
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(finishTextView)];
+    
+    [self.cleanAskMaskView addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)finishTextView {
+    [self.cleanAskTextView resignFirstResponder];
 }
 
 - (void)removeCleanAskViewLayout {
@@ -587,10 +628,11 @@
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.cleanAskDate success:^() {
         } failure:^() {
-            NSLog(@"回答問題失敗");
+            NSLog(@"answerQuestion error");
         }];
     } failure:^() {
-        NSLog(@"檢查使用者失敗");
+        NSLog(@"check user error");
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
