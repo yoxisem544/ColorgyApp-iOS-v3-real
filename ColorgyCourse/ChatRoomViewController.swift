@@ -26,7 +26,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	/// **Need accesstoken to create chatroom**
 	var accessToken: String!
-	/// **Need friendId to create chatroom**
+	/// **Need chatroomId to create chatroom**
 	var chatroomId: String!
 	/// **Need userId to create chatroom**
 	var userId: String!
