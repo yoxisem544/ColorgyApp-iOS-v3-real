@@ -57,6 +57,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     return [horoscpoeArray objectAtIndex:row];
 }
+
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     return [horoscpoeArray count];
 }
@@ -204,6 +205,7 @@
     [scrollView addSubview:aboutHoroscopeLabel];
     
     aboutHoroscopeTextField = [[UITextField alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHoroscopeLabel.frame) + marginY, width, height)];
+    aboutHoroscopeTextField.tag = 2;
     [aboutHoroscopeTextField setDelegate:self];
     aboutHoroscopeTextField.backgroundColor = [UIColor whiteColor];
     aboutHoroscopeTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
@@ -314,12 +316,12 @@
     self.pickerView.dataSource = self;
     aboutHoroscopeTextField.inputView = self.pickerView;
     
-    //UIToolbar *toolbar = [[UIToolbar alloc] init];
-    //UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
-    //UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    //toolbar.items = @[flexibleSeparator, doneButton];
-    //aboutHoroscopeTextField.inputAccessoryView = toolbar;
-    horoscpoeArray = [[NSArray alloc] initWithObjects:@"白羊宮（Aries, ♈）", @"金牛宮（Taurus, ♉）", @"雙子宮（Gemini, ♊）", @"巨蟹宮（Cancer, ♋）", @"獅子宮（Leo, ♌）", @"處女宮（Virgo, ♍）", @"天秤宮（Libra, ♎）", @"天蠍宮（Scorpio, ♏）", @"人馬宮（Sagittarius, ♐）", @"摩羯宮（Capricornus, ♑）", @"水瓶宮（Aquarius, ♒）", @"雙魚宮（Pisces, ♓）", nil];
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
+    UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    toolbar.items = @[flexibleSeparator, doneButton];
+    aboutHoroscopeTextField.inputAccessoryView = toolbar;
+    horoscpoeArray = [[NSArray alloc] initWithObjects:@"白羊", @"金牛", @"雙子", @"巨蟹", @"獅子", @"處女", @"天秤", @"天蠍", @"人馬", @"摩羯", @"水瓶", @"雙魚", nil];
     //    白羊宮（Aries, ♈）
     //    金牛宮（Taurus, ♉）
     //    雙子宮（Gemini, ♊）
@@ -334,8 +336,9 @@
     //    水瓶宮（Aquarius, ♒）
     //    雙魚宮（Pisces, ♓）
     
-
+    
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -702,6 +705,9 @@
 #pragma mark - TouchViewToReturn
 
 - (void)touchViewToReturn {
+    if (self.activeTextField.tag == aboutHoroscopeTextField.tag) {
+        aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:[self.pickerView selectedRowInComponent:0]];
+    }
     [self.activeTextField resignFirstResponder];
     [self.activeTextView resignFirstResponder];
 }

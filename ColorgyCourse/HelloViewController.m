@@ -172,7 +172,7 @@
     
     // Cheack hi
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who) {
+        [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who, NSString *chatroomId) {
             if (can) {
                 [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
                 [self.helloButton addTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
