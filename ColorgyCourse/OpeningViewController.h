@@ -26,6 +26,7 @@
 @property NSString *loadingString;
 @property NSString *finishedString;
 @property UIButton *checkEmailButton;
+@property UIButton *manualVerificationButton;
 
 // uplaod layout
 @property UIImageView *userImageView;

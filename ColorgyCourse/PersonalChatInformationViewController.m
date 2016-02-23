@@ -38,14 +38,32 @@
     UITextView *aboutExpertiseTextView;
     
     ChatMeUserInformation *userInformation;
+    NSArray *horoscpoeArray;
 }
 
 @end
 
 @implementation PersonalChatInformationViewController
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    // result.text = [array objectAtIndex:row];
+    aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:row];
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return [horoscpoeArray objectAtIndex:row];
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return [horoscpoeArray count];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
         userInformation = information;
@@ -54,7 +72,7 @@
         activityIndicatorView.center = CGPointMake(userImageView.bounds.size.width / 2, userImageView.bounds.size.height / 2);
         [userImageView addSubview:activityIndicatorView];
         
-        [activityIndicatorView startAnimating];
+        // [activityIndicatorView startAnimating];
         [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
         nameTextField.text = userInformation.name;
         aboutSchoolTextField.placeholder = information.organizationCode;
@@ -287,6 +305,36 @@
     [scrollView addSubview:aboutExpertiseTextView];
     
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(aboutExpertiseTextView.frame) + 50);
+    
+    
+    
+    
+    self.pickerView = [[UIPickerView alloc] init];
+    self.pickerView.delegate = self;
+    self.pickerView.dataSource = self;
+    aboutHoroscopeTextField.inputView = self.pickerView;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
+    UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    toolbar.items = @[flexibleSeparator, doneButton];
+    aboutHoroscopeTextField.inputAccessoryView = toolbar;
+    horoscpoeArray = [[NSArray alloc] initWithObjects:@"白羊宮（Aries, ♈）", @"金牛宮（Taurus, ♉）", @"雙子宮（Gemini, ♊）", @"巨蟹宮（Cancer, ♋）", @"獅子宮（Leo, ♌）", @"處女宮（Virgo, ♍）", @"天秤宮（Libra, ♎）", @"天蠍宮（Scorpio, ♏）", @"人馬宮（Sagittarius, ♐）", @"摩羯宮（Capricornus, ♑）", @"水瓶宮（Aquarius, ♒）", @"雙魚宮（Pisces, ♓）", nil];
+    //    白羊宮（Aries, ♈）
+    //    金牛宮（Taurus, ♉）
+    //    雙子宮（Gemini, ♊）
+    //    巨蟹宮（Cancer, ♋）
+    //    獅子宮（Leo, ♌）
+    //    處女宮（Virgo, ♍）
+    //    天秤宮（Libra, ♎）
+    //    天蠍宮（Scorpio, ♏）
+    //    蛇夫宮（Ophiuchus, Ophiuchus zodiac.svg）
+    //    人馬宮（Sagittarius, ♐）
+    //    摩羯宮（Capricornus, ♑）
+    //    水瓶宮（Aquarius, ♒）
+    //    雙魚宮（Pisces, ♓）
+    
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

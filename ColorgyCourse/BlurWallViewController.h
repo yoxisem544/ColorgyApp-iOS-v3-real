@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LoadingView.h"
 
-@interface BlurWallViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface BlurWallViewController : UIViewController <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITextViewDelegate>
 
 @property UICollectionView *blurWallCollectionView;
 @property UICollectionViewFlowLayout *blurWallCollectionViewFlowLayout;

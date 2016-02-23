@@ -43,7 +43,7 @@ class SayHelloTableViewCell: UITableViewCell {
 	
 	func testCHeckhi() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-			ColorgyChatAPI.checkHi(user.userId, targetId: "56af0ebb4bd9c5f12d613d7c", success: { (canSayHi, whoSaidHi) -> Void in
+			ColorgyChatAPI.checkHi(user.userId, targetId: "56af0ebb4bd9c5f12d613d7c", success: { (canSayHi, whoSaidHi, chatroomId) -> Void in
 				
 				}, failure: { () -> Void in
 					
