@@ -314,11 +314,11 @@
     self.pickerView.dataSource = self;
     aboutHoroscopeTextField.inputView = self.pickerView;
     
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
-    UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    toolbar.items = @[flexibleSeparator, doneButton];
-    aboutHoroscopeTextField.inputAccessoryView = toolbar;
+    //UIToolbar *toolbar = [[UIToolbar alloc] init];
+    //UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
+    //UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    //toolbar.items = @[flexibleSeparator, doneButton];
+    //aboutHoroscopeTextField.inputAccessoryView = toolbar;
     horoscpoeArray = [[NSArray alloc] initWithObjects:@"白羊宮（Aries, ♈）", @"金牛宮（Taurus, ♉）", @"雙子宮（Gemini, ♊）", @"巨蟹宮（Cancer, ♋）", @"獅子宮（Leo, ♌）", @"處女宮（Virgo, ♍）", @"天秤宮（Libra, ♎）", @"天蠍宮（Scorpio, ♏）", @"人馬宮（Sagittarius, ♐）", @"摩羯宮（Capricornus, ♑）", @"水瓶宮（Aquarius, ♒）", @"雙魚宮（Pisces, ♓）", nil];
     //    白羊宮（Aries, ♈）
     //    金牛宮（Taurus, ♉）
