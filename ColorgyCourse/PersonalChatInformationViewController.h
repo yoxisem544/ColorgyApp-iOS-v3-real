@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "LoadingView.h"
 
-@interface PersonalChatInformationViewController : UIViewController<UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface PersonalChatInformationViewController : UIViewController<UITextFieldDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 @property UITextField *activeTextField;
 @property UITextView *activeTextView;
 @property UIImage *uploadImage;
 @property LoadingView *loadingView;
+@property UIPickerView *pickerView;
 
 @end
