@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E24E5E01C7D656500B63641 /* UselessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E24E5DF1C7D656500B63641 /* UselessView.m */; };
 		4E3D74F41C560071002812F4 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74EF1C560071002812F4 /* LoadingView.m */; };
 		4E3D74F51C560071002812F4 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F11C560071002812F4 /* NSString+Email.m */; };
 		4E3D74F61C560071002812F4 /* OpeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E3D74F31C560071002812F4 /* OpeningViewController.m */; };
@@ -226,6 +227,8 @@
 		130DDF145FA9483E5FB7BC6E /* Pods-ColorgyCourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.release.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.release.xcconfig"; sourceTree = "<group>"; };
 		2E52639F02009DF3E40AF132 /* Pods-ColorgyCourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorgyCourse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ColorgyCourse/Pods-ColorgyCourse.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDA03A00B425B011EDCA3E6 /* libPods-ColorgyCourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ColorgyCourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E24E5DE1C7D656500B63641 /* UselessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UselessView.h; sourceTree = "<group>"; };
+		4E24E5DF1C7D656500B63641 /* UselessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UselessView.m; sourceTree = "<group>"; };
 		4E3D74EE1C560071002812F4 /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		4E3D74EF1C560071002812F4 /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		4E3D74F01C560071002812F4 /* NSString+Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Email.h"; sourceTree = "<group>"; };
@@ -480,6 +483,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E24E5E11C7D656900B63641 /* UselessView */ = {
+			isa = PBXGroup;
+			children = (
+				4E24E5DE1C7D656500B63641 /* UselessView.h */,
+				4E24E5DF1C7D656500B63641 /* UselessView.m */,
+			);
+			name = UselessView;
+			sourceTree = "<group>";
+		};
 		4E89D0F61C73429E002B7993 /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -597,6 +609,7 @@
 			isa = PBXGroup;
 			children = (
 				4E89D0F61C73429E002B7993 /* LoadingView */,
+				4E24E5E11C7D656900B63641 /* UselessView */,
 			);
 			name = ChatViews;
 			sourceTree = "<group>";
@@ -1436,6 +1449,7 @@
 				63C7A7A01C6059E5004DF000 /* FriendListTableViewCell.swift in Sources */,
 				635B5BCA1C3CE9DF00261D13 /* ColorgyColor.swift in Sources */,
 				63FBCC531B9346D900B3084F /* ColorgyAPITrafficControlCenter.swift in Sources */,
+				4E24E5E01C7D656500B63641 /* UselessView.m in Sources */,
 				6311D2141C3A69AA00812934 /* CreateCourseTableViewController.swift in Sources */,
 				63ABBC011B94B15C0077580D /* CourseDetailInformationView.swift in Sources */,
 				63B942921C59D87D0060A097 /* DLOutgoingPhotoBubble.swift in Sources */,

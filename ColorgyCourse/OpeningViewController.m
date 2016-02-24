@@ -12,6 +12,7 @@
 #import "ColorgyCourse-Swift.h"
 #import "ColorgyChatAPIOC.h"
 #import "BlurWallSwitchViewController.h"
+#import "UselessView.h"
 
 @implementation OpeningViewController {
     ChatUser *chatUser;
@@ -29,9 +30,13 @@
     self.scrollView.contentSize = self.view.bounds.size;
     self.scrollView.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
+    
+    // View Customized
+    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
+    
     // Layout
-    // [self openingLayout];
-    [self checkEmailLayout];
+    [self openingLayout];
+    // [self checkEmailLayout];
     // [self uploadLayout];
     // [self nameLayout];
     // [self cleanAskLayout];
@@ -150,9 +155,7 @@
 #pragma mark - OpeningLayout
 
 - (void)openingLayout {
-    
-    // View Customized
-    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
+
     
     // Navigation Customized
     // self.title = @"模糊聊";
@@ -1041,6 +1044,8 @@
     [self.progressBarView2 addSubview:progressBarImageView2];
     [self.view addSubview:self.progressBarView2];
     
+    
+    
     // CleanAskTitleLabel Customized
     //    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
     //    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
@@ -1051,6 +1056,12 @@
     //    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
     //
     //    [self.view addSubview:self.cleanAskTitleLabel];
+    
+    NSLog(@"%f", CGRectGetMinY(self.progressBarView2.frame));
+    
+    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
+    
+    [self.view addSubview:uselessView];
 }
 
 - (void)removeCleanAskLayout {

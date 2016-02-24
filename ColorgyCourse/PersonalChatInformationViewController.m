@@ -11,6 +11,7 @@
 #import "UIImage+GaussianBlurUIImage.h"
 #import "ColorgyChatAPIOC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UselessView.h"
 
 @interface PersonalChatInformationViewController () {
     UIBarButtonItem *submitBarButtonItem;
@@ -337,6 +338,9 @@
     //    雙魚宮（Pisces, ♓）
     
     
+    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50) withMessage:@"快快快～新增更多個人資訊～讓對的人找到你！"];
+    
+    [self.view addSubview:uselessView];
 }
 
 
