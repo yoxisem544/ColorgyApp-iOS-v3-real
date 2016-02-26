@@ -277,6 +277,9 @@ class FriendListViewController: UIViewController {
 				if oldRoom.chatroomId == newRoom.chatroomId {
 					// update content
 					historyChatrooms[index] = newRoom
+					if newRoom.lastContent != oldRoom.lastContent {
+						historyChatrooms[index].unread = true
+					}
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						self.friendListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
 					})

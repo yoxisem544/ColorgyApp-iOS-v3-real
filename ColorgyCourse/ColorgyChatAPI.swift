@@ -1143,6 +1143,7 @@ class ColorgyChatAPI : NSObject {
         afManager.POST(serverURL + "/chatroom/leave_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             if let response = response {
                 let json = JSON(response)
+				print(json)
                 if json["result"].string == "success" {
                     success()
                 } else {
@@ -1152,10 +1153,11 @@ class ColorgyChatAPI : NSObject {
                 failure()
             }
             }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                failure()
+				print(error.localizedDescription)
+				failure()
         })
     }
-    
+	
     ///更新對方稱呼：
     ///
     ///用途：更新對方的暱稱，並不會讓對方知道

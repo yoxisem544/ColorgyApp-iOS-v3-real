@@ -34,6 +34,11 @@ class FriendListTableViewCell: UITableViewCell {
 		userLastMessageLabel.text = prefixString + lastMessage
 		timeStampLabel.text = historyChatroom.lastContentTime.timeStampString()
 		userQuestionLabel.text = historyChatroom.lastAnswer
+		if historyChatroom.unread {
+			userLastMessageLabel.font = UIFont.boldSystemFontOfSize(14.0)
+		} else {
+			userLastMessageLabel.font = UIFont.systemFontOfSize(14.0)
+		}
 	}
 	
     override func awakeFromNib() {

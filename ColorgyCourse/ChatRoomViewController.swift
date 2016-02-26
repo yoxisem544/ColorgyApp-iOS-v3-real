@@ -503,6 +503,7 @@ extension ChatRoomViewController : FloatingOptionViewDelegate {
 				ColorgyChatAPI.leaveChatroom(user.userId, chatroomId: self.historyChatroom.chatroomId, success: { () -> Void in
 					self.navigationController?.popViewControllerAnimated(true)
 					}, failure: { () -> Void in
+						print(self.historyChatroom)
 						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 				})
 				}, failure: { () -> Void in
