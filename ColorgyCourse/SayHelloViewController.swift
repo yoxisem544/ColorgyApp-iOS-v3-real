@@ -202,9 +202,33 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 extension SayHelloViewController : ChatReportViewControllerDelegate {
 	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitReportUserContent")
+		if let hi = hi {
+			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
+				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
+					
+					}, failure: { () -> Void in
+					
+				})
+				}, failure: { () -> Void in
+					
+			})
+		}
 	}
 	
 	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitBlockUserContent")
+		if let hi = hi {
+			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
+				ColorgyChatAPI.blockUser(user.userId, targetId: targetId, success: { () -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
+				}, failure: { () -> Void in
+					
+			})
+		}
 	}
 }
