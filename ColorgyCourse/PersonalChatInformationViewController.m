@@ -81,7 +81,7 @@
         [self showCheck];
         
         nameTextField.text = information.name;
-        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", (long)[self stringCounter:nameTextField.text]];
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", (long)[self stringCounter:nameTextField.text]];
         [self showCheck];
         aboutConversationTextView.text = information.aboutConversation;
         aboutExpertiseTextView.text = information.aboutExpertise;
@@ -193,7 +193,7 @@
     textNumberCounterLabel.center = CGPointMake(nameTextField.frame.size.width - 50 / 2, nameTextField.frame.size.height / 2);
     textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-    textNumberCounterLabel.text = @"0/5";
+    textNumberCounterLabel.text = @"0/8";
     
     [nameTextField addSubview:textNumberCounterLabel];
     nameIsOk = NO;
@@ -322,7 +322,7 @@
     UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     toolbar.items = @[flexibleSeparator, doneButton];
     aboutHoroscopeTextField.inputAccessoryView = toolbar;
-    horoscpoeArray = [[NSArray alloc] initWithObjects:@"白羊", @"金牛", @"雙子", @"巨蟹", @"獅子", @"處女", @"天秤", @"天蠍", @"人馬", @"摩羯", @"水瓶", @"雙魚", nil];
+    horoscpoeArray = [[NSArray alloc] initWithObjects:@"牡羊", @"金牛", @"雙子", @"巨蟹", @"獅子", @"處女", @"天秤", @"天蠍", @"射手", @"摩羯", @"水瓶", @"雙魚", nil];
     //    白羊宮（Aries, ♈）
     //    金牛宮（Taurus, ♉）
     //    雙子宮（Gemini, ♊）
@@ -457,7 +457,7 @@
     
     if (textField == nameTextField) {
         [self dismissCheck];
-        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:nameTextField.text] / 2];
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", [self stringCounter:nameTextField.text] / 2];
     }
 }
 
@@ -466,7 +466,7 @@
     
     if (textField == nameTextField) {
         [self dismissCheck];
-        nameTextField.text = [self stringCounterTo:nameTextField.text number:10];
+        nameTextField.text = [self stringCounterTo:nameTextField.text number:16];
         
         // 檢查名字 尚需修改
         if (nameTextField.text.length) {
@@ -509,9 +509,9 @@
         NSString *string = nameTextField.text;
         
         if ([self stringCounter:string] > 10) {
-            nameTextField.text = [self stringCounterTo:string number:10];
+            nameTextField.text = [self stringCounterTo:string number:16];
         }
-        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:nameTextField.text] / 2];
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", [self stringCounter:nameTextField.text] / 2];
     }
 }
 

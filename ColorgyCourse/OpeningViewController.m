@@ -390,7 +390,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"尚未認證" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                [self removeCheckEmailLayout];
+//                [self removeCheckEmailLayout];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -739,7 +739,7 @@
     self.nameTextField.delegate = self;
     self.nameTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
     self.nameTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    self.nameTextField.placeholder = @"五字以內";
+    self.nameTextField.placeholder = @"八字以內";
     
     [self.scrollView addSubview:self.nameTextField];
     
@@ -764,7 +764,7 @@
     self.textNumberCounterLabel.center = CGPointMake(self.nameTextField.frame.size.width - 50 / 2, self.nameTextField.frame.size.height / 2);
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-    self.textNumberCounterLabel.text = @"0/5";
+    self.textNumberCounterLabel.text = @"0/8";
     
     [self.nameTextField addSubview:self.textNumberCounterLabel];
     
@@ -868,7 +868,7 @@
     [self dismissCheck];
     
     if (textField == self.nameTextField) {
-        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:self.nameTextField.text] / 2];
+        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", [self stringCounter:self.nameTextField.text] / 2];
     }
     return YES;
 }
@@ -878,7 +878,7 @@
     
     if (textField == self.nameTextField) {
         [self dismissCheck];
-        self.nameTextField.text = [self stringCounterTo:self.nameTextField.text number:10];
+        self.nameTextField.text = [self stringCounterTo:self.nameTextField.text number:16];
         
         // 檢查名字 尚需修改
         if (self.nameTextField.text.length) {
@@ -922,7 +922,7 @@
         tempString = [tempString stringByAppendingString:string];
         checkString = [[NSString alloc] initWithString:tempString];
         
-        tempString = [self stringCounterTo:tempString number:10];
+        tempString = [self stringCounterTo:tempString number:16];
         //self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:tempString] / 2];
         if (checkString.length != tempString.length) {
             //[self.nameTextField resignFirstResponder];
@@ -949,9 +949,9 @@
         NSString *string = self.nameTextField.text;
         
         if ([self stringCounter:string] > 10) {
-            self.nameTextField.text = [self stringCounterTo:string number:10];
+            self.nameTextField.text = [self stringCounterTo:string number:16];
         }
-        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:self.nameTextField.text] / 2];
+        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", [self stringCounter:self.nameTextField.text] / 2];
     }
 }
 

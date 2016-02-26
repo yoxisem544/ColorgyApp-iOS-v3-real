@@ -33,6 +33,13 @@
     [super viewDidLoad];
     currentPage = 0;
     
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStyleBordered
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
+    
     [self registerForKeyboardNotifications];
     
     self.navigationController.navigationBar.translucent = NO;
@@ -83,7 +90,7 @@
     self.blurWallSegmentedControl = [[UISegmentedControl alloc] initWithItems:mySegments];
     self.blurWallSegmentedControl.selectedSegmentIndex = 0;
     self.blurWallSegmentedControl.tintColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
-    self.blurWallSegmentedControl.frame = CGRectMake(0, 0, self.view.frame.size.width - 115, 27);
+    self.blurWallSegmentedControl.frame = CGRectMake(0, 0, self.view.frame.size.width - 150, 27);
     self.navigationItem.titleView = self.blurWallSegmentedControl;
     [self.blurWallSegmentedControl addTarget:self action:@selector(refreshDataBySegment) forControlEvents:UIControlEventValueChanged];
     
@@ -158,7 +165,7 @@
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^() {
             useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50);
     } completion:^(BOOL finished) {}];
-    [UIView animateWithDuration:0.3 delay:3 options:UIViewAnimationOptionCurveEaseIn animations:^() {
+    [UIView animateWithDuration:0.3 delay:5 options:UIViewAnimationOptionCurveEaseIn animations:^() {
         useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50);
     } completion:^(BOOL finished) {}];
 }
@@ -277,8 +284,9 @@
     
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 10)];
-    
+#pragma mark - Warnrnig
     messageLabel.text = availableTarget.lastAnswer;
+//    messageLabel.text = @"我是帥";
     messageLabel.numberOfLines = 2;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:12.0];
@@ -749,7 +757,8 @@
     self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     self.cancelButton.frame = CGRectMake(0, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
-    self.submitButton.frame = CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+//    self.submitButton.frame = CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    self.submitButton.frame = CGRectMake(0, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width, 45);
     //    cancelButton.backgroundColor = [UIColor orangeColor];
     //    submitButton.backgroundColor = [UIColor blueColor];
     [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -774,19 +783,19 @@
     maskLayer.path = maskPath.CGPath;
     self.submitButton.layer.mask = maskLayer;
     
-    [self.cleanAskAlertView addSubview:self.cancelButton];
+//    [self.cleanAskAlertView addSubview:self.cancelButton];
     [self.cleanAskAlertView addSubview:self.submitButton];
     
-    [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
+//    [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
     [self.submitButton addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
     
     self.line1 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.cancelButton.frame), CGRectGetMinY(self.cancelButton.frame), self.cleanAskAlertView.frame.size.width, 1)];
     [self.line1 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
     [self.cleanAskAlertView addSubview:self.line1];
     
-    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
-    [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
-    [self.cleanAskAlertView addSubview:self.line2];
+//    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
+//    [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
+//    [self.cleanAskAlertView addSubview:self.line2];
     
     // textNumberCunter Customized
     self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskTextView.bounds.size.width - 45, self.cleanAskTextView.bounds.size.height - 30, 45, 30)];

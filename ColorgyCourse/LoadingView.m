@@ -64,6 +64,51 @@
     return self;
 }
 
+- (instancetype)initJustFinished {
+    self = [super init];
+    if (self) {
+        self.currentWindow = [UIApplication sharedApplication].keyWindow;
+        
+        self.frame = self.currentWindow.frame;
+        // mask view
+        self.maskView = [[UIView alloc] initWithFrame:self.frame];
+        //        self.maskView.backgroundColor = [UIColor blackColor];
+        
+        [self addSubview:self.maskView];
+        
+        // alert view
+        self.popView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 125, 125)];
+        self.popView.center = self.center;
+        self.popView.layer.cornerRadius = 3.54;
+        self.popView.layer.backgroundColor = [self UIColorFromRGB:0 green:207 blue:228 alpha:100].CGColor;
+        
+        [self addSubview:self.popView];
+        
+        self.loadingString = @"發送中";
+        self.finishedString = @"成功";
+        
+        // attributed message string
+        NSAttributedString *attributedMessageString = [[NSAttributedString alloc] initWithString:self.loadingString attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:18.0]}];
+        
+        // message label
+        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.popView.bounds.size.width - 20, 38)];
+        self.messageLabel.center = CGPointMake(self.center.x, self.center.y + 30);
+        self.messageLabel.attributedText = attributedMessageString;
+        self.messageLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [self addSubview:self.messageLabel];
+        
+        
+        [self.window addSubview:self];
+        
+        // message label
+        self.messageLabel.attributedText = attributedMessageString;
+        
+        [self.currentWindow addSubview:self];
+    }
+    return self;
+}
+
 - (void)start {
     [self.window addSubview:self];
     [self.checkEmailButton removeFromSuperview];
@@ -83,6 +128,45 @@
     self.messageLabel.attributedText = attributedMessageString;
     
     [self.currentWindow addSubview:self];
+}
+
+- (void)justFinished {
+    [self.indicatorView stopAnimating];
+    [self.indicatorView removeFromSuperview];
+    // attributed message string
+    NSAttributedString *attributedMessageString = [[NSAttributedString alloc] initWithString:self.finishedString attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:18.0]}];
+    
+    self.messageLabel.attributedText = attributedMessageString;
+    
+    self.popView.layer.backgroundColor = [self UIColorFromRGB:0 green:207 blue:228 alpha:100].CGColor;
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    
+    [path moveToPoint:CGPointMake(40.0, 45.0)];
+    [path addLineToPoint:CGPointMake(55.0, 60.0)];
+    [path addLineToPoint:CGPointMake(85.0, 30.0)];
+    
+    self.pathLayer = [CAShapeLayer layer];
+    
+    self.pathLayer.frame = self.popView.frame;
+    self.pathLayer.path = path.CGPath;
+    self.pathLayer.strokeColor = [[UIColor whiteColor] CGColor];
+    self.pathLayer.fillColor = nil;
+    self.pathLayer.lineWidth = 2.0f;
+    self.pathLayer.lineJoin = kCALineJoinBevel;
+    
+    [self.layer addSublayer:self.pathLayer];
+    
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    
+    pathAnimation.duration = 0.3;
+    pathAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+    pathAnimation.toValue = [NSNumber numberWithFloat:1.0f];
+    
+    [self.pathLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dismiss:NULL];
+    });
 }
 
 - (void)finished:(void (^)(void))callbackBlock {
