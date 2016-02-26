@@ -453,6 +453,12 @@ extension ChatRoomViewController : DLMessagesViewControllerDelegate {
 	func DLMessagesViewControllerDidClickedCameraButton() {
 		openImagePicker()
 	}
+	
+	func DLMessagesViewControllerDidTapOnBubbleTableView() {
+		if floatingOptionView.isShown {
+			toggleDropDownMenu()
+		}
+	}
 }
 
 // MARK: - UIImagePickerControllerDelegate
@@ -545,8 +551,12 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 		// submit a request
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom.friendId, success: { () -> Void in
-				// wait after callback
-				self.navigationController?.popViewControllerAnimated(true)
+				ColorgyChatAPI.leaveChatroom(user.userId, chatroomId: self.historyChatroom.chatroomId, success: { () -> Void in
+					// wait after callback
+					self.navigationController?.popViewControllerAnimated(true)
+					}, failure: { () -> Void in
+						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！出現此錯誤是已經封鎖使用者但是尚未離開聊天室。")
+				})
 				}, failure: { () -> Void in
 					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 			})

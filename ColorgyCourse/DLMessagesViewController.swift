@@ -19,6 +19,7 @@ struct DLMessageControllerIdentifier {
 protocol DLMessagesViewControllerDelegate {
     func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?)
 	func DLMessagesViewControllerDidClickedCameraButton()
+	func DLMessagesViewControllerDidTapOnBubbleTableView()
 }
 
 class DLMessagesViewController: UIViewController {
@@ -166,6 +167,7 @@ class DLMessagesViewController: UIViewController {
 	
 	func tapOnBubbleTableView() {
 		if tapToDismissKeyboard {
+			delegate?.DLMessagesViewControllerDidTapOnBubbleTableView()
 			dismissKeyboard()
 		}
 	}
