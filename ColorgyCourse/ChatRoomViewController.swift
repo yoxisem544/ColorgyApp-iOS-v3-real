@@ -508,31 +508,35 @@ extension ChatRoomViewController : FloatingOptionViewDelegate {
 }
 
 extension ChatRoomViewController : ChatReportViewControllerDelegate {
-	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?, hi: Hello?) {
 		// submit a request
-//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-//			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
-//				// wait after callback
-//				
-//				}, failure: { () -> Void in
-//					<#code#>
-//			})
-//			}) { () -> Void in
-//				<#code#>
-//		}
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
+				// wait after callback
+				
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
 		
 		// wait after callback
 		navigationController?.popViewControllerAnimated(true)
 	}
 	
-	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?) {
 		
 		// submit a request
-//		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-//			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom, success: <#T##() -> Void#>, failure: <#T##() -> Void#>)
-//			}) { () -> Void in
-//				<#code#>
-//		}
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom.friendId, success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
+			}) { () -> Void in
+				
+		}
 		
 		
 		// wait after callback
