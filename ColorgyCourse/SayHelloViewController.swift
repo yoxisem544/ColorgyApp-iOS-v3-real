@@ -98,7 +98,7 @@ class SayHelloViewController: UIViewController {
 	func moreOptions(hi: Hello?) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 		let block = UIAlertAction(title: "封鎖", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			self.showChatReportController("封鎖用戶", canSkip: false, type: "block")
+			self.showChatReportController("封鎖用戶", canSkip: true, type: "block")
 		}
 		let report = UIAlertAction(title: "檢舉", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
 			self.showChatReportController("檢舉用戶", canSkip: false, type: "report")
@@ -200,11 +200,11 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 }
 
 extension SayHelloViewController : ChatReportViewControllerDelegate {
-	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitReportUserContent")
 	}
 	
-	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitBlockUserContent")
 	}
 }

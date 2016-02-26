@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ChatReportViewControllerDelegate {
-	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?)
-	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?)
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?)
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?, hi: Hello?)
 }
 
 class ChatReportViewController: UIViewController {
@@ -31,6 +31,8 @@ class ChatReportViewController: UIViewController {
 	var titleOfReport: String!
 
 	var delegate: ChatReportViewControllerDelegate?
+	
+	var hi: Hello!
 	
 	private var problem: String?
 	internal var problemDescription: String?
@@ -88,18 +90,18 @@ class ChatReportViewController: UIViewController {
 	func skipReport() {
 		dismissViewControllerAnimated(true, completion: nil)
 		if reportType == "report" {
-			delegate?.chatReportViewController(didSubmitReportUserContent: nil, description: nil)
+			delegate?.chatReportViewController(didSubmitReportUserContent: nil, description: nil, hi: hi)
 		} else if reportType == "block" {
-			delegate?.chatReportViewController(didSubmitBlockUserContent: nil, description: nil)
+			delegate?.chatReportViewController(didSubmitBlockUserContent: nil, description: nil, hi: hi)
 		}
 	}
 	
 	@IBAction func submitReportButtonClicked() {
 		dismissViewControllerAnimated(true, completion: nil)
 		if reportType == "report" {
-			delegate?.chatReportViewController(didSubmitReportUserContent: self.problem, description: self.problemDescription)
+			delegate?.chatReportViewController(didSubmitReportUserContent: self.problem, description: self.problemDescription, hi: hi)
 		} else if reportType == "block" {
-			delegate?.chatReportViewController(didSubmitBlockUserContent: self.problem, description: self.problemDescription)
+			delegate?.chatReportViewController(didSubmitBlockUserContent: self.problem, description: self.problemDescription, hi: hi)
 		}
 	}
 }
