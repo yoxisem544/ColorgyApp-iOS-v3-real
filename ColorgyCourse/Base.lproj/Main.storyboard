@@ -1217,7 +1217,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Say Hello Cell" rowHeight="127" id="X97-Zl-UZo" customClass="SayHelloTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="127"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="127"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="X97-Zl-UZo" id="jAO-CT-gJS">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
@@ -2618,7 +2618,7 @@
                         <segue destination="ZCD-Qg-Jcn" kind="relationship" relationship="viewControllers" id="DGb-zW-qTU"/>
                         <segue destination="mdb-Ri-nKp" kind="relationship" relationship="viewControllers" id="iMD-Pd-GMA"/>
                         <segue destination="kTZ-0y-3Uf" kind="relationship" relationship="viewControllers" id="NwR-5e-hTh"/>
-                        <segue destination="41U-8t-JMB" kind="relationship" relationship="viewControllers" id="Rea-Fb-Oc4"/>
+                        <segue destination="gML-Gu-eh8" kind="relationship" relationship="viewControllers" id="Rea-Fb-Oc4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KwJ-N0-Szf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2871,7 +2871,7 @@
             </objects>
             <point key="canvasLocation" x="-472" y="614"/>
         </scene>
-        <!--好朋友-->
+        <!--Friend List View Controller-->
         <scene sceneID="3Yw-Rb-QHe">
             <objects>
                 <viewController id="41U-8t-JMB" customClass="FriendListViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
@@ -2888,7 +2888,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Friend List Cell" rowHeight="82" id="f7s-zM-FD2" customClass="FriendListTableViewCell" customModule="ColorgyCourse" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="92" width="600" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f7s-zM-FD2" id="PQK-75-wxM">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="81"/>
@@ -2961,7 +2961,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hello counts cell" rowHeight="51" id="oDD-8z-poV" customClass="SayHelloCountsCell" customModule="ColorgyCourse" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="110" width="600" height="51"/>
+                                        <rect key="frame" x="0.0" y="174" width="600" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oDD-8z-poV" id="Xhx-zy-gLQ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
@@ -3014,11 +3014,7 @@
                             <constraint firstAttribute="trailing" secondItem="9da-Q6-7km" secondAttribute="trailing" id="vpb-9U-HwI"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="好朋友" image="personalInfo" id="Mub-rK-o6x">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="personalInfoSelected"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" id="9j1-vv-eE3"/>
                     <connections>
                         <outlet property="friendListTableView" destination="9da-Q6-7km" id="TeM-dr-TWM"/>
                         <segue destination="1hP-AF-A0w" kind="show" identifier="goto chatroom" id="ypF-3y-Hte"/>
@@ -3027,7 +3023,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V6M-S5-zcP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922" y="3714"/>
+            <point key="canvasLocation" x="1672" y="3714"/>
         </scene>
         <!--Item-->
         <scene sceneID="tr6-Ja-4ta">
@@ -3047,6 +3043,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TZu-4O-OZe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-478" y="1717"/>
+        </scene>
+        <!--好朋友-->
+        <scene sceneID="AzL-bh-W4n">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gML-Gu-eh8" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="好朋友" image="personalInfo" id="Mub-rK-o6x">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="personalInfoSelected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UFr-nT-xgi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="41U-8t-JMB" kind="relationship" relationship="rootViewController" id="KA7-DJ-qc2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KJ7-9d-PUp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="922" y="3714"/>
         </scene>
     </scenes>
     <resources>
