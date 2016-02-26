@@ -23,6 +23,8 @@ class FriendListViewController: UIViewController {
 	
 	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...正在重新下載...")
 	
+	private var hiList: [Hello] = []
+	
 	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,8 +87,24 @@ class FriendListViewController: UIViewController {
 		NSRunLoop.currentRunLoop().addTimer(renewTimer, forMode: NSRunLoopCommonModes)
 	}
 	
+	func loadHi() {
+		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
+				print(hiList)
+				self.hideHintFailView()
+				self.hiList = hiList
+				self.friendListTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.None)
+				}, failure: { () -> Void in
+					self.showHintFailView()
+			})
+			}, failure: { () -> Void in
+				self.showHintFailView()
+		})
+	}
+	
 	func refreshChatroom() {
 		loadFriend()
+		loadHi()
 	}
 	
 	func loadFriend() {
@@ -323,6 +341,7 @@ class FriendListViewController: UIViewController {
 		static let FriendListCellIdentifier = "Friend List Cell"
 		static let GotoChatroomSegueIdentifier = "goto chatroom"
 		static let SayHelloCellIdentifier = "hello counts cell"
+		static let SayHelloSegue = "to say hi segue"
 	}
 	
 	// MARK: Navigation
@@ -344,6 +363,9 @@ class FriendListViewController: UIViewController {
 					print("enter chatroom without uuid")
 				}
 			}
+		} else if segue.identifier == Storyboard.SayHelloSegue {
+			let vc = segue.destinationViewController as! SayHelloViewController
+			vc.hiList = hiList
 		}
 	}
 }
@@ -368,7 +390,7 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 		if indexPath.section == 0 {
 			let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.SayHelloCellIdentifier, forIndexPath: indexPath) as! SayHelloCountsCell
 			
-			cell.countsLabel.text = "100"
+			cell.countsLabel.text = "\(hiList.count)"
 			
 			return cell
 		} else {
@@ -384,9 +406,18 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		if indexPath.section == 0 {
 			// goto say hello list
+			performSegueWithIdentifier(Storyboard.SayHelloSegue, sender: nil)
 		} else {
 			hidesBottomBarWhenPushed = true
 			performSegueWithIdentifier(Storyboard.GotoChatroomSegueIdentifier, sender: historyChatrooms[indexPath.row])
+		}
+	}
+	
+	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		if indexPath.section == 0 {
+			return 51
+		} else {
+			return 82
 		}
 	}
 }

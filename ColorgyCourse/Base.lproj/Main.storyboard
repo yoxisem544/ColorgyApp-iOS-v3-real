@@ -1350,7 +1350,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Suf-Av-NUn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="263" y="3714"/>
+            <point key="canvasLocation" x="922" y="4496"/>
         </scene>
         <!--活動牆-->
         <scene sceneID="mpn-s9-DsR">
@@ -2618,7 +2618,6 @@
                         <segue destination="ZCD-Qg-Jcn" kind="relationship" relationship="viewControllers" id="DGb-zW-qTU"/>
                         <segue destination="mdb-Ri-nKp" kind="relationship" relationship="viewControllers" id="iMD-Pd-GMA"/>
                         <segue destination="kTZ-0y-3Uf" kind="relationship" relationship="viewControllers" id="NwR-5e-hTh"/>
-                        <segue destination="Cf5-y4-OPf" kind="relationship" relationship="viewControllers" id="u6i-Ie-1o3"/>
                         <segue destination="41U-8t-JMB" kind="relationship" relationship="viewControllers" id="Rea-Fb-Oc4"/>
                     </connections>
                 </tabBarController>
@@ -2849,11 +2848,15 @@
             </objects>
             <point key="canvasLocation" x="2133" y="-50"/>
         </scene>
-        <!--Item-->
+        <!--模糊聊-->
         <scene sceneID="ADF-Q3-5aP">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZCD-Qg-Jcn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="zPa-Jw-cxv"/>
+                    <tabBarItem key="tabBarItem" title="模糊聊" image="ChatBarIcon" id="zPa-Jw-cxv">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="ChatBarIconHighlight"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="M5x-Wu-xRc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2868,7 +2871,7 @@
             </objects>
             <point key="canvasLocation" x="-472" y="614"/>
         </scene>
-        <!--Item-->
+        <!--好朋友-->
         <scene sceneID="3Yw-Rb-QHe">
             <objects>
                 <viewController id="41U-8t-JMB" customClass="FriendListViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
@@ -2967,16 +2970,16 @@
                                                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udc-pJ-Ham">
                                                     <rect key="frame" x="227" y="8" width="147" height="33"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Idj-rA-7YQ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="打招呼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Idj-rA-7YQ">
                                                             <rect key="frame" x="8" y="6" width="44" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="Loe-Cs-UfD"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F68-JA-Lpd">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F68-JA-Lpd" customClass="DLMessageLabel" customModule="ColorgyCourse" customModuleProvider="target">
                                                             <rect key="frame" x="97" y="6" width="42" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2993,12 +2996,11 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="udc-pJ-Ham" firstAttribute="centerY" secondItem="Xhx-zy-gLQ" secondAttribute="centerY" id="Nd6-Hu-hhW"/>
                                                 <constraint firstItem="udc-pJ-Ham" firstAttribute="centerX" secondItem="Xhx-zy-gLQ" secondAttribute="centerX" id="diI-cC-msf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="countsLabel" destination="F68-JA-Lpd" id="qy8-y2-gEO"/>
+                                            <outlet property="countsLabel" destination="F68-JA-Lpd" id="fL4-fE-Utq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3012,10 +3014,15 @@
                             <constraint firstAttribute="trailing" secondItem="9da-Q6-7km" secondAttribute="trailing" id="vpb-9U-HwI"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Mub-rK-o6x"/>
+                    <tabBarItem key="tabBarItem" title="好朋友" image="personalInfo" id="Mub-rK-o6x">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="personalInfoSelected"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <connections>
                         <outlet property="friendListTableView" destination="9da-Q6-7km" id="TeM-dr-TWM"/>
                         <segue destination="1hP-AF-A0w" kind="show" identifier="goto chatroom" id="ypF-3y-Hte"/>
+                        <segue destination="Cf5-y4-OPf" kind="show" identifier="to say hi segue" id="rEF-md-1gQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V6M-S5-zcP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3045,6 +3052,8 @@
     <resources>
         <image name="1.jpg" width="500" height="500"/>
         <image name="3.jpg" width="189" height="267"/>
+        <image name="ChatBarIcon" width="24" height="24"/>
+        <image name="ChatBarIconHighlight" width="24" height="24"/>
         <image name="ChatIcon_InFriendList" width="13" height="13"/>
         <image name="MoreInfoIcon" width="22" height="22"/>
         <image name="acceptIcon" width="21" height="15"/>
@@ -3063,6 +3072,8 @@
         <image name="moreInfo" width="24" height="23"/>
         <image name="moreInfoHighlight" width="24" height="23"/>
         <image name="periodIcon" width="14" height="14"/>
+        <image name="personalInfo" width="23" height="24"/>
+        <image name="personalInfoSelected" width="23" height="23"/>
         <image name="reclineIcon" width="17" height="17"/>
         <image name="starEmpty" width="10" height="10"/>
         <image name="tableViewNext" width="9" height="13"/>
@@ -3071,7 +3082,7 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ypF-3y-Hte"/>
         <segue reference="sYP-VR-PPv"/>
+        <segue reference="ypF-3y-Hte"/>
     </inferredMetricsTieBreakers>
 </document>
