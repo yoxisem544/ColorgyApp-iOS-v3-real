@@ -2957,6 +2957,50 @@
                                             <outlet property="userQuestionLabel" destination="gjW-Iq-JD7" id="v7C-D8-hnM"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="hello counts cell" rowHeight="51" id="oDD-8z-poV" customClass="SayHelloCountsCell" customModule="ColorgyCourse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="110" width="600" height="51"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oDD-8z-poV" id="Xhx-zy-gLQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udc-pJ-Ham">
+                                                    <rect key="frame" x="227" y="8" width="147" height="33"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Idj-rA-7YQ">
+                                                            <rect key="frame" x="8" y="6" width="44" height="22"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="22" id="Loe-Cs-UfD"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F68-JA-Lpd">
+                                                            <rect key="frame" x="97" y="6" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Idj-rA-7YQ" firstAttribute="centerY" secondItem="udc-pJ-Ham" secondAttribute="centerY" id="VI9-Bw-5pc"/>
+                                                        <constraint firstItem="Idj-rA-7YQ" firstAttribute="leading" secondItem="udc-pJ-Ham" secondAttribute="leading" constant="8" id="gvw-U9-imR"/>
+                                                        <constraint firstAttribute="trailing" secondItem="F68-JA-Lpd" secondAttribute="trailing" constant="8" id="hUM-fL-3d6"/>
+                                                        <constraint firstItem="F68-JA-Lpd" firstAttribute="centerY" secondItem="udc-pJ-Ham" secondAttribute="centerY" id="qcv-cN-MOg"/>
+                                                        <constraint firstItem="F68-JA-Lpd" firstAttribute="leading" secondItem="Idj-rA-7YQ" secondAttribute="trailing" constant="8" id="zJC-a8-s4W"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="udc-pJ-Ham" firstAttribute="centerY" secondItem="Xhx-zy-gLQ" secondAttribute="centerY" id="Nd6-Hu-hhW"/>
+                                                <constraint firstItem="udc-pJ-Ham" firstAttribute="centerX" secondItem="Xhx-zy-gLQ" secondAttribute="centerX" id="diI-cC-msf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="countsLabel" destination="F68-JA-Lpd" id="qy8-y2-gEO"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>

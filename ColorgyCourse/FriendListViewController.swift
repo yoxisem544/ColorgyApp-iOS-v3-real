@@ -168,8 +168,8 @@ class FriendListViewController: UIViewController {
 							dispatch_async(dispatch_get_main_queue(), { () -> Void in
 								self.friendListTableView.beginUpdates()
 								self.historyChatrooms.append(room)
-								let rows = self.friendListTableView.numberOfRowsInSection(0)
-								self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+								let rows = self.friendListTableView.numberOfRowsInSection(1)
+								self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Fade)
 								self.friendListTableView.endUpdates()
 							})
 							NSThread.sleepForTimeInterval(0.1)
@@ -185,7 +185,7 @@ class FriendListViewController: UIViewController {
 									self.friendListTableView.beginUpdates()
 									self.historyChatrooms.removeAtIndex(index)
 									dispatch_async(dispatch_get_main_queue(), { () -> Void in
-									self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+									self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Fade)
 										self.friendListTableView.endUpdates()
 									})
 								})
@@ -214,9 +214,9 @@ class FriendListViewController: UIViewController {
 											print("\(index) need to move to \(newIndex)")
 											dispatch_async(dispatch_get_main_queue(), { () -> Void in
 												self.historyChatrooms.removeAtIndex(index)
-												self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+												self.friendListTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Fade)
 												self.historyChatrooms.insert(oldRoom, atIndex: newIndex)
-												self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+												self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: newIndex, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Fade)
 											})
 											//								})
 											// 移動後重新開始
@@ -281,7 +281,7 @@ class FriendListViewController: UIViewController {
 						historyChatrooms[index].unread = true
 					}
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						self.friendListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
+						self.friendListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: UITableViewRowAnimation.None)
 					})
 
 				}
@@ -322,6 +322,7 @@ class FriendListViewController: UIViewController {
 	struct Storyboard {
 		static let FriendListCellIdentifier = "Friend List Cell"
 		static let GotoChatroomSegueIdentifier = "goto chatroom"
+		static let SayHelloCellIdentifier = "hello counts cell"
 	}
 	
 	// MARK: Navigation
@@ -350,22 +351,43 @@ class FriendListViewController: UIViewController {
 // MARK: - Table View Delegate and DataSource
 extension FriendListViewController : UITableViewDataSource, UITableViewDelegate {
 	
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 2
+	}
+	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return historyChatrooms.count
+		if section == 0 {
+			return 1
+		} else {
+			return historyChatrooms.count
+		}
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.FriendListCellIdentifier, forIndexPath: indexPath) as! FriendListTableViewCell
 		
-		cell.userId = userId
-		cell.historyChatroom = historyChatrooms[indexPath.row]
-		
-		return cell
+		if indexPath.section == 0 {
+			let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.SayHelloCellIdentifier, forIndexPath: indexPath) as! SayHelloCountsCell
+			
+			cell.countsLabel.text = "100"
+			
+			return cell
+		} else {
+			let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.FriendListCellIdentifier, forIndexPath: indexPath) as! FriendListTableViewCell
+			
+			cell.userId = userId
+			cell.historyChatroom = historyChatrooms[indexPath.row]
+			
+			return cell
+		}
 	}
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		hidesBottomBarWhenPushed = true
-		performSegueWithIdentifier(Storyboard.GotoChatroomSegueIdentifier, sender: historyChatrooms[indexPath.row])
+		if indexPath.section == 0 {
+			// goto say hello list
+		} else {
+			hidesBottomBarWhenPushed = true
+			performSegueWithIdentifier(Storyboard.GotoChatroomSegueIdentifier, sender: historyChatrooms[indexPath.row])
+		}
 	}
 }
 
