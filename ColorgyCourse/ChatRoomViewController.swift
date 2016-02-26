@@ -129,6 +129,15 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
+	func showAlertWithErrorMessage(title: String?, message: String?) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+		let ok = UIAlertAction(title: "確定", style: UIAlertActionStyle.Default, handler: nil)
+		alert.addAction(ok)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
+	}
+	
 	func showUpdateNickNameView() {
 		let alert = UIAlertController(title: "幫他取名字", message: "此修改暱稱只有你看的到。", preferredStyle: UIAlertControllerStyle.Alert)
 		alert.addTextFieldWithConfigurationHandler { (tf: UITextField) -> Void in
@@ -490,7 +499,15 @@ extension ChatRoomViewController : FloatingOptionViewDelegate {
 		print("floatingOptionViewShouldLeaveChatroom")
 //		showChatReportController("檢舉用戶", canSkip: false, type: "report")
 		showAlertWithTitle("你確定要離開他？", message: "不再收到對方訊息，聊天記錄也將消失。", confirmHandler: { () -> Void in
-			self.navigationController?.popViewControllerAnimated(true)
+			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+				ColorgyChatAPI.leaveChatroom(user.userId, chatroomId: self.historyChatroom.chatroomId, success: { () -> Void in
+					self.navigationController?.popViewControllerAnimated(true)
+					}, failure: { () -> Void in
+						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+				})
+				}, failure: { () -> Void in
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+			})
 		})
 	}
 	
@@ -513,16 +530,13 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
 				// wait after callback
-				
+				self.navigationController?.popViewControllerAnimated(true)
 				}, failure: { () -> Void in
-					
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 			})
 			}) { () -> Void in
-				
+				self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 		}
-		
-		// wait after callback
-		navigationController?.popViewControllerAnimated(true)
 	}
 	
 	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?) {
@@ -530,16 +544,13 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 		// submit a request
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom.friendId, success: { () -> Void in
-				
+				// wait after callback
+				self.navigationController?.popViewControllerAnimated(true)
 				}, failure: { () -> Void in
-					
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 			})
 			}) { () -> Void in
-				
+				self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 		}
-		
-		
-		// wait after callback
-		navigationController?.popViewControllerAnimated(true)
 	}
 }
