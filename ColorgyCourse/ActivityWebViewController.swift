@@ -21,7 +21,7 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
     private var islogin: Bool = false {
         didSet {
             if islogin {
-                let pageURL = NSURL(string: "https://colorgy.io/mobile-index")!
+                let pageURL = NSURL(string: "https://mall.colorgy.io")!
                 let request = NSURLRequest(URL: pageURL)
                 webView.loadRequest(request)
             } else {
