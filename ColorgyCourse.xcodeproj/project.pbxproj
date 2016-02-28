@@ -90,6 +90,7 @@
 		639D45151B96A75D0053870D /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 639D45141B96A75D0053870D /* 4.jpg */; };
 		63A50ACC1C6F610500B3F119 /* SecretKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A50ACB1C6F610500B3F119 /* SecretKeys.swift */; };
 		63A50AD01C6F615000B3F119 /* libFlurry_7.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */; };
+		63A97A7A1C8036C900FE86B1 /* SayHelloCountsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A97A791C8036C900FE86B1 /* SayHelloCountsCell.swift */; };
 		63ABBBFB1B9477930077580D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63ABBBFA1B9477930077580D /* 1.jpg */; };
 		63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */; };
 		63ABBBFF1B947DCE0077580D /* AlertDeleteCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */; };
@@ -326,6 +327,7 @@
 		63A50ACD1C6F615000B3F119 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		63A50ACE1C6F615000B3F119 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
 		63A50ACF1C6F615000B3F119 /* libFlurry_7.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_7.3.0.a; sourceTree = "<group>"; };
+		63A97A791C8036C900FE86B1 /* SayHelloCountsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SayHelloCountsCell.swift; sourceTree = "<group>"; };
 		63ABBBFA1B9477930077580D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		63ABBBFC1B9478E30077580D /* SearchCourseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCourseCell.swift; sourceTree = "<group>"; };
 		63ABBBFE1B947DCE0077580D /* AlertDeleteCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDeleteCourseView.swift; sourceTree = "<group>"; };
@@ -1165,6 +1167,7 @@
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
+				63A97A791C8036C900FE86B1 /* SayHelloCountsCell.swift */,
 				63B942931C59DEAB0060A097 /* ImagePickerSheetController */,
 				63BB302B1C561F300055BA19 /* DLMessageView */,
 				63BB30141C56173F0055BA19 /* SocketIO_Client */,
@@ -1293,7 +1296,7 @@
 				TargetAttributes = {
 					63FBCC0A1B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 5T4G827M4A;
+						DevelopmentTeam = 55V6ERRQ79;
 					};
 					63FBCC221B9345B800B3084F = {
 						CreatedOnToolsVersion = 6.4;
@@ -1571,6 +1574,7 @@
 				632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */,
 				63BB30281C561F280055BA19 /* DLOutgoingMessageBubble.swift in Sources */,
 				63B942A81C59DEAB0060A097 /* PreviewSupplementaryView.swift in Sources */,
+				63A97A7A1C8036C900FE86B1 /* SayHelloCountsCell.swift in Sources */,
 				633D11C11C5F2EB7009370B4 /* LaunchNavigationViewController.swift in Sources */,
 				63BB300D1C5617390055BA19 /* SocketLogger.swift in Sources */,
 				63B942AA1C59DEAB0060A097 /* SheetCollectionViewCell.swift in Sources */,

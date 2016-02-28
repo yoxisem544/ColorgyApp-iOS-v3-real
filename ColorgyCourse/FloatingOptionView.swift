@@ -43,8 +43,8 @@ class FloatingOptionView: UIView {
 		blockView.center.y = self.bounds.midY
 		nameUserView.center.y = self.bounds.midY
 		leaveView.center.x = self.bounds.maxX * (2.0 / 4.0)
-		blockView.center.x =  self.bounds.maxX * (3.0 / 4.0)
-		nameUserView.center.x =  self.bounds.maxX * (1.0 / 4.0)
+		blockView.center.x =  self.bounds.maxX * ((3.0 + 0.2) / 4.0)
+		nameUserView.center.x =  self.bounds.maxX * ((1.0 - 0.2) / 4.0)
 		
 		// add to view
 		self.addSubview(leaveView)

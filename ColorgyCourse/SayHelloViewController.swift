@@ -60,6 +60,15 @@ class SayHelloViewController: UIViewController {
 		})
 	}
 	
+	func showAlertWithErrorMessage(title: String?, message: String?) {
+		let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+		let ok = UIAlertAction(title: "確定", style: UIAlertActionStyle.Default, handler: nil)
+		alert.addAction(ok)
+		dispatch_async(dispatch_get_main_queue()) { () -> Void in
+			self.presentViewController(alert, animated: true, completion: nil)
+		}
+	}
+	
 	// MARK: hint view
 	func hideHintFailView() {
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -98,7 +107,7 @@ class SayHelloViewController: UIViewController {
 	func moreOptions(hi: Hello?) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 		let block = UIAlertAction(title: "封鎖", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			self.showChatReportController("封鎖用戶", canSkip: false, type: "block")
+			self.showChatReportController("封鎖用戶", canSkip: true, type: "block")
 		}
 		let report = UIAlertAction(title: "檢舉", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
 			self.showChatReportController("檢舉用戶", canSkip: false, type: "report")
@@ -127,6 +136,30 @@ class SayHelloViewController: UIViewController {
 			})
 			}) { () -> Void in
 				self.showHintFailView()
+		}
+	}
+	
+	func removeHi(hi: Hello?) {
+		if let hi = hi {
+			for (index, _hi) : (Int, Hello) in hiList.enumerate() {
+				if _hi.id == hi.id {
+					// find out the index to remove
+					hiList.removeAtIndex(index)
+					sayHelloTableView.beginUpdates()
+					sayHelloTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+					sayHelloTableView.endUpdates()
+				}
+			}
+		}
+	}
+	
+	func reappendHi(hi: Hello?) {
+		if let hi = hi {
+			// insert at the front
+			hiList.insert(hi, atIndex: 0)
+			sayHelloTableView.beginUpdates()
+			sayHelloTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+			sayHelloTableView.endUpdates()
 		}
 	}
 	
@@ -170,27 +203,33 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 	
 	func sayHelloTableViewCellAcceptHelloButtonClicked(hi: Hello) {
 		print("sayHelloTableViewCellAcceptHelloButtonClicked")
+		removeHi(hi)
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.acceptHi(user.userId, hiId: hi.id, success: { () -> Void in
 				self.reloadHi()
 				}, failure: { () -> Void in
-					
+					self.reappendHi(hi)
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 			})
 			}, failure: { () -> Void in
-				
+				self.reappendHi(hi)
+				self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 		})
 	}
 	
 	func sayHelloTableViewCellRejectHelloButtonClicked(hi: Hello) {
 		print("sayHelloTableViewCellRejectHelloButtonClicked")
+		removeHi(hi)
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
 				self.reloadHi()
 				}, failure: { () -> Void in
-					
+					self.reappendHi(hi)
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 			})
 			}, failure: { () -> Void in
-				
+				self.reappendHi(hi)
+				self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
 		})
 	}
 	
@@ -200,11 +239,41 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 }
 
 extension SayHelloViewController : ChatReportViewControllerDelegate {
-	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitReportUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitReportUserContent")
+		if let hi = hi {
+			removeHi(hi)
+			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
+				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
+					self.reloadHi()
+					}, failure: { () -> Void in
+						self.reappendHi(hi)
+						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+				})
+				}, failure: { () -> Void in
+					self.reappendHi(hi)
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+			})
+		}
 	}
 	
-	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?) {
+	func chatReportViewController(didSubmitBlockUserContent title: String?, description: String?, hi: Hello?) {
 		print("didSubmitBlockUserContent")
+		if let hi = hi {
+			removeHi(hi)
+			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
+				ColorgyChatAPI.blockUser(user.userId, targetId: targetId, success: { () -> Void in
+					self.reloadHi()
+					}, failure: { () -> Void in
+						self.reappendHi(hi)
+						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+				})
+				}, failure: { () -> Void in
+					self.reappendHi(hi)
+					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+			})
+		}
 	}
 }

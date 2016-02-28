@@ -22,9 +22,10 @@ class HistoryChatroom : NSObject {
 	var lastContentTime: TimeStamp
 	var lastSpeaker: String
 	var updatedAt: TimeStamp
+	var unread: Bool = false
 	
 	override var description: String {
-		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastContentTime -> \(lastContentTime)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n}"
+		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastContentTime -> \(lastContentTime)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n\tunread -> \(unread)\n}"
 	}
 	
 	convenience init?(json: JSON) {
