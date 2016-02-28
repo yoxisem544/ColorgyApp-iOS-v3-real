@@ -448,13 +448,35 @@
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
-            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
-            // Tell the collectionView to reload.
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
-            if (callbackBlock) {
-                callbackBlock();
-            }
+            [ColorgyChatAPI getMyList:user.userId success:^(NSArray *myList) {
+                NSMutableArray *finallyArray = [[NSMutableArray alloc] init];
+                NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:response];
+                for (NSString *useId in myList) {
+                    for (AvailableTarget *target in response) {
+                        if ([useId isEqualToString:target.id]) {
+                            [finallyArray addObject:target];
+                            [tempArray removeObject:target];
+                        }
+                    }
+                }
+                
+                [finallyArray addObjectsFromArray:tempArray];
+                
+                
+                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:finallyArray];
+//                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+                if (callbackBlock) {
+                    callbackBlock();
+                }
+            } failure:^() {
+                NSLog(@"get myList error");
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+            }];
         } failure:^() {
             NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
@@ -541,10 +563,31 @@
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
-            [self.blurWallDataMutableArray addObjectsFromArray:response];
-            // Tell the collectionView to reload.
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
+            [ColorgyChatAPI getMyList:user.userId success:^(NSArray *myList) {
+                NSMutableArray *finallyArray = [[NSMutableArray alloc] init];
+                NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:response];
+                for (NSString *useId in myList) {
+                    for (AvailableTarget *target in response) {
+                        if ([useId isEqualToString:target.id]) {
+                            [finallyArray addObject:target];
+                            [tempArray removeObject:target];
+                        }
+                    }
+                }
+                
+                [finallyArray addObjectsFromArray:tempArray];
+                [self.blurWallDataMutableArray addObjectsFromArray:finallyArray];
+                //                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+
+            } failure:^() {
+                NSLog(@"get myList error");
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+            }];
         } failure:^() {
             NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
