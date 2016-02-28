@@ -21,6 +21,7 @@
 
 @implementation HelloViewController {
     BOOL hidenTabbar;
+    BOOL translucent;
 }
 
 - (instancetype)initWithInformaion:(AvailableTarget *)information {
@@ -36,6 +37,7 @@
     // Do any additional setup after loading the view.
     [self layout];
     self.tabBarController.tabBarController.hidesBottomBarWhenPushed = YES;
+    translucent = self.navigationController.navigationBar.translucent;
     self.navigationController.navigationBar.translucent = YES;
     //    [self performSegueWithIdentifier:@"to chat room" sender:nil];
     // 跳轉
@@ -86,14 +88,14 @@
     hidenTabbar = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     if (hidenTabbar) {
         [self.tabBarController.tabBar setHidden:NO];
     }
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
-    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.translucent = translucent;
 }
 
 - (void)didReceiveMemoryWarning {
