@@ -22,4 +22,6 @@
 
 #import "Mixpanel/Mixpanel.h"
 
+#import "UIImage+GaussianBlurUIImage.h"
+
 #endif

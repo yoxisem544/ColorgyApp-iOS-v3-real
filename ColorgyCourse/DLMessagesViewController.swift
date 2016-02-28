@@ -75,6 +75,8 @@ class DLMessagesViewController: UIViewController {
 			print("there is a navi")
 			bubbleTableView.contentInset.top = navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height
 		}
+		// customize top inset
+		bubbleTableView.contentInset.top += 10
 		
 		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
 	}

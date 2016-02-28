@@ -99,12 +99,18 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
     }
     
     func login() {
+//		let pageURL = NSURL(string: "https://mall.colorgy.io")!
+//		let request = NSURLRequest(URL: pageURL)
+//		let connection = NSURLConnection(request: request, delegate: self)
+//		webView.loadRequest(request)
         if let accessToken = UserSetting.UserAccessToken() {
             let reqObj = NSURLRequest(URL: NSURL(string: "https://colorgy.io/sso_new_session?access_token=" + accessToken)!)
             print(reqObj.URL)
             self.webView.loadRequest(reqObj)
         }
     }
+	
+
     
     
     func webViewDidStartLoad(webView: UIWebView) {
@@ -166,5 +172,26 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
         }
     }
 
+//	func connection(connection: NSURLConnection, canAuthenticateAgainstProtectionSpace protectionSpace: NSURLProtectionSpace) -> Bool {
+//		return protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust
+//	}
+//	
+//	func connection(connection: NSURLConnection, didReceiveAuthenticationChallenge challenge: NSURLAuthenticationChallenge) {
+//		if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+//			if challenge.protectionSpace.host == "192.168.1.2" {
+//				print("Allowing bypass...")
+//				if let trust = challenge.protectionSpace.serverTrust {
+//					let credential = NSURLCredential(trust: trust)
+//					challenge.sender?.useCredential(credential, forAuthenticationChallenge: challenge)
+//				}
+//			} else {
+//				print("Not trusting connection to host %@", challenge.protectionSpace.host)
+//			}
+//		}
+//		challenge.sender?.continueWithoutCredentialForAuthenticationChallenge(challenge)
+//	}
+}
 
+extension ActivityWebViewController : NSURLConnectionDelegate {
+	
 }

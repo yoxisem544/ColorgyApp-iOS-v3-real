@@ -35,7 +35,18 @@ class UserDetailInformationView: UIView {
 		userImageView.layer.borderColor = UIColor.whiteColor().CGColor
 		userImageView.layer.borderWidth = 2.0
 		
-		userImageView.image = image
+		if let image = image {
+			if let percentage = percentage {
+				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+					let radius = 2.0 * CGFloat(100 - percentage) * 0.01
+					let blurImage = UIImage().gaussianBlurImage(image, andInputRadius: radius)
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						userImageView.image = blurImage
+					})
+				})
+			}
+		}
 		
 		let title = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 21))
 		title.font = UIFont.systemFontOfSize(20)
