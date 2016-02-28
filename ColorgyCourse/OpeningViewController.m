@@ -18,6 +18,14 @@
     ChatUser *chatUser;
 }
 
+- (instancetype)initWithLayout:(NSInteger)whichLayout {
+    self = [super init];
+    if (self) {
+        self.whichLayout = whichLayout;
+    }
+    return self;
+}
+
 #pragma mark - LifeCicle
 
 - (void)viewDidLoad {
@@ -30,14 +38,14 @@
     self.scrollView.contentSize = self.view.bounds.size;
     self.scrollView.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
-    
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
     // Layout
-    [self openingLayout];
+    // [self openingLayout];
     // [self checkEmailLayout];
     // [self uploadLayout];
+    // [self uploadPreviewLayout];
     // [self nameLayout];
     // [self cleanAskLayout];
     
@@ -56,6 +64,23 @@
     self.navigationItem.hidesBackButton = YES;
     [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setHidden:YES];
+    
+    switch (self.whichLayout) {
+        case 0:
+            [self openingLayout];
+            break;
+        case 1:
+            [self checkEmail];
+            break;
+        case 2:
+            [self uploadLayout];
+            break;
+        case 3:
+            [self nameLayout];
+        default:
+            [self openingLayout];
+            break;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -414,6 +439,9 @@
 #pragma mark - Upload Layout
 
 - (void)uploadLayout {
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
     self.userImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
@@ -580,6 +608,10 @@
 
 #pragma mark - Upload Preview
 - (void)uploadPreviewLayout {
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeUploadLayout];
+    
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
     self.userImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
@@ -711,10 +743,15 @@
 #pragma mark - NameLayout
 
 - (void)nameLayout {
+    [self.tabBarController.tabBar setHidden:YES];
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    
     self.nameIsOk = NO;
     
     [self.view addSubview:self.scrollView];
-    [self.tabBarController.tabBar setHidden:YES];
     
     // nameDescriptionLabel Customized
     self.nameDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
@@ -963,6 +1000,11 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeUploadLayout];
+    [self removeNameLayout];
+    
     [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
         self.questionString = question;
         self.cleanAskQuestionLabel.text = self.questionString;

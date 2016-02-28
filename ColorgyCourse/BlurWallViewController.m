@@ -107,7 +107,7 @@
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
     
     useLessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50) withMessage:@""];
-//    useLessView.hidden = YES;
+    //    useLessView.hidden = YES;
     
     [self.view addSubview:useLessView];
 }
@@ -131,11 +131,12 @@
                     //                    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
                     self.questionDate = date;
                     self.cleanAskString = question;
-                    [self showUseLess];
                     if (self.cleanAskString && !answered) {
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
                         }
+                    } else if (animated) {
+                        [self showUseLess];
                     }
                     //                    } failure:^() {
                     //                    }];
@@ -147,7 +148,6 @@
                     //                    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
                     self.cleanAskString = question;
                     self.questionDate = date;
-                    [self showUseLess];
                     if (self.cleanAskString) {
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
@@ -478,6 +478,8 @@
             self.loadingView = nil;
             callbackBlock();
         }
+        [self.blurWallCollectionView reloadData];
+        [self.blurWallRefreshControl endRefreshing];
     }];
     
     // Simulate an async load...
@@ -556,6 +558,8 @@
         //        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         //        }]];
         //        [self presentViewController:alertController animated:YES completion:nil];
+        //        [self.blurWallCollectionView reloadData];
+        [self.blurWallRefreshControl endRefreshing];
     }];
     
     // Simulate an async load...
@@ -834,13 +838,13 @@
     [self.line2 removeFromSuperview];
     [self.textNumberCounterLabel removeFromSuperview];
     useLessView.messageLabel.text = [NSString stringWithFormat:@"每日清晰問：%@", self.cleanAskString];
-    [self showUseLess];
 }
 
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
+            [self showUseLess];
         } failure:^() {
             NSLog(@"answerQuestion error");
         }];

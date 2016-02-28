@@ -27,7 +27,7 @@
 }
 
 - (void)childViewLayoutInitializing {
-    self.openingViewController = [[OpeningViewController alloc] init];
+    self.openingViewController = [[OpeningViewController alloc] initWithLayout:0];
     [self addChildViewController:self.openingViewController];
     
     self.blurWallViewController = [[BlurWallViewController alloc] init];
