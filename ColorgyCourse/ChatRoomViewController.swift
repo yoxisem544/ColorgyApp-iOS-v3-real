@@ -46,6 +46,11 @@ class ChatRoomViewController: DLMessagesViewController {
 	private var userProfileImageString: String = ""
 	private var yourFriend: ChatUserInformation?
 	
+	// request more data
+	private var isRequestingForMoreData: Bool = false
+	private var messageRequestPage: Int = 0
+	
+	
 	// MARK: Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -257,6 +262,8 @@ class ChatRoomViewController: DLMessagesViewController {
 		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
 			self.chatroom = chatroom
 			print(self.chatroom)
+			// set page to 1 when connected
+			self.messageRequestPage += 1
 			// TODO: handle not connect condition
 			}, withMessages: { (messages) -> Void in
 				print(messages)
@@ -292,6 +299,32 @@ class ChatRoomViewController: DLMessagesViewController {
 		floatingOptionView.frame.origin.y = barHeight - floatingOptionView.frame.height
 		view.addSubview(floatingOptionView)
 		floatingOptionView.delegate = self
+	}
+	
+	func requestMoreData() {
+		if !isRequestingForMoreData {
+			isRequestingForMoreData = true
+			
+			// check content size
+			print("bubbleTableView content size \(bubbleTableView.contentSize)\nbubbleTableView content bounds \(bubbleTableView.bounds)")
+			if bubbleTableView.contentSize.height >= bubbleTableView.bounds.height {
+				// check page
+				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+					ColorgyChatAPI.moreMessage(user.userId, chatroomId: self.historyChatroom.chatroomId, offset: 10, success: { () -> Void in
+						self.isRequestingForMoreData = false
+						}, failure: { () -> Void in
+							self.isRequestingForMoreData = false
+					})
+					}, failure: { () -> Void in
+						self.isRequestingForMoreData = false
+				})
+				// finished
+			}
+		}
+	}
+	
+	func doneRequestingMessages() {
+		isRequestingForMoreData = false
 	}
 	
 	
@@ -458,6 +491,7 @@ extension ChatRoomViewController : DLMessagesViewControllerDelegate {
 		if floatingOptionView.isShown {
 			toggleDropDownMenu()
 		}
+		requestMoreData()
 	}
 }
 

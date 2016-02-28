@@ -1194,8 +1194,52 @@ class ColorgyChatAPI : NSObject {
                 failure()
         })
     }
-    
-    
+	
+	///得到更多聊天訊息：
+	///
+	///用途：取得聊天室過去的訊息
+	///使用方式：
+	///
+	///1. 傳一個http post給/chatroom/more_message，參數包含使用者的userId, uuid,accessToken,chatroomId,從頭數過來的offset
+	///2. 比如說你想要拿到第51~75則訊息，offset設定為50即可
+	class func moreMessage(userId: String, chatroomId: String, offset: Int, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId,
+			"offset": offset
+		]
+		
+		afManager.POST(serverURL + "/chatroom/more_message", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json)
+			} else {
+				failure()
+			}
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+
+	
+	
     class func checkImageType(data: NSData) {
         var c = UInt8()
         data.getBytes(&c, length: 1)

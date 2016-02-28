@@ -156,10 +156,18 @@ class SayHelloViewController: UIViewController {
 	func reappendHi(hi: Hello?) {
 		if let hi = hi {
 			// insert at the front
-			hiList.insert(hi, atIndex: 0)
-			sayHelloTableView.beginUpdates()
-			sayHelloTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
-			sayHelloTableView.endUpdates()
+			var doesConatinHi = false
+			for _hi in hiList {
+				if _hi.id == hi.id {
+					doesConatinHi = true
+				}
+			}
+			if !doesConatinHi {
+				hiList.insert(hi, atIndex: 0)
+				sayHelloTableView.beginUpdates()
+				sayHelloTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+				sayHelloTableView.endUpdates()
+			}
 		}
 	}
 	
