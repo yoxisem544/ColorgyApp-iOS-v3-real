@@ -38,7 +38,8 @@ class FriendListTableViewCell: UITableViewCell {
 				let percentage = self.historyChatroom.chatProgress
 				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
 				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-					let radius = 20 * (CGFloat(100 - percentage) % 33) * 0.01
+					var radius: CGFloat = 0.0
+					radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 					print(radius)
 					let blurImage = UIImage().gaussianBlurImage(imageFromCache, andInputRadius: radius)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -68,6 +69,7 @@ class FriendListTableViewCell: UITableViewCell {
         // Initialization code
 		userProfileImageView.clipsToBounds = true
 		userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.width / 2
+		userProfileImageView.image = nil
 		
 		let separatorLine = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 0.5))
 		separatorLine.backgroundColor = UIColor.lightGrayColor()

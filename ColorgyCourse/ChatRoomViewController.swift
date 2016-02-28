@@ -217,7 +217,7 @@ class ChatRoomViewController: DLMessagesViewController {
 					})
 				}
 			} else {
-				let radius = 20.0 * (CGFloat(100 - percentage) % 33) * 0.01
+				let radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 				print(radius)
 				let blurImage = imageFromCache.gaussianBlurImage(imageFromCache, andInputRadius: radius)
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -312,13 +312,16 @@ class ChatRoomViewController: DLMessagesViewController {
 				print(m)
 				print("訊息延遲....")
 				print(m.createdAt.timeStampString())
+				if let p = m.chatProgress {
+					print("update progress \(p)")
+					self.chatroom?.chatProgress = p
+				}
 			}
 		}
 		
 		colorgySocket.onUpdateUserAvatar { (user1, user2) -> Void in
 			let thisUser = (user1.id == self.userId ? user2 : user1)
-			self.historyChatroom.image = thisUser.imageId
-			self.bubbleTableView.reloadData()
+			self.userProfileImageString = thisUser.imageId
 		}
 		
 		colorgySocket.connect()
@@ -545,11 +548,11 @@ extension ChatRoomViewController : UIImagePickerControllerDelegate, UINavigation
 // MARK: - DLMessageDelegate
 extension ChatRoomViewController : DLMessageDelegate {
 	func DLMessage(didTapOnUserImageView image: UIImage?, message: ChatMessage) {
-		if let image = image {
-			print("did tap on user image \(image)")
-			self.dismissKeyboard()
-			navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: message.chatProgress, withUserImage: image, user: yourFriend))
-		}
+		print("did tap on user image \(image)")
+		self.dismissKeyboard()
+		let sc = SDImageCache()
+		let _img = sc.imageFromDiskCacheForKey(userProfileImageString)
+		navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: message.chatProgress, withUserImage: _img, user: yourFriend))
 	}
 	
 	func DLMessage(didTapOnSentImageView imageView: UIImageView?) {
