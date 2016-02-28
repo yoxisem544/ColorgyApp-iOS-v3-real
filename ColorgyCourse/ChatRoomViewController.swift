@@ -369,7 +369,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	}
 	
 	// MARK: - Scroll view delegate
-	override func scrollViewDidScroll(scrollView: UIScrollView) {
+	func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
 		if scrollView.contentOffset.y <= -(scrollView.contentInset.top) {
 			requestMoreData()
 		}

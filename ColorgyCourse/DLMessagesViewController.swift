@@ -220,7 +220,7 @@ class DLMessagesViewController: UIViewController {
 	}
 	
 	func recieveMessageAndInsertAtFront() {
-		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Top)
 	}
 }
 
