@@ -336,7 +336,8 @@ class ChatRoomViewController: DLMessagesViewController {
 	}
 	
 	func requestMoreData() {
-		if !isRequestingForMoreData {
+		if !isRequestingForMoreData && (chatroom != nil) {
+			print("loading")
 			isRequestingForMoreData = true
 			
 			// check content size
@@ -344,15 +345,21 @@ class ChatRoomViewController: DLMessagesViewController {
 			if bubbleTableView.contentSize.height >= bubbleTableView.bounds.height {
 				// check page
 				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-					ColorgyChatAPI.moreMessage(user.userId, chatroomId: self.historyChatroom.chatroomId, offset: 10, success: { () -> Void in
-						self.isRequestingForMoreData = false
+					ColorgyChatAPI.moreMessage(user.userId, chatroomId: self.historyChatroom.chatroomId, offset: self.messages.count, success: { (messages) -> Void in
+						self.messagesCount += messages.count
+						print(messages.count)
+						for m in messages {
+							self.messages.insert(m, atIndex: 0)
+							self.recieveMessageAndInsertAtFront()
+						}
+						
+						self.doneRequestingMessages()
 						}, failure: { () -> Void in
-							self.isRequestingForMoreData = false
+							self.doneRequestingMessages()
 					})
 					}, failure: { () -> Void in
-						self.isRequestingForMoreData = false
+						self.doneRequestingMessages()
 				})
-				// finished
 			}
 		}
 	}
@@ -361,6 +368,12 @@ class ChatRoomViewController: DLMessagesViewController {
 		isRequestingForMoreData = false
 	}
 	
+	// MARK: - Scroll view delegate
+	override func scrollViewDidScroll(scrollView: UIScrollView) {
+		if scrollView.contentOffset.y <= -(scrollView.contentInset.top) {
+			requestMoreData()
+		}
+	}
 	
 	// MARK: - TableView Delegate and DataSource
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -527,7 +540,6 @@ extension ChatRoomViewController : DLMessagesViewControllerDelegate {
 		if floatingOptionView.isShown {
 			toggleDropDownMenu()
 		}
-		requestMoreData()
 	}
 }
 

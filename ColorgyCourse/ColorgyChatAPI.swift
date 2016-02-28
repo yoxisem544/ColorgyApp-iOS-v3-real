@@ -1202,7 +1202,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/chatroom/more_message，參數包含使用者的userId, uuid,accessToken,chatroomId,從頭數過來的offset
 	///2. 比如說你想要拿到第51~75則訊息，offset設定為50即可
-	class func moreMessage(userId: String, chatroomId: String, offset: Int, success: () -> Void, failure: () -> Void) {
+	class func moreMessage(userId: String, chatroomId: String, offset: Int, success: (messages: [ChatMessage]) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -1228,7 +1228,17 @@ class ColorgyChatAPI : NSObject {
 		afManager.POST(serverURL + "/chatroom/more_message", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
 				let json = JSON(response)
-				print(json)
+				// TODO: preformance handle
+				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+					var ms = ChatMessage.generateMessagesOnRequestingMoreMessage(json)
+					ms = ms.sort({ (m1: ChatMessage, m2: ChatMessage) -> Bool in
+						return m1.createdAt.timeIntervalSince1970() < m2.createdAt.timeIntervalSince1970()
+					})
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						success(messages: ms)
+					})
+				})
 			} else {
 				failure()
 			}

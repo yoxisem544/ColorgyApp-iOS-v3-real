@@ -77,6 +77,49 @@ class ChatMessage: NSObject {
 		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt, chatProgress: chatProgress)
 	}
 	
+	convenience init?(onRequestingMoreMessage json: JSON) {
+		
+		var id: String?
+		var type: String?
+		var content: String?
+		var userId: String?
+		var createdAt: String?
+		var chatProgress: Int?
+		
+		if json["id"].string != nil {
+			id = json["id"].string!
+		}
+		if json["type"].string != nil {
+			type = json["type"].string!
+		}
+		
+		if type == ChatMessage.MessageType.Text {
+			if json["content"]["text"].string != nil {
+				content = json["content"][ChatMessage.ContentKey.Text].string!
+			}
+		} else if type == ChatMessage.MessageType.Image {
+			if json["content"]["imgSrc"].string != nil {
+				content = json["content"][ChatMessage.ContentKey.Image].string!
+			}
+		} else if type == ChatMessage.MessageType.Sticker {
+			if json["content"]["stickerId"].string != nil {
+				content = json["content"][ChatMessage.ContentKey.Sticker].string!
+			}
+		}
+		
+		//		if json["data"]["content"]["text"].string != nil {
+		//			content = json["data"]["content"]["text"].string!
+		//		}
+		if json["userId"].string != nil {
+			userId = json["userId"].string!
+		}
+		if json["createdAt"].string != nil {
+			createdAt = json["createdAt"].string!
+		}
+		
+		self.init(id: id, type: type, content: content, userId: userId, createdAt: createdAt, chatProgress: 1)
+	}
+	
 	convenience init?(onConnect json: JSON) {
 
 		var id: String?
@@ -155,6 +198,17 @@ class ChatMessage: NSObject {
 //		print(json)
 		for (_, json) : (String, JSON) in json {
 			if let message = ChatMessage(onMessage: json) {
+				messages.append(message)
+			}
+		}
+		return messages
+	}
+	
+	class func generateMessagesOnRequestingMoreMessage(json: JSON) -> [ChatMessage] {
+		var messages = [ChatMessage]()
+		//		print(json)
+		for (_, json) : (String, JSON) in json["messageList"] {
+			if let message = ChatMessage(onRequestingMoreMessage: json) {
 				messages.append(message)
 			}
 		}

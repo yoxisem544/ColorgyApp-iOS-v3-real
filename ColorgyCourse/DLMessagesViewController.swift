@@ -218,6 +218,10 @@ class DLMessagesViewController: UIViewController {
 			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: rows, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
 		}
 	}
+	
+	func recieveMessageAndInsertAtFront() {
+		bubbleTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Fade)
+	}
 }
 
 extension DLMessagesViewController : TextInputViewDelegate {
@@ -259,6 +263,8 @@ extension DLMessagesViewController : UITableViewDelegate, UITableViewDataSource 
         
         return cell
     }
-    
-
+	
+	func scrollViewDidScroll(scrollView: UIScrollView) {
+		
+	}
 }
