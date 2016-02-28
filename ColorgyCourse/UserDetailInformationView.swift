@@ -39,7 +39,8 @@ class UserDetailInformationView: UIView {
 			if let percentage = percentage {
 				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
 				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-					let radius = 2.0 * CGFloat(100 - percentage) * 0.01
+					let radius = 20.0 * (CGFloat(100 - percentage) % 33) * 0.01
+					print(radius)
 					let blurImage = UIImage().gaussianBlurImage(image, andInputRadius: radius)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						userImageView.image = blurImage

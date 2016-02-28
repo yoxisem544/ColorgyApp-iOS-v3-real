@@ -190,7 +190,7 @@ class FriendListViewController: UIViewController {
 								self.friendListTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: rows, inSection: 1)], withRowAnimation: UITableViewRowAnimation.Fade)
 								self.friendListTableView.endUpdates()
 							})
-							NSThread.sleepForTimeInterval(0.1)
+							NSThread.sleepForTimeInterval(0.01)
 						}
 					}
 					//		看old有沒有多餘的，刪除

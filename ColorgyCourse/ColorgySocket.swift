@@ -83,8 +83,38 @@ class ColorgySocket : NSObject {
 	
 	func onRecievingMessage(messagesRecieved messagesRecieved: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("chatroom") { (response, ack: SocketAckEmitter) -> Void in
-			let ms = ChatMessage.generateMessages(JSON(response))
-			messagesRecieved(messages: ms)
+			let json = JSON(response)
+			if json["data"]["type"].string != "avatar" {
+				let ms = ChatMessage.generateMessages(json)
+				if ms.count > 0 {
+					messagesRecieved(messages: ms)
+				}
+			}
+		}
+	}
+	
+	func onUpdateUserAvatar(updateAvatar: (user1: (id: String, imageId: String), user2: (id: String, imageId: String)) -> Void) {
+		self.socket.on("chatroom") { (response, ack: SocketAckEmitter) -> Void in
+			let _json = JSON(response)
+			let json: JSON? = _json.isArray ? _json[0] : nil
+			guard json != nil else { return }
+			print(json)
+			if json!["data"]["type"].string == "avatar" {
+				let userId1 = json!["data"]["userId1"].string
+				let userId2 = json!["data"]["userId2"].string
+				let imageId1 = json!["data"]["imageId1"].string
+				let imageId2 = json!["data"]["imageId2"].string
+				
+				guard userId1 != nil else { return }
+				guard userId2 != nil else { return }
+				guard imageId1 != nil else { return }
+				guard imageId2 != nil else { return }
+				
+				let user1 = (userId1!, imageId1!)
+				let user2 = (userId2!, imageId2!)
+				
+				updateAvatar(user1: user1, user2: user2)
+			}
 		}
 	}
 	
@@ -110,7 +140,7 @@ class ColorgySocket : NSObject {
 				],
 				"url": "/chatroom/send_message"
 			]
-			print(postData)
+//			print(postData)
 			//			s.emit("post", withItems: postData as! [AnyObject])
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)

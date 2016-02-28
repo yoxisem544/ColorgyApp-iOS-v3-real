@@ -43,12 +43,19 @@ class ChatRoomViewController: DLMessagesViewController {
 	private var dropDownButton: UIBarButtonItem!
 	
 	// for user profile image
-	private var userProfileImageString: String = ""
+	private var userProfileImage: UIImage = UIImage()
+	private var userProfileImageString: String = "" {
+		didSet {
+			if chatroom != nil {
+				loadUserProfileImage(chatroom!.chatProgress)
+			}
+		}
+	}
 	private var yourFriend: ChatUserInformation?
 	
 	// request more data
 	private var isRequestingForMoreData: Bool = false
-	private var messageRequestPage: Int = 0
+	private var messagesCount: Int = 0
 	
 	
 	// MARK: Life Cycle
@@ -59,8 +66,6 @@ class ChatRoomViewController: DLMessagesViewController {
 		// the delegate here is from DLMessageView
 		// set it to current class
 		self.delegate = self
-		
-		loadUserProfileImage()
 		
 		configureFloatingOptionView()
 		
@@ -194,14 +199,34 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	func loadUserProfileImage() {
-		// TODO: 檢查friend是否正確
-		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user: ChatUserInformation) -> Void in
-			self.userProfileImageString = user.avatarBlur2XURL ?? ""
-			self.yourFriend = user
-			}) { () -> Void in
-				
-		}
+	func loadUserProfileImage(percentage: Int) {
+
+		let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+		dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+			
+			// get image from cache
+			let sc = SDImageCache()
+			var imageFromCache = sc.imageFromDiskCacheForKey(self.userProfileImageString)
+			
+			if imageFromCache == nil  {
+				// load image if its nil
+				if self.userProfileImageString.isValidURLString {
+					print(self.userProfileImageString)
+					UIImageView().sd_setImageWithURL(self.userProfileImageString.url, completed: { (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, url: NSURL!) -> Void in
+						self.loadUserProfileImage(percentage)
+					})
+				}
+			} else {
+				let radius = 20.0 * (CGFloat(100 - percentage) % 33) * 0.01
+				print(radius)
+				let blurImage = imageFromCache.gaussianBlurImage(imageFromCache, andInputRadius: radius)
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.userProfileImage = blurImage
+					self.bubbleTableView.reloadData()
+				})
+			}
+		
+		})
 	}
 	
 	func openPhotoBrowserWithImage(image: UIImage) {
@@ -261,12 +286,11 @@ class ChatRoomViewController: DLMessagesViewController {
 		// register for connect event
 		colorgySocket.connectToServer(withParameters: params, registerToChatroom: { (chatroom) -> Void in
 			self.chatroom = chatroom
+			self.userProfileImageString = self.chatroom?.targetImage ?? ""
 			print(self.chatroom)
-			// set page to 1 when connected
-			self.messageRequestPage += 1
 			// TODO: handle not connect condition
 			}, withMessages: { (messages) -> Void in
-				print(messages)
+				print("message count \(messages.count)")
 				for m in messages {
 					self.messages.append(m)
 					//        self.messageRecieved()
@@ -275,7 +299,8 @@ class ChatRoomViewController: DLMessagesViewController {
 					m.chatProgress = self.historyChatroom.chatProgress
 				}
 				self.recievingABunchMessages()
-				print(messages)
+				// set count when connected
+				self.messagesCount = self.messages.count
 		})
 		
 		// register for recieving message event
@@ -288,6 +313,12 @@ class ChatRoomViewController: DLMessagesViewController {
 				print("訊息延遲....")
 				print(m.createdAt.timeStampString())
 			}
+		}
+		
+		colorgySocket.onUpdateUserAvatar { (user1, user2) -> Void in
+			let thisUser = (user1.id == self.userId ? user2 : user1)
+			self.historyChatroom.image = thisUser.imageId
+			self.bubbleTableView.reloadData()
 		}
 		
 		colorgySocket.connect()
@@ -343,7 +374,8 @@ class ChatRoomViewController: DLMessagesViewController {
 			if messages[indexPath.row].type == ChatMessage.MessageType.Text {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingMessageBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingMessageBubble
 				
-				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+//				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+				cell.userImageView.image = userProfileImage
 				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				
@@ -351,7 +383,8 @@ class ChatRoomViewController: DLMessagesViewController {
 			} else if messages[indexPath.row].type == ChatMessage.MessageType.Image {
 				let cell = tableView.dequeueReusableCellWithIdentifier(DLMessageControllerIdentifier.DLIncomingPhotoBubbleIdentifier, forIndexPath: indexPath) as! DLIncomingPhotoBubble
 				
-				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+//				cell.userImageView.sd_setImageWithURL(userProfileImageString.url, placeholderImage: nil)
+				cell.userImageView.image = userProfileImage
 				cell.message = messages[indexPath.row]
 				cell.delegate = self
 				

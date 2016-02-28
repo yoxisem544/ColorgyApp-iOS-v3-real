@@ -25,7 +25,27 @@ class FriendListTableViewCell: UITableViewCell {
 	
 	func updateUI() {
 		if historyChatroom.image.isValidURLString {
-			userProfileImageView.sd_setImageWithURL(NSURL(string: historyChatroom.image)!, placeholderImage: nil)
+			
+			let sc = SDImageCache()
+			let imageFromCache = sc.imageFromDiskCacheForKey(self.historyChatroom.image)
+			
+			if imageFromCache == nil  {
+				// load image if its nil
+				UIImageView().sd_setImageWithURL(historyChatroom.image.url, completed: { (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, url: NSURL!) -> Void in
+					self.updateUI()
+				})
+			} else {
+				let percentage = self.historyChatroom.chatProgress
+				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+					let radius = 20 * (CGFloat(100 - percentage) % 33) * 0.01
+					print(radius)
+					let blurImage = UIImage().gaussianBlurImage(imageFromCache, andInputRadius: radius)
+					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+						self.userProfileImageView.image = blurImage
+					})
+				})
+			}
 		}
 		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
 		userQuestionLabel.text = " "
