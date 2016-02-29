@@ -55,7 +55,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// request more data
 	private var isRequestingForMoreData: Bool = false
-	private var messagesCount: Int = 0
+	private var historyMessagesCount: Int = 0
 	
 	
 	// MARK: Life Cycle
@@ -300,7 +300,7 @@ class ChatRoomViewController: DLMessagesViewController {
 				}
 				self.recievingABunchMessages()
 				// set count when connected
-				self.messagesCount = self.messages.count
+				self.historyMessagesCount = self.messages.count
 		})
 		
 		// register for recieving message event
@@ -345,8 +345,8 @@ class ChatRoomViewController: DLMessagesViewController {
 			if bubbleTableView.contentSize.height >= bubbleTableView.bounds.height {
 				// check page
 				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-					ColorgyChatAPI.moreMessage(user.userId, chatroomId: self.historyChatroom.chatroomId, offset: self.messages.count, success: { (messages) -> Void in
-						self.messagesCount += messages.count
+					ColorgyChatAPI.moreMessage(user.userId, chatroom: self.chatroom!, historyMessagesCount: self.historyMessagesCount, success: { (messages) -> Void in
+						self.historyMessagesCount += messages.count
 						print(messages.count)
 						for m in messages {
 							self.messages.insert(m, atIndex: 0)

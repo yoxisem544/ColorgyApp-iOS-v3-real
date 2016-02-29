@@ -1202,7 +1202,7 @@ class ColorgyChatAPI : NSObject {
 	///
 	///1. 傳一個http post給/chatroom/more_message，參數包含使用者的userId, uuid,accessToken,chatroomId,從頭數過來的offset
 	///2. 比如說你想要拿到第51~75則訊息，offset設定為50即可
-	class func moreMessage(userId: String, chatroomId: String, offset: Int, success: (messages: [ChatMessage]) -> Void, failure: () -> Void) {
+	class func moreMessage(userId: String, chatroom: Chatroom, historyMessagesCount: Int, success: (messages: [ChatMessage]) -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
@@ -1217,12 +1217,17 @@ class ColorgyChatAPI : NSObject {
 			return
 		}
 		
+		print("history message count \(historyMessagesCount)")
+		// get 25 messages everytime, -1 because of starting from 0
+		let offset = chatroom.totalMessageLength - historyMessagesCount - 25
+		print(offset)
+		
 		let params = [
 			"uuid": uuid,
 			"accessToken": accessToken,
 			"userId": userId,
-			"chatroomId": chatroomId,
-			"offset": offset
+			"chatroomId": chatroom.chatroomId,
+			"offset": offset >= 0 ? offset : 0
 		]
 		
 		afManager.POST(serverURL + "/chatroom/more_message", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
@@ -1233,8 +1238,22 @@ class ColorgyChatAPI : NSObject {
 				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
 					var ms = ChatMessage.generateMessagesOnRequestingMoreMessage(json)
 					ms = ms.sort({ (m1: ChatMessage, m2: ChatMessage) -> Bool in
-						return m1.createdAt.timeIntervalSince1970() < m2.createdAt.timeIntervalSince1970()
+						return m1.createdAt.timeIntervalSince1970() > m2.createdAt.timeIntervalSince1970()
 					})
+					for m in ms {
+						print(m.createdAt.timeStampString())
+					}
+					print("getting \(ms.count) messages")
+					print("historyMessagesCount \(historyMessagesCount)")
+					print("total length \(chatroom.totalMessageLength)")
+					print("slicing")
+					if (historyMessagesCount + ms.count) > chatroom.totalMessageLength {
+						print("need slicing")
+						let countsNeedToSlice = (historyMessagesCount + ms.count) - chatroom.totalMessageLength
+						for i in 1...countsNeedToSlice {
+							ms.removeFirst()
+						}
+					}
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						success(messages: ms)
 					})
