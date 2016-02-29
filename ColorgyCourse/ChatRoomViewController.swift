@@ -56,7 +56,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	// request more data
 	private var isRequestingForMoreData: Bool = false
 	private var historyMessagesCount: Int = 0
-	
+	private let requestMoreMessageRefreshControl: UIRefreshControl = UIRefreshControl()
 	
 	// MARK: Life Cycle
 	override func viewDidLoad() {
@@ -74,6 +74,20 @@ class ChatRoomViewController: DLMessagesViewController {
 		addRightNavButton()
 		
 		title = historyChatroom.name
+		
+		configureRefreshControl()
+	}
+	
+	func configureRefreshControl() {
+		requestMoreMessageRefreshControl.addTarget(self, action: "needsToRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+		requestMoreMessageRefreshControl.tintColor = ColorgyColor.MainOrange
+		bubbleTableView.addSubview(requestMoreMessageRefreshControl)
+	}
+	
+	func needsToRefresh(control: UIRefreshControl) {
+		requestMoreData { () -> Void in
+			control.endRefreshing()
+		}
 	}
 	
 	override func viewDidAppear(animated: Bool) {
@@ -335,7 +349,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		floatingOptionView.delegate = self
 	}
 	
-	func requestMoreData() {
+	func requestMoreData(complete: () -> Void) {
 		if !isRequestingForMoreData && (chatroom != nil) {
 			print("loading")
 			isRequestingForMoreData = true
@@ -354,11 +368,14 @@ class ChatRoomViewController: DLMessagesViewController {
 						}
 						
 						self.doneRequestingMessages()
+						complete()
 						}, failure: { () -> Void in
 							self.doneRequestingMessages()
+							complete()
 					})
 					}, failure: { () -> Void in
 						self.doneRequestingMessages()
+						complete()
 				})
 			}
 		}
@@ -369,11 +386,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	}
 	
 	// MARK: - Scroll view delegate
-	func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-		if scrollView.contentOffset.y <= -(scrollView.contentInset.top) {
-			requestMoreData()
-		}
-	}
+	
 	
 	// MARK: - TableView Delegate and DataSource
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
