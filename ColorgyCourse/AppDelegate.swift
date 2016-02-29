@@ -168,6 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+		print(deviceToken)
         UserSetting.storePushNotificationDeviceToken(deviceToken)
         // update token
         ColorgyAPI.PUTdeviceToken(success: { () -> Void in
@@ -176,6 +177,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("noti fail")
         }
     }
+	
+	// MARK: - notification
+	func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+		print("did recieve notification")
+		print("user info")
+		print(userInfo)
+		if application.applicationState == UIApplicationState.Active {
+			
+		}
+	}
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

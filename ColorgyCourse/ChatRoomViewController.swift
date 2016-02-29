@@ -637,7 +637,7 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 					// wait after callback
 					self.navigationController?.popViewControllerAnimated(true)
 					}, failure: { () -> Void in
-						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！出現此錯誤是已經封鎖使用者但是尚未離開聊天室。")
+						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！出現此錯誤是已經封鎖使用者但是尚未離開聊天室，請回報BUG。")
 				})
 				}, failure: { () -> Void in
 					self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")

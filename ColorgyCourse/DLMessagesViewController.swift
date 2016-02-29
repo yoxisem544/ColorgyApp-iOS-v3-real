@@ -67,6 +67,8 @@ class DLMessagesViewController: UIViewController {
 		
 		bubbleTableView.separatorStyle = .None
 		
+		bubbleTableView.scrollsToTop = true
+		
 		// adjust inset
 		bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
 		

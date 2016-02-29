@@ -46,7 +46,7 @@ class SayHelloViewController: UIViewController {
 	}
 	
 	// MARK: show report view
-	func showChatReportController(title: String?, canSkip: Bool, type: String?) {
+	func showChatReportController(title: String?, canSkip: Bool, type: String?, hi: Hello?) {
 		
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
 		let reportController = storyboard.instantiateViewControllerWithIdentifier("chat report") as! ChatReportViewController
@@ -54,6 +54,7 @@ class SayHelloViewController: UIViewController {
 		reportController.titleOfReport = title
 		reportController.reportType = type
 		reportController.delegate = self
+		reportController.hi = hi
 		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.3))
 		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
 			self.presentViewController(reportController, animated: true, completion: nil)
@@ -107,10 +108,10 @@ class SayHelloViewController: UIViewController {
 	func moreOptions(hi: Hello?) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 		let block = UIAlertAction(title: "封鎖", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			self.showChatReportController("封鎖用戶", canSkip: true, type: "block")
+			self.showChatReportController("封鎖用戶", canSkip: true, type: "block", hi: hi)
 		}
 		let report = UIAlertAction(title: "檢舉", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
-			self.showChatReportController("檢舉用戶", canSkip: false, type: "report")
+			self.showChatReportController("檢舉用戶", canSkip: false, type: "report", hi: hi)
 		}
 		let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
 		alert.addAction(report)
@@ -254,7 +255,12 @@ extension SayHelloViewController : ChatReportViewControllerDelegate {
 			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
 				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
-					self.reloadHi()
+					ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
+						self.reloadHi()
+						}, failure: { () -> Void in
+							self.reappendHi(hi)
+							self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+					})
 					}, failure: { () -> Void in
 						self.reappendHi(hi)
 						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
@@ -273,7 +279,12 @@ extension SayHelloViewController : ChatReportViewControllerDelegate {
 			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
 				ColorgyChatAPI.blockUser(user.userId, targetId: targetId, success: { () -> Void in
-					self.reloadHi()
+					ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
+						self.reloadHi()
+						}, failure: { () -> Void in
+							self.reappendHi(hi)
+							self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
+					})
 					}, failure: { () -> Void in
 						self.reappendHi(hi)
 						self.showAlertWithErrorMessage("錯誤", message: "請檢查網路是否暢通，然後再試一次！")
