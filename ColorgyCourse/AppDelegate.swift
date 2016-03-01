@@ -16,6 +16,8 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+	
+	let kStatusBarTappedNotification = "statusBarTappedNotification"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -186,6 +188,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if application.applicationState == UIApplicationState.Active {
 			
 		}
+	}
+	
+	// MARK: - status bar touched
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		super.touchesBegan(touches, withEvent: event)
+		if window != nil {
+			if let location: CGPoint = event?.allTouches()?.first?.locationInView(window!) {
+				let statusBarFrame = UIApplication.sharedApplication().statusBarFrame
+				if CGRectContainsPoint(statusBarFrame, location) {
+					statusBarTouchedAction()
+				}
+			}
+		}
+		
+	}
+	
+	func statusBarTouchedAction() {
+		NSNotificationCenter.defaultCenter().postNotificationName(kStatusBarTappedNotification, object: nil)
 	}
 
     func applicationWillResignActive(application: UIApplication) {
