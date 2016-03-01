@@ -377,7 +377,13 @@ class ChatRoomViewController: DLMessagesViewController {
 						self.doneRequestingMessages()
 						complete()
 				})
+			} else {
+				// height not ok
+				complete()
 			}
+		} else {
+			// can not fetch
+			complete()
 		}
 	}
 	

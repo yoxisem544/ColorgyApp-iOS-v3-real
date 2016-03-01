@@ -35,6 +35,11 @@ class UserDetailInformationView: UIScrollView {
 		userImageView.layer.borderColor = UIColor.whiteColor().CGColor
 		userImageView.layer.borderWidth = 2.0
 		
+		let loadingView = UIActivityIndicatorView()
+		loadingView.tintColor = ColorgyColor.MainOrange
+		userImageView.addSubview(loadingView)
+		loadingView.startAnimating()
+		
 		if let image = image {
 			if let percentage = percentage {
 				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
@@ -46,6 +51,8 @@ class UserDetailInformationView: UIScrollView {
 					let blurImage = UIImage().gaussianBlurImage(image, andInputRadius: radius)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						userImageView.image = blurImage
+						loadingView.stopAnimating()
+						loadingView.removeFromSuperview()
 					})
 				})
 			}
