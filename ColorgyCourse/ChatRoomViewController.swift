@@ -645,6 +645,11 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 		
 		// submit a request
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
 			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom.friendId, success: { () -> Void in
 				ColorgyChatAPI.leaveChatroom(user.userId, chatroomId: self.historyChatroom.chatroomId, success: { () -> Void in
 					// wait after callback
