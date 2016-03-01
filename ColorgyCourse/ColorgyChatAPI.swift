@@ -123,6 +123,7 @@ class ColorgyChatAPI : NSObject {
 		afManager.POST(serverURL + "/users/check_user_available", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			//            print(response)
 			if let response = response {
+				print(response)
 				if let user = ChatUser(json: JSON(response)) {
 					success(user: user)
 				} else {
@@ -1046,7 +1047,9 @@ class ColorgyChatAPI : NSObject {
             if let response = response {
                 let json = JSON(response)
                 let rooms = HistoryChatroom.generateHistoryChatrooms(json)
-                success(targets: rooms)
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					success(targets: rooms)
+				})
             } else {
                 failure()
             }

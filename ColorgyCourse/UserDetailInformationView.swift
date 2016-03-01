@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDetailInformationView: UIView {
+class UserDetailInformationView: UIScrollView {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -103,6 +103,12 @@ class UserDetailInformationView: UIView {
 			// error on percentage
 			percenageLabel.text = "???%"
 		}
+		
+		expandContentSize()
+	}
+	
+	func expandContentSize() {
+		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
 	}
 	
 	func dismissView() {
