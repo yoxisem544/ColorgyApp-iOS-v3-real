@@ -14,6 +14,7 @@
 #import "HelloViewController.h"
 #import "PersonalChatInformationViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UselessView.h"
 
 #define CELL_IDENTIFIER @"cellIdentifier"
 #define FOOTER_IDENTIFIER @"footerIdentifier"
@@ -25,14 +26,23 @@
 
 @implementation BlurWallViewController {
     int currentPage;
+    UselessView *useLessView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentPage = 0;
-    // self.cachedImages = [[NSMutableDictionary alloc] init];
+    
+    UIBarButtonItem *newBackButton =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
     
     [self registerForKeyboardNotifications];
+    
+    self.navigationController.navigationBar.translucent = NO;
     
     // Make RightBarButtonItem
     UIButton *completeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,7 +90,7 @@
     self.blurWallSegmentedControl = [[UISegmentedControl alloc] initWithItems:mySegments];
     self.blurWallSegmentedControl.selectedSegmentIndex = 0;
     self.blurWallSegmentedControl.tintColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
-    self.blurWallSegmentedControl.frame = CGRectMake(0, 0, self.view.frame.size.width - 115, 27);
+    self.blurWallSegmentedControl.frame = CGRectMake(0, 0, self.view.frame.size.width - 150, 27);
     self.navigationItem.titleView = self.blurWallSegmentedControl;
     [self.blurWallSegmentedControl addTarget:self action:@selector(refreshDataBySegment) forControlEvents:UIControlEventValueChanged];
     
@@ -95,33 +105,47 @@
     }];
     
     NSLog(@"%lu", (unsigned long)[self.blurWallDataMutableArray count]);
+    
+    useLessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50) withMessage:@""];
+    //    useLessView.hidden = YES;
+    
+    [self.view addSubview:useLessView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    // 檢查是否回答清晰問
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = nil;
+    self.navigationController.navigationBar.translucent = NO;
+    
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
-            [self.loadingView finished:^() {
-                // 取得清晰問
-                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+        
+        // 取得清晰問
+        [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+            
+            // 檢查是否回答清晰問
+            [ColorgyChatAPI checkAnsweredLatestQuestion:chatUser.userId success:^(BOOL answered) {
+                [self.loadingView finished:^() {
+                    //                    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
                     self.questionDate = date;
                     self.cleanAskString = question;
                     if (self.cleanAskString && !answered) {
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
                         }
+                    } else if (animated) {
+                        [self showUseLess];
                     }
-                } failure:^() {
-                    NSLog(@"getQuestion error");
+                    //                    } failure:^() {
+                    //                    }];
                 }];
-            }];
-        } failure:^() {
-            NSLog(@"checkAnswered error");
-            [self.loadingView finished:^() {
-                // 取得清晰問
-                [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+            } failure:^() {
+                NSLog(@"checkAnswered error");
+                [self.loadingView finished:^() {
+                    // 取得清晰問
+                    //                    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
                     self.cleanAskString = question;
                     self.questionDate = date;
                     if (self.cleanAskString) {
@@ -129,14 +153,27 @@
                             [self cleanAskViewLayout];
                         }
                     }
-                } failure:^() {
-                    NSLog(@"getquestion error");
+                    //                    } failure:^() {
+                    //                        NSLog(@"getquestion error");
+                    //                    }];
                 }];
             }];
+        } failure:^() {
+            NSLog(@"getQuestion error");
         }];
     } failure:^() {
         NSLog(@"check user error");
     }];
+}
+
+- (void)showUseLess {
+    useLessView.messageLabel.text = [NSString stringWithFormat:@"每日清晰問：%@", self.cleanAskString];
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^() {
+        useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50);
+    } completion:^(BOOL finished) {}];
+    [UIView animateWithDuration:0.3 delay:5 options:UIViewAnimationOptionCurveEaseIn animations:^() {
+        useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50);
+    } completion:^(BOOL finished) {}];
 }
 
 #pragma mark - KeyboardNotifications
@@ -212,19 +249,19 @@
     AvailableTarget *availableTarget = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
     NSString *imageUrl = availableTarget.avatarBlur2XURL;
     
-//    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
-//        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
-//    } else {
-        blurImageView.image = nil;
-        [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-        /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
-         dispatch_sync(dispatch_get_main_queue(), ^{
-         blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
-         
-         [cell setNeedsLayout];
-         });
-         }];*/
-//    }
+    //    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
+    //        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
+    //    } else {
+    blurImageView.image = nil;
+    [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
+    /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
+     dispatch_sync(dispatch_get_main_queue(), ^{
+     blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
+     
+     [cell setNeedsLayout];
+     });
+     }];*/
+    //    }
     
     blurImageView.center = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
     [cell addSubview:blurImageView];
@@ -253,8 +290,9 @@
     
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 10)];
-    
+#pragma mark - Warnrnig
     messageLabel.text = availableTarget.lastAnswer;
+    //    messageLabel.text = @"我是帥";
     messageLabel.numberOfLines = 2;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:12.0];
@@ -362,7 +400,7 @@
     [self.tabBarController setHidesBottomBarWhenPushed:YES];
     HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
     [self.navigationController pushViewController:vc animated:YES];
-//    [self presentViewController:vc animated:YES completion:nil];
+    //    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -410,13 +448,35 @@
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
-            self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
-            // Tell the collectionView to reload.
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
-            if (callbackBlock) {
-                callbackBlock();
-            }
+            [ColorgyChatAPI getMyList:user.userId success:^(NSArray *myList) {
+                NSMutableArray *finallyArray = [[NSMutableArray alloc] init];
+                NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:response];
+                for (NSString *useId in myList) {
+                    for (AvailableTarget *target in response) {
+                        if ([useId isEqualToString:target.id]) {
+                            [finallyArray addObject:target];
+                            [tempArray removeObject:target];
+                        }
+                    }
+                }
+                
+                [finallyArray addObjectsFromArray:tempArray];
+                
+                
+                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:finallyArray];
+//                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+                if (callbackBlock) {
+                    callbackBlock();
+                }
+            } failure:^() {
+                NSLog(@"get myList error");
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+            }];
         } failure:^() {
             NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
@@ -440,6 +500,8 @@
             self.loadingView = nil;
             callbackBlock();
         }
+        [self.blurWallCollectionView reloadData];
+        [self.blurWallRefreshControl endRefreshing];
     }];
     
     // Simulate an async load...
@@ -501,10 +563,31 @@
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
-            [self.blurWallDataMutableArray addObjectsFromArray:response];
-            // Tell the collectionView to reload.
-            [self.blurWallCollectionView reloadData];
-            [self.blurWallRefreshControl endRefreshing];
+            [ColorgyChatAPI getMyList:user.userId success:^(NSArray *myList) {
+                NSMutableArray *finallyArray = [[NSMutableArray alloc] init];
+                NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:response];
+                for (NSString *useId in myList) {
+                    for (AvailableTarget *target in response) {
+                        if ([useId isEqualToString:target.id]) {
+                            [finallyArray addObject:target];
+                            [tempArray removeObject:target];
+                        }
+                    }
+                }
+                
+                [finallyArray addObjectsFromArray:tempArray];
+                [self.blurWallDataMutableArray addObjectsFromArray:finallyArray];
+                //                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+
+            } failure:^() {
+                NSLog(@"get myList error");
+                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
+                [self.blurWallRefreshControl endRefreshing];
+            }];
         } failure:^() {
             NSLog(@"get AvailableTarget fail");
             [self.blurWallCollectionView reloadData];
@@ -518,6 +601,8 @@
         //        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         //        }]];
         //        [self presentViewController:alertController animated:YES completion:nil];
+        //        [self.blurWallCollectionView reloadData];
+        [self.blurWallRefreshControl endRefreshing];
     }];
     
     // Simulate an async load...
@@ -709,7 +794,7 @@
     [self.cleanAskAlertView addSubview:self.cleanAskTextView];
     self.cleanAskTextView.layer.borderWidth = 1;
     self.cleanAskTextView.layer.cornerRadius = 3;
-//    self.cleanAskTextView.textAlignment = NSTextAlignmentCenter;
+    //    self.cleanAskTextView.textAlignment = NSTextAlignmentCenter;
     self.cleanAskTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
     self.cleanAskTextView.delegate = self;
     
@@ -725,7 +810,8 @@
     self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     self.cancelButton.frame = CGRectMake(0, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
-    self.submitButton.frame = CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    //    self.submitButton.frame = CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width / 2, 45);
+    self.submitButton.frame = CGRectMake(0, CGRectGetHeight(self.cleanAskAlertView.frame) - 45, self.cleanAskAlertView.frame.size.width, 45);
     //    cancelButton.backgroundColor = [UIColor orangeColor];
     //    submitButton.backgroundColor = [UIColor blueColor];
     [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -750,19 +836,19 @@
     maskLayer.path = maskPath.CGPath;
     self.submitButton.layer.mask = maskLayer;
     
-    [self.cleanAskAlertView addSubview:self.cancelButton];
+    //    [self.cleanAskAlertView addSubview:self.cancelButton];
     [self.cleanAskAlertView addSubview:self.submitButton];
     
-    [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.cancelButton addTarget:self action:@selector(removeCleanAskViewLayout) forControlEvents:UIControlEventTouchUpInside];
     [self.submitButton addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
     
     self.line1 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.cancelButton.frame), CGRectGetMinY(self.cancelButton.frame), self.cleanAskAlertView.frame.size.width, 1)];
     [self.line1 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
     [self.cleanAskAlertView addSubview:self.line1];
     
-    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
-    [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
-    [self.cleanAskAlertView addSubview:self.line2];
+    //    self.line2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.cleanAskAlertView.frame) / 2, CGRectGetMinY(self.cancelButton.frame), 0.5, self.cancelButton.frame.size.height)];
+    //    [self.line2 setBackgroundColor:[self UIColorFromRGB:139 green:138 blue:138 alpha:100]];
+    //    [self.cleanAskAlertView addSubview:self.line2];
     
     // textNumberCunter Customized
     self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskTextView.bounds.size.width - 45, self.cleanAskTextView.bounds.size.height - 30, 45, 30)];
@@ -794,12 +880,14 @@
     [self.line1 removeFromSuperview];
     [self.line2 removeFromSuperview];
     [self.textNumberCounterLabel removeFromSuperview];
+    useLessView.messageLabel.text = [NSString stringWithFormat:@"每日清晰問：%@", self.cleanAskString];
 }
 
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
+            [self showUseLess];
         } failure:^() {
             NSLog(@"answerQuestion error");
         }];

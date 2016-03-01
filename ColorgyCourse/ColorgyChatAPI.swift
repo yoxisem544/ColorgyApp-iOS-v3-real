@@ -772,6 +772,53 @@ class ColorgyChatAPI : NSObject {
 				failure()
 		})
 	}
+    
+    ///取得打招呼列表：(simple test passed)
+    ///
+    ///取得被打過招呼的列表：
+    //
+    //    用途：取得打過招呼，還沒被接受的id列表
+    //    使用方式：
+    //
+    //    1. 傳一個http post給/hi/get_my_list，參數包含使用者的userId,uuid,accessToken
+    //    2. 回傳被打過招呼的列表，成功的話會出現status 200：{ result: [...] }的對你打過招呼的人的userId
+    
+    
+    class func getMyList(userId: String, success: (hiedList: NSArray) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard let uuid = UserSetting.UserUUID() else {
+            failure()
+            return
+        }
+        guard let accessToken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        
+        let params = [
+            "uuid": uuid,
+            "accessToken": accessToken,
+            "userId": userId
+        ]
+        print(params)
+        afManager.POST(serverURL + "/hi/get_my_list", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            if let response = response {
+                let json = JSON(response)
+                print(json)
+                success(hiedList: json["result"].arrayObject!)
+            } else {
+                failure()
+            }
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+                failure()
+        })
+    }
+
 	
 	///接受打招呼：(simple test passed)
 	///

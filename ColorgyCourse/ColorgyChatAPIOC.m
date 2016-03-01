@@ -30,6 +30,18 @@
 - (void)postChatUserNamer:(NSString *)name successs:(void (^) (NSDictionary *response))success failure:(void (^)(void))failure {
 }
 
+- (void)postEmail:(NSString *)email success:(void (^)(NSDictionary *response))success failure:(void (^)(void))failure {
+    [ColorgyAPI POSTUserEmail:email success:^(NSDictionary *response) {
+        if(success) {
+            success(response);
+        }
+    } failure:^() {
+        if(failure) {
+            failure();
+        }
+    }];
+}
+
 #pragma mark - Base64
 
 - (NSString *)encodeToBase64String:(UIImage *)image {

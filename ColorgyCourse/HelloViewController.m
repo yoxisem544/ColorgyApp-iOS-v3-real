@@ -8,9 +8,12 @@
 
 #import "HelloViewController.h"
 #import "ColorgyCourse-Swift.h"
+#import "LoadingView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface HelloViewController ()
+@interface HelloViewController () {
+    LoadingView *loadingView;
+}
 
 @property AvailableTarget *information;
 
@@ -18,6 +21,7 @@
 
 @implementation HelloViewController {
     BOOL hidenTabbar;
+    BOOL translucent;
 }
 
 - (instancetype)initWithInformaion:(AvailableTarget *)information {
@@ -33,7 +37,8 @@
     // Do any additional setup after loading the view.
     [self layout];
     self.tabBarController.tabBarController.hidesBottomBarWhenPushed = YES;
-    
+    translucent = self.navigationController.navigationBar.translucent;
+    self.navigationController.navigationBar.translucent = YES;
     //    [self performSegueWithIdentifier:@"to chat room" sender:nil];
     // 跳轉
     
@@ -83,13 +88,14 @@
     hidenTabbar = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     if (hidenTabbar) {
         [self.tabBarController.tabBar setHidden:NO];
     }
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = nil;
+    self.navigationController.navigationBar.translucent = translucent;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,7 +135,13 @@
     [gradientView.layer insertSublayer:gradient atIndex:0];
     
     // set messageRect
+    #pragma mark-Warning
     UIImageView *messageRect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageRect2"]];
+//    UIImageView *messageRect = [[UIImageView alloc] init];
+//    
+//    messageRect.layer.borderWidth = 1.5;
+//    messageRect.layer.cornerRadius = 3.0;
+//    messageRect.layer.borderColor = [[UIColor whiteColor] CGColor];
     
     messageRect.frame = CGRectMake(0, 0, userImageViewLength - 100, 60);
     messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
@@ -139,10 +151,18 @@
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 15, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 20)];
     messageLabel.text = self.information.lastAnswer;
+//    messageLabel.text = @"我是帥哥我是帥哥我是帥哥我是帥哥我是帥哥";
     messageLabel.numberOfLines = 2;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
     //messageLabel.backgroundColor = [UIColor yellowColor];
     messageLabel.textColor = [UIColor whiteColor];
-    messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+    messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
+    
+#pragma mark-Warning
+//    [messageLabel sizeToFit];
+    
+//    messageRect.frame = CGRectMake(0, 0, messageLabel.bounds.size.width + 25, 60);
+//    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
     
     [messageRect addSubview:messageLabel];
     
@@ -226,14 +246,14 @@
     
     NSString *aboutLabelString = nil;
     
-    if (self.information.aboutSchool) {
+    if ([self.information.aboutSchool length]) {
         aboutLabelString = self.information.aboutSchool;
     }
-    if (self.information.aboutHabitancy) {
+    if ([self.information.aboutHabitancy length]) {
         aboutLabelString = [aboutLabelString stringByAppendingString:@" . "];
         aboutLabelString = [aboutLabelString stringByAppendingString:self.information.aboutHabitancy];
     }
-    if (self.information.aboutHoroscope) {
+    if ([self.information.aboutHoroscope length]) {
         aboutLabelString = [aboutLabelString stringByAppendingString:@" . "];
         aboutLabelString = [aboutLabelString stringByAppendingString:self.information.aboutHoroscope];
     }
@@ -242,6 +262,7 @@
     //        organizationCodeLabel.text = self.information.organizationCode;
     //    } else {
     aboutLabel.text = aboutLabelString;
+    aboutLabel.textAlignment = NSTextAlignmentCenter;
     //    }
     aboutLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
     aboutLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
@@ -265,21 +286,23 @@
         
         // 檢查各個about有的話會顯示，沒有的話會自動隱藏
         if (self.information.aboutExpertise.length) {
-            UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY + 10, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
-            aboutExpertiseTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutExpertiseTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutExpertiseTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
             aboutExpertiseTitleLabel.text = @"專精的事情";
+//            aboutExpertiseTitleLabel.backgroundColor = [UIColor yellowColor];
             [aboutInformationView addSubview:aboutExpertiseTitleLabel];
             currentY = CGRectGetMaxY(aboutExpertiseTitleLabel.frame);
             currentY += paddingY;
             UILabel *aboutExpertiseLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
-            aboutExpertiseLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutExpertiseLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
             aboutExpertiseLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
             aboutExpertiseLabel.text = self.information.aboutExpertise;
             aboutExpertiseLabel.numberOfLines = 0;
             [aboutExpertiseLabel sizeToFit];
+//            aboutExpertiseLabel.backgroundColor = [UIColor blueColor];
             [aboutInformationView addSubview:aboutExpertiseLabel];
             currentY = CGRectGetMaxY(aboutExpertiseLabel.frame);
             currentY += sectionY;
@@ -287,7 +310,7 @@
         
         if (self.information.aboutPassion.length) {
             UILabel *aboutPassionTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
-            aboutPassionTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutPassionTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutPassionTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
             aboutPassionTitleLabel.text = @"最近熱衷的事物";
             [aboutInformationView addSubview:aboutPassionTitleLabel];
@@ -295,7 +318,7 @@
             currentY += paddingY;
             UILabel *aboutPassionLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
-            aboutPassionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutPassionLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
             aboutPassionLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
             aboutPassionLabel.numberOfLines = 0;
             aboutPassionLabel.text = self.information.aboutPassion;
@@ -307,7 +330,7 @@
         
         if (self.information.aboutConversation.length) {
             UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
-            aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:11.0];
+            aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutConversationTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
             aboutConversationTitleLabel.text = @"想聊的話題";
             [aboutInformationView addSubview:aboutConversationTitleLabel];
@@ -315,7 +338,7 @@
             currentY += paddingY;
             UILabel *aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
-            aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+            aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
             aboutConversationLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
             aboutConversationLabel.text = self.information.aboutConversation;
             aboutConversationLabel.numberOfLines = 0;
@@ -368,12 +391,16 @@
                 
                 [alertView addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
                     
+                    loadingView = [[LoadingView alloc] initJustFinished];
+
                     
                     // say hi
                     [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:alertView.textFields.firstObject.text success:^() {
                         [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
                         [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
+                        [loadingView justFinished];
                     } failure:^() {
+                        [loadingView dismiss:NULL];
                         NSLog(@"打招呼失敗");
                     }];
                     

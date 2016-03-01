@@ -23,7 +23,9 @@
 @property UIWindow *currentWindow;
 @property UIView *pathView;
 
+- (instancetype)initJustFinished;
 - (void)start;
+- (void)justFinished;
 - (void)finished:(void (^)(void))callbackBlock;
 - (void)dismiss:(void (^)(void))callbackBlock;
 // - (void)emailCheck;
