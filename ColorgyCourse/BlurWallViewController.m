@@ -232,7 +232,6 @@
             NSLog(@"%ld == %lu", (long)indexPath.item, (unsigned long)self.blurWallDataMutableArray.count);
             [self loadMoreData];
         }
-        
         return [self itemCellForIndexPath:indexPath];
     } else {
         [self loadMoreData];
@@ -578,19 +577,19 @@
                 [finallyArray addObjectsFromArray:tempArray];
                 [self.blurWallDataMutableArray addObjectsFromArray:finallyArray];
                 //                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
-                // Tell the collectionView to reload.
-                [self.blurWallCollectionView reloadData];
+//                // Tell the collectionView to reload.
+//                [self.blurWallCollectionView reloadData];
                 [self.blurWallRefreshControl endRefreshing];
 
             } failure:^() {
                 NSLog(@"get myList error");
-                // Tell the collectionView to reload.
-                [self.blurWallCollectionView reloadData];
+//                // Tell the collectionView to reload.
+//                [self.blurWallCollectionView reloadData];
                 [self.blurWallRefreshControl endRefreshing];
             }];
         } failure:^() {
-            NSLog(@"get AvailableTarget fail");
-            [self.blurWallCollectionView reloadData];
+//            NSLog(@"get AvailableTarget fail");
+//            [self.blurWallCollectionView reloadData];
             [self.blurWallRefreshControl endRefreshing];
         }];
     } failure:^() {

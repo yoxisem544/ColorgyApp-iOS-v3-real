@@ -19,6 +19,7 @@
 @property UIView *buttonView;
 @property UIButton *helloButton;
 @property UIScrollView *scrollView;
+
 // CleanAskView
 @property UIView *cleanAskView;
 @property UIView *cleanAskMaskView;

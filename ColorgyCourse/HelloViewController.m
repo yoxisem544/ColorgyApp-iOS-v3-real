@@ -135,13 +135,13 @@
     [gradientView.layer insertSublayer:gradient atIndex:0];
     
     // set messageRect
-    #pragma mark-Warning
+#pragma mark-Warning
     UIImageView *messageRect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageRect2"]];
-//    UIImageView *messageRect = [[UIImageView alloc] init];
-//    
-//    messageRect.layer.borderWidth = 1.5;
-//    messageRect.layer.cornerRadius = 3.0;
-//    messageRect.layer.borderColor = [[UIColor whiteColor] CGColor];
+    //    UIImageView *messageRect = [[UIImageView alloc] init];
+    //
+    //    messageRect.layer.borderWidth = 1.5;
+    //    messageRect.layer.cornerRadius = 3.0;
+    //    messageRect.layer.borderColor = [[UIColor whiteColor] CGColor];
     
     messageRect.frame = CGRectMake(0, 0, userImageViewLength - 100, 60);
     messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
@@ -151,7 +151,7 @@
     // set message
     UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 15, messageRect.bounds.size.width - 16, messageRect.bounds.size.height - 20)];
     messageLabel.text = self.information.lastAnswer;
-//    messageLabel.text = @"我是帥哥我是帥哥我是帥哥我是帥哥我是帥哥";
+    //    messageLabel.text = @"我是帥哥我是帥哥我是帥哥我是帥哥我是帥哥";
     messageLabel.numberOfLines = 2;
     messageLabel.textAlignment = NSTextAlignmentCenter;
     //messageLabel.backgroundColor = [UIColor yellowColor];
@@ -159,10 +159,10 @@
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
     
 #pragma mark-Warning
-//    [messageLabel sizeToFit];
+    //    [messageLabel sizeToFit];
     
-//    messageRect.frame = CGRectMake(0, 0, messageLabel.bounds.size.width + 25, 60);
-//    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
+    //    messageRect.frame = CGRectMake(0, 0, messageLabel.bounds.size.width + 25, 60);
+    //    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
     
     [messageRect addSubview:messageLabel];
     
@@ -291,7 +291,7 @@
             aboutExpertiseTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutExpertiseTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
             aboutExpertiseTitleLabel.text = @"專精的事情";
-//            aboutExpertiseTitleLabel.backgroundColor = [UIColor yellowColor];
+            //            aboutExpertiseTitleLabel.backgroundColor = [UIColor yellowColor];
             [aboutInformationView addSubview:aboutExpertiseTitleLabel];
             currentY = CGRectGetMaxY(aboutExpertiseTitleLabel.frame);
             currentY += paddingY;
@@ -302,7 +302,7 @@
             aboutExpertiseLabel.text = self.information.aboutExpertise;
             aboutExpertiseLabel.numberOfLines = 0;
             [aboutExpertiseLabel sizeToFit];
-//            aboutExpertiseLabel.backgroundColor = [UIColor blueColor];
+            //            aboutExpertiseLabel.backgroundColor = [UIColor blueColor];
             [aboutInformationView addSubview:aboutExpertiseLabel];
             currentY = CGRectGetMaxY(aboutExpertiseLabel.frame);
             currentY += sectionY;
@@ -391,13 +391,11 @@
                 
                 [alertView addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
                     
-                    loadingView = [[LoadingView alloc] initJustFinished];
-
-                    
                     // say hi
                     [ColorgyChatAPI sayHi:chatUser.userId targetId:self.information.id message:alertView.textFields.firstObject.text success:^() {
                         [self.helloButton setTitle:@"已打招呼" forState:UIControlStateNormal];
                         [self.helloButton removeTarget:self action:@selector(helloAction) forControlEvents:UIControlEventTouchUpInside];
+                        loadingView = [[LoadingView alloc] initJustFinished];
                         [loadingView justFinished];
                     } failure:^() {
                         [loadingView dismiss:NULL];
