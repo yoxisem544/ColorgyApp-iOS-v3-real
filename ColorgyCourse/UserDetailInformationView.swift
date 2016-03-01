@@ -37,6 +37,7 @@ class UserDetailInformationView: UIScrollView {
 		
 		let loadingView = UIActivityIndicatorView()
 		loadingView.tintColor = ColorgyColor.MainOrange
+		loadingView.center = CGPoint(x: userImageView.bounds.midX, y: userImageView.bounds.midY)
 		userImageView.addSubview(loadingView)
 		loadingView.startAnimating()
 		

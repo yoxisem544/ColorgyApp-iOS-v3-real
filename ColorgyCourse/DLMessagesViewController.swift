@@ -121,7 +121,9 @@ class DLMessagesViewController: UIViewController {
 	}
 	
 	func tapOnStatusBarNotification(notification: NSNotification) {
-		bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true)
+		if bubbleTableView.numberOfRowsInSection(0) > 0 {
+			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true)
+		}
 	}
 	
 	func frameWillChangeNotification(notification: NSNotification) {
