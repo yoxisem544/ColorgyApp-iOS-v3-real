@@ -21,7 +21,8 @@ class FriendListViewController: UIViewController {
 	
 	private var isListReloading: Bool = false
 	
-	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...正在重新下載...")
+	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...點擊重新下載...")
+	private let noDataHintView = FailToLoadDataHintView(errorTitle: "哦！看起來你還沒有成功配對的聊天室喔！")
 	
 	private var hiList: [Hello] = []
 	
@@ -45,6 +46,10 @@ class FriendListViewController: UIViewController {
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true
 		failToLoadDataHintView.alpha = 0.1
+		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "failToLoadDataHintViewDidTap"))
+		
+		view.addSubview(noDataHintView)
+		noDataHintView.hidden = true
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -63,8 +68,15 @@ class FriendListViewController: UIViewController {
 		renewTimer.invalidate()
 	}
 	
+	// MARK: about failToLoadDataHintView
+	func failToLoadDataHintViewDidTap() {
+		hideHintFailView()
+		refreshChatroom()
+	}
+	
 	// MARK: hint view
 	func hideHintFailView() {
+		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 0.1
 			}) { (finished: Bool) -> Void in
@@ -76,15 +88,10 @@ class FriendListViewController: UIViewController {
 	
 	func showHintFailView() {
 		self.failToLoadDataHintView.hidden = false
+		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 1.0
 			})
-		// reload again
-		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
-		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
-			print("reloading......")
-			self.refreshChatroom()
-		})
 	}
 	
 	// MARK: Refresh
@@ -126,6 +133,12 @@ class FriendListViewController: UIViewController {
 //				self.removeChatroom(targets)
 				self.hideHintFailView()
 				self.reloadFriendListV2(targets)
+				if targets.count == 0 {
+					// need to show hint
+					self.noDataHintView.hidden = false
+				} else {
+					self.noDataHintView.hidden = true
+				}
 				}, failure: { () -> Void in
 					self.showHintFailView()
 			})
@@ -153,6 +166,12 @@ class FriendListViewController: UIViewController {
 			self.userId = user.userId
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
 				self.hideHintFailView()
+				if targets.count == 0 {
+					// need to show hint
+					self.noDataHintView.hidden = false
+				} else {
+					self.noDataHintView.hidden = true
+				}
 				self.reloadFriendListV2(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
@@ -443,13 +462,6 @@ extension FriendListViewController : UIScrollViewDelegate {
 			print("scrollViewWillBeginDecelerating")
 			if (scrollView.contentOffset.y + scrollView.frame.height) >= scrollView.contentSize.height {
 				print("need more data, loading page \(currentPage + 1)")
-//				ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
-//					ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, fromPage: 0, toPage: 10, complete: { (targets) -> Void in
-//						print(targets.count)
-//					})
-//					}, failure: { () -> Void in
-//						print("fail to refresh friend list")
-//				})
 			}
 		}
 	}

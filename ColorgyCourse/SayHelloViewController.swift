@@ -14,7 +14,8 @@ class SayHelloViewController: UIViewController {
 	var hiList: [Hello] = []
 	let refreshContorl = UIRefreshControl()
 	
-	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...請下拉畫面重新讀取...")
+	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...點擊重新讀取...")
+	private let noDataHintView = FailToLoadDataHintView(errorTitle: "哦！看起來還沒有人跟你打招呼喔！")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,10 @@ class SayHelloViewController: UIViewController {
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true
 		failToLoadDataHintView.alpha = 0.1
+		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "failToLoadDataHintViewDidTap"))
+		
+		view.addSubview(noDataHintView)
+		noDataHintView.hidden = true
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -44,6 +49,12 @@ class SayHelloViewController: UIViewController {
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
+	}
+	
+	// MARK: about failToLoadDataHintView
+	func failToLoadDataHintViewDidTap() {
+		hideHintFailView()
+		reloadHi()
 	}
 	
 	// MARK: show report view
@@ -73,6 +84,7 @@ class SayHelloViewController: UIViewController {
 	
 	// MARK: hint view
 	func hideHintFailView() {
+		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 0.1
 			}) { (finished: Bool) -> Void in
@@ -82,9 +94,9 @@ class SayHelloViewController: UIViewController {
 		}
 	}
 	
-	// MARK: hint view
 	func showHintFailView() {
 		self.failToLoadDataHintView.hidden = false
+		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 1.0
 		})
@@ -97,6 +109,12 @@ class SayHelloViewController: UIViewController {
 				print(hiList)
 				self.hideHintFailView()
 				self.hiList = hiList
+				if hiList.count == 0 {
+					// need to show hint
+					self.noDataHintView.hidden = false
+				} else {
+					self.noDataHintView.hidden = true
+				}
 				self.sayHelloTableView.reloadData()
 				}, failure: { () -> Void in
 					self.showHintFailView()
@@ -132,6 +150,12 @@ class SayHelloViewController: UIViewController {
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				self.hideHintFailView()
 				self.hiList = hiList
+				if hiList.count == 0 {
+					// need to show hint
+					self.noDataHintView.hidden = false
+				} else {
+					self.noDataHintView.hidden = true
+				}
 				self.sayHelloTableView.reloadData()
 				}, failure: { () -> Void in
 					self.showHintFailView()
@@ -178,6 +202,12 @@ class SayHelloViewController: UIViewController {
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
 				self.hideHintFailView()
 				self.hiList = hiList
+				if hiList.count == 0 {
+					// need to show hint
+					self.noDataHintView.hidden = false
+				} else {
+					self.noDataHintView.hidden = true
+				}
 				self.sayHelloTableView.reloadData()
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
