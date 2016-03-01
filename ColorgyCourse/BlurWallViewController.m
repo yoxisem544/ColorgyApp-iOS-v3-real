@@ -26,12 +26,14 @@
 
 @implementation BlurWallViewController {
     int currentPage;
+    BOOL canLoadMore;
     UselessView *useLessView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     currentPage = 0;
+    canLoadMore = YES;
     
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@""
@@ -65,7 +67,7 @@
     self.blurWallCollectionViewFlowLayout.footerReferenceSize = CGSizeMake(self.view.bounds.size.width, 70);
     
     // blurCollectionView Customized
-    self.blurWallCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height) collectionViewLayout:self.blurWallCollectionViewFlowLayout];
+    self.blurWallCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height - 64) collectionViewLayout:self.blurWallCollectionViewFlowLayout];
     self.blurWallCollectionView.delegate = self;
     self.blurWallCollectionView.dataSource = self;
     self.blurWallCollectionView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
@@ -228,7 +230,7 @@
     if (indexPath.item < self.blurWallDataMutableArray.count) {
         
         // pre-fetch the next 'page' of data.
-        if(self.blurWallDataMutableArray.count > 10 && indexPath.item == (self.blurWallDataMutableArray.count - PRELOAD_NUMBER)){
+        if(self.blurWallDataMutableArray.count > 10 && indexPath.item == (self.blurWallDataMutableArray.count - PRELOAD_NUMBER) && canLoadMore){
             NSLog(@"%ld == %lu", (long)indexPath.item, (unsigned long)self.blurWallDataMutableArray.count);
             [self loadMoreData];
         }
@@ -432,6 +434,7 @@
     [self.blurWallDataMutableArray removeAllObjects];
     NSString *currentGender;
     currentPage = 0;
+    canLoadMore = YES;
     switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
         case 0:
             currentGender = @"unspecified";
@@ -463,7 +466,7 @@
                 
                 
                 self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:finallyArray];
-//                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
+                //                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
                 // Tell the collectionView to reload.
                 [self.blurWallCollectionView reloadData];
                 [self.blurWallRefreshControl endRefreshing];
@@ -562,6 +565,9 @@
     // 重新整理最新的數據
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         [ColorgyChatAPI getAvailableTarget:user.userId gender:currentGender page:currentPage success:^(NSArray *response) {
+            if ([response count] < PRELOAD_NUMBER) {
+                canLoadMore = NO;
+            }
             [ColorgyChatAPI getMyList:user.userId success:^(NSArray *myList) {
                 NSMutableArray *finallyArray = [[NSMutableArray alloc] init];
                 NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:response];
@@ -577,19 +583,19 @@
                 [finallyArray addObjectsFromArray:tempArray];
                 [self.blurWallDataMutableArray addObjectsFromArray:finallyArray];
                 //                self.blurWallDataMutableArray = [[NSMutableArray alloc] initWithArray:response];
-//                // Tell the collectionView to reload.
-//                [self.blurWallCollectionView reloadData];
+                //                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
                 [self.blurWallRefreshControl endRefreshing];
-
+                
             } failure:^() {
                 NSLog(@"get myList error");
-//                // Tell the collectionView to reload.
-//                [self.blurWallCollectionView reloadData];
+                //                // Tell the collectionView to reload.
+                [self.blurWallCollectionView reloadData];
                 [self.blurWallRefreshControl endRefreshing];
             }];
         } failure:^() {
-//            NSLog(@"get AvailableTarget fail");
-//            [self.blurWallCollectionView reloadData];
+            NSLog(@"get AvailableTarget fail");
+            [self.blurWallCollectionView reloadData];
             [self.blurWallRefreshControl endRefreshing];
         }];
     } failure:^() {
