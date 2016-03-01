@@ -307,7 +307,7 @@
     [aboutExpertiseTextView.layer setMasksToBounds:YES];
     [scrollView addSubview:aboutExpertiseTextView];
     
-    scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(aboutExpertiseTextView.frame) + 50);
+    scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(aboutExpertiseTextView.frame) + 80);
     
     
     
