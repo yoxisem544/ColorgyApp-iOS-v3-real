@@ -30,6 +30,7 @@ class SayHelloViewController: UIViewController {
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		sayHelloTableView.addSubview(refreshContorl)
+		sayHelloTableView.sendSubviewToBack(refreshContorl)
 		
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true

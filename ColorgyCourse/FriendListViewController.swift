@@ -40,6 +40,7 @@ class FriendListViewController: UIViewController {
 		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		friendListTableView.addSubview(refreshContorl)
+		friendListTableView.sendSubviewToBack(refreshContorl)
 		
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true
@@ -78,6 +79,12 @@ class FriendListViewController: UIViewController {
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 1.0
 			})
+		// reload again
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 0.5))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			print("reloading......")
+			self.refreshChatroom()
+		})
 	}
 	
 	// MARK: Refresh
