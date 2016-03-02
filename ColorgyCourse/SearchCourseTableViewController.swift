@@ -84,7 +84,7 @@ class SearchCourseViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
 			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSearchCourseView, customAttributes: nil)
         }
@@ -106,7 +106,7 @@ class SearchCourseViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release().mode {
+        if Release.mode {
             Flurry.endTimedEvent("v3.0: User Using Search Course View", withParameters: nil)
         }
     }
@@ -335,7 +335,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 			self.removeCourse(course)
 			self.searchCourseTableView.reloadData()
             // Flurry
-            if Release().mode {
+            if Release.mode {
                 Flurry.logEvent("v3.0: User Delete A Course")
 				Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
             }
@@ -397,7 +397,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
             cell.hasEnrolledState = true
 			self.searchCourseTableView.reloadData()
             // Flurry
-            if Release().mode {
+            if Release.mode {
                 Flurry.logEvent("v3.0: User Add A Course")
 				Answers.logCustomEventWithName(AnswersLogEvents.userAddCourse, customAttributes: nil)
             }

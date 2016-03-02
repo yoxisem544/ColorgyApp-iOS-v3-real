@@ -88,14 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func setupMixpanel() {
-		if Release().mode {
+		if Release.mode {
 			let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
 			mixpanel.track(MixpanelEvents.OpenApp)
 		}
 	}
 	
 	func setupFlurry() {
-		if Release().mode {
+		if Release.mode {
 			// setup Flurry
 			Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
 			let id = UserSetting.UserId() ?? -1
@@ -150,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func developmentMethods() {
-		if !Release().mode {
+		if !Release.mode {
 			// for dev
 //			DevelopmentTestingMethods.test(loginCounts: 99)
 		}
@@ -217,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Close Application, application enter background")
         }
     }
@@ -230,7 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Start Application, applicationDidBecomeActive")
         } else {
             Flurry.logEvent("User applicationWillEnterForeground, for testing")

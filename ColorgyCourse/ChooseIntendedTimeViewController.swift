@@ -76,7 +76,7 @@ class ChooseIntendedTimeViewController: UIViewController {
                         ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
                             if let periodDataObjects = periodDataObjects {
                                 UserSetting.storePeriodsData(periodDataObjects)
-                                if Release().mode {
+                                if Release.mode {
                                     Flurry.logEvent("v3.0: User login using FB")
 									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
                                 }
@@ -94,7 +94,7 @@ class ChooseIntendedTimeViewController: UIViewController {
 //                                let alert = ErrorAlertView.alertUserWithError("讀取課程時間資料錯誤，請重新登入。或者為學校尚未開通使用！")
 //                                self.presentViewController(alert, animated: true, completion: nil)
                                 UserSetting.storeFakePeriodsData()
-                                if Release().mode {
+                                if Release.mode {
                                     Flurry.logEvent("v3.0: User login using FB, but has no period data")
 									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
                                 }

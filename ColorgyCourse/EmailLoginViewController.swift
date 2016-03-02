@@ -28,7 +28,7 @@ class EmailLoginViewController: UIViewController {
         super.viewDidLoad()
         
         // test region
-        if !Release().mode {
+        if !Release.mode {
             emailLoginTextField.text = "test-cyu-student-1d1e@test.colorgy.io"
             passwordLoginTextField.text = "test-cyu-student-1d1e"
         }
@@ -75,14 +75,14 @@ class EmailLoginViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User On Email Login View", timed: true)
         }
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release().mode {
+        if Release.mode {
             Flurry.endTimedEvent("User On Email Login View", withParameters: nil)
         }
     }
@@ -123,7 +123,7 @@ class EmailLoginViewController: UIViewController {
 						ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
 							if let periodDataObjects = periodDataObjects {
 								UserSetting.storePeriodsData(periodDataObjects)
-								if Release().mode {
+								if Release.mode {
 									Flurry.logEvent("v3.0: User login using FB")
 									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
 								}
@@ -141,7 +141,7 @@ class EmailLoginViewController: UIViewController {
 								//                                        self.presentViewController(alert, animated: true, completion: nil)
 								//                                        self.showButtons()
 								UserSetting.storeFakePeriodsData()
-								if Release().mode {
+								if Release.mode {
 									Flurry.logEvent("v3.0: User login using FB, but has no period data")
 									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
 								}

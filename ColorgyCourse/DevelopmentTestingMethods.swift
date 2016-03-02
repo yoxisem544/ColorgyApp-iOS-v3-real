@@ -11,7 +11,7 @@ import Foundation
 class DevelopmentTestingMethods {
     
     class func deleteAllCourses() {
-        if !Release().mode {
+        if !Release.mode {
             CourseDB.deleteAllCourses()
         }
     }
@@ -37,7 +37,7 @@ class DevelopmentTestingMethods {
     }
     
     class func enrollAllCoursesInDB() {
-        if !Release().mode {
+        if !Release.mode {
             ServerCourseDB.getAllStoredCoursesObject(complete: { (courseDataFromServerDBManagedObjects) -> Void in
                 if let objects = courseDataFromServerDBManagedObjects {
                     // get courses
@@ -55,7 +55,7 @@ class DevelopmentTestingMethods {
     }
     
     class func logCoursesSessionLength() {
-        if !Release().mode {
+        if !Release.mode {
             var failCounter = 0
             ServerCourseDB.getAllStoredCoursesObject(complete: { (courseDataFromServerDBManagedObjects) -> Void in
                 if let ob = courseDataFromServerDBManagedObjects {
@@ -80,7 +80,7 @@ class DevelopmentTestingMethods {
     }
     
     class func changeSchool(school: String) {
-        if !Release().mode {
+        if !Release.mode {
             ColorgyAPI.PATCHUserInfo(school, department: "000", year: "2012", success: { () -> Void in
                 print("to \(school)")
                 print("to \(school)")
@@ -92,7 +92,7 @@ class DevelopmentTestingMethods {
     }
     
     class func testSchoolPeriods() {
-        if !Release().mode {
+        if !Release.mode {
             var invalidSchool = [String]()
             var validSchool = [String]()
             // get schools
@@ -128,7 +128,7 @@ class DevelopmentTestingMethods {
     }
     
     class func testGetDepartment(school: String) {
-        if !Release().mode {
+        if !Release.mode {
             ColorgyAPI.getDepartments(school, success: { (departments) -> Void in
                 print(departments)
                 }, failure: { () -> Void in
