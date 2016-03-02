@@ -49,7 +49,7 @@ class UserDetailInformationView: UIScrollView {
 					radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 					print(radius)
 					print(percentage)
-					let blurImage = UIImage().gaussianBlurImage(image, andInputRadius: radius)
+					let blurImage = UIImage.gaussianBlurImage(image, radius: radius)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						userImageView.image = blurImage
 						loadingView.stopAnimating()

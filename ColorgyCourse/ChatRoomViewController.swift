@@ -43,7 +43,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	private var dropDownButton: UIBarButtonItem!
 	
 	// for user profile image
-	private var userProfileImage: UIImage = UIImage()
+	private var userProfileImage: UIImage? = UIImage()
 	private var userProfileImageString: String = "" {
 		didSet {
 			if chatroom != nil {
@@ -233,7 +233,7 @@ class ChatRoomViewController: DLMessagesViewController {
 			} else {
 				let radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 				print(radius)
-				let blurImage = imageFromCache.gaussianBlurImage(imageFromCache, andInputRadius: radius)
+				let blurImage = UIImage.gaussianBlurImage(imageFromCache, radius: radius)
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					self.userProfileImage = blurImage
 					self.bubbleTableView.reloadData()
