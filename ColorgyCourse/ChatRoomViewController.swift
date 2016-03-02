@@ -43,7 +43,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	private var dropDownButton: UIBarButtonItem!
 	
 	// for user profile image
-	private var userProfileImage: UIImage = UIImage()
+	private var userProfileImage: UIImage? = UIImage()
 	private var userProfileImageString: String = "" {
 		didSet {
 			if chatroom != nil {
@@ -233,7 +233,7 @@ class ChatRoomViewController: DLMessagesViewController {
 			} else {
 				let radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 				print(radius)
-				let blurImage = imageFromCache.gaussianBlurImage(imageFromCache, andInputRadius: radius)
+				let blurImage = UIImage.gaussianBlurImage(imageFromCache, radius: radius)
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					self.userProfileImage = blurImage
 					self.bubbleTableView.reloadData()
@@ -377,7 +377,13 @@ class ChatRoomViewController: DLMessagesViewController {
 						self.doneRequestingMessages()
 						complete()
 				})
+			} else {
+				// height not ok
+				complete()
 			}
+		} else {
+			// can not fetch
+			complete()
 		}
 	}
 	
@@ -645,6 +651,11 @@ extension ChatRoomViewController : ChatReportViewControllerDelegate {
 		
 		// submit a request
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
+			ColorgyChatAPI.reportUser(user.userId, targetId: self.historyChatroom.friendId, type: title, reason: description, success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
 			ColorgyChatAPI.blockUser(user.userId, targetId: self.historyChatroom.friendId, success: { () -> Void in
 				ColorgyChatAPI.leaveChatroom(user.userId, chatroomId: self.historyChatroom.chatroomId, success: { () -> Void in
 					// wait after callback

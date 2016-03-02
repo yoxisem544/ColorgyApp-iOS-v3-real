@@ -2982,7 +2982,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F68-JA-Lpd" customClass="DLMessageLabel" customModule="ColorgyCourse" customModuleProvider="target">
                                                             <rect key="frame" x="97" y="6" width="42" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -3101,7 +3101,7 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="eC1-ts-q6b"/>
         <segue reference="sYP-VR-PPv"/>
+        <segue reference="ypF-3y-Hte"/>
     </inferredMetricsTieBreakers>
 </document>

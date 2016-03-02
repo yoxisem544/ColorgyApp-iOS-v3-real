@@ -21,19 +21,9 @@ class ChatUser : NSObject {
 		
 		var _status: String?
 		var _userId: String?
-		
-		for (key, json) in json {
-			if key == "status" {
-				if let s = json.string {
-					_status = s
-				}
-			}
-			if key == "userId" {
-				if let u = json.string {
-					_userId = u
-				}
-			}
-		}
+
+		_userId = json["userId"].string
+		_status = json["status"].int != nil ? "\(json["status"].int!)" : ""
 		
 		guard _status != nil else { return nil }
 		guard _userId != nil else { return nil }

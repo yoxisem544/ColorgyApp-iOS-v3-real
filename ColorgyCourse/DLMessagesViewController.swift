@@ -67,7 +67,7 @@ class DLMessagesViewController: UIViewController {
 		
 		bubbleTableView.separatorStyle = .None
 		
-		bubbleTableView.scrollsToTop = true
+		bubbleTableView.scrollsToTop = false
 		
 		// adjust inset
 		bubbleTableView.contentInset.bottom = keyboardAndMessageGap + keyboardTextInputView.bounds.height
@@ -106,6 +106,8 @@ class DLMessagesViewController: UIViewController {
 	
 	private func registerForNotifications() {
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "frameWillChangeNotification:", name: UIApplicationWillChangeStatusBarFrameNotification, object: nil)
+		let kStatusBarTappedNotification = "statusBarTappedNotification"
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "tapOnStatusBarNotification:", name: kStatusBarTappedNotification, object: nil)
 		registerKeyboardNotifications()
 	}
 	
@@ -116,6 +118,12 @@ class DLMessagesViewController: UIViewController {
 	
 	func unregisterNotifications() {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
+	func tapOnStatusBarNotification(notification: NSNotification) {
+		if bubbleTableView.numberOfRowsInSection(0) > 0 {
+			bubbleTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.None, animated: true)
+		}
 	}
 	
 	func frameWillChangeNotification(notification: NSNotification) {

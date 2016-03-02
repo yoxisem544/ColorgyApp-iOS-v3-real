@@ -55,7 +55,7 @@ class FriendListViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		loadFriend()
-		renewChatroom(every: 6.0)
+		renewChatroom(every: 16.0)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -76,7 +76,6 @@ class FriendListViewController: UIViewController {
 	
 	// MARK: hint view
 	func hideHintFailView() {
-		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 0.1
 			}) { (finished: Bool) -> Void in
@@ -87,11 +86,28 @@ class FriendListViewController: UIViewController {
 	}
 	
 	func showHintFailView() {
+		print("showHintFailView")
 		self.failToLoadDataHintView.hidden = false
-		self.noDataHintView.hidden = true
 		UIView.animateWithDuration(0.3, animations: { () -> Void in
 			self.failToLoadDataHintView.alpha = 1.0
 			})
+	}
+	
+	func hideNoRoomView() {
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.noDataHintView.alpha = 0.1
+			}) { (finished: Bool) -> Void in
+				if finished {
+					self.noDataHintView.hidden = true
+				}
+		}
+	}
+	
+	func showNoRoomView() {
+		self.noDataHintView.hidden = false
+		UIView.animateWithDuration(0.3, animations: { () -> Void in
+			self.noDataHintView.alpha = 1.0
+		})
 	}
 	
 	// MARK: Refresh
@@ -135,15 +151,17 @@ class FriendListViewController: UIViewController {
 				self.reloadFriendListV2(targets)
 				if targets.count == 0 {
 					// need to show hint
-					self.noDataHintView.hidden = false
+					self.showNoRoomView()
 				} else {
-					self.noDataHintView.hidden = true
+					self.hideNoRoomView()
 				}
 				}, failure: { () -> Void in
 					self.showHintFailView()
+					self.hideNoRoomView()
 			})
 			}, failure: { () -> Void in
 				self.showHintFailView()
+				self.hideNoRoomView()
 		})
 	}
 	
@@ -168,19 +186,21 @@ class FriendListViewController: UIViewController {
 				self.hideHintFailView()
 				if targets.count == 0 {
 					// need to show hint
-					self.noDataHintView.hidden = false
+					self.showNoRoomView()
 				} else {
-					self.noDataHintView.hidden = true
+					self.hideNoRoomView()
 				}
 				self.reloadFriendListV2(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
 					self.showHintFailView()
+					self.hideNoRoomView()
 			})
 		}, failure: { () -> Void in
 			refresh.endRefreshing()
 			self.showHintFailView()
+			self.hideNoRoomView()
 		})
 	}
 	

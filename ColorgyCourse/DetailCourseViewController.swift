@@ -99,7 +99,7 @@ class DetailCourseViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Using Detail Course View", timed: true)
 			Answers.logCustomEventWithName(AnswersLogEvents.userWatchingDetailCourseView, customAttributes: nil)
         }
@@ -107,7 +107,7 @@ class DetailCourseViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release().mode {
+        if Release.mode {
             Flurry.endTimedEvent("v3.0: User Using Detail Course View", withParameters: nil)
         }
     }
@@ -179,7 +179,7 @@ extension DetailCourseViewController : ClassmatesContainerViewDelegate {
     func classmatesContainerView(userDidTapOnUser userCourseObject: UserCourseObject) {
         print(userCourseObject)
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo", withParameters: ["user_id": userCourseObject.user_id])
         }
 		Mixpanel.sharedInstance().track(MixpanelEvents.clickOthersProfileImage)

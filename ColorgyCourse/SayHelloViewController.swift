@@ -286,6 +286,11 @@ extension SayHelloViewController : ChatReportViewControllerDelegate {
 			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
 				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
+				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
 					ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
 						self.reloadHi()
 						}, failure: { () -> Void in
@@ -309,6 +314,11 @@ extension SayHelloViewController : ChatReportViewControllerDelegate {
 			removeHi(hi)
 			ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 				let targetId = (user.userId == hi.userId ? hi.targetId : hi.userId)
+				ColorgyChatAPI.reportUser(user.userId, targetId: targetId, type: title, reason: description, success: { () -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
 				ColorgyChatAPI.blockUser(user.userId, targetId: targetId, success: { () -> Void in
 					ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in
 						self.reloadHi()

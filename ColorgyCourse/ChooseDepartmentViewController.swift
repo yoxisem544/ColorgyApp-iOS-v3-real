@@ -113,7 +113,7 @@ class ChooseDepartmentViewController: UIViewController {
                         ColorgyAPI.getSchoolPeriodData({ (periodDataObjects) -> Void in
                             if let periodDataObjects = periodDataObjects {
                                 UserSetting.storePeriodsData(periodDataObjects)
-                                if Release().mode {
+                                if Release.mode {
                                     Flurry.logEvent("v3.0: User login using FB")
 									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
                                 }

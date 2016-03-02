@@ -16,6 +16,8 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+	
+	let kStatusBarTappedNotification = "statusBarTappedNotification"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -86,14 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func setupMixpanel() {
-		if Release().mode {
+		if Release.mode {
 			let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
 			mixpanel.track(MixpanelEvents.OpenApp)
 		}
 	}
 	
 	func setupFlurry() {
-		if Release().mode {
+		if Release.mode {
 			// setup Flurry
 			Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
 			let id = UserSetting.UserId() ?? -1
@@ -148,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func developmentMethods() {
-		if !Release().mode {
+		if !Release.mode {
 			// for dev
 //			DevelopmentTestingMethods.test(loginCounts: 99)
 		}
@@ -187,6 +189,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			
 		}
 	}
+	
+	// MARK: - status bar touched
+	override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+		super.touchesBegan(touches, withEvent: event)
+		if window != nil {
+			if let location: CGPoint = event?.allTouches()?.first?.locationInView(window!) {
+				let statusBarFrame = UIApplication.sharedApplication().statusBarFrame
+				if CGRectContainsPoint(statusBarFrame, location) {
+					statusBarTouchedAction()
+				}
+			}
+		}
+		
+	}
+	
+	func statusBarTouchedAction() {
+		NSNotificationCenter.defaultCenter().postNotificationName(kStatusBarTappedNotification, object: nil)
+	}
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -197,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Close Application, application enter background")
         }
     }
@@ -210,7 +230,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         // Flurry
-        if Release().mode {
+        if Release.mode {
             Flurry.logEvent("v3.0: User Start Application, applicationDidBecomeActive")
         } else {
             Flurry.logEvent("User applicationWillEnterForeground, for testing")

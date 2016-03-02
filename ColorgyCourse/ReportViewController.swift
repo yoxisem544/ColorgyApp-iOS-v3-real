@@ -44,7 +44,7 @@ class ReportViewController: UIViewController {
 		if reportProblemType != nil {
 			ColorgyAPI.POSTUserFeedBack(reportEmail ?? "no email", feedbackType: reportProblemType!, feedbackDescription: reportProblemDescription ?? "no description", success: { () -> Void in
 				self.dismissViewControllerAnimated(true, completion: { () -> Void in
-					if Release().mode {
+					if Release.mode {
 						let params: [String : AnyObject] = [
 							"user_id": UserSetting.UserId() ?? -1,
 							"user_organization": UserSetting.UserPossibleOrganization() ?? "no organization",

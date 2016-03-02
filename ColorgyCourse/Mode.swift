@@ -10,8 +10,8 @@ import Foundation
 
 class Release: NSObject {
     #if DEBUG
-        let mode = false
+        static let mode = false
     #else
-        let mode = true
+        static let mode = true
     #endif
 }

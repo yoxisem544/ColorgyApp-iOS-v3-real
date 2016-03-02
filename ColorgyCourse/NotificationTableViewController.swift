@@ -39,7 +39,7 @@ class NotificationTableViewController: UITableViewController {
     }
 	
 	func flurryEventLog() {
-		if Release().mode {
+		if Release.mode {
 			let params: [String : AnyObject] = [
 				"user_id": UserSetting.UserId() ?? -1,
 				"user_orgazination": UserSetting.UserPossibleOrganization() ?? "no orgazination",

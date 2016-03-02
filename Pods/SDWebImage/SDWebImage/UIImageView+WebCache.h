@@ -62,6 +62,15 @@
 - (void)sd_setImageWithURL:(NSURL *)url;
 
 /**
+ * Set the imageView `image` with an `url` and blur percentage
+ *
+ * The download is asynchronous and cached.
+ *
+ * @param url The url for the image.
+ */
+- (void)sd_setImageWithURL:(NSURL *)url blurPercantage:(CGFloat)percentage;
+
+/**
  * Set the imageView `image` with an `url` and a placeholder.
  *
  * The download is asynchronous and cached.

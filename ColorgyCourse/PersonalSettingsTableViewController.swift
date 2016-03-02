@@ -26,7 +26,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		if Release().mode {
+		if Release.mode {
 			Flurry.logEvent("v3.0: User On Setting Page")
 			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSettingsPage, customAttributes: nil)
 		}
@@ -71,7 +71,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                 UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/1529686803975150")!)
             }
             // Flurry
-            if Release().mode {
+            if Release.mode {
                 Flurry.logEvent("v3.0: User goto FB fan page using app.")
 				Answers.logCustomEventWithName(AnswersLogEvents.userGoToFanPage, customAttributes: nil)
             }
@@ -92,7 +92,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                     CourseDB.deleteAllCourses()
                     LocalCourseDB.deleteAllCourses()
                     // Flurry
-                    if Release().mode {
+                    if Release.mode {
                         Flurry.logEvent("v3.0: User Logout App")
 						Answers.logCustomEventWithName(AnswersLogEvents.userLogout, customAttributes: nil)
                     }

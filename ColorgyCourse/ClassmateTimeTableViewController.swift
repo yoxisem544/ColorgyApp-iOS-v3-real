@@ -76,7 +76,7 @@ class ClassmateTimeTableViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Flurry
-        if Release().mode {
+        if Release.mode {
 			let params: [String : AnyObject] = ["user_id": userCourseObject.user_id]
             Flurry.logEvent("v3.0: User Watching Other's Timetable View", withParameters: params, timed: true)
 			Answers.logCustomEventWithName(AnswersLogEvents.userWatchingOthersTimetable, customAttributes: params)
@@ -85,7 +85,7 @@ class ClassmateTimeTableViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release().mode {
+        if Release.mode {
             Flurry.endTimedEvent("v3.0: User Watching Other's Timetable View", withParameters: nil)
         }
     }

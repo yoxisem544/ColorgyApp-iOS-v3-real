@@ -23,9 +23,10 @@ class HistoryChatroom : NSObject {
 	var lastSpeaker: String
 	var updatedAt: TimeStamp
 	var unread: Bool = false
+	var blurImage: String
 	
 	override var description: String {
-		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastContentTime -> \(lastContentTime)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n\tunread -> \(unread)\n}"
+		return "HistoryChatroom: {\n\tchatProgress -> \(chatProgress)\n\tgender -> \(gender)\n\tfriendId -> \(friendId)\n\tchatroomId -> \(chatroomId)\n\timage -> \(image)\n\tlastAnswer -> \(lastAnswer)\n\tlastAnswerDate -> \(lastAnsweredDate)\n\tname -> \(name)\n\tlastContent -> \(lastContent)\n\tlastContentTime -> \(lastContentTime)\n\tlastSpeaker -> \(lastSpeaker)\n\tupdatedAt -> \(updatedAt)\n\tunread -> \(unread)\n\tblurImage -> \(blurImage)\n}"
 	}
 	
 	convenience init?(json: JSON) {
@@ -42,6 +43,7 @@ class HistoryChatroom : NSObject {
 		var _lastSpeaker: String?
 		var _updatedAt: String?
 		var _lastContentTime: String?
+		var _blurImage: String?
 		
 		_chatProgress = json["chatProgress"].int
 		_gender = json["gender"].string
@@ -55,11 +57,12 @@ class HistoryChatroom : NSObject {
 		_lastSpeaker = json["lastSpeaker"].string
 		_updatedAt = json["updatedAt"].string
 		_lastContentTime = json["lastContentTime"].string
+		_blurImage = json["blurImage"].string
 		
-		self.init(chatProgress: _chatProgress, gender: _gender, friendId: _friendId, chatroomId: _chatroomId, image: _image, lastAnswer: _lastAnswer, lastAnsweredDate: _lastAnswerDate, name: _name, lastContent: _lastContent, lastSpeaker: _lastSpeaker, updatedAt: _updatedAt, lastContentTime: _lastContentTime)
+		self.init(chatProgress: _chatProgress, gender: _gender, friendId: _friendId, chatroomId: _chatroomId, image: _image, lastAnswer: _lastAnswer, lastAnsweredDate: _lastAnswerDate, name: _name, lastContent: _lastContent, lastSpeaker: _lastSpeaker, updatedAt: _updatedAt, lastContentTime: _lastContentTime, blurImage: _blurImage)
 	}
 	
-	init?(chatProgress: Int?, gender: String?, friendId: String?, chatroomId: String?, image: String?, lastAnswer: String?, lastAnsweredDate: String?, name: String?, lastContent: String?, lastSpeaker: String?, updatedAt: String?, lastContentTime: String?) {
+	init?(chatProgress: Int?, gender: String?, friendId: String?, chatroomId: String?, image: String?, lastAnswer: String?, lastAnsweredDate: String?, name: String?, lastContent: String?, lastSpeaker: String?, updatedAt: String?, lastContentTime: String?, blurImage: String?) {
 		
 		self.chatProgress = Int()
 		self.gender = String()
@@ -74,6 +77,7 @@ class HistoryChatroom : NSObject {
 		self.lastContent = String()
 		self.updatedAt = TimeStamp()
 		self.lastContentTime = TimeStamp()
+		self.blurImage = String()
 		
 		super.init()
 		
@@ -90,6 +94,7 @@ class HistoryChatroom : NSObject {
 		guard updatedAt != nil else { return nil }
 		guard let updatedAtTimeStamp = TimeStamp(timeStampString: updatedAt!) else { return nil }
 		guard lastContentTime != nil else { return nil }
+		guard blurImage != nil else { return nil }
 		
 		// required
 		self.chatProgress = chatProgress!
@@ -102,6 +107,7 @@ class HistoryChatroom : NSObject {
 		self.lastContent = lastContent!
 		self.updatedAt = updatedAtTimeStamp
 		self.lastContentTime = TimeStamp(timeStampString: lastContentTime!) ?? TimeStamp()
+		self.blurImage = blurImage!
 		
 		// optional
 		self.lastAnswer = lastAnswer

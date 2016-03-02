@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDetailInformationView: UIView {
+class UserDetailInformationView: UIScrollView {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -35,6 +35,12 @@ class UserDetailInformationView: UIView {
 		userImageView.layer.borderColor = UIColor.whiteColor().CGColor
 		userImageView.layer.borderWidth = 2.0
 		
+		let loadingView = UIActivityIndicatorView()
+		loadingView.tintColor = ColorgyColor.MainOrange
+		loadingView.center = CGPoint(x: userImageView.bounds.midX, y: userImageView.bounds.midY)
+		userImageView.addSubview(loadingView)
+		loadingView.startAnimating()
+		
 		if let image = image {
 			if let percentage = percentage {
 				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
@@ -43,9 +49,11 @@ class UserDetailInformationView: UIView {
 					radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
 					print(radius)
 					print(percentage)
-					let blurImage = UIImage().gaussianBlurImage(image, andInputRadius: radius)
+					let blurImage = UIImage.gaussianBlurImage(image, radius: radius)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						userImageView.image = blurImage
+						loadingView.stopAnimating()
+						loadingView.removeFromSuperview()
 					})
 				})
 			}
@@ -103,6 +111,12 @@ class UserDetailInformationView: UIView {
 			// error on percentage
 			percenageLabel.text = "???%"
 		}
+		
+		expandContentSize()
+	}
+	
+	func expandContentSize() {
+		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
 	}
 	
 	func dismissView() {
