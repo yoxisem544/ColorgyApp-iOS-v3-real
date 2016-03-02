@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationController.navigationBarHidden = YES;
     
     // View Customized
@@ -78,7 +79,7 @@
 - (void)switchViewController {
     
     // 檢查信箱認證
-    if ([self isEmailOkCheck]) {
+    if (NO && [self isEmailOkCheck]) {
         // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {

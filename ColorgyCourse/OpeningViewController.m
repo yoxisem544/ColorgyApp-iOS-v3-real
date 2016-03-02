@@ -180,7 +180,7 @@
 #pragma mark - OpeningLayout
 
 - (void)openingLayout {
-
+    
     
     // Navigation Customized
     // self.title = @"模糊聊";
@@ -246,7 +246,13 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"認證學校信箱" message:@"發送後趕快去收信吧～" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"colorgy@gmail.com";
+        [ColorgyChatAPI GetEmailHints:[UserSetting UserPossibleOrganization] success:^(NSString *response) {
+            NSLog(@"%@", response);
+            textField.placeholder = response;
+        } failure:^() {
+            NSLog(@"email hints error use default");
+            textField.placeholder = @"school_id@school.edu";
+        }];
         self.activeTextField = textField;
     }];
     
@@ -415,7 +421,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"尚未認證" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-//                [self removeCheckEmailLayout];
+                //                [self removeCheckEmailLayout];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
@@ -1015,7 +1021,7 @@
         if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
             [self.cleanAskQuestionLabel sizeToFit];
         }
-
+        
     } failure:^() {
         NSLog(@"get question error");
     }];

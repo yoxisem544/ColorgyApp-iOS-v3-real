@@ -1314,6 +1314,37 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
 
+    // email_hints : Get data of email_hints
+    class func GetEmailHints(organization_code: String, success: (response: String) -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        let url = "https://colorgy.io:443/api/v1/email_hints/\(organization_code).json"
+        guard url.isValidURLString else {
+            print(ColorgyErrorType.invalidURLString)
+            failure()
+            return
+        }
+        
+        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            if let response = response {
+                print(response)
+                print("get hint OK")
+                var json = JSON(response)
+                
+                success(response:json["hint"].string!)
+            } else {
+                failure()
+            }
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print("fail to get email_hints")
+                failure()
+        })
+        
+        return
+    }
 	
 	
     class func checkImageType(data: NSData) {
