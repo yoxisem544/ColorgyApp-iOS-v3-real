@@ -95,11 +95,87 @@ static char TAG_ACTIVITY_SHOW;
     }
 }
 
+- (UIImage *)gaussianBlurImage:(UIImage *)image andInputRadius:(CGFloat)radius {
+	if (image) {
+		CIContext *context = [CIContext contextWithOptions:nil];
+		CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
+		CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+		
+		[filter setValue:inputImage forKey:kCIInputImageKey];
+		[filter setValue:[NSNumber numberWithFloat:radius] forKey:@"inputRadius"];
+		
+		CIImage *result = [filter valueForKey:kCIOutputImageKey];
+		CGImageRef cgImage = [context createCGImage:result fromRect:[inputImage extent]];
+		
+		return [UIImage imageWithCGImage:cgImage];
+	}
+	return nil;
+}
+
+- (void)sd_setImageWithURL:(NSURL *)url blurPercantage:(CGFloat)percentage {
+	[self sd_setImageWithURL:url placeholderImage:nil blurPercantage:percentage options:0 progress:nil completed:nil];
+}
+
+- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder blurPercantage:(CGFloat)percantage options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock {
+	[self sd_cancelCurrentImageLoad];
+	objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	
+	if (!(options & SDWebImageDelayPlaceholder)) {
+		dispatch_main_async_safe(^{
+			self.image = placeholder;
+		});
+	}
+	
+	if (url) {
+		
+		// check if activityView is enabled or not
+		if ([self showActivityIndicatorView]) {
+			[self addActivityIndicator];
+		}
+		
+		__weak __typeof(self)wself = self;
+		id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+			[wself removeActivityIndicator];
+			if (!wself) return;
+			UIImage *blurImage = [self gaussianBlurImage:image andInputRadius:percantage];
+			dispatch_main_sync_safe(^{
+				if (!wself) return;
+				if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
+				{
+					completedBlock(image, error, cacheType, url);
+					return;
+				}
+				else if (image) {
+					wself.image = blurImage;
+					[wself setNeedsLayout];
+				} else {
+					if ((options & SDWebImageDelayPlaceholder)) {
+						wself.image = placeholder;
+						[wself setNeedsLayout];
+					}
+				}
+				if (completedBlock && finished) {
+					completedBlock(image, error, cacheType, url);
+				}
+			});
+		}];
+		[self sd_setImageLoadOperation:operation forKey:@"UIImageViewImageLoad"];
+	} else {
+		dispatch_main_async_safe(^{
+			[self removeActivityIndicator];
+			if (completedBlock) {
+				NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
+				completedBlock(nil, error, SDImageCacheTypeNone, url);
+			}
+		});
+	}
+}
+
 - (void)sd_setImageWithPreviousCachedImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock {
     NSString *key = [[SDWebImageManager sharedManager] cacheKeyForURL:url];
     UIImage *lastPreviousCachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:key];
-    
-    [self sd_setImageWithURL:url placeholderImage:lastPreviousCachedImage ?: placeholder options:options progress:progressBlock completed:completedBlock];    
+	
+    [self sd_setImageWithURL:url placeholderImage:lastPreviousCachedImage ?: placeholder options:options progress:progressBlock completed:completedBlock];
 }
 
 - (NSURL *)sd_imageURL {

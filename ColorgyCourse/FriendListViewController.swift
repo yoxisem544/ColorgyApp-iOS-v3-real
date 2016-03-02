@@ -55,7 +55,7 @@ class FriendListViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		loadFriend()
-		renewChatroom(every: 3.0)
+		renewChatroom(every: 16.0)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {

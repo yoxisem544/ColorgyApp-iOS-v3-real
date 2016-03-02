@@ -26,27 +26,39 @@ class FriendListTableViewCell: UITableViewCell {
 	func updateUI() {
 		if historyChatroom.image.isValidURLString {
 			
-			let sc = SDImageCache()
-			let imageFromCache = sc.imageFromDiskCacheForKey(self.historyChatroom.image)
-			
-			if imageFromCache == nil  {
-				// load image if its nil
-				UIImageView().sd_setImageWithURL(historyChatroom.image.url, completed: { (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, url: NSURL!) -> Void in
-					self.updateUI()
-				})
+			if historyChatroom.chatProgress == 100 {
+				// can show photo
+				userProfileImageView.sd_setImageWithURL(historyChatroom.image.url)
 			} else {
-				let percentage = self.historyChatroom.chatProgress
-				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
-				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
-					var radius: CGFloat = 0.0
-					radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
-					print(radius)
-					let blurImage = UIImage().gaussianBlurImage(imageFromCache, andInputRadius: radius)
-					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						self.userProfileImageView.image = blurImage
-					})
-				})
+				userProfileImageView.sd_setImageWithURL(historyChatroom.blurImage.url)
 			}
+			
+//			let percentage = self.historyChatroom.chatProgress
+//			var radius: CGFloat = 0.0
+//			radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
+//			userProfileImageView.sd_setImageWithURL(historyChatroom.image.url, blurPercantage: radius)
+			
+//			let sc = SDImageCache()
+//			let imageFromCache = sc.imageFromDiskCacheForKey(self.historyChatroom.image)
+//			
+//			if imageFromCache == nil  {
+//				// load image if its nil
+//				UIImageView().sd_setImageWithURL(historyChatroom.image.url, completed: { (image: UIImage!, error: NSError!, cacheType: SDImageCacheType, url: NSURL!) -> Void in
+//					self.updateUI()
+//				})
+//			} else {
+//				let percentage = self.historyChatroom.chatProgress
+//				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
+//				dispatch_async(dispatch_get_global_queue(qos, 0), { () -> Void in
+//					var radius: CGFloat = 0.0
+//					radius = (33 - CGFloat(percentage < 98 ? percentage : 98) % 33) / 33.0 * 4.0
+//					print(radius)
+//					let blurImage = UIImage().gaussianBlurImage(imageFromCache, andInputRadius: radius)
+//					dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//						self.userProfileImageView.image = blurImage
+//					})
+//				})
+//			}
 		}
 		userNameLabel.text = (historyChatroom.name != "" ? historyChatroom.name : " ")
 		userQuestionLabel.text = " "
