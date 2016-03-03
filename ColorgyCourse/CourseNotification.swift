@@ -14,6 +14,7 @@ class CourseNotification {
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         if UserSetting.isCourseNotificationOn() {
             // then register new one
+			print(UserSetting.getPeriodData())
 			CourseDB.getAllStoredCourses(complete: { (courses) -> Void in
 				if let courses = courses {
 					// get out all course stored in db
@@ -25,7 +26,7 @@ class CourseNotification {
 						}
 					}
 				}
-//				print(UIApplication.sharedApplication().scheduledLocalNotifications)
+				print(UIApplication.sharedApplication().scheduledLocalNotifications)
 //				print("")
 				LocalCourseDB.getAllStoredCourses(complete: { (localCourses) -> Void in
 					if let localCourses = localCourses {

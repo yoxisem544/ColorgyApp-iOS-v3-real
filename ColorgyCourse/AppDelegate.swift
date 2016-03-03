@@ -153,6 +153,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if !Release.mode {
 			// for dev
 //			DevelopmentTestingMethods.test(loginCounts: 99)
+			ColorgyAPI.PATCHUserInfo("USC", department: "000", year: "2012", success: { () -> Void in
+				
+				}, failure: { () -> Void in
+					
+			})
 		}
 	}
 	
@@ -186,8 +191,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		print("user info")
 		print(userInfo)
 		if application.applicationState == UIApplicationState.Active {
-			
+			print("recieveing at state Active")
+			if let type = userInfo["type"] as? String {
+				if type == "new message" {
+					messageRecievedNotification()
+				}
+			}
+		} else if application.applicationState == UIApplicationState.Inactive {
+			print("recieveing at state Inactive")
+		} else if application.applicationState == UIApplicationState.Background {
+			print("recieveing at state Background")
 		}
+	}
+	
+	// MARK: - message recieved notification
+	func messageRecievedNotification() {
+		NSNotificationCenter.defaultCenter().postNotificationName(ColorgyNotification.didRecievedMessageNotification.rawValue, object: nil)
 	}
 	
 	// MARK: - status bar touched
@@ -201,7 +220,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				}
 			}
 		}
-		
 	}
 	
 	func statusBarTouchedAction() {
