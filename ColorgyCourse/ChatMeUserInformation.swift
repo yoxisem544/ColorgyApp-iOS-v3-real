@@ -10,7 +10,7 @@ import Foundation
 
 class ChatMeUserInformation : NSObject {
 	// required
-	var status: String
+	var status: Int
 	var avatarURL: String?
 	var organizationCode: String
 	var id: String
@@ -29,7 +29,7 @@ class ChatMeUserInformation : NSObject {
 	
 	convenience init?(json: JSON) {
 		
-		var _status: String?
+		var _status: Int?
 		var _avatarURL: String?
 		var _organizationCode: String?
 		var _id: String?
@@ -40,8 +40,8 @@ class ChatMeUserInformation : NSObject {
 		var _aboutHoroscope: String?
 		var _aboutHabitancy: String?
 		var _aboutExpertise: String?
-		
-		_status = json["status"].string
+
+		_status = json["status"].number?.integerValue
 		_avatarURL = json["avatar_url"].string
 		_organizationCode = json["organization_code"].string
 		_id = json["id"].string
@@ -56,9 +56,9 @@ class ChatMeUserInformation : NSObject {
 		self.init(status: _status, avatarURL: _avatarURL, organizationCode: _organizationCode, id: _id, name: _name, aboutSchool: _aboutSchool, aboutConversation: _aboutConversation, aboutPassion: _aboutPassion, aboutHoroscope: _aboutHoroscope, aboutHabitancy: _aboutHabitancy, aboutExpertise: _aboutExpertise)
 	}
 	
-	init?(status: String?, avatarURL: String?, organizationCode: String?, id: String?, name: String?, aboutSchool: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?) {
+	init?(status: Int?, avatarURL: String?, organizationCode: String?, id: String?, name: String?, aboutSchool: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?) {
 		
-		self.status = String()
+		self.status = Int()
 		self.organizationCode = String()
 		self.id = String()
 		self.name = String()
