@@ -74,6 +74,16 @@ class FriendListViewController: UIViewController {
 		renewTimer.invalidate()
 	}
 	
+	// MARK: update back button title 
+	func updateBackButtonTitle(title: String) {
+		let newBackButton = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		navigationItem.backBarButtonItem = newBackButton
+	}
+	
+	func restoreBackButton() {
+		navigationItem.backBarButtonItem = nil
+	}
+	
 	// MARK: about failToLoadDataHintView
 	func failToLoadDataHintViewDidTap() {
 		hideHintFailView()

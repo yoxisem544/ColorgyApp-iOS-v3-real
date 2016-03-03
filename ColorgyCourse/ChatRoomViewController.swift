@@ -60,6 +60,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 	private var unreadMessages = 0
+	private var friendViewControllerReference: FriendListViewController?
 	
 	// MARK: Life Cycle
 	override func viewDidLoad() {
@@ -81,6 +82,14 @@ class ChatRoomViewController: DLMessagesViewController {
 		configureRefreshControl()
 		
 //		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
+		if let vcs = navigationController?.viewControllers {
+			if vcs.count > 1 {
+				if let vc = vcs[1] as? FriendListViewController {
+					print("yo looooo")
+					friendViewControllerReference = vc
+				}
+			}
+		}
 	}
 	
 	// MARK: notification
@@ -95,13 +104,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	func messageRecievedNotification() {
 		print("yo lo")
 		unreadMessages += 1
-		navigationItem.backBarButtonItem?.title = "(\(unreadMessages))"
-		navigationController?.navigationBar.backItem?.backBarButtonItem?.title = "(\(unreadMessages))"
-		
-		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
-		print(navigationItem.backBarButtonItem)
-		print(navigationController?.navigationBar.backItem)
-		print(navigationController?.navigationBar.backItem?.backBarButtonItem)
+		friendViewControllerReference?.updateBackButtonTitle("(\(unreadMessages))好朋友")
 	}
 	
 	// MARK: yolo
@@ -128,6 +131,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		super.viewDidDisappear(animated)
 		if shouldDisconnectSocket {
 			colorgySocket.disconnect()
+			friendViewControllerReference?.restoreBackButton()
 		}
 		
 		unregisterNotification()
