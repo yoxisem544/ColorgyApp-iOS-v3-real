@@ -19,33 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationController.navigationBarHidden = YES;
-    
-    // View Customized
-    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
-    self.isEmailOK = NO;
-    [self childViewLayoutInitializing];
-}
-
-- (void)childViewLayoutInitializing {
-    self.openingViewController = [[OpeningViewController alloc] initWithLayout:0];
-    [self addChildViewController:self.openingViewController];
-    
-    self.blurWallViewController = [[BlurWallViewController alloc] init];
-    
-    self.navigationController.navigationBarHidden = YES;
-    
-    self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:self.blurWallViewController];
-    [self addChildViewController:self.navigationBlurWallViewController];
-    
-    self.activityViewController = self.openingViewController;
-    
-    // Do any additional setup after loading the view.
-    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
-        self.lastestQuestion = question;
-        self.questionDate = date;
-        [self switchViewController];
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        self.chatUser = user;
+        [self childViewLayoutInitializing];
     } failure:^() {
+        NSLog(@"checkUserAvaliable error");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常，使用模糊聊需要完整的網路功能" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"重試" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
@@ -65,12 +43,41 @@
             [self.refreshButton setTitle:@"重試" forState:UIControlStateNormal];
             [self.refreshButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
             [self.refreshButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
-
+            
             [self.refreshButton addTarget:self action:@selector(childViewLayoutInitializing) forControlEvents:UIControlEventTouchUpInside];
             
             [self.view addSubview:self.refreshButton];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
+    }];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    // View Customized
+    self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
+    //    self.isEmailOK = NO;
+}
+
+- (void)childViewLayoutInitializing {
+    self.openingViewController = [[OpeningViewController alloc] initWithLayout:self.chatUser.status.intValue];
+    [self addChildViewController:self.openingViewController];
+    
+    self.blurWallViewController = [[BlurWallViewController alloc] init];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    self.navigationBlurWallViewController = [[UINavigationController alloc] initWithRootViewController:self.blurWallViewController];
+    [self addChildViewController:self.navigationBlurWallViewController];
+    
+    self.activityViewController = self.openingViewController;
+    
+    // Do any additional setup after loading the view.
+    [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
+        self.lastestQuestion = question;
+        self.questionDate = date;
+        [self switchViewController];
+    } failure:^() {
+        NSLog(@"get question error");
     }];
 }
 
@@ -79,7 +86,7 @@
 - (void)switchViewController {
     
     // 檢查信箱認證
-    if (NO && [self isEmailOkCheck]) {
+    if (NO && self.chatUser.status.intValue == 4) {
         // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {

@@ -14,9 +14,7 @@
 #import "BlurWallSwitchViewController.h"
 #import "UselessView.h"
 
-@implementation OpeningViewController {
-    ChatUser *chatUser;
-}
+@implementation OpeningViewController
 
 - (instancetype)initWithLayout:(NSInteger)whichLayout {
     self = [super init];
@@ -69,18 +67,52 @@
         case 0:
             [self openingLayout];
             break;
+            //            case 1:
+            //                [self checkEmail];
+            //                break;
         case 1:
-            [self checkEmail];
-            break;
-        case 2:
             [self uploadLayout];
             break;
-        case 3:
+        case 2:
             [self nameLayout];
+            break;
+        case 3:
+            [self cleanAskLayout];
+            break;
         default:
             [self openingLayout];
             break;
     }
+    
+    //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+    //        switch (self.whichLayout) {
+    //            case 0:
+    //                [self openingLayout];
+    //                break;
+    //                //            case 1:
+    //                //                [self checkEmail];
+    //                //                break;
+    //            case 1:
+    //                [self uploadLayout];
+    //                break;
+    //            case 2:
+    //                [self nameLayout];
+    //                break;
+    //            case 3:
+    //                [self cleanAskLayout];
+    //                break;
+    //            default:
+    //                [self openingLayout];
+    //                break;
+    //        }
+    //    } failure:^() {
+    //        NSLog(@"checkUserAvaliability error");
+    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+    //
+    //        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    //        }]];
+    //        [self presentViewController:alertController animated:YES completion:nil];
+    //    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -181,7 +213,7 @@
 
 - (void)openingLayout {
     
-    
+    [self removeOpeningLayout];
     // Navigation Customized
     // self.title = @"模糊聊";
     // self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
@@ -305,6 +337,7 @@
 #pragma mark - Check Email Layout
 
 - (void)checkEmailLayout {
+    [self removeCheckEmailLayout];
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
@@ -410,6 +443,15 @@
     // 認證信箱，模擬延遲
     [ColorgyChatAPI ColorgyAPIMe:^() {
         if ([UserSetting UserOrganization]) {
+            [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"1" success:^() {
+                    NSLog(@"updateUserStatus success");
+                } failure:^() {
+                    NSLog(@"updateUserStatus error");
+                }];
+            } failure:^() {
+                NSLog(@"checkUserAvailability error");
+            }];
             [self.loadingView finished:^() {
                 [self removeOpeningLayout];
                 [self removeCheckEmailLayout];
@@ -445,6 +487,7 @@
 #pragma mark - Upload Layout
 
 - (void)uploadLayout {
+    [self removeUploadLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
     
@@ -712,6 +755,15 @@
     
     [self.chatApiOC patchUserImage:self.uploadImage chopRect:chopRect success:^(NSDictionary *response) {
         NSLog(@"%@", [response valueForKey:@"avatar_url"]);
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+            [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"2" success:^() {
+                NSLog(@"updateUserStatus success");
+            } failure:^() {
+                NSLog(@"updateUserStatus error");
+            }];
+        } failure:^() {
+            NSLog(@"checkUserAvailability error");
+        }];
         [self.loadingView finished:^() {
             [self nameLayout];
         }];
@@ -749,6 +801,7 @@
 #pragma mark - NameLayout
 
 - (void)nameLayout {
+    [self removeNameLayout];
     [self.tabBarController.tabBar setHidden:YES];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -881,8 +934,16 @@
     if (self.nameIsOk && self.nameTextField.text.length) {
         // 上傳名字
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-            chatUser = user;
             [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
+                [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
+                        NSLog(@"updateUserStatus success");
+                    } failure:^() {
+                        NSLog(@"updateUserStatus error");
+                    }];
+                } failure:^() {
+                    NSLog(@"checkUserAvailability error");
+                }];
                 // CleanAskLayout
                 [self removeNameLayout];
                 [self cleanAskLayout];
@@ -1006,6 +1067,7 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
+    [self removeNameLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
     [self removeUploadLayout];
@@ -1126,15 +1188,29 @@
 
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:self.questionDate success:^() {
-            // 開啟模糊牆
-            [self removeCleanAskLayout];
-            [self.view removeFromSuperview];
-            [self.navigationController.navigationBar setHidden:YES];
-            [self.tabBarController.tabBar setHidden:NO];
-            [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+            [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:self.questionDate success:^() {
+                [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"4" success:^() {
+                        NSLog(@"updateUserStatus success");
+                    } failure:^() {
+                        NSLog(@"updateUserStatus error");
+                    }];
+                } failure:^() {
+                    NSLog(@"checkUserAvailability error");
+                }];
+                // 開啟模糊牆
+                [self removeCleanAskLayout];
+                [self.view removeFromSuperview];
+                [self.navigationController.navigationBar setHidden:YES];
+                [self.tabBarController.tabBar setHidden:NO];
+                [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
+            } failure:^() {
+                NSLog(@"get answer error");
+            }];
+            
         } failure:^() {
-            NSLog(@"get answer error");
+            NSLog(@"check user availability error");
         }];
     }
 }
