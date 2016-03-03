@@ -84,7 +84,8 @@
 #pragma mark - switcher
 
 - (void)switchViewController {
-    
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+        self.chatUser = user;
     // 檢查信箱認證
     if (self.chatUser.status.intValue == 4) {
         // 模糊牆
@@ -109,6 +110,9 @@
             }
         }];
     }
+    } failure:^() {
+        NSLog(@"check AvailableUser error");
+    }];
 }
 
 - (BOOL)isEmailOkCheck {
