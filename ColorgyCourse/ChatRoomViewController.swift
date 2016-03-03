@@ -58,6 +58,9 @@ class ChatRoomViewController: DLMessagesViewController {
 	private var historyMessagesCount: Int = 0
 	private let requestMoreMessageRefreshControl: UIRefreshControl = UIRefreshControl()
 	
+	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+	private var unreadMessages = 0
+	
 	// MARK: Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -76,8 +79,32 @@ class ChatRoomViewController: DLMessagesViewController {
 		title = historyChatroom.name
 		
 		configureRefreshControl()
+		
+//		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
 	}
 	
+	// MARK: notification
+	func registerNotification() {
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageRecievedNotification", name: ColorgyNotification.didRecievedMessageNotification.rawValue, object: nil)
+	}
+	
+	func unregisterNotification() {
+		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
+	
+	func messageRecievedNotification() {
+		print("yo lo")
+		unreadMessages += 1
+		navigationItem.backBarButtonItem?.title = "(\(unreadMessages))"
+		navigationController?.navigationBar.backItem?.backBarButtonItem?.title = "(\(unreadMessages))"
+		
+		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
+		print(navigationItem.backBarButtonItem)
+		print(navigationController?.navigationBar.backItem)
+		print(navigationController?.navigationBar.backItem?.backBarButtonItem)
+	}
+	
+	// MARK: yolo
 	func configureRefreshControl() {
 		requestMoreMessageRefreshControl.addTarget(self, action: "needsToRefresh:", forControlEvents: UIControlEvents.ValueChanged)
 		requestMoreMessageRefreshControl.tintColor = ColorgyColor.MainOrange
@@ -93,6 +120,8 @@ class ChatRoomViewController: DLMessagesViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		colorgySocket.connect()
+		
+		registerNotification()
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
@@ -100,6 +129,8 @@ class ChatRoomViewController: DLMessagesViewController {
 		if shouldDisconnectSocket {
 			colorgySocket.disconnect()
 		}
+		
+		unregisterNotification()
 	}
 	
 	// MARK: Configuration

@@ -29,8 +29,8 @@ class EmailLoginViewController: UIViewController {
         
         // test region
         if !Release.mode {
-            emailLoginTextField.text = "test-cyu-student-1d1e@test.colorgy.io"
-            passwordLoginTextField.text = "test-cyu-student-1d1e"
+            emailLoginTextField.text = "test-usc-student-22be@test.colorgy.io"
+            passwordLoginTextField.text = "test-usc-student-22be"
         }
 
         // Do any additional setup after loading the view.

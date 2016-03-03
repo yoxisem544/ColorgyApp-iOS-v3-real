@@ -26,6 +26,8 @@ class FriendListViewController: UIViewController {
 	
 	private var hiList: [Hello] = []
 	
+	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+	
 	// MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,10 @@ class FriendListViewController: UIViewController {
 		
 		view.addSubview(noDataHintView)
 		noDataHintView.hidden = true
+		
+		title = "好朋友"
+		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
+		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
     }
 	
 	override func viewDidAppear(animated: Bool) {
