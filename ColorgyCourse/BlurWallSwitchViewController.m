@@ -86,7 +86,7 @@
 - (void)switchViewController {
     
     // 檢查信箱認證
-    if (NO && self.chatUser.status.intValue == 4) {
+    if (self.chatUser.status.intValue == 4) {
         // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {

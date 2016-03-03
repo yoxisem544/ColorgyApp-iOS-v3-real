@@ -1193,18 +1193,24 @@
                 [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
                     [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"4" success:^() {
                         NSLog(@"updateUserStatus success");
+                        // 開啟模糊牆
+                        [self removeCleanAskLayout];
+                        [self.view removeFromSuperview];
+                        [self.navigationController.navigationBar setHidden:YES];
+                        [self.tabBarController.tabBar setHidden:NO];
+                        [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
                     } failure:^() {
                         NSLog(@"updateUserStatus error");
+                        // 開啟模糊牆
+                        [self removeCleanAskLayout];
+                        [self.view removeFromSuperview];
+                        [self.navigationController.navigationBar setHidden:YES];
+                        [self.tabBarController.tabBar setHidden:NO];
+                        [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
                     }];
                 } failure:^() {
                     NSLog(@"checkUserAvailability error");
                 }];
-                // 開啟模糊牆
-                [self removeCleanAskLayout];
-                [self.view removeFromSuperview];
-                [self.navigationController.navigationBar setHidden:YES];
-                [self.tabBarController.tabBar setHidden:NO];
-                [(BlurWallSwitchViewController *)self.parentViewController switchViewController];
             } failure:^() {
                 NSLog(@"get answer error");
             }];
