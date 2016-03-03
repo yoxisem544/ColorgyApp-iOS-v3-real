@@ -355,6 +355,7 @@ class ColorgyChatAPI : NSObject {
 			if let response = response {
 				let json = JSON(response)["result"]
 				if let user = ChatMeUserInformation(json: json) {
+					print(user)
 					success(user: user)
 				} else {
 					print("fail to generate UnmatchedUser at me api.")

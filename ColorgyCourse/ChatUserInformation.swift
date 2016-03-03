@@ -10,7 +10,7 @@ import Foundation
 
 class ChatUserInformation : NSObject {
 	// required
-	var status: String
+	var status: Int
 	var avatarBlur2XURL: String?
 	var organizationCode: String
 	var id: String
@@ -30,7 +30,7 @@ class ChatUserInformation : NSObject {
 	
 	convenience init?(json: JSON) {
 		
-		var _status: String?
+		var _status: Int?
 		var _avatarBlur2XURL: String?
 		var _organizationCode: String?
 		var _id: String?
@@ -43,7 +43,7 @@ class ChatUserInformation : NSObject {
 		var _lastAnswer: String?
 		var _lastAnsweredDate: String?
 		
-		_status = json["status"].string
+		_status = json["status"].number?.integerValue
 		_avatarBlur2XURL = json["avatar_blur_2x_url"].string
 		_organizationCode = json["organization_code"].string
 		_id = json["id"].string
@@ -59,9 +59,9 @@ class ChatUserInformation : NSObject {
 		self.init(status: _status, avatarBlur2XURL: _avatarBlur2XURL, organizationCode: _organizationCode, id: _id, name: _name,aboutConversation: _aboutConversation, aboutPassion: _aboutPassion, aboutHoroscope: _aboutHoroscope, aboutHabitancy: _aboutHabitancy, aboutExpertise: _aboutExpertise, lastAnswer: _lastAnswer, lastAnsweredDate: _lastAnsweredDate)
 	}
 	
-	init?(status: String?, avatarBlur2XURL: String?, organizationCode: String?, id: String?, name: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?, lastAnswer: String?, lastAnsweredDate: String?) {
+	init?(status: Int?, avatarBlur2XURL: String?, organizationCode: String?, id: String?, name: String?, aboutConversation: String?, aboutPassion: String?, aboutHoroscope: String?, aboutHabitancy: String?, aboutExpertise: String?, lastAnswer: String?, lastAnsweredDate: String?) {
 		
-		self.status = String()
+		self.status = Int()
 		self.organizationCode = String()
 		self.id = String()
 		self.name = String()
