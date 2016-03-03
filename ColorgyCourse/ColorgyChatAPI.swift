@@ -1348,7 +1348,49 @@ class ColorgyChatAPI : NSObject {
         
         return
     }
-	
+    
+//    更新使用者狀態
+//    
+//    用途：給 app 一個 web API endpoint 來更新使用者狀態
+//    使用方式：
+//    
+//    1. 傳一個http post給/users/update_user_status，參數包含使用者的status、 uuid、accessToken
+    
+    class func updateUserStatus(userId: String, status: String, success: () -> Void, failure: () -> Void) {
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        guard let uuid = UserSetting.UserUUID() else {
+            failure()
+            return
+        }
+        guard let accessToken = UserSetting.UserAccessToken() else {
+            failure()
+            return
+        }
+        
+        let params = [
+            "uuid": uuid,
+            "accessToken": accessToken,
+            "userId": userId,
+            "status": status
+        ]
+        
+        afManager.POST(serverURL + "/users/update_user_status", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            if let response = response {
+                let json = JSON(response)["result"]
+                print(json)
+                success()
+            } else {
+                failure()
+            }
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                failure()
+                print(error.localizedDescription)
+        })
+    }
 	
     class func checkImageType(data: NSData) {
         var c = UInt8()
