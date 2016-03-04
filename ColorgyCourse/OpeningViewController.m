@@ -931,31 +931,54 @@
 #pragma mark - submitName
 
 - (void)submitName {
-    if (self.nameIsOk && self.nameTextField.text.length) {
-        // 上傳名字
-        [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-            [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
-                [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
-                        NSLog(@"updateUserStatus success");
+    // 檢查名字 尚需修改
+    if (self.nameTextField.text.length) {
+        [self showChecking];
+        [ColorgyChatAPI checkNameExists:self.nameTextField.text success:^(NSString *status) {
+            if ([status isEqualToString:@"ok"]) {
+                [self showCheck];
+                if (self.nameIsOk && self.nameTextField.text.length) {
+                    // 上傳名字
+                    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+                        [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
+                            [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                                [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
+                                    NSLog(@"updateUserStatus success");
+                                } failure:^() {
+                                    NSLog(@"updateUserStatus error");
+                                }];
+                            } failure:^() {
+                                NSLog(@"checkUserAvailability error");
+                            }];
+                            // CleanAskLayout
+                            [self removeNameLayout];
+                            [self cleanAskLayout];
+                        } failure:^() {
+                            NSLog(@"update name error");
+                        }];
+                        [ColorgyChatAPI updateFromCore:^() {} failure:^() {
+                            NSLog(@"update core error");
+                        }];
                     } failure:^() {
-                        NSLog(@"updateUserStatus error");
+                        NSLog(@"check user error");
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                        }]];
+                        [self presentViewController:alertController animated:YES completion:nil];
                     }];
-                } failure:^() {
-                    NSLog(@"checkUserAvailability error");
-                }];
-                // CleanAskLayout
-                [self removeNameLayout];
-                [self cleanAskLayout];
-            } failure:^() {
-                NSLog(@"update name error");
-            }];
-            [ColorgyChatAPI updateFromCore:^() {} failure:^() {
-                NSLog(@"update core error");
-            }];
+                }
+            } else {
+                [self dismissCheck];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"名字無法使用" message:@"請想個新的吧！！" preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                }]];
+                [self presentViewController:alertController animated:YES completion:nil];
+
+            }
         } failure:^() {
-            NSLog(@"check user error");
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];

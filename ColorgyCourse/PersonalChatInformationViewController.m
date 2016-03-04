@@ -81,6 +81,7 @@
         [self showCheck];
         
         nameTextField.text = information.name;
+        NSLog(@"%@", information.name);
         textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", (long)[self stringCounter:nameTextField.text]];
         [self showCheck];
         aboutConversationTextView.text = information.aboutConversation;
