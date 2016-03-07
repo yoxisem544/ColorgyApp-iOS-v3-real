@@ -366,7 +366,7 @@
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
         
         if (self.blurWallDataMutableArray.count > 6) {
-            UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+            UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
             
             activityIndicator.color = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
             activityIndicator.center = CGPointMake(reusableView.bounds.size.width / 2, reusableView.bounds.size.height / 2);
