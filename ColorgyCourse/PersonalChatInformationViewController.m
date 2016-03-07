@@ -40,6 +40,7 @@
     
     ChatMeUserInformation *userInformation;
     NSArray *horoscpoeArray;
+    NSArray *addressArray;
 }
 
 @end
@@ -48,7 +49,11 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     // result.text = [array objectAtIndex:row];
-    aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:row];
+    if (self.activeTextField == aboutHoroscopeTextField) {
+        aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:row];
+    } else if (self.activeTextField == aboutHabitancyTextField) {
+        aboutHabitancyTextField.text = [addressArray objectAtIndex:row];
+    }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -56,11 +61,23 @@
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return [horoscpoeArray objectAtIndex:row];
+    if (self.activeTextField == aboutHoroscopeTextField) {
+        return [horoscpoeArray objectAtIndex:row];
+    } else if (self.activeTextField == aboutHabitancyTextField) {
+        return [addressArray objectAtIndex:row];
+    } else {
+        return nil;
+    }
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return [horoscpoeArray count];
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if (self.activeTextField == aboutHoroscopeTextField) {
+        return [horoscpoeArray count];
+    } else if (self.activeTextField == aboutHabitancyTextField) {
+        return [addressArray count];
+    } else {
+        return 0;
+    }
 }
 
 - (void)viewDidLoad {
@@ -90,7 +107,6 @@
         aboutHoroscopeTextField.text = information.aboutHoroscope;
         aboutPassionTextView.text = information.aboutPassion;
         aboutSchoolTextField.text = information.aboutSchool;
-        
         
         
         submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(submitMethod)];
@@ -313,16 +329,22 @@
     
     
     
-    self.pickerView = [[UIPickerView alloc] init];
-    self.pickerView.delegate = self;
-    self.pickerView.dataSource = self;
-    aboutHoroscopeTextField.inputView = self.pickerView;
+    self.pickerViewHoroscope = [[UIPickerView alloc] init];
+    self.pickerViewHoroscope.delegate = self;
+    self.pickerViewHoroscope.dataSource = self;
+    aboutHoroscopeTextField.inputView = self.pickerViewHoroscope;
+    
+    self.pickerViewAddress = [[UIPickerView alloc] init];
+    self.pickerViewAddress.delegate = self;
+    self.pickerViewAddress.dataSource = self;
+    aboutHabitancyTextField.inputView = self.pickerViewAddress;
     
     UIToolbar *toolbar = [[UIToolbar alloc] init];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
     UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     toolbar.items = @[flexibleSeparator, doneButton];
     aboutHoroscopeTextField.inputAccessoryView = toolbar;
+    aboutHabitancyTextField.inputAccessoryView = toolbar;
     horoscpoeArray = [[NSArray alloc] initWithObjects:@"牡羊", @"金牛", @"雙子", @"巨蟹", @"獅子", @"處女", @"天秤", @"天蠍", @"射手", @"摩羯", @"水瓶", @"雙魚", nil];
     //    白羊宮（Aries, ♈）
     //    金牛宮（Taurus, ♉）
@@ -338,8 +360,10 @@
     //    水瓶宮（Aquarius, ♒）
     //    雙魚宮（Pisces, ♓）
     
+    addressArray = [[NSArray alloc] initWithObjects:@"基隆", @"臺北", @"新北", @"桃園", @"新竹", @"苗栗", @"臺中", @"彰化", @"南投", @"雲林", @"嘉義", @"臺南", @"高雄", @"屏東", @"宜蘭", @"花蓮", @"臺東", @"連江", @"金門", @"澎湖", nil];
     
-    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50) withMessage:@"快快快～新增更多個人資訊～讓對的人找到你！"];
+    
+    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50) withMessage:@"新增更多個人資訊～讓對的人找到你！"];
     
     [self.view addSubview:uselessView];
 }
@@ -710,8 +734,10 @@
 #pragma mark - TouchViewToReturn
 
 - (void)touchViewToReturn {
-    if (self.activeTextField.tag == aboutHoroscopeTextField.tag) {
-        aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:[self.pickerView selectedRowInComponent:0]];
+    if (self.activeTextField == aboutHoroscopeTextField) {
+        aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:[self.pickerViewHoroscope selectedRowInComponent:0]];
+    } else if (self.activeTextField == aboutHabitancyTextField) {
+        aboutHabitancyTextField.text = [addressArray objectAtIndex:[self.pickerViewAddress selectedRowInComponent:0]];
     }
     [self.activeTextField resignFirstResponder];
     [self.activeTextView resignFirstResponder];

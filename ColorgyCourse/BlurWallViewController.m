@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     currentPage = 0;
     canLoadMore = YES;
     
@@ -53,6 +54,13 @@
     [completeButton addTarget:self action:@selector(pushToPersonalChatInformationViewController) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:completeButton];
     
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        self.uselessBall = [[UIView alloc] initWithFrame:CGRectMake(-3, completeButton.bounds.size.height - 9, 12, 12)];
+        self.uselessBall.layer.cornerRadius = 6;
+        self.uselessBall.layer.masksToBounds = YES;
+        self.uselessBall.backgroundColor = [self UIColorFromRGB:0 green:207 blue:228 alpha:100];
+        [completeButton addSubview:self.uselessBall];
+    }
     
     self.numberOfColumn = 2;
     
@@ -137,7 +145,7 @@
                         if ([self.cleanAskString length]) {
                             [self cleanAskViewLayout];
                         }
-                    } else if (animated) {
+                    } else if (answered) {
                         [self showUseLess];
                     }
                     //                    } failure:^() {
@@ -892,7 +900,7 @@
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
-            [self showUseLess];
+            //[self showUseLess];
         } failure:^() {
             NSLog(@"answerQuestion error");
         }];
@@ -961,6 +969,10 @@
 
 #pragma mark - information view
 - (void)pushToPersonalChatInformationViewController {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self.uselessBall removeFromSuperview];
     PersonalChatInformationViewController *vc = [[PersonalChatInformationViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
