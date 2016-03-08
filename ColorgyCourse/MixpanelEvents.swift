@@ -14,6 +14,7 @@ struct MixpanelEvents {
 	static let ClickEmailLogin = "Click Email Login"
 	static let FacebookLoginSuccess = "Facebook Login Success"
 	static let FacebookLoginFail = "Facebook Login Fail"
+    static let FacebookLoginFailByUserCancel = "Facebook Login Fail By User Cancel"
 	static let SelectSchool = "Select School"
 	static let SelectDepartment = "Select Department"
 	static let SelectStartTime = "Select StartTime"

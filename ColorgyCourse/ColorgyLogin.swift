@@ -63,6 +63,7 @@ class ColorgyLogin {
                     handler(token: nil)
                 } else if result.isCancelled {
                     print(ColorgyErrorType.canceledFBLogin)
+                    Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFailByUserCancel)
                     handler(token: nil)
                 } else {
                     print("logged in")

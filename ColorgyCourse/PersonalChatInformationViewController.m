@@ -340,6 +340,8 @@
     aboutHabitancyTextField.inputView = self.pickerViewAddress;
     
     UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.barTintColor = [UIColor lightGrayColor];
+    toolbar.translucent = NO;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(touchViewToReturn)];
     UIBarButtonItem *flexibleSeparator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     toolbar.items = @[flexibleSeparator, doneButton];
