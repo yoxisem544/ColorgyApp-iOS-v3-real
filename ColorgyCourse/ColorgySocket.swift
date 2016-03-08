@@ -14,21 +14,6 @@ class ColorgySocket : NSObject {
 	internal var chatroom: Chatroom?
 	internal var didConnectToSocketOnce: Bool = false
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?, messages: [ChatMessage]) -> Void) {
-		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
-			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
-				let chatroom = Chatroom(json: JSON(responseOnEmit))
-				self.chatroom = chatroom
-				print(chatroom)
-				if !self.didConnectToSocketOnce {
-					let chatMessages = ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit))
-					registerToChatroom(chatroom: chatroom, messages: chatMessages)
-					self.didConnectToSocketOnce = true
-				}
-			})
-		}
-	}
-	
 	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
@@ -48,30 +33,6 @@ class ColorgySocket : NSObject {
 								})
 								// complete
 								withMessages(messages: sortedMessages)
-							})
-							self.didConnectToSocketOnce = true
-						}
-					}
-				}
-			})
-		}
-	}
-	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom?) -> Void, withSectionMessage: (message: ChatMessage) -> Void) {
-		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
-			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
-
-				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
-					let chatroom = Chatroom(json: JSON(responseOnEmit))
-					dispatch_async(dispatch_get_main_queue(), { () -> Void in
-						self.chatroom = chatroom
-						registerToChatroom(chatroom: self.chatroom)
-					})
-					
-					if chatroom != nil {
-						if !self.didConnectToSocketOnce {
-							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), withSectionMessage: { (message) -> Void in
-								withSectionMessage(message: message)
 							})
 							self.didConnectToSocketOnce = true
 						}
@@ -141,7 +102,6 @@ class ColorgySocket : NSObject {
 				"url": "/chatroom/send_message"
 			]
 //			print(postData)
-			//			s.emit("post", withItems: postData as! [AnyObject])
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)
 			})
@@ -162,7 +122,7 @@ class ColorgySocket : NSObject {
 				],
 				"url": "/chatroom/send_message"
 			]
-			//			s.emit("post", withItems: postData as! [AnyObject])
+
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)
 			})

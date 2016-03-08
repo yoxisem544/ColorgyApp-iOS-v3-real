@@ -62,10 +62,7 @@ class ChatMessage: NSObject {
 				content = json["data"]["content"][ChatMessage.ContentKey.Sticker].string!
 			}
 		}
-		
-//		if json["data"]["content"]["text"].string != nil {
-//			content = json["data"]["content"]["text"].string!
-//		}
+
 		if json["data"]["userId"].string != nil {
 			userId = json["data"]["userId"].string!
 		}
@@ -106,10 +103,7 @@ class ChatMessage: NSObject {
 				content = json["content"][ChatMessage.ContentKey.Sticker].string!
 			}
 		}
-		
-		//		if json["data"]["content"]["text"].string != nil {
-		//			content = json["data"]["content"]["text"].string!
-		//		}
+
 		if json["userId"].string != nil {
 			userId = json["userId"].string!
 		}
@@ -150,9 +144,6 @@ class ChatMessage: NSObject {
 			}
 		}
 
-//		if json["content"]["text"].string != nil {
-//			content = json["content"]["text"].string!
-//		}
 		if json["content"]["image"] != nil {
 			print(json["content"]["image"])
 		}
@@ -215,19 +206,6 @@ class ChatMessage: NSObject {
 		return messages
 	}
 	
-	class func generateMessagesOnConnent(json: JSON) -> [ChatMessage] {
-		var messages = [ChatMessage]()
-		if let (_, json) = json.first {
-//			print(json["body"]["result"]["messageList"].count)
-			for (_, json) : (String, JSON) in json["body"]["result"]["messageList"] {
-				if let message = ChatMessage(onConnect: json) {
-					messages.append(message)
-				}
-			}
-		}
-		return messages
-	}
-	
 	class func generateMessagesOnConnent(json: JSON, complete: (messages: [ChatMessage]) -> Void) {
 		var messages = [ChatMessage]()
 		dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
@@ -241,22 +219,6 @@ class ChatMessage: NSObject {
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					complete(messages: messages)
 				})
-			}
-		}
-	}
-	
-	class func generateMessagesOnConnent(json: JSON, withSectionMessage: (message: ChatMessage) -> Void) {
-		dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
-			if let (_, json) = json.first {
-				//			print(json["body"]["result"]["messageList"].count)
-				for (_, json) : (String, JSON) in json["body"]["result"]["messageList"] {
-					if let m = ChatMessage(onConnect: json) {
-						NSThread.sleepForTimeInterval(0.1)
-						dispatch_async(dispatch_get_main_queue(), { () -> Void in
-							withSectionMessage(message: m)
-						})
-					}
-				}
 			}
 		}
 	}
