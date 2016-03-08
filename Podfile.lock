@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Crashlytics (3.6.0):
+  - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.5)
   - Mixpanel (2.9.3):
@@ -33,7 +33,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   Mixpanel: b9ff1c5d41fc07037d4b813bf2799c050ee3e49b
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
