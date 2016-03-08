@@ -64,6 +64,7 @@ class ColorgyLogin {
                 } else if result.isCancelled {
                     print(ColorgyErrorType.canceledFBLogin)
                     Mixpanel.sharedInstance().track(MixpanelEvents.FacebookLoginFailByUserCancel)
+                    Flurry.logEvent("FacebookLoginFailByUserCancel", timed: true)
                     handler(token: nil)
                 } else {
                     print("logged in")
