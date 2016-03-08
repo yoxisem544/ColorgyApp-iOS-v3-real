@@ -12,7 +12,8 @@
 
 - (UIImage *)gaussianBlurImage:(UIImage *)image andInputRadius:(CGFloat)radius {
     if (image) {
-        CIContext *context = [CIContext contextWithOptions:nil];
+		EAGLContext *openGLContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+		CIContext *context = [CIContext contextWithEAGLContext:openGLContext];
         CIImage *inputImage = [CIImage imageWithCGImage:image.CGImage];
         CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
         
