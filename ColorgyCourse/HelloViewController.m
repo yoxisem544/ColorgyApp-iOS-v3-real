@@ -225,7 +225,7 @@
     
     [backButton setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
     //    backButton.backgroundColor = [UIColor blackColor];
-    //    [self.view addSubview:backButton];
+    [self.view addSubview:backButton];
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
 }
 
