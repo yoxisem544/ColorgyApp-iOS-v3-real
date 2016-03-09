@@ -63,6 +63,13 @@
     [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setHidden:YES];
     
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
     switch (self.whichLayout) {
         case 0:
             [self openingLayout];
