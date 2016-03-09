@@ -14,6 +14,7 @@
 @property UITextView *activeTextView;
 @property UIImage *uploadImage;
 @property LoadingView *loadingView;
-@property UIPickerView *pickerView;
+@property UIPickerView *pickerViewAddress;
+@property UIPickerView *pickerViewHoroscope;
 
 @end

@@ -176,31 +176,32 @@ class ColorgyChatAPI : NSObject {
 	
 	class func checkNameExists(name: String, success: (status: String) -> Void, failure: () -> Void) {
 		
-		let afManager = AFHTTPSessionManager(baseURL: nil)
-		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
-		
-		let params = ["name": name]
-		print(params)
-		afManager.POST(serverURL + "/users/check_name_exists", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-			if let response = response {
-				let json = JSON(response)
-				print(json["result"].string)
-				if json["result"].string == NameStatus.Ok.rawValue {
-					success(status: NameStatus.Ok.rawValue)
-				} else if json["result"].string == NameStatus.AlreadyExists.rawValue {
-					success(status: NameStatus.AlreadyExists.rawValue)
-				} else {
-					failure()
-					print("fail to generate NameStatus, unknown status")
-				}
-			} else {
-				failure()
-			}
-			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-				print(error.localizedDescription)
-				failure()
-		})
+        
+        let afManager = AFHTTPSessionManager(baseURL: nil)
+        afManager.requestSerializer = AFJSONRequestSerializer()
+        afManager.responseSerializer = AFJSONResponseSerializer()
+        
+        let params = ["name": name]
+        print(params)
+        afManager.POST(serverURL + "/users/check_name_exists", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            if let response = response {
+                let json = JSON(response)
+                print(json["result"].string)
+                if json["result"].string == NameStatus.Ok.rawValue {
+                    success(status: NameStatus.Ok.rawValue)
+                } else if json["result"].string == NameStatus.AlreadyExists.rawValue {
+                    success(status: NameStatus.AlreadyExists.rawValue)
+                } else {
+                    failure()
+                    print("fail to generate NameStatus, unknown status")
+                }
+            } else {
+                failure()
+            }
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+                failure()
+        })
 	}
 	
 	///更新使用者名稱：(simple test passed)

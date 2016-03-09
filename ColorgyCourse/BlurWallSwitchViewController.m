@@ -78,6 +78,7 @@
         [self switchViewController];
     } failure:^() {
         NSLog(@"get question error");
+        [self switchViewController];
     }];
 }
 
@@ -87,7 +88,7 @@
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         self.chatUser = user;
     // 檢查信箱認證
-    if (self.chatUser.status.intValue == 4) {
+    if (self.chatUser.status.intValue >= 3 && self.chatUser.status.intValue != 5) {
         // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {
@@ -111,7 +112,32 @@
         }];
     }
     } failure:^() {
-        NSLog(@"check AvailableUser error");
+        NSLog(@"checkUserAvaliable error");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常，使用模糊聊需要完整的網路功能" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"重試" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            [self switchViewController];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"瞭解" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            // SubmitNameButtom Customized
+            self.refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.refreshButton.frame = CGRectMake(141, 440, 120, 41);
+            self.refreshButton.backgroundColor = [UIColor clearColor];
+            self.refreshButton.layer.borderColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100].CGColor;
+            self.refreshButton.layer.borderWidth = 2.5;
+            self.refreshButton.layer.cornerRadius = 2.5;
+            self.refreshButton.center = self.view.center;
+            
+            // SubmitNameButtom Customized
+            [self.refreshButton setTitle:@"重試" forState:UIControlStateNormal];
+            [self.refreshButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
+            [self.refreshButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
+            
+            [self.refreshButton addTarget:self action:@selector(switchViewController) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self.view addSubview:self.refreshButton];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
     }];
 }
 

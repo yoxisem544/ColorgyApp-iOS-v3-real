@@ -35,4 +35,6 @@
 @property UIView *line2;
 @property UILabel *textNumberCounterLabel;
 
+@property UIView *uselessBall;
+
 @end
