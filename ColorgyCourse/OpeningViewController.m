@@ -14,7 +14,9 @@
 #import "BlurWallSwitchViewController.h"
 #import "UselessView.h"
 
-@implementation OpeningViewController
+@implementation OpeningViewController {
+    UselessView *uselessView;
+}
 
 - (instancetype)initWithLayout:(NSInteger)whichLayout {
     self = [super init];
@@ -70,26 +72,29 @@
     [self removeUploadPreviewLayout];
     [self removeNameLayout];
     
-    switch (self.whichLayout) {
-        case 0:
-            [self openingLayout];
-            break;
-            //            case 1:
-            //                [self checkEmail];
-            //                break;
-        case 1:
-            [self uploadLayout];
-            break;
-        case 2:
-            [self nameLayout];
-            break;
-        case 3:
-            [self cleanAskLayout];
-            break;
-        default:
-            [self openingLayout];
-            break;
-    }
+    
+    [self openingLayout];
+    
+//    switch (self.whichLayout) {
+//        case 0:
+//            [self openingLayout];
+//            break;
+//            //            case 1:
+//            //                [self checkEmail];
+//            //                break;
+//        case 1:
+//            [self uploadLayout];
+//            break;
+//        case 2:
+//            [self nameLayout];
+//            break;
+//        case 3:
+//            [self cleanAskLayout];
+//            break;
+//        default:
+//            [self openingLayout];
+//            break;
+//    }
     
     //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
     //        switch (self.whichLayout) {
@@ -272,7 +277,7 @@
     [self.startCheckEmailButton setTitle:@"開始認證" forState:UIControlStateNormal];
     [self.startCheckEmailButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.startCheckEmailButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
-    [self.startCheckEmailButton addTarget:self action:@selector(showCheckEmailAlert) forControlEvents:UIControlEventTouchUpInside];
+    [self.startCheckEmailButton addTarget:self action:@selector(startOpening) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.startCheckEmailButton];
 }
@@ -283,6 +288,41 @@
     [self.uploadPhotoButton removeFromSuperview];
     [self.welcomeLabel removeFromSuperview];
     [self.welcomeDescriptionLabel removeFromSuperview];
+}
+
+#pragma mark - StartOpening
+- (void)startOpening {
+    self.navigationItem.hidesBackButton = YES;
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:YES];
+    
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
+    switch (self.whichLayout) {
+        case 0:
+            [self showCheckEmailAlert];
+            break;
+            //            case 1:
+            //                [self checkEmail];
+            //                break;
+        case 1:
+            [self uploadLayout];
+            break;
+        case 2:
+            [self nameLayout];
+            break;
+        case 3:
+            [self cleanAskLayout];
+            break;
+        default:
+            [self openingLayout];
+            break;
+    }
 }
 
 #pragma mark - CheckEmailButtonAction
@@ -1204,7 +1244,7 @@
     
     NSLog(@"%f", CGRectGetMinY(self.progressBarView2.frame));
     
-    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
+    uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
     
     [self.view addSubview:uselessView];
 }
@@ -1217,6 +1257,7 @@
     [self.textNumberCounterLabel removeFromSuperview];
     [self.cleanAskTitleLabel removeFromSuperview];
     [self.progressBarView2 removeFromSuperview];
+    [uselessView removeFromSuperview];
 }
 
 #pragma mark - openChatButtonAction

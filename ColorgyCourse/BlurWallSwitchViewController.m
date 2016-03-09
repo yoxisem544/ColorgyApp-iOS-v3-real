@@ -23,6 +23,7 @@
         if (![chatUser.userId isEqualToString:self.chatUser.userId]) {
             // change user
             self.chatUser = chatUser;
+            self.openingViewController.whichLayout = self.chatUser.status.integerValue;
             [self switchViewController];
         }
     } failure:^() {}];
