@@ -88,7 +88,7 @@
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
         self.chatUser = user;
     // 檢查信箱認證
-    if (/*self.chatUser.status.intValue >= 3 && self.chatUser.status.intValue != 5*/NO) {
+    if (self.chatUser.status.intValue >= 3 && self.chatUser.status.intValue != 5) {
         // 模糊牆
         [self transitionFromViewController:self.activityViewController toViewController:self.navigationBlurWallViewController duration:0 options:UIViewAnimationOptionTransitionNone animations:nil completion:^(BOOL finished) {
             if (finished) {

@@ -70,8 +70,6 @@
     [self removeUploadPreviewLayout];
     [self removeNameLayout];
     
-    self.whichLayout = 1;
-    
     switch (self.whichLayout) {
         case 0:
             [self openingLayout];
