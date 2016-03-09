@@ -70,6 +70,8 @@
     [self removeUploadPreviewLayout];
     [self removeNameLayout];
     
+    self.whichLayout = 1;
+    
     switch (self.whichLayout) {
         case 0:
             [self openingLayout];
@@ -221,6 +223,12 @@
 - (void)openingLayout {
     
     [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
     // Navigation Customized
     // self.title = @"模糊聊";
     // self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
@@ -444,7 +452,12 @@
 - (void)checkEmail {
     self.loadingView.loadingString = @"驗證中";
     self.loadingView.finishedString = @"認證成功";
+    [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     [self.loadingView start];
     // 認證信箱，模擬延遲
@@ -494,9 +507,12 @@
 #pragma mark - Upload Layout
 
 - (void)uploadLayout {
-    [self removeUploadLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
@@ -563,14 +579,10 @@
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         
         // Cancel button tappped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
     }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // FBImageSticker button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self removeUploadLayout];
         [self uploadPreviewLayout];
         UIActivityIndicatorView *indView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -589,15 +601,9 @@
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // PhotoAlbumr button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self openPhotoLibrary];
     }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"拍攝照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        // TakePhoto button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self openPhotoCamera];
     }]];
     [self presentViewController:photoMeunAlertController animated:YES completion:nil];
@@ -616,9 +622,6 @@
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相簿失敗" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-            }];
         }]];
         [self presentViewController:alertError animated:YES completion:nil];
     }
@@ -637,8 +640,6 @@
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相機失敗" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            [self dismissViewControllerAnimated:YES completion:^{
-            }];
         }]];
         [self presentViewController:alertError animated:YES completion:nil];
     }
@@ -666,7 +667,10 @@
 - (void)uploadPreviewLayout {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
@@ -808,12 +812,14 @@
 #pragma mark - NameLayout
 
 - (void)nameLayout {
-    [self removeNameLayout];
     [self.tabBarController.tabBar setHidden:YES];
+    
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
     [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     self.nameIsOk = NO;
     
@@ -1097,10 +1103,11 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
-    [self removeNameLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
     [self removeNameLayout];
     
     [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
