@@ -144,7 +144,7 @@
                     self.questionDate = date;
                     self.cleanAskString = question;
                     if (self.cleanAskString && !answered) {
-                        if ([self.cleanAskString length]) {
+                        if ([self.cleanAskString length] > 0 && chatUser.status.integerValue >= 3) {
                             [self cleanAskViewLayout];
                         }
                     } else if (answered) {
@@ -747,7 +747,7 @@
 #pragma mark - cleanAskView
 
 - (void)cleanAskViewLayout {
-    
+    [self removeCleanAskViewLayout];
     //    if (self.cleanAskString) {
     //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:self.cleanAskString preferredStyle:UIAlertControllerStyleAlert];
     //
@@ -921,12 +921,6 @@
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }];
-    } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"糟糕～" message:@"請回答題目" preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
