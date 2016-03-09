@@ -484,6 +484,7 @@ extension FriendListViewController : UITableViewDataSource, UITableViewDelegate 
 	}
 }
 
+// MARK: - ScorllViewDelegate
 extension FriendListViewController : UIScrollViewDelegate {
 	func scrollViewDidScroll(scrollView: UIScrollView) {
 		if scrollView == friendListTableView {

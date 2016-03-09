@@ -92,6 +92,24 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		colorgySocket.connect()
+		
+		registerNotification()
+	}
+	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		if shouldDisconnectSocket {
+			colorgySocket.disconnect()
+			friendViewControllerReference?.restoreBackButton()
+		}
+		
+		unregisterNotification()
+	}
+	
 	// MARK: notification
 	func registerNotification() {
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageRecievedNotification", name: ColorgyNotification.didRecievedMessageNotification.rawValue, object: nil)
@@ -120,23 +138,6 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-		colorgySocket.connect()
-		
-		registerNotification()
-	}
-	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		if shouldDisconnectSocket {
-			colorgySocket.disconnect()
-			friendViewControllerReference?.restoreBackButton()
-		}
-		
-		unregisterNotification()
-	}
-	
 	// MARK: Configuration
 	func addRightNavButton() {
 		dropDownButton = UIBarButtonItem(image: UIImage(named: "chatDropDownIcon"), style: UIBarButtonItemStyle.Done, target: self, action: "toggleDropDownMenu")
@@ -161,6 +162,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 	}
 	
+	// MARK: Alerts
 	func showChatReportController(title: String?, canSkip: Bool, type: String?) {
 		
 		let storyboard = UIStoryboard(name: "Main", bundle: nil)
