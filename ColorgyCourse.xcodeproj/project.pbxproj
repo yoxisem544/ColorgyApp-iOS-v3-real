@@ -37,6 +37,7 @@
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
 		632095051C92B432000C5A38 /* ColorgyLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632095041C92B432000C5A38 /* ColorgyLoadingView.swift */; };
 		632095071C92BBA8000C5A38 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632095061C92BBA8000C5A38 /* UIViewExtension.swift */; };
+		632095091C92BFEC000C5A38 /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632095081C92BFEC000C5A38 /* CGRectExtension.swift */; };
 		632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */; };
 		6323726B1C5B443000C9FC27 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726A1C5B442F00C9FC27 /* ChatUser.swift */; };
 		6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */; };
@@ -273,6 +274,7 @@
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
 		632095041C92B432000C5A38 /* ColorgyLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyLoadingView.swift; sourceTree = "<group>"; };
 		632095061C92BBA8000C5A38 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		632095081C92BFEC000C5A38 /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyChatAPI.swift; sourceTree = "<group>"; };
 		6323726A1C5B442F00C9FC27 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -978,6 +980,7 @@
 				6348F87D1B9A366B005E4D37 /* ClassmateTimeTableViewController.swift */,
 				6348F8791B9A040E005E4D37 /* DetailCourseViewController.swift */,
 				6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */,
+				632095081C92BFEC000C5A38 /* CGRectExtension.swift */,
 				63C1F40B1B944ABF00D57DEF /* SearchCourseTableViewController.swift */,
 			);
 			name = "About Course";
@@ -1520,6 +1523,7 @@
 				63FBCC511B9346D900B3084F /* ColorgyAPI.swift in Sources */,
 				63BB302D1C561F680055BA19 /* ChatMessage.swift in Sources */,
 				630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */,
+				632095091C92BFEC000C5A38 /* CGRectExtension.swift in Sources */,
 				639D450F1B95FA680053870D /* CourseCommentCell.swift in Sources */,
 				63BB30011C5617390055BA19 /* SocketClientSpec.swift in Sources */,
 				63B942AB1C59DEAB0060A097 /* SheetCollectionViewLayout.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIView {
-	func anchorTo(view: UIView) {
+	func anchorViewTo(view: UIView) {
 		view.addSubview(self)
 	}
 }
