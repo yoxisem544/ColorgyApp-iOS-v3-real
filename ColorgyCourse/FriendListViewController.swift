@@ -26,7 +26,7 @@ class FriendListViewController: UIViewController {
 	
 	private var hiList: [Hello] = []
 	
-	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+//	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 	
 	// MARK: Life Cycle
     override func viewDidLoad() {
@@ -54,8 +54,8 @@ class FriendListViewController: UIViewController {
 		noDataHintView.hidden = true
 		
 		title = "好朋友"
-		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
-		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
+//		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
+//		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -164,7 +164,7 @@ class FriendListViewController: UIViewController {
 				print("房間數 \(targets.count)")
 //				self.removeChatroom(targets)
 				self.hideHintFailView()
-				self.reloadFriendListV2(targets)
+				self.reloadFriendListV3(targets)
 				if targets.count == 0 {
 					// need to show hint
 					self.showNoRoomView()
@@ -206,7 +206,7 @@ class FriendListViewController: UIViewController {
 				} else {
 					self.hideNoRoomView()
 				}
-				self.reloadFriendListV2(targets)
+				self.reloadFriendListV3(targets)
 				refresh.endRefreshing()
 				}, failure: { () -> Void in
 					refresh.endRefreshing()
@@ -270,7 +270,7 @@ class FriendListViewController: UIViewController {
 									})
 								})
 							}
-							NSThread.sleepForTimeInterval(0.1)
+							NSThread.sleepForTimeInterval(0.01)
 						}
 					}
 					// 更新內容
@@ -300,7 +300,7 @@ class FriendListViewController: UIViewController {
 											})
 											//								})
 											// 移動後重新開始
-											NSThread.sleepForTimeInterval(0.1)
+											NSThread.sleepForTimeInterval(0.01)
 											break
 										}
 									}

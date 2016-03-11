@@ -720,7 +720,7 @@ extension TestChatLoginViewController : UITableViewDelegate, UITableViewDataSour
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("test account", forIndexPath: indexPath)
-		cell.textLabel?.text = testAccounts[indexPath.row][2] + " " + testAccounts[indexPath.row][0]
+		cell.textLabel?.text = testAccounts[indexPath.row][1] + " " + testAccounts[indexPath.row][0]
 		return cell
 	}
 	

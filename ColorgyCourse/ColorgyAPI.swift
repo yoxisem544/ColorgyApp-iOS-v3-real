@@ -1230,12 +1230,14 @@ class ColorgyAPI : NSObject {
                 "unconfirmed_started_year": year
             ]
         ]
-        
+        print(url)
+		print(params)
         afManager.PATCH(url, parameters: params, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             print("PATCH OK")
             print(response)
             success()
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
                 print("fail to patch")
                 failure()
         })

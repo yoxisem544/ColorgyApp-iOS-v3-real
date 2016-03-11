@@ -74,7 +74,7 @@ class TextInputView: UIView {
         sendMessageButton.frame = CGRectZero
         sendMessageButton.frame.size = sendMessageButtonSize
         sendMessageButton.setTitle("傳送", forState: UIControlState.Normal)
-        sendMessageButton.titleLabel?.font = UIFont.systemFontOfSize(18)
+        sendMessageButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         sendMessageButton.contentHorizontalAlignment = .Center
         sendMessageButton.contentVerticalAlignment = .Center
         sendMessageButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9)

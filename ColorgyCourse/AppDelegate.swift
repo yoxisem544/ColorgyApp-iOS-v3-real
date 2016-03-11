@@ -153,7 +153,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if !Release.mode {
 			// for dev
 //			DevelopmentTestingMethods.test(loginCounts: 99)
-			
+//			ColorgyAPI.PATCHUserInfo("NTU", department: "000", year: "2012", success: { () -> Void in
+//				
+//				}, failure: { () -> Void in
+//					
+//			})
 		}
 	}
 	
