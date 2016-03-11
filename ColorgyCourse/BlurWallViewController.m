@@ -28,6 +28,7 @@
     int currentPage;
     BOOL canLoadMore;
     UselessView *useLessView;
+    BOOL isShowing;
 }
 
 - (void)viewDidLoad {
@@ -35,6 +36,7 @@
     
     currentPage = 0;
     canLoadMore = YES;
+    isShowing = NO;
     
     UIBarButtonItem *newBackButton =
     [[UIBarButtonItem alloc] initWithTitle:@""
@@ -142,7 +144,7 @@
                     self.questionDate = date;
                     self.cleanAskString = question;
                     if (self.cleanAskString && !answered) {
-                        if ([self.cleanAskString length]) {
+                        if ([self.cleanAskString length] > 0 && chatUser.status.integerValue >= 3) {
                             [self cleanAskViewLayout];
                         }
                     } else if (answered) {
@@ -178,12 +180,17 @@
 
 - (void)showUseLess {
     useLessView.messageLabel.text = [NSString stringWithFormat:@"每日清晰問：%@", self.cleanAskString];
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^() {
-        useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50);
-    } completion:^(BOOL finished) {}];
-    [UIView animateWithDuration:0.3 delay:5 options:UIViewAnimationOptionCurveEaseIn animations:^() {
-        useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50);
-    } completion:^(BOOL finished) {}];
+    if (!isShowing) {
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^() {
+            isShowing = YES;
+            useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50);
+        } completion:^(BOOL finished) {}];
+        [UIView animateWithDuration:0.3 delay:5 options:UIViewAnimationOptionCurveEaseIn animations:^() {
+            useLessView.frame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y - 50, self.view.bounds.size.width, 50);
+        } completion:^(BOOL finished) {
+            isShowing = NO;
+        }];
+    }
 }
 
 #pragma mark - KeyboardNotifications
@@ -408,8 +415,8 @@
     
     [self.tabBarController setHidesBottomBarWhenPushed:YES];
     HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
-    [self.navigationController pushViewController:vc animated:YES];
-    //    [self presentViewController:vc animated:YES completion:nil];
+    //    [self.navigationController pushViewController:vc animated:YES];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -740,7 +747,7 @@
 #pragma mark - cleanAskView
 
 - (void)cleanAskViewLayout {
-    
+    [self removeCleanAskViewLayout];
     //    if (self.cleanAskString) {
     //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:self.cleanAskString preferredStyle:UIAlertControllerStyleAlert];
     //
@@ -897,22 +904,24 @@
 }
 
 - (void)answerQuestion {
-    [self removeCleanAskViewLayout];
-    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-        [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
-            //[self showUseLess];
+    if ([self.cleanAskTextView.text length]) {
+        [self removeCleanAskViewLayout];
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+            [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {
+                //[self showUseLess];
+            } failure:^() {
+                NSLog(@"answerQuestion error");
+            }];
         } failure:^() {
-            NSLog(@"answerQuestion error");
+            NSLog(@"check user error");
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
         }];
-    } failure:^() {
-        NSLog(@"check user error");
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        }]];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }];
+    }
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {

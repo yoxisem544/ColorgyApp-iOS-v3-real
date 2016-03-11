@@ -3101,7 +3101,7 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sYP-VR-PPv"/>
         <segue reference="ypF-3y-Hte"/>
+        <segue reference="iw3-Wa-rtI"/>
     </inferredMetricsTieBreakers>
 </document>

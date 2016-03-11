@@ -14,7 +14,9 @@
 #import "BlurWallSwitchViewController.h"
 #import "UselessView.h"
 
-@implementation OpeningViewController
+@implementation OpeningViewController {
+    UselessView *uselessView;
+}
 
 - (instancetype)initWithLayout:(NSInteger)whichLayout {
     self = [super init];
@@ -63,26 +65,36 @@
     [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setHidden:YES];
     
-    switch (self.whichLayout) {
-        case 0:
-            [self openingLayout];
-            break;
-            //            case 1:
-            //                [self checkEmail];
-            //                break;
-        case 1:
-            [self uploadLayout];
-            break;
-        case 2:
-            [self nameLayout];
-            break;
-        case 3:
-            [self cleanAskLayout];
-            break;
-        default:
-            [self openingLayout];
-            break;
-    }
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
+    
+    [self openingLayout];
+    
+//    switch (self.whichLayout) {
+//        case 0:
+//            [self openingLayout];
+//            break;
+//            //            case 1:
+//            //                [self checkEmail];
+//            //                break;
+//        case 1:
+//            [self uploadLayout];
+//            break;
+//        case 2:
+//            [self nameLayout];
+//            break;
+//        case 3:
+//            [self cleanAskLayout];
+//            break;
+//        default:
+//            [self openingLayout];
+//            break;
+//    }
     
     //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
     //        switch (self.whichLayout) {
@@ -214,6 +226,12 @@
 - (void)openingLayout {
     
     [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
     // Navigation Customized
     // self.title = @"模糊聊";
     // self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
@@ -259,7 +277,7 @@
     [self.startCheckEmailButton setTitle:@"開始認證" forState:UIControlStateNormal];
     [self.startCheckEmailButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.startCheckEmailButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
-    [self.startCheckEmailButton addTarget:self action:@selector(showCheckEmailAlert) forControlEvents:UIControlEventTouchUpInside];
+    [self.startCheckEmailButton addTarget:self action:@selector(startOpening) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.startCheckEmailButton];
 }
@@ -270,6 +288,41 @@
     [self.uploadPhotoButton removeFromSuperview];
     [self.welcomeLabel removeFromSuperview];
     [self.welcomeDescriptionLabel removeFromSuperview];
+}
+
+#pragma mark - StartOpening
+- (void)startOpening {
+    self.navigationItem.hidesBackButton = YES;
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:YES];
+    
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    
+    switch (self.whichLayout) {
+        case 0:
+            [self showCheckEmailAlert];
+            break;
+            //            case 1:
+            //                [self checkEmail];
+            //                break;
+        case 1:
+            [self uploadLayout];
+            break;
+        case 2:
+            [self nameLayout];
+            break;
+        case 3:
+            [self cleanAskLayout];
+            break;
+        default:
+            [self openingLayout];
+            break;
+    }
 }
 
 #pragma mark - CheckEmailButtonAction
@@ -437,7 +490,12 @@
 - (void)checkEmail {
     self.loadingView.loadingString = @"驗證中";
     self.loadingView.finishedString = @"認證成功";
+    [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     [self.loadingView start];
     // 認證信箱，模擬延遲
@@ -487,9 +545,12 @@
 #pragma mark - Upload Layout
 
 - (void)uploadLayout {
-    [self removeUploadLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
@@ -556,14 +617,10 @@
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         
         // Cancel button tappped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
     }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // FBImageSticker button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self removeUploadLayout];
         [self uploadPreviewLayout];
         UIActivityIndicatorView *indView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -582,15 +639,9 @@
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // PhotoAlbumr button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self openPhotoLibrary];
     }]];
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"拍攝照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        // TakePhoto button tapped.
-        [self dismissViewControllerAnimated:YES completion:^{
-        }];
         [self openPhotoCamera];
     }]];
     [self presentViewController:photoMeunAlertController animated:YES completion:nil];
@@ -609,9 +660,6 @@
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相簿失敗" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-            }];
         }]];
         [self presentViewController:alertError animated:YES completion:nil];
     }
@@ -630,8 +678,6 @@
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相機失敗" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            [self dismissViewControllerAnimated:YES completion:^{
-            }];
         }]];
         [self presentViewController:alertError animated:YES completion:nil];
     }
@@ -659,7 +705,10 @@
 - (void)uploadPreviewLayout {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     // userImageView Customized
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
@@ -801,12 +850,14 @@
 #pragma mark - NameLayout
 
 - (void)nameLayout {
-    [self removeNameLayout];
     [self.tabBarController.tabBar setHidden:YES];
+    
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
     [self removeUploadPreviewLayout];
+    [self removeNameLayout];
     
     self.nameIsOk = NO;
     
@@ -1090,10 +1141,11 @@
 #pragma mark - CleanAskLayout
 
 - (void)cleanAskLayout {
-    [self removeNameLayout];
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
     [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
     [self removeNameLayout];
     
     [ColorgyChatAPI getQuestion:^(NSString *date, NSString *question) {
@@ -1192,7 +1244,7 @@
     
     NSLog(@"%f", CGRectGetMinY(self.progressBarView2.frame));
     
-    UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
+    uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
     
     [self.view addSubview:uselessView];
 }
@@ -1205,6 +1257,7 @@
     [self.textNumberCounterLabel removeFromSuperview];
     [self.cleanAskTitleLabel removeFromSuperview];
     [self.progressBarView2 removeFromSuperview];
+    [uselessView removeFromSuperview];
 }
 
 #pragma mark - openChatButtonAction

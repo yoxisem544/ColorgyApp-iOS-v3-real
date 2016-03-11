@@ -16,6 +16,19 @@
 
 @implementation BlurWallSwitchViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        NSLog(@"%@, %@", chatUser.userId, self.chatUser.userId);
+        if (![chatUser.userId isEqualToString:self.chatUser.userId]) {
+            // change user
+            self.chatUser = chatUser;
+            self.openingViewController.whichLayout = self.chatUser.status.integerValue;
+            [self switchViewController];
+        }
+    } failure:^() {}];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
