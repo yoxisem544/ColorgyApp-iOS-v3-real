@@ -35,6 +35,8 @@
 		6317466F1C04092500F612B9 /* ChooseDepartmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */; };
 		631746711C04110400F612B9 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631746701C04110400F612B9 /* School.swift */; };
 		631991DC1C3F6790005052BC /* DevelopmentTestingMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */; };
+		632095051C92B432000C5A38 /* ColorgyLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632095041C92B432000C5A38 /* ColorgyLoadingView.swift */; };
+		632095071C92BBA8000C5A38 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632095061C92BBA8000C5A38 /* UIViewExtension.swift */; };
 		632372691C59F4BA00C9FC27 /* ColorgyChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */; };
 		6323726B1C5B443000C9FC27 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726A1C5B442F00C9FC27 /* ChatUser.swift */; };
 		6323726D1C5B6DBD00C9FC27 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */; };
@@ -269,6 +271,8 @@
 		6317466E1C04092500F612B9 /* ChooseDepartmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDepartmentViewController.swift; sourceTree = "<group>"; };
 		631746701C04110400F612B9 /* School.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevelopmentTestingMethods.swift; sourceTree = "<group>"; };
+		632095041C92B432000C5A38 /* ColorgyLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyLoadingView.swift; sourceTree = "<group>"; };
+		632095061C92BBA8000C5A38 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		632372681C59F4BA00C9FC27 /* ColorgyChatAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorgyChatAPI.swift; sourceTree = "<group>"; };
 		6323726A1C5B442F00C9FC27 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		6323726C1C5B6DBD00C9FC27 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -1168,6 +1172,8 @@
 			isa = PBXGroup;
 			children = (
 				639C978E1C86A85600E546D9 /* UIImageExtension.swift */,
+				632095041C92B432000C5A38 /* ColorgyLoadingView.swift */,
+				632095061C92BBA8000C5A38 /* UIViewExtension.swift */,
 				6313B2271C7AB5AB0075A00E /* FailToLoadDataHintView.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
@@ -1537,6 +1543,7 @@
 				63FBCC581B9346D900B3084F /* CourseRawDataObject.swift in Sources */,
 				634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */,
 				63C1F40C1B944ABF00D57DEF /* SearchCourseTableViewController.swift in Sources */,
+				632095071C92BBA8000C5A38 /* UIViewExtension.swift in Sources */,
 				633D7ED21C6DCC2C00683AFD /* SKDetectingView.swift in Sources */,
 				63306E831C68AEEA00D5D57C /* HistoryChatroom.swift in Sources */,
 				63BB30081C5617390055BA19 /* SocketEventHandler.swift in Sources */,
@@ -1574,6 +1581,7 @@
 				63BB30071C5617390055BA19 /* SocketEngineWebsocket.swift in Sources */,
 				63B942A31C59DEAB0060A097 /* ImagePickerAction.swift in Sources */,
 				633D11C51C5F2ECF009370B4 /* SpinView.swift in Sources */,
+				632095051C92B432000C5A38 /* ColorgyLoadingView.swift in Sources */,
 				63BB30251C561F280055BA19 /* DLMessageData.swift in Sources */,
 				63FBCC5A1B9346D900B3084F /* UserCourseObject.swift in Sources */,
 				63ABBBFD1B9478E30077580D /* SearchCourseCell.swift in Sources */,
