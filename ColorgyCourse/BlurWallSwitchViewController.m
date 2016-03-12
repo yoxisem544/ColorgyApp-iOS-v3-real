@@ -23,7 +23,7 @@
         if (![chatUser.userId isEqualToString:self.chatUser.userId]) {
             // change user
             self.chatUser = chatUser;
-            self.openingViewController.whichLayout = self.chatUser.status.integerValue;
+            [self.openingViewController refreshView];
             [self switchViewController];
         }
     } failure:^() {}];
@@ -72,7 +72,7 @@
 }
 
 - (void)childViewLayoutInitializing {
-    self.openingViewController = [[OpeningViewController alloc] initWithLayout:self.chatUser.status.intValue];
+    self.openingViewController = [[OpeningViewController alloc] init];
     [self addChildViewController:self.openingViewController];
     
     self.blurWallViewController = [[BlurWallViewController alloc] init];

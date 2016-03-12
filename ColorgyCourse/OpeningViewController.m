@@ -18,18 +18,24 @@
     UselessView *uselessView;
 }
 
-- (instancetype)initWithLayout:(NSInteger)whichLayout {
-    self = [super init];
-    if (self) {
-        self.whichLayout = whichLayout;
-    }
-    return self;
+- (void)refreshView {
+    [self removeOpeningLayout];
+    [self removeCheckEmailLayout];
+    [self removeCleanAskLayout];
+    [self removeUploadLayout];
+    [self removeUploadPreviewLayout];
+    [self removeNameLayout];
+    [self openingLayout];
 }
 
-#pragma mark - LifeCicle
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.hidesBackButton = YES;
+    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.navigationBar setHidden:YES];
     
     self.chatApiOC = [[ColorgyChatAPIOC alloc] init];
     
@@ -42,7 +48,7 @@
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
     // Layout
-    // [self openingLayout];
+    [self openingLayout];
     // [self checkEmailLayout];
     // [self uploadLayout];
     // [self uploadPreviewLayout];
@@ -59,73 +65,73 @@
     [self.scrollView addGestureRecognizer:tapGestureRecognizer];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.navigationItem.hidesBackButton = YES;
-    [self.tabBarController.tabBar setHidden:NO];
-    [self.navigationController.navigationBar setHidden:YES];
-    
-    [self removeOpeningLayout];
-    [self removeCheckEmailLayout];
-    [self removeCleanAskLayout];
-    [self removeUploadLayout];
-    [self removeUploadPreviewLayout];
-    [self removeNameLayout];
-    
-    
-    [self openingLayout];
-    
-//    switch (self.whichLayout) {
-//        case 0:
-//            [self openingLayout];
-//            break;
-//            //            case 1:
-//            //                [self checkEmail];
-//            //                break;
-//        case 1:
-//            [self uploadLayout];
-//            break;
-//        case 2:
-//            [self nameLayout];
-//            break;
-//        case 3:
-//            [self cleanAskLayout];
-//            break;
-//        default:
-//            [self openingLayout];
-//            break;
-//    }
-    
-    //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-    //        switch (self.whichLayout) {
-    //            case 0:
-    //                [self openingLayout];
-    //                break;
-    //                //            case 1:
-    //                //                [self checkEmail];
-    //                //                break;
-    //            case 1:
-    //                [self uploadLayout];
-    //                break;
-    //            case 2:
-    //                [self nameLayout];
-    //                break;
-    //            case 3:
-    //                [self cleanAskLayout];
-    //                break;
-    //            default:
-    //                [self openingLayout];
-    //                break;
-    //        }
-    //    } failure:^() {
-    //        NSLog(@"checkUserAvaliability error");
-    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-    //
-    //        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-    //        }]];
-    //        [self presentViewController:alertController animated:YES completion:nil];
-    //    }];
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    self.navigationItem.hidesBackButton = YES;
+//    [self.tabBarController.tabBar setHidden:NO];
+//    [self.navigationController.navigationBar setHidden:YES];
+//
+//    [self removeOpeningLayout];
+//    [self removeCheckEmailLayout];
+//    [self removeCleanAskLayout];
+//    [self removeUploadLayout];
+//    [self removeUploadPreviewLayout];
+//    [self removeNameLayout];
+//
+//
+//    [self openingLayout];
+//
+//    //    switch (self.whichLayout) {
+//    //        case 0:
+//    //            [self openingLayout];
+//    //            break;
+//    //            //            case 1:
+//    //            //                [self checkEmail];
+//    //            //                break;
+//    //        case 1:
+//    //            [self uploadLayout];
+//    //            break;
+//    //        case 2:
+//    //            [self nameLayout];
+//    //            break;
+//    //        case 3:
+//    //            [self cleanAskLayout];
+//    //            break;
+//    //        default:
+//    //            [self openingLayout];
+//    //            break;
+//    //    }
+//
+//    //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+//    //        switch (self.whichLayout) {
+//    //            case 0:
+//    //                [self openingLayout];
+//    //                break;
+//    //                //            case 1:
+//    //                //                [self checkEmail];
+//    //                //                break;
+//    //            case 1:
+//    //                [self uploadLayout];
+//    //                break;
+//    //            case 2:
+//    //                [self nameLayout];
+//    //                break;
+//    //            case 3:
+//    //                [self cleanAskLayout];
+//    //                break;
+//    //            default:
+//    //                [self openingLayout];
+//    //                break;
+//    //        }
+//    //    } failure:^() {
+//            NSLog(@"checkUserAvaliability error");
+//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+//
+//            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+//            }]];
+//            [self presentViewController:alertController animated:YES completion:nil];
+//        }];
+//}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -291,38 +297,42 @@
 }
 
 #pragma mark - StartOpening
+
 - (void)startOpening {
     self.navigationItem.hidesBackButton = YES;
     [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setHidden:YES];
     
-    [self removeOpeningLayout];
-    [self removeCheckEmailLayout];
-    [self removeCleanAskLayout];
-    [self removeUploadLayout];
-    [self removeUploadPreviewLayout];
-    [self removeNameLayout];
-    
-    switch (self.whichLayout) {
-        case 0:
-            [self showCheckEmailAlert];
-            break;
-            //            case 1:
-            //                [self checkEmail];
-            //                break;
-        case 1:
-            [self uploadLayout];
-            break;
-        case 2:
-            [self nameLayout];
-            break;
-        case 3:
-            [self cleanAskLayout];
-            break;
-        default:
-            [self openingLayout];
-            break;
-    }
+    [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        switch (chatUser.status.integerValue) {
+            case 0:
+                [self showCheckEmailAlert];
+                break;
+                //            case 1:
+                //                [self checkEmail];
+                //                break;
+            case 1:
+                [self uploadLayout];
+                break;
+            case 2:
+                [self nameLayout];
+                break;
+            case 3:
+                [self cleanAskLayout];
+                break;
+            default:
+                [self openingLayout];
+                break;
+        }
+    } failure:^() {
+        NSLog(@"checkUserAvaliability error");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }];
 }
 
 #pragma mark - CheckEmailButtonAction
@@ -982,13 +992,44 @@
 #pragma mark - submitName
 
 - (void)submitName {
-    // 檢查名字 尚需修改
-    if (self.nameTextField.text.length) {
+    // 檢查名字
+    
+    if (self.nameIsOk) {
+        // 上傳名字
+        [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
+            [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
+                [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
+                        NSLog(@"updateUserStatus success");
+                    } failure:^() {
+                        NSLog(@"updateUserStatus error");
+                    }];
+                } failure:^() {
+                    NSLog(@"checkUserAvailability error");
+                }];
+                // CleanAskLayout
+                [self removeNameLayout];
+                [self cleanAskLayout];
+            } failure:^() {
+                NSLog(@"update name error");
+            }];
+            [ColorgyChatAPI updateFromCore:^() {} failure:^() {
+                NSLog(@"update core error");
+            }];
+        } failure:^() {
+            NSLog(@"check user error");
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            }]];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }];
+    } else {
         [self showChecking];
         [ColorgyChatAPI checkNameExists:self.nameTextField.text success:^(NSString *status) {
             if ([status isEqualToString:@"ok"]) {
                 [self showCheck];
-                if (self.nameIsOk && self.nameTextField.text.length) {
+                if (self.nameIsOk) {
                     // 上傳名字
                     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
                         [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
@@ -1026,7 +1067,7 @@
                 [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
                 }]];
                 [self presentViewController:alertController animated:YES completion:nil];
-
+                
             }
         } failure:^() {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
@@ -1193,12 +1234,14 @@
     [self.scrollView addSubview:self.cleanAskReplyTextView];
     
     // textNumberCunter Customized
-    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.cleanAskReplyTextView.frame) - 45, CGRectGetMaxY(self.cleanAskReplyTextView.frame) - 30, 45, 30)];
+    self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskReplyTextView.bounds.size.width - 45, self.cleanAskReplyTextView.bounds.size.height - 30, 45, 30)];
+//    self.textNumberCounterLabel.center = CGPointMake(self.cleanAskReplyTextView.bounds.size.width / 2, self.cleanAskReplyTextView.bounds.size.height / 2);
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
     self.textNumberCounterLabel.text = @"0/20";
+//    self.textNumberCounterLabel.backgroundColor = [UIColor yellowColor];
     
-    [self.scrollView addSubview:self.textNumberCounterLabel];
+    [self.cleanAskReplyTextView addSubview:self.textNumberCounterLabel];
     
     // openChatButton Customized
     self.openChatButton = [UIButton buttonWithType:UIButtonTypeCustom];
