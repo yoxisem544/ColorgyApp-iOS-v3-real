@@ -64,8 +64,6 @@
 @property UITextView *activeTextView;
 @property ColorgyChatAPIOC *chatApiOC;
 
-@property NSInteger whichLayout;
-
-- (instancetype)initWithLayout:(NSInteger)whichLayout;
+- (void)refreshView;
 
 @end
