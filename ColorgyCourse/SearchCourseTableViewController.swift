@@ -53,7 +53,10 @@ class SearchCourseViewController: UIViewController {
     private func hideSuccessfullyAddCourseView() {
         self.successfullyAddCourseView.hidden = true
     }
-    
+	
+	// loading view
+	private let loadingView: ColorgyLoadingView = ColorgyLoadingView()
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -323,10 +326,20 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 	
     func alertDeleteCourseView(didTapDeleteCourseAlertDeleteCourseView alertDeleteCourseView: AlertDeleteCourseView, course: Course, cell: SearchCourseCell) {
         print("didTapDeleteCourseAlertDeleteCourseView")
+		
+		// prepare for loading view
+		loadingView.anchorViewTo(navigationController?.view)
+		loadingView.startAnimating()
+		// alert view
+		alertDeleteCourseView.hideView(0.1)
+		alertDeleteCourseView.removeFromSuperview()
+		
         ColorgyAPI.DELETECourseToServer(course.code, success: { (courseCode) -> Void in
+			// loading view
+			self.loadingView.stopAniamting()
+			self.loadingView.removeFromSuperview()
+			// reload data
             CourseDB.deleteCourseWithCourseCode(course.code)
-            alertDeleteCourseView.hideView(0.4)
-            alertDeleteCourseView.removeFromSuperview()
             // successfully delete course
             // change state
             cell.hasEnrolledState = false
@@ -340,8 +353,10 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 				Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
             }
             }, failure: { () -> Void in
-                alertDeleteCourseView.hideView(0.4)
-                alertDeleteCourseView.removeFromSuperview()
+				// loading view
+				self.loadingView.stopAniamting()
+				self.loadingView.removeFromSuperview()
+				
 				// try refresh here
 				self.refreshAccessToken()
         })
@@ -389,8 +404,18 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
         print("didtapadd")
         print("\(course)")
         print("didtapadd")
+		
+		// prepare for loading view
+		loadingView.anchorViewTo(navigationController?.view)
+		loadingView.startAnimating()
+		
+		// fire api
         let semester: (year: Int, term: Int) = Semester.currentSemesterAndYear()
         ColorgyAPI.PUTCourseToServer(course.code, year: semester.year, term: semester.term, success: { () -> Void in
+			// remove loading view
+			self.loadingView.stopAniamting()
+			self.loadingView.removeFromSuperview()
+			// reload data
             self.animateSuccessfullyAddCourseView()
             CourseDB.storeCourseToDB(course)
             CourseUpdateHelper.needUpdateCourse()
@@ -402,7 +427,9 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
 				Answers.logCustomEventWithName(AnswersLogEvents.userAddCourse, customAttributes: nil)
             }
             }, failure: { () -> Void in
-                
+				// remove loading view
+				self.loadingView.stopAniamting()
+				self.loadingView.removeFromSuperview()
         })
     }
     
