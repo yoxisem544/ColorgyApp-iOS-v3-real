@@ -135,6 +135,8 @@ class TimeTableViewController: UIViewController {
         } else {
             Flurry.logEvent("test: Using User Timetable", timed: true)
         }
+		// recover tab bar
+		hidesBottomBarWhenPushed = false
     }
     
     private func checkToken() {
@@ -228,6 +230,7 @@ class TimeTableViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Timetable Show Detail Info" {
+			// prepare for view
             let destinationVC = segue.destinationViewController as! DetailCourseViewController
             if sender != nil {
                 if sender!.isKindOfClass(Course) {
@@ -236,11 +239,14 @@ class TimeTableViewController: UIViewController {
                     destinationVC.localCourse = sender as! LocalCourse
                 }
             }
-            
-        }
+		} else if segue.identifier == "Show Add Course" {
+			// showing add course view
+			// need to hide tab bar here
+			hidesBottomBarWhenPushed = true
+		}
     }
 }
-
+// MARK: - TimeTableViewDelegate
 extension TimeTableViewController : TimeTableViewDelegate {
     
     func timeTableView(userDidTapOnLocalCourseCell cell: CourseCellView) {
