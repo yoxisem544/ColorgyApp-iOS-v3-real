@@ -114,9 +114,10 @@ class UserDetailInformationView: UIView {
 		containerScrollView.addSubview(percenageLabel)
 		
 		self.addSubview(containerScrollView)
-		let g = generateAttributedLabel("hiiii", content: "fuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfu", width: 50)
-		g.center = containerScrollView.bounds.centerPoint
-		g.anchorViewTo(containerScrollView)
+		let labels = [generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200)]
+		let c = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: 200)
+		c.anchorViewTo(self)
+		c.center = self.bounds.centerPoint
 		
 		// adjust blur percentage
 		if let percentage = percentage {
@@ -143,8 +144,75 @@ class UserDetailInformationView: UIView {
 //		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
 	}
 	
-	func generateDetailDescriptionContainerView(school: String, ) -> UIView {
+	func generateDetailDescriptionContainerView(school: String, constellation: String, whereAreYouFrom: String, detailDescriptionLabels: [UILabel], width: CGFloat) -> UIView {
 		
+		let containerView = UIView()
+		let schoolLabel = UILabel()
+		let detailLabel = UILabel()
+		
+		let padding: CGFloat = 16.0
+		let textPadding: CGFloat = 8.0
+		let upperPadding: CGFloat = 24.0
+		
+		// configure
+		schoolLabel.textColor = UIColor.whiteColor()
+		schoolLabel.textAlignment = .Center
+		schoolLabel.font = UIFont.systemFontOfSize(15.0)
+		schoolLabel.frame.size.width = width
+		schoolLabel.adjustsFontSizeToFitWidth = true
+		schoolLabel.minimumScaleFactor = 0.5
+		schoolLabel.text = school
+		schoolLabel.sizeToFit()
+		detailLabel.textColor = UIColor.whiteColor()
+		detailLabel.textAlignment = .Center
+		detailLabel.font = UIFont.systemFontOfSize(15.0)
+		detailLabel.frame.size.width = width
+		detailLabel.adjustsFontSizeToFitWidth = true
+		detailLabel.minimumScaleFactor = 0.5
+		detailLabel.text = "\(constellation) / \(whereAreYouFrom)"
+		detailLabel.sizeToFit()
+		
+		// arrange
+		schoolLabel.frame.origin.y = upperPadding
+		detailLabel.frame.origin.y = schoolLabel.frame.maxY
+		
+		// arrange views
+		var heightOfLabels: CGFloat = detailLabel.frame.maxY
+		for label in detailDescriptionLabels {
+			// make space
+			heightOfLabels += textPadding
+			//arrage
+			label.frame.origin.y = heightOfLabels
+			// count its height
+			heightOfLabels += label.bounds.height
+		}
+		
+		// expand view
+		let height = heightOfLabels + 2 * upperPadding
+		let w = width + 2 * padding
+		containerView.frame.size = CGSize(width: w, height: height)
+		
+		// center views
+		detailLabel.center.x = containerView.bounds.midX
+		schoolLabel.center.x = containerView.bounds.midX
+		for label in detailDescriptionLabels {
+			label.center.x = containerView.bounds.midX
+		}
+		
+		// anchor views
+		schoolLabel.anchorViewTo(containerView)
+		detailLabel.anchorViewTo(containerView)
+		for l in detailDescriptionLabels {
+			l.anchorViewTo(containerView)
+		}
+		
+		// border line
+		containerView.layer.borderColor = ColorgyColor.grayContentTextColor.CGColor
+		containerView.layer.borderWidth = 1.0
+		containerView.layer.cornerRadius = 3.0
+		
+		// return
+		return containerView
 	}
 	
 	func generateAttributedLabel(title: String, content: String, width: CGFloat) -> UILabel {
