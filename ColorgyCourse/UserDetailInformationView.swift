@@ -20,6 +20,7 @@ class UserDetailInformationView: UIView {
 	
 	private var containerScrollView: UIScrollView = UIScrollView()
 	private var detailDescriptionContainerView: UIView = UIView()
+	private var closeButton: UIButton = UIButton()
 	
 	convenience init(withBlurPercentage percentage: Int?, withUserImage image: UIImage?, user: ChatUserInformation?) {
 		self.init()
@@ -114,10 +115,21 @@ class UserDetailInformationView: UIView {
 		containerScrollView.addSubview(percenageLabel)
 		
 		self.addSubview(containerScrollView)
+		
 		let labels = [generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout這是什麼鳥layout這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("咻咻咻咻咻咻", content: "好想買重機", width: 200), generateAttributedLabel("嗡嗡翁", content: "一起大便", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: 200)]
-		let c = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: 200)
-		c.anchorViewTo(self)
-		c.center = self.bounds.centerPoint
+		detailDescriptionContainerView = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: 200)
+		containerScrollView.addSubview(detailDescriptionContainerView)
+		
+		// arrange
+		detailDescriptionContainerView.frame.origin.y = 40.0 + subtitle.frame.maxY
+		detailDescriptionContainerView.center.x = containerScrollView.bounds.midX
+		
+		// close button
+		configureCloseButton()
+		let closeButtonX: CGFloat = UIScreen.mainScreen().bounds.width - closeButton.bounds.width - 24.0
+		let closeButtonY: CGFloat = 36.0
+		closeButton.frame.origin = CGPoint(x: closeButtonX, y: closeButtonY)
+		closeButton.anchorViewTo(self)
 		
 		// adjust blur percentage
 		if let percentage = percentage {
@@ -140,11 +152,26 @@ class UserDetailInformationView: UIView {
 		expandContentSize()
 	}
 	
-	func expandContentSize() {
-//		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
+	private func expandContentSize() {
+		containerScrollView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: detailDescriptionContainerView.frame.maxY + 40.0)
+		print(containerScrollView.contentSize)
 	}
 	
-	func generateDetailDescriptionContainerView(school: String, constellation: String, whereAreYouFrom: String, detailDescriptionLabels: [UILabel], width: CGFloat) -> UIView {
+	private func configureCloseButton() {
+		closeButton = UIButton(type: UIButtonType.System)
+		closeButton.tintColor = UIColor.whiteColor()
+		closeButton.frame.size = CGSize(width: 44.0, height: 44.0)
+//		closeButton.setImage(UIImage(named: "closeButton"), forState: UIControlState.Normal)
+		closeButton.setTitle("✕", forState: UIControlState.Normal)
+		closeButton.titleLabel?.font = UIFont.systemFontOfSize(36.0)
+		closeButton.addTarget(self, action: "closeButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+	}
+	
+	internal func closeButtonClicked() {
+		dismissView()
+	}
+	
+	private func generateDetailDescriptionContainerView(school: String, constellation: String, whereAreYouFrom: String, detailDescriptionLabels: [UILabel], width: CGFloat) -> UIView {
 		
 		let containerView = UIView()
 		let schoolLabel = UILabel()
@@ -227,7 +254,7 @@ class UserDetailInformationView: UIView {
 		return containerView
 	}
 	
-	func generateAttributedLabel(title: String, content: String, width: CGFloat) -> UILabel {
+	private func generateAttributedLabel(title: String, content: String, width: CGFloat) -> UILabel {
 		
 		// 0
 		let attributedLabel = UILabel()
