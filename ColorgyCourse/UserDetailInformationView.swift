@@ -114,7 +114,7 @@ class UserDetailInformationView: UIView {
 		containerScrollView.addSubview(percenageLabel)
 		
 		self.addSubview(containerScrollView)
-		let labels = [generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("幹幹幹", content: "這是什麼鳥layout", width: 200)]
+		let labels = [generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout這是什麼鳥layout這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("咻咻咻咻咻咻", content: "好想買重機", width: 200), generateAttributedLabel("嗡嗡翁", content: "一起大便", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: 200)]
 		let c = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: 200)
 		c.anchorViewTo(self)
 		c.center = self.bounds.centerPoint
@@ -153,6 +153,10 @@ class UserDetailInformationView: UIView {
 		let padding: CGFloat = 16.0
 		let textPadding: CGFloat = 8.0
 		let upperPadding: CGFloat = 24.0
+		let lineSpacing: CGFloat = 7.0
+		
+		let lineSpacingStyle = NSMutableParagraphStyle()
+		lineSpacingStyle.lineSpacing = lineSpacing
 		
 		// configure
 		schoolLabel.textColor = UIColor.whiteColor()
@@ -162,6 +166,10 @@ class UserDetailInformationView: UIView {
 		schoolLabel.adjustsFontSizeToFitWidth = true
 		schoolLabel.minimumScaleFactor = 0.5
 		schoolLabel.text = school
+		var string = school as NSString
+		let schoolAttributedString = NSMutableAttributedString(string: school)
+		schoolAttributedString.addAttribute(NSParagraphStyleAttributeName, value: lineSpacingStyle, range: string.rangeOfString(school))
+		schoolLabel.attributedText = schoolAttributedString
 		schoolLabel.sizeToFit()
 		detailLabel.textColor = UIColor.whiteColor()
 		detailLabel.textAlignment = .Center
@@ -170,6 +178,10 @@ class UserDetailInformationView: UIView {
 		detailLabel.adjustsFontSizeToFitWidth = true
 		detailLabel.minimumScaleFactor = 0.5
 		detailLabel.text = "\(constellation) / \(whereAreYouFrom)"
+		string = "\(constellation) / \(whereAreYouFrom)" as NSString
+		let detailAttributedString = NSMutableAttributedString(string: string as String)
+		detailAttributedString.addAttribute(NSParagraphStyleAttributeName, value: lineSpacingStyle, range: string.rangeOfString(string as String))
+		detailLabel.attributedText = detailAttributedString
 		detailLabel.sizeToFit()
 		
 		// arrange
@@ -188,7 +200,7 @@ class UserDetailInformationView: UIView {
 		}
 		
 		// expand view
-		let height = heightOfLabels + 2 * upperPadding
+		let height = heightOfLabels + upperPadding
 		let w = width + 2 * padding
 		containerView.frame.size = CGSize(width: w, height: height)
 		
@@ -227,10 +239,13 @@ class UserDetailInformationView: UIView {
 		// 2
 		let grayAttributes = [NSForegroundColorAttributeName: ColorgyColor.grayContentTextColor, NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
 		let contentWhiteAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
+		let lineSpacingStyle = NSMutableParagraphStyle()
+		lineSpacingStyle.lineSpacing = 7.0
   
 		// 3
 		attributedString.addAttributes(grayAttributes, range: string.rangeOfString("\(title)："))
 		attributedString.addAttributes(contentWhiteAttributes, range: string.rangeOfString(content))
+		attributedString.addAttribute(NSParagraphStyleAttributeName, value: lineSpacingStyle, range: string.rangeOfString(string as String))
 		
 		// 4
 		attributedLabel.attributedText = attributedString
