@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserDetailInformationView: UIScrollView {
+class UserDetailInformationView: UIView {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -17,6 +17,10 @@ class UserDetailInformationView: UIScrollView {
         // Drawing code
     }
     */
+	
+	private var containerScrollView: UIScrollView = UIScrollView()
+	private var detailDescriptionContainerView: UIView = UIView()
+	
 	convenience init(withBlurPercentage percentage: Int?, withUserImage image: UIImage?, user: ChatUserInformation?) {
 		self.init()
 		
@@ -25,6 +29,7 @@ class UserDetailInformationView: UIScrollView {
 		
 		self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
 		
+		// configure user image view
 		let userImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.width * 0.5, self.bounds.width * 0.5))
 		userImageView.center = self.center
 		userImageView.center.y = self.center.y * 0.7
@@ -35,12 +40,14 @@ class UserDetailInformationView: UIScrollView {
 		userImageView.layer.borderColor = UIColor.whiteColor().CGColor
 		userImageView.layer.borderWidth = 2.0
 		
+		// loading image indicator
 		let loadingView = UIActivityIndicatorView()
 		loadingView.tintColor = ColorgyColor.MainOrange
 		loadingView.center = CGPoint(x: userImageView.bounds.midX, y: userImageView.bounds.midY)
 		userImageView.addSubview(loadingView)
 		loadingView.startAnimating()
 		
+		// loading blur image
 		if let image = image {
 			if let percentage = percentage {
 				let qos = Int(QOS_CLASS_USER_INTERACTIVE.rawValue)
@@ -59,24 +66,29 @@ class UserDetailInformationView: UIScrollView {
 			}
 		}
 		
+		// title of this view
 		let title = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 21))
 		title.font = UIFont.systemFontOfSize(20)
 		title.textAlignment = .Center
 		title.textColor = UIColor.whiteColor()
 		title.center = self.center
 		
+		// subtitle of this view
 		let subtitle = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 18))
 		subtitle.font = UIFont.systemFontOfSize(16)
 		subtitle.textAlignment = .Center
 		subtitle.textColor = UIColor.whiteColor()
 		subtitle.center = self.center
 		
+		// arrange title
 		title.frame.origin.y = userImageView.frame.maxY + 20
 		subtitle.frame.origin.y = title.frame.maxY + 8
 		
+		// set text
 		title.text = user?.name
 		subtitle.text = user?.lastAnswer
 		
+		// percentage label
 		let percenageLabel = UILabel(frame: CGRectMake(0, 0, 66, 28))
 		percenageLabel.layer.cornerRadius = 13.0
 		percenageLabel.clipsToBounds = true
@@ -86,14 +98,25 @@ class UserDetailInformationView: UIScrollView {
 		percenageLabel.backgroundColor = ColorgyColor.MainOrange
 		let centerOfUserImageView: CGPoint = userImageView.center
 		let radius: CGFloat = userImageView.bounds.width / 2
+		// arrange
 		let x = centerOfUserImageView.x + cos(60.0.RadianValue).CGFloatValue * radius
 		let y = centerOfUserImageView.y + sin(60.0.RadianValue).CGFloatValue * radius
 		percenageLabel.center = CGPoint(x: x, y: y)
 		
-		self.addSubview(userImageView)
-		self.addSubview(title)
-		self.addSubview(subtitle)
-		self.addSubview(percenageLabel)
+		// configure container scroll view
+		containerScrollView = UIScrollView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+		containerScrollView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
+		
+		// adding subview
+		containerScrollView.addSubview(userImageView)
+		containerScrollView.addSubview(title)
+		containerScrollView.addSubview(subtitle)
+		containerScrollView.addSubview(percenageLabel)
+		
+		self.addSubview(containerScrollView)
+		let g = generateAttributedLabel("hiiii", content: "fuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfuckfu", width: 50)
+		g.center = containerScrollView.bounds.centerPoint
+		g.anchorViewTo(containerScrollView)
 		
 		// adjust blur percentage
 		if let percentage = percentage {
@@ -112,11 +135,50 @@ class UserDetailInformationView: UIScrollView {
 			percenageLabel.text = "???%"
 		}
 		
+		// expand the size of view according to size.
 		expandContentSize()
 	}
 	
 	func expandContentSize() {
-		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
+//		self.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height*2)
+	}
+	
+	func generateDetailDescriptionContainerView(school: String, ) -> UIView {
+		
+	}
+	
+	func generateAttributedLabel(title: String, content: String, width: CGFloat) -> UILabel {
+		
+		// 0
+		let attributedLabel = UILabel()
+
+		// 1
+		let string = "\(title)：\(content)" as NSString
+		let attributedString = NSMutableAttributedString(string: string as String)
+		
+		// 2
+		let grayAttributes = [NSForegroundColorAttributeName: ColorgyColor.grayContentTextColor, NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
+		let contentWhiteAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
+  
+		// 3
+		attributedString.addAttributes(grayAttributes, range: string.rangeOfString("\(title)："))
+		attributedString.addAttributes(contentWhiteAttributes, range: string.rangeOfString(content))
+		
+		// 4
+		attributedLabel.attributedText = attributedString
+		
+		// 5
+		attributedLabel.frame.size.width = width
+		attributedLabel.numberOfLines = 0
+		attributedLabel.sizeToFit()
+		
+		// resize
+		if attributedLabel.bounds.width < width {
+			attributedLabel.frame.size.width = width
+		}
+		
+		// 6
+		return attributedLabel
 	}
 	
 	func dismissView() {
