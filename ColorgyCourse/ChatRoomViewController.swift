@@ -151,8 +151,18 @@ class ChatRoomViewController: DLMessagesViewController {
 	func loadUserAbout() {
 		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
 			print(user)
+			self.yourFriend = user
 			}, failure: { () -> Void in
-				print("failure.....!!@!!@@")
+				self.delay(1.0, complete: { () -> Void in
+					self.loadUserAbout()
+				})
+		})
+	}
+	
+	func delay(time: Double, complete: () -> Void) {
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * time))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			complete()
 		})
 	}
 	
@@ -384,6 +394,10 @@ class ChatRoomViewController: DLMessagesViewController {
 				if let p = m.chatProgress {
 					print("update progress \(p)")
 					self.chatroom?.chatProgress = p
+				}
+				// vibrate
+				if m.userId != self.userId {
+					self.vibrate()
 				}
 			}
 		}
@@ -638,6 +652,7 @@ extension ChatRoomViewController : DLMessageDelegate {
 		self.dismissKeyboard()
 		let sc = SDImageCache()
 		let _img = sc.imageFromDiskCacheForKey(userProfileImageString)
+		// FIXME: user image view
 		navigationController?.view?.addSubview(UserDetailInformationView(withBlurPercentage: message.chatProgress, withUserImage: _img, user: yourFriend))
 	}
 	

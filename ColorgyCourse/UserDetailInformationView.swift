@@ -61,6 +61,7 @@ class UserDetailInformationView: UIView {
 					print(radius)
 					print(percentage)
 					let blurImage = UIImage.gaussianBlurImage(image, radius: radius)
+					print(blurImage)
 					dispatch_async(dispatch_get_main_queue(), { () -> Void in
 						userImageView.image = blurImage
 						loadingView.stopAnimating()
@@ -121,6 +122,7 @@ class UserDetailInformationView: UIView {
 		
 		let w: CGFloat = 250.0
 		let labels = generateContentLabels(user, width: 250)
+		print(user)
 		let constellation = user?.aboutHoroscope ?? " "
 		let school = user?.organizationCode ?? "未知學校"
 		let place = user?.aboutHabitancy ?? " "
