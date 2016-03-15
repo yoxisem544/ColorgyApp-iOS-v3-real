@@ -266,6 +266,8 @@
     //    }
     aboutLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
     aboutLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutLabel.minimumScaleFactor = 0.6;
+    aboutLabel.adjustsFontSizeToFitWidth = YES;
     [aboutView addSubview:aboutLabel];
     
     // about infromation layout
