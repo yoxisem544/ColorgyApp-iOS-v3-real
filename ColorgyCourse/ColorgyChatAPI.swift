@@ -776,17 +776,15 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
     
-    ///取得打招呼列表：(simple test passed)
+    /// 取得打招呼列表：(simple test passed)
     ///
-    ///取得被打過招呼的列表：
-    //
-    //    用途：取得打過招呼，還沒被接受的id列表
-    //    使用方式：
-    //
-    //    1. 傳一個http post給/hi/get_my_list，參數包含使用者的userId,uuid,accessToken
-    //    2. 回傳被打過招呼的列表，成功的話會出現status 200：{ result: [...] }的對你打過招呼的人的userId
-    
-    
+    /// 取得被打過招呼的列表：
+    ///
+    /// 用途：取得打過招呼，還沒被接受的id列表
+    /// 使用方式：
+    ///
+    /// 1. 傳一個http post給/hi/get_my_list，參數包含使用者的userId,uuid,accessToken
+    /// 2. 回傳被打過招呼的列表，成功的話會出現status 200：{ result: [...] }的對你打過招呼的人的userId
     class func getMyList(userId: String, success: (hiedList: NSArray) -> Void, failure: () -> Void) {
         
         let afManager = AFHTTPSessionManager(baseURL: nil)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class FriendListViewController: UIViewController {
 
@@ -74,6 +75,11 @@ class FriendListViewController: UIViewController {
 		renewTimer.invalidate()
 	}
 	
+	// MARK: sound and vibrate
+	func vibrate() {
+		AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+	}
+	
 	// MARK: update back button title 
 	func updateBackButtonTitle(title: String) {
 		let newBackButton = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -136,7 +142,7 @@ class FriendListViewController: UIViewController {
 	func loadHi() {
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.getHiList(user.userId, success: { (hiList) -> Void in
-				print(hiList)
+//				print(hiList)
 				self.hideHintFailView()
 				self.hiList = hiList
 				self.friendListTableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.None)
@@ -160,7 +166,7 @@ class FriendListViewController: UIViewController {
 			print(self.userId)
 			print("自己的id")
 			ColorgyChatAPI.getHistoryTarget(user.userId, gender: Gender.Unspecified, page: 0, success: { (targets) -> Void in
-				print(targets)
+//				print(targets)
 				print("房間數 \(targets.count)")
 //				self.removeChatroom(targets)
 				self.hideHintFailView()
@@ -221,10 +227,32 @@ class FriendListViewController: UIViewController {
 	}
 	
 	func reloadFriendListV3(list: [HistoryChatroom]) {
+		didReceiveNewMessage(list)
 		historyChatrooms = list.sort({ (r1: HistoryChatroom, r2: HistoryChatroom) -> Bool in
 			return r1.lastContentTime.timeIntervalSince1970() > r2.lastContentTime.timeIntervalSince1970()
 		})
 		friendListTableView.reloadData()
+	}
+	
+	func didReceiveNewMessage(list: [HistoryChatroom]) {
+		for (index, list) : (Int, HistoryChatroom) in list.enumerate() {
+			for (index, historyChatroom) : (Int, HistoryChatroom) in historyChatrooms.enumerate() {
+				if historyChatroom.chatroomId == list.chatroomId {
+					// check room id
+					if historyChatroom.lastContent != list.lastContent {
+						vibrate()
+						return
+					}
+				}
+			}
+		}
+	}
+	
+	func delay(time: Double, complete: () -> Void) {
+		let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * time))
+		dispatch_after(delay, dispatch_get_main_queue(), { () -> Void in
+			complete()
+		})
 	}
 	
 	func reloadFriendListV2(list: [HistoryChatroom]) {

@@ -26,9 +26,12 @@ class UserDetailInformationView: UIView {
 		self.init()
 		
 		// dismiss
-		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismissView"))
+//		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismissView"))
 		
-		self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+//		self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+		let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
+		visualEffectView.frame = self.bounds
+		self.addSubview(visualEffectView)
 		
 		// configure user image view
 		let userImageView = UIImageView(frame: CGRectMake(0, 0, self.bounds.width * 0.5, self.bounds.width * 0.5))
@@ -116,8 +119,9 @@ class UserDetailInformationView: UIView {
 		
 		self.addSubview(containerScrollView)
 		
-		let labels = [generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout這是什麼鳥layout這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("咻咻咻咻咻咻", content: "好想買重機", width: 200), generateAttributedLabel("嗡嗡翁", content: "一起大便", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "這是什麼鳥layout", width: 200), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: 200)]
-		detailDescriptionContainerView = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: 200)
+		let w: CGFloat = 250.0
+		let labels = [generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～產生一些廢文囉～～～～～～～～～～～～產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("咻咻咻咻咻咻", content: "好想買重機", width: w), generateAttributedLabel("嗡嗡翁", content: "一起大便", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w)]
+		detailDescriptionContainerView = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: w)
 		containerScrollView.addSubview(detailDescriptionContainerView)
 		
 		// arrange
@@ -160,10 +164,10 @@ class UserDetailInformationView: UIView {
 	private func configureCloseButton() {
 		closeButton = UIButton(type: UIButtonType.System)
 		closeButton.tintColor = UIColor.whiteColor()
-		closeButton.frame.size = CGSize(width: 44.0, height: 44.0)
+		closeButton.frame.size = CGSize(width: 36.0, height: 36.0)
 //		closeButton.setImage(UIImage(named: "closeButton"), forState: UIControlState.Normal)
 		closeButton.setTitle("✕", forState: UIControlState.Normal)
-		closeButton.titleLabel?.font = UIFont.systemFontOfSize(36.0)
+		closeButton.titleLabel?.font = UIFont.systemFontOfSize(24.0)
 		closeButton.addTarget(self, action: "closeButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
 	}
 	
@@ -180,7 +184,7 @@ class UserDetailInformationView: UIView {
 		let padding: CGFloat = 16.0
 		let textPadding: CGFloat = 8.0
 		let upperPadding: CGFloat = 24.0
-		let lineSpacing: CGFloat = 7.0
+		let lineSpacing: CGFloat = 5.0
 		
 		let lineSpacingStyle = NSMutableParagraphStyle()
 		lineSpacingStyle.lineSpacing = lineSpacing
@@ -267,7 +271,7 @@ class UserDetailInformationView: UIView {
 		let grayAttributes = [NSForegroundColorAttributeName: ColorgyColor.grayContentTextColor, NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
 		let contentWhiteAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont.systemFontOfSize(15.0)]
 		let lineSpacingStyle = NSMutableParagraphStyle()
-		lineSpacingStyle.lineSpacing = 7.0
+		lineSpacingStyle.lineSpacing = 5.0
   
 		// 3
 		attributedString.addAttributes(grayAttributes, range: string.rangeOfString("\(title)："))

@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import AudioToolbox
 
 class ChatRoomViewController: DLMessagesViewController {
 	
@@ -95,6 +96,9 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
+		
+		loadUserAbout()
+		
 		colorgySocket.connect()
 		
 		registerNotification()
@@ -108,6 +112,11 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 		
 		unregisterNotification()
+	}
+	
+	// MARK: sound and vibrate
+	func vibrate() {
+		AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
 	}
 	
 	// MARK: notification
@@ -136,6 +145,15 @@ class ChatRoomViewController: DLMessagesViewController {
 		requestMoreData { () -> Void in
 			control.endRefreshing()
 		}
+	}
+	
+	// load user about
+	func loadUserAbout() {
+		ColorgyChatAPI.getUser(historyChatroom.friendId, success: { (user) -> Void in
+			print(user)
+			}, failure: { () -> Void in
+				print("failure.....!!@!!@@")
+		})
 	}
 	
 	// MARK: Configuration

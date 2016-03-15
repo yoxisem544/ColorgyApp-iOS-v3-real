@@ -118,6 +118,7 @@ class HistoryChatroom : NSObject {
 		let json = json["result"]
 		var rooms = [HistoryChatroom]()
 		
+		let before = NSDate()
 		if json.isArray {
 			for (_, json) : (String, JSON) in json {
 				if let r = HistoryChatroom(json: json) {
@@ -125,6 +126,8 @@ class HistoryChatroom : NSObject {
 				}
 			}
 		}
+		let now = NSDate()
+		print("time to create history room ---> \(now.timeIntervalSinceDate(before))")
 		
 		return rooms
 	}
