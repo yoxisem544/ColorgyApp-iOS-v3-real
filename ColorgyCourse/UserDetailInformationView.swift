@@ -120,9 +120,17 @@ class UserDetailInformationView: UIView {
 		self.addSubview(containerScrollView)
 		
 		let w: CGFloat = 250.0
-		let labels = [generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～產生一些廢文囉～～～～～～～～～～～～產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("咻咻咻咻咻咻", content: "好想買重機", width: w), generateAttributedLabel("嗡嗡翁", content: "一起大便", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w), generateAttributedLabel("嗡嗡翁", content: "產生一些廢文囉～～～～～～～～～～～～", width: w)]
-		detailDescriptionContainerView = generateDetailDescriptionContainerView("台ㄎ大", constellation: "雙魚座", whereAreYouFrom: "天堂", detailDescriptionLabels: labels, width: w)
+		let labels = generateContentLabels(user, width: 250)
+		let constellation = user?.aboutHoroscope ?? " "
+		let school = user?.organizationCode ?? "未知學校"
+		let place = user?.aboutHabitancy ?? " "
+		
+		detailDescriptionContainerView = generateDetailDescriptionContainerView(school, constellation: constellation, whereAreYouFrom: place, detailDescriptionLabels: labels, width: w)
 		containerScrollView.addSubview(detailDescriptionContainerView)
+		
+		// name and something
+		title.text = user?.name
+		subtitle.text = user?.lastAnswer
 		
 		// arrange
 		detailDescriptionContainerView.frame.origin.y = 40.0 + subtitle.frame.maxY
@@ -173,6 +181,23 @@ class UserDetailInformationView: UIView {
 	
 	internal func closeButtonClicked() {
 		dismissView()
+	}
+	
+	private func generateContentLabels(user: ChatUserInformation?, width: CGFloat) -> [UILabel] {
+		guard let user = user else { return [] }
+		var labels = [UILabel]()
+		
+		if let con = user.aboutConversation {
+			labels.append(generateAttributedLabel("想聊的話題", content: con, width: width))
+		}
+		if let con = user.aboutPassion {
+			labels.append(generateAttributedLabel("最近熱衷的事", content: con, width: width))
+		}
+		if let con = user.aboutExpertise {
+			labels.append(generateAttributedLabel("專精的事情", content: con, width: width))
+		}
+		
+		return labels
 	}
 	
 	private func generateDetailDescriptionContainerView(school: String, constellation: String, whereAreYouFrom: String, detailDescriptionLabels: [UILabel], width: CGFloat) -> UIView {
