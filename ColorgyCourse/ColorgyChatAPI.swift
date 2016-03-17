@@ -128,13 +128,16 @@ class ColorgyChatAPI : NSObject {
 					success(user: user)
 				} else {
 					failure()
+					Flurry.logError("check user availability fail", message: "fail to parse user \(UserSetting.UserId())", error: nil)
 				}
 			} else {
 				failure()
+				Flurry.logError("check user availability fail", message: "fail to parse response", error: nil)
 			}
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
+				Flurry.logError("check user availability fail", message: "afnetworking fail", error: error)
 		})
 	}
 	
