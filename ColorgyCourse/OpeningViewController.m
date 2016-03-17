@@ -5,6 +5,10 @@
 //  Created by 張子晏 on 2016/1/16.
 //  Copyright © 2016年 張子晏. All rights reserved.
 //
+// 核心概念：動態元件的加入與刪除，達成面對不同user status各自狀態。
+// 點選開始註冊按鈕後，檢查使用者狀態並對應產生畫面，並可以透過refreshView
+// 切換回的一張畫面
+// 由六張畫面組成Opening, Check Email, Upload, Upload Preview, Name, CleanAsk
 
 #import "OpeningViewController.h"
 #import "UIImage+GaussianBlurUIImage.h"
@@ -14,8 +18,10 @@
 #import "BlurWallSwitchViewController.h"
 #import "UselessView.h"
 
+#define DEBUG_TAG() printf("debug+ [%s], line=%d, func=%s\n", __FILE__, __LINE__, __func__)
+
 @implementation OpeningViewController {
-    UselessView *uselessView;
+    UselessView *uselessView; // 藍色標籤條
 }
 
 // 重置註冊畫面
@@ -50,12 +56,14 @@
     
     // Layout
     [self openingLayout];
+    // 測試用
     // [self checkEmailLayout];
     // [self uploadLayout];
     // [self uploadPreviewLayout];
     // [self nameLayout];
     // [self cleanAskLayout];
     
+    // 註冊文字變動推播
     [self registerForUITextFieldTextDidChangeNotification];
     
     // keyboard and tapGesture
@@ -110,6 +118,7 @@
 
 #pragma mark - TouchViewToReturn
 
+// 對畫面點擊後的反應
 - (void)touchViewToReturn {
     [self.activeTextField resignFirstResponder];
     [self.activeTextView resignFirstResponder];
@@ -124,6 +133,7 @@
 }
 
 // Called when the UIKeyboardDidShowNotification is sent.
+// 如果要輸入的位置被鍵盤遮到，會滑動到可視範圍
 - (void)keyboardWasShown:(NSNotification*)aNotification {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
@@ -156,6 +166,7 @@
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
+// 鍵盤藏起，恢復上一動ＸＤ
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     
@@ -173,11 +184,6 @@
     [self removeUploadLayout];
     [self removeUploadPreviewLayout];
     [self removeNameLayout];
-    
-    // Navigation Customized
-    // self.title = @"模糊聊";
-    // self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[self UIColorFromRGB:74.0 green:74.0 blue:74.0 alpha:100.0], NSFontAttributeName:[UIFont fontWithName:@"STHeitiTC-Medium" size:17.0]};
-    // self.navigationController.navigationBar.tintColor = [self UIColorFromRGB:255.0 green:255.0 blue:255.0 alpha:80.0];
     
     // WelcomeChatIconImageView Cusomized
     self.welcomeChatIconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WelcomeChatIcon"]];
@@ -219,11 +225,12 @@
     [self.startCheckEmailButton setTitle:@"開始認證" forState:UIControlStateNormal];
     [self.startCheckEmailButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.startCheckEmailButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:20.0]];
-    [self.startCheckEmailButton addTarget:self action:@selector(startOpening) forControlEvents:UIControlEventTouchUpInside];
+    [self.startCheckEmailButton addTarget:self action:@selector(startOpening) forControlEvents:UIControlEventTouchUpInside]; // 按下開始認證後的反應
     
     [self.view addSubview:self.startCheckEmailButton];
 }
 
+// 移除畫面
 - (void)removeOpeningLayout {
     [self.welcomeChatIconImageView removeFromSuperview];
     [self.startCheckEmailButton removeFromSuperview];
@@ -234,6 +241,11 @@
 
 #pragma mark - StartOpening
 
+// 分為0~3種狀態，
+// 0代表沒註冊信箱，啟動輸入信箱畫面
+// 1已註冊信箱，啟動上傳照片畫面
+// 2已上傳照面，啟動名字確認畫面
+// 3清晰問畫面
 - (void)startOpening {
     self.navigationItem.hidesBackButton = YES;
     [self.tabBarController.tabBar setHidden:NO];
@@ -244,9 +256,6 @@
             case 0:
                 [self showCheckEmailAlert];
                 break;
-                //            case 1:
-                //                [self checkEmail];
-                //                break;
             case 1:
                 [self uploadLayout];
                 break;
@@ -262,6 +271,9 @@
         }
     } failure:^() {
         NSLog(@"checkUserAvaliability error");
+        DEBUG_TAG();
+        
+        // 提醒彈出視窗
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
@@ -273,15 +285,20 @@
 
 #pragma mark - CheckEmailButtonAction
 
+// 秀出Alert並輸入視窗並發送信件
 - (void)showCheckEmailAlert {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"認證學校信箱" message:@"發送後趕快去收信吧～" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        
+        // 取得Email提示，沒有的話用基本的
         [ColorgyChatAPI GetEmailHints:[UserSetting UserPossibleOrganization] success:^(NSString *response) {
             NSLog(@"%@", response);
             textField.placeholder = response;
         } failure:^() {
             NSLog(@"email hints error use default");
+            DEBUG_TAG();
+            
             textField.placeholder = @"school_id@school.edu";
         }];
         self.activeTextField = textField;
@@ -290,8 +307,8 @@
     [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         NSString *emailString = alertController.textFields.firstObject.text;
         
+        // NSString+Email檢查email格式的方法
         if ([emailString isEmail]) {
-            // [self removeOpeningLayout];
             self.activeTextField = nil;
             self.loadingView = [[LoadingView alloc] init];
             self.loadingView.loadingString = @"發送中";
@@ -300,28 +317,23 @@
             self.loadingView.maskView.backgroundColor = [UIColor blackColor];
             self.loadingView.maskView.alpha = 0.75;
             
-            // 發送email認證，模擬延遲
+            // 發送email認證
             
             [self.chatApiOC postEmail:emailString success:^(NSDictionary *response) {
                 [self.loadingView finished:^() {
                     [self checkEmailLayout];
                 }];
             } failure:^() {
+                NSLog(@"Email post error");
+                DEBUG_TAG();
+                
                 [self.loadingView dismiss:nil];
-                // [self openingLayout];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查學校信箱是否正確" preferredStyle:UIAlertControllerStyleAlert];
                 
                 [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
                 }]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }];
-            
-            //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //                [self.loadingView finished:^() {
-            //                    [self.loadingView emailCheck];
-            //                    [self.loadingView.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
-            //                }];
-            //            });
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查學校信箱是否正確" preferredStyle:UIAlertControllerStyleAlert];
             
@@ -335,8 +347,10 @@
 
 #pragma mark - Check Email Layout
 
+// 確認Email完成
 - (void)checkEmailLayout {
     [self removeCheckEmailLayout];
+    
     // View Customized
     self.view.backgroundColor = [self UIColorFromRGB:250.0 green:247.0 blue:245.0 alpha:100.0];
     
@@ -391,7 +405,7 @@
     
     [self.maskView addSubview:self.checkEmailButton];
     
-    [self.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside];
+    [self.checkEmailButton addTarget:self action:@selector(checkEmail) forControlEvents:UIControlEventTouchUpInside]; // 確認驗證
     
     // manual verification button
     self.manualVerificationButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -405,9 +419,10 @@
     
     [self.maskView addSubview:self.manualVerificationButton];
     
-    [self.manualVerificationButton addTarget:self action:@selector(manualVerification) forControlEvents:UIControlEventTouchUpInside];
+    [self.manualVerificationButton addTarget:self action:@selector(manualVerification) forControlEvents:UIControlEventTouchUpInside]; // 人工驗證按鈕
 }
 
+// 移除畫面
 - (void)removeCheckEmailLayout {
     [self.maskView removeFromSuperview];
     [self.messageLabel removeFromSuperview];
@@ -418,12 +433,16 @@
 
 #pragma mark - manual verification {
 
+// 人工驗證，打開瀏覽器
 - (void)manualVerification {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"前往粉專，私訊Colorgy進行人工驗證。" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]]) {
             [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]];
+        } else {
+            NSLog(@"open url error");
+            DEBUG_TAG();
         }
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -444,7 +463,8 @@
     [self removeNameLayout];
     
     [self.loadingView start];
-    // 認證信箱，模擬延遲
+    
+    // 認證信箱，透過apime更新me，然後檢查UserOrganization是否有值，作為判斷，並更新使用者現在狀態
     [ColorgyChatAPI ColorgyAPIMe:^() {
         if ([UserSetting UserOrganization]) {
             [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
@@ -467,11 +487,13 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"尚未認證" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                //                [self removeCheckEmailLayout];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
     } failure:^() {
+        NSLog(@"APIME error");
+        DEBUG_TAG();
+        
         [self.loadingView dismiss:nil];
         [self checkEmailLayout];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
@@ -480,16 +502,11 @@
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }];
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //        [self.loadingView finished:^() {
-    //            [self removeOpeningLayout];
-    //            [self uploadLayout];
-    //        }];
-    //    });
 }
 
 #pragma mark - Upload Layout
 
+// 上傳照片畫面
 - (void)uploadLayout {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -502,8 +519,6 @@
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 142, 142)];
     self.userImageView.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
     self.userImageView.backgroundColor = [UIColor whiteColor];
-    //    self.uploadImage = [UIImage imageNamed:@"2.jpg"];
-    //self.userImageView.image = [self.uploadImage gaussianBlurImage:self.uploadImage andInputRadius:4];
     self.userImageView.layer.masksToBounds = YES;
     self.userImageView.layer.borderWidth = 3;
     self.userImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -542,11 +557,12 @@
     [self.uploadPhotoButton setTitle:@"上傳頭貼" forState:UIControlStateNormal];
     [self.uploadPhotoButton setTitleColor:[self UIColorFromRGB:248 green:150 blue:128 alpha:100] forState:UIControlStateNormal];
     [self.uploadPhotoButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
-    [self.uploadPhotoButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
+    [self.uploadPhotoButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside]; // 秀出選擇方法
     
     [self.view addSubview:self.uploadPhotoButton];
 }
 
+// 清除畫面
 - (void)removeUploadLayout {
     [self.userImageView removeFromSuperview];
     [self.uploadTitleLabel removeFromSuperview];
@@ -556,7 +572,9 @@
 
 #pragma mark - UploadButtonAction
 
+// ActionSheet 選擇照片方法，fb頭貼，相片選取器，拍照
 - (void)showPhotoMeunAlert {
+    
     // UIAlertController AnctionSheetStyle Initializing
     UIAlertController *photoMeunAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -564,6 +582,7 @@
         
         // Cancel button tappped.
     }]];
+    
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"使用FB大頭照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // FBImageSticker button tapped.
@@ -573,6 +592,8 @@
         [indView startAnimating];
         indView.center = CGPointMake(self.userImageView.bounds.size.width / 2, self.userImageView.bounds.size.height / 2);
         [self.userImageView addSubview:indView];
+        
+        // 下載Colorgy庫存照片
         [self downloadImageAtURL:[UserSetting UserAvatarUrl] withHandler:^(UIImage *image) {
             self.uploadImage = image;
             dispatch_sync(dispatch_get_main_queue(), ^{
@@ -582,17 +603,20 @@
             });
         }];
     }]];
+    
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"從相簿選擇" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         // PhotoAlbumr button tapped.
         [self openPhotoLibrary];
     }]];
+    
     [photoMeunAlertController addAction:[UIAlertAction actionWithTitle:@"拍攝照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self openPhotoCamera];
     }]];
     [self presentViewController:photoMeunAlertController animated:YES completion:nil];
 }
 
+// 開起相簿
 - (void)openPhotoLibrary {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -603,7 +627,9 @@
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
-        UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相簿失敗" preferredStyle:UIAlertControllerStyleAlert];
+        NSLog(@"open imagepicker error");
+        DEBUG_TAG();
+        UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相簿失敗，請去設定給予Colorgy Course存取相簿的權限" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }]];
@@ -611,6 +637,7 @@
     }
 }
 
+// 開啟相機
 - (void)openPhotoCamera {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
@@ -621,6 +648,9 @@
         
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
+        NSLog(@"open camera error");
+        DEBUG_TAG();
+        
         UIAlertController *alertError = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"存取相機失敗" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertError addAction:[UIAlertAction actionWithTitle:@"好吧..." style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -648,6 +678,8 @@
 }
 
 #pragma mark - Upload Preview
+
+//上傳預覽畫面
 - (void)uploadPreviewLayout {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -730,6 +762,7 @@
 
 #pragma mark - UploadingImage
 
+// 上傳照片，並更新使用者狀態到2
 - (void)uploadingImage {
     NSString *path = [[NSHomeDirectory()stringByAppendingPathComponent:@"Documents"]stringByAppendingPathComponent:@"image.png"];
     NSData *data = UIImagePNGRepresentation(self.uploadImage);
@@ -763,6 +796,9 @@
             [self nameLayout];
         }];
     } failure:^() {
+        NSLog(@"upload image error");
+        DEBUG_TAG();
+        
         [self.loadingView dismiss:^() {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"頭貼傳輸失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
@@ -772,18 +808,11 @@
             [self uploadPreviewLayout];
         }];
     }];
-    
-    // 測試用需要刪除
-    
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //        [self.loadingView finished:^(){
-    //            [self nameLayout];
-    //        }];
-    //    });
 }
 
 #pragma mark - UIImage Resize
 
+// 照片裁切
 - (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize {
     UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
     [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
@@ -795,6 +824,7 @@
 
 #pragma mark - NameLayout
 
+// 名字確認畫面
 - (void)nameLayout {
     [self.tabBarController.tabBar setHidden:YES];
     
@@ -835,8 +865,6 @@
     self.nameTextField.placeholder = @"八字以內";
     
     [self.scrollView addSubview:self.nameTextField];
-    
-    //[self.nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 20)];
     
@@ -890,6 +918,7 @@
     [self.view addSubview:self.progressBarView1];
 }
 
+// 移除畫面
 - (void)removeNameLayout {
     [self.nameDescriptionLabel removeFromSuperview];
     [self.nameTextField removeFromSuperview];
@@ -900,6 +929,7 @@
 
 #pragma mark - CheckView
 
+// 檢查名子的轉圈圈
 - (void)showChecking {
     self.checkingView = [[UIActivityIndicatorView alloc] initWithFrame:self.checkedView.frame];
     
@@ -911,6 +941,7 @@
     self.nameIsOk = YES;
 }
 
+// 確認可用的勾勾
 - (void)showCheck {
     [self.checkingView removeFromSuperview];
     [self.textNumberCounterLabel removeFromSuperview];
@@ -918,6 +949,7 @@
     self.nameIsOk = YES;
 }
 
+// 移除檢查
 - (void)dismissCheck {
     [self.checkingView removeFromSuperview];
     [self.checkedView removeFromSuperview];
@@ -927,6 +959,7 @@
 
 #pragma mark - submitName
 
+// 確認名字，並更新狀態到3
 - (void)submitName {
     // 檢查名字
     
@@ -938,22 +971,27 @@
                     [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
                         NSLog(@"updateUserStatus success");
                     } failure:^() {
+                        DEBUG_TAG();
                         NSLog(@"updateUserStatus error");
                     }];
                 } failure:^() {
+                    DEBUG_TAG();
                     NSLog(@"checkUserAvailability error");
                 }];
                 // CleanAskLayout
                 [self removeNameLayout];
                 [self cleanAskLayout];
             } failure:^() {
+                DEBUG_TAG();
                 NSLog(@"update name error");
             }];
             [ColorgyChatAPI updateFromCore:^() {} failure:^() {
+                DEBUG_TAG();
                 NSLog(@"update core error");
             }];
         } failure:^() {
             NSLog(@"check user error");
+            DEBUG_TAG();
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
@@ -1017,6 +1055,7 @@
 
 #pragma mark - UITextFieldDelegate
 
+// 檢查名字長度
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.activeTextField = textField;
     
@@ -1056,14 +1095,7 @@
     return YES;
 }
 
-//- (void)textFieldDidChange:(UITextField *)textField {
-//    if (textField == self.nameTextField) {
-//        self.activeTextField = self.nameTextField;
-//        self.nameTextField.text = [self stringCounterTo:self.nameTextField.text number:10.0];
-//        self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:self.nameTextField.text] / 2];
-//    }
-//}
-
+// 裁切名字
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if (textField == self.nameTextField) {
@@ -1078,9 +1110,7 @@
         checkString = [[NSString alloc] initWithString:tempString];
         
         tempString = [self stringCounterTo:tempString number:16];
-        //self.textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/5", [self stringCounter:tempString] / 2];
         if (checkString.length != tempString.length) {
-            //[self.nameTextField resignFirstResponder];
             
             return NO;
         }
@@ -1092,10 +1122,12 @@
 #pragma mark - UITextFieldTextDidChangeNotification
 
 - (void)registerForUITextFieldTextDidChangeNotification {
+    
     // UITextFieldTextDidChangeNotification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange:)name:@"UITextFieldTextDidChangeNotification" object:nil];
 }
 
+// 檢查名字並裁切
 - (void)textChange:(NSNotification *)noti {
     if (self.nameTextField.markedTextRange) {
         return;
@@ -1117,6 +1149,7 @@
 
 #pragma mark - CleanAskLayout
 
+// 清晰問畫面
 - (void)cleanAskLayout {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -1135,9 +1168,9 @@
         if (size.width >= self.cleanAskQuestionLabel.frame.size.width) {
             [self.cleanAskQuestionLabel sizeToFit];
         }
-        
     } failure:^() {
         NSLog(@"get question error");
+        DEBUG_TAG();
     }];
     
     [self.view addSubview:self.scrollView];
@@ -1155,7 +1188,6 @@
     
     // cleanAskReplyTextView Customized
     self.cleanAskReplyTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 60 , 73)];
-    //self.cleanAskReplyTextView.text = @"我是浪漫人，只看浪漫電影。只看浪漫電影。";
     self.cleanAskReplyTextView.backgroundColor = [self UIColorFromRGB:255 green:255 blue:255 alpha:100];
     self.cleanAskReplyTextView.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16];
     self.cleanAskReplyTextView.layer.borderColor = [self UIColorFromRGB:200 green:199 blue:198 alpha:100].CGColor;
@@ -1171,11 +1203,9 @@
     
     // textNumberCunter Customized
     self.textNumberCounterLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.cleanAskReplyTextView.bounds.size.width - 45, self.cleanAskReplyTextView.bounds.size.height - 30, 45, 30)];
-//    self.textNumberCounterLabel.center = CGPointMake(self.cleanAskReplyTextView.bounds.size.width / 2, self.cleanAskReplyTextView.bounds.size.height / 2);
     self.textNumberCounterLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13];
     self.textNumberCounterLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
     self.textNumberCounterLabel.text = @"0/20";
-//    self.textNumberCounterLabel.backgroundColor = [UIColor yellowColor];
     
     [self.cleanAskReplyTextView addSubview:self.textNumberCounterLabel];
     
@@ -1208,19 +1238,6 @@
     [self.progressBarView2 addSubview:progressBarImageView2];
     [self.view addSubview:self.progressBarView2];
     
-    
-    
-    // CleanAskTitleLabel Customized
-    //    self.cleanAskTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 315, 18)];
-    //    self.cleanAskTitleLabel.textAlignment = NSTextAlignmentCenter;
-    //    self.cleanAskTitleLabel.center = CGPointMake(self.view.center.x, self.progressBarView2.center.y - self.progressBarView2.bounds.size.height / 2 - self.cleanAskTitleLabel.bounds.size.height / 2);
-    //
-    //    NSAttributedString *attributedcleanAskTitleString = [[NSAttributedString alloc] initWithString:@"每日清晰問，讓大家更了解你" attributes:@{NSForegroundColorAttributeName:[self UIColorFromRGB:151.0 green:151.0 blue:151.0 alpha:100.0], NSFontAttributeName: [UIFont fontWithName:@"STHeitiTC-Light" size:17.0]}];
-    //
-    //    self.cleanAskTitleLabel.attributedText = attributedcleanAskTitleString;
-    //
-    //    [self.view addSubview:self.cleanAskTitleLabel];
-    
     NSLog(@"%f", CGRectGetMinY(self.progressBarView2.frame));
     
     uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, CGRectGetMinY(self.progressBarView2.frame) - 50, self.view.bounds.size.width, 50) withMessage:@"每日清晰問：從你的回答，讓大家更了解你！"];
@@ -1228,6 +1245,7 @@
     [self.view addSubview:uselessView];
 }
 
+// 畫面清除
 - (void)removeCleanAskLayout {
     [self.cleanAskQuestionLabel removeFromSuperview];
     [self.cleanAskReplyTextView removeFromSuperview];
@@ -1241,6 +1259,7 @@
 
 #pragma mark - openChatButtonAction
 
+// 開始聊，更新狀態到4，透過BlurWallSwitchView的switch方法切換
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
@@ -1265,13 +1284,15 @@
                     }];
                 } failure:^() {
                     NSLog(@"checkUserAvailability error");
+                    DEBUG_TAG();
                 }];
             } failure:^() {
                 NSLog(@"get answer error");
+                DEBUG_TAG();
             }];
-            
         } failure:^() {
             NSLog(@"check user availability error");
+            DEBUG_TAG();
         }];
     }
 }
@@ -1299,6 +1320,7 @@
     }
 }
 
+// 檢查長度並裁切
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     self.activeTextView = nil;
     
@@ -1311,6 +1333,7 @@
 
 #pragma mark - Lazy Loading Image
 
+// 下載圖片
 - (void)downloadImageAtURL:(NSString *)imageURL withHandler:(void(^)(UIImage *image))handler {
     NSURL *urlString = [NSURL URLWithString:imageURL];
     
