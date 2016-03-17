@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ColorgyCourse-Swift.h"
 
-@interface HelloViewController : UIViewController<UITextViewDelegate>
+@interface HelloViewController : UIViewController<UITextViewDelegate, UIScrollViewDelegate>
 
 @property UIImage *userImage;
 

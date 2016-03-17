@@ -13,6 +13,9 @@
 
 @interface HelloViewController () {
     LoadingView *loadingView;
+    UIView *gradientView;
+    CAGradientLayer *gradientLayer;
+    UIImageView *messageRect;
 }
 
 @property AvailableTarget *information;
@@ -116,27 +119,29 @@
     
     self.userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, userImageViewLength, userImageViewLength)];
     [self.userImageView sd_setImageWithURL:[NSURL URLWithString:self.information.avatarBlur2XURL]];
-    self.userImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.userImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.userImageView.clipsToBounds = YES;
     NSLog(@"%@", [self.information description]);
-    [self.view addSubview:self.userImageView];
+    //    [self.view addSubview:self.userImageView];
     
     // set gradient
-    UIView *gradientView = [[UIView alloc] initWithFrame:self.userImageView.frame];
+    gradientView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1000, 1000)];
     
     gradientView.alpha = 0.5;
     gradientView.center = CGPointMake(self.userImageView.bounds.size.width / 2, self.userImageView.bounds.size.height / 2);
+    gradientView.clipsToBounds = YES;
     
     [self.userImageView addSubview:gradientView];
     
-    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradientLayer = [CAGradientLayer layer];
     
-    gradient.frame = gradientView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil]; // 由上到下的漸層顏色
-    [gradientView.layer insertSublayer:gradient atIndex:0];
+    gradientLayer.frame = gradientView.bounds;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)[[UIColor whiteColor] CGColor], (id)[[UIColor blackColor] CGColor], nil]; // 由上到下的漸層顏色
+    [gradientView.layer insertSublayer:gradientLayer atIndex:0];
     
     // set messageRect
 #pragma mark-Warning
-    UIImageView *messageRect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageRect2"]];
+    messageRect = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"messageRect2"]];
     //    UIImageView *messageRect = [[UIImageView alloc] init];
     //
     //    messageRect.layer.borderWidth = 1.5;
@@ -214,10 +219,14 @@
     }];
     
     // scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, userImageViewLength, self.view.bounds.size.width, self.view.bounds.size.height - userImageViewLength - self.buttonView.bounds.size.height)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.buttonView.bounds.size.height)];
     self.scrollView.contentSize = CGSizeMake(1000, 1000);
     self.scrollView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
+    
     [self.view addSubview:self.scrollView];
+    
+    [self.scrollView addSubview:self.userImageView];
+    self.scrollView.delegate = self;
     
     [self scrollViewLayout];
     
@@ -234,9 +243,10 @@
 }
 
 - (void)scrollViewLayout {
+    CGFloat userImageViewLength = self.view.bounds.size.width;
     CGFloat marginY = 10;
     CGFloat marginX = 30;
-    UIView *aboutView = [[UIView alloc] initWithFrame:CGRectMake(marginX, marginY, self.scrollView.bounds.size.width - 2 * marginX, 44)];
+    UIView *aboutView = [[UIView alloc] initWithFrame:CGRectMake(marginX, marginY + userImageViewLength, self.scrollView.bounds.size.width - 2 * marginX, 44)];
     aboutView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:aboutView];
     CGFloat paddingX = 40;
@@ -266,6 +276,8 @@
     //    }
     aboutLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
     aboutLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
+    aboutLabel.minimumScaleFactor = 0.6;
+    aboutLabel.adjustsFontSizeToFitWidth = YES;
     [aboutView addSubview:aboutLabel];
     
     // about infromation layout
@@ -366,7 +378,11 @@
     
     aboutInformationView.frame = CGRectMake(marginX, CGRectGetMaxY(aboutView.frame) + marginY, aboutView.bounds.size.width, currentY);
     currentY += marginY;
-    self.scrollView.contentSize = CGSizeMake(10, CGRectGetMaxY(aboutInformationView.frame) + marginY);
+    if (CGRectGetMaxY(aboutInformationView.frame) >= self.scrollView.frame.size.height) {
+        self.scrollView.contentSize = CGSizeMake(10, CGRectGetMaxY(aboutInformationView.frame) + marginY);
+    } else {
+        self.scrollView.contentSize = CGSizeMake(10, self.scrollView.frame.size.height + 10);
+    }
 }
 
 #pragma mark - Hello Action
@@ -488,8 +504,6 @@
         [self presentViewController:alertController animated:YES completion:nil];
     }];
 }
-
-#pragma mark - cleanAskView
 
 #pragma mark - cleanAskView
 
@@ -664,6 +678,27 @@
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self updateUserImageView];
+//    NSLog(@"%f", self.scrollView.contentOffset.y);
+}
+
+- (void)updateUserImageView {
+    self.userImageView.backgroundColor = [UIColor yellowColor];
+    CGFloat userImageViewLength = self.view.bounds.size.width;
+    CGRect userImageViewRect = CGRectMake(0, 0, userImageViewLength, userImageViewLength);
+    
+    if (self.scrollView.contentOffset.y <= 0) {
+        userImageViewRect.origin.y = self.scrollView.contentOffset.y;
+        userImageViewRect.size.height = userImageViewLength -self.scrollView.contentOffset.y;
+    }
+    
+    [self.userImageView setFrame:userImageViewRect];
+    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
