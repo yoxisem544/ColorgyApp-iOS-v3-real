@@ -18,6 +18,7 @@
     UselessView *uselessView;
 }
 
+// 重置註冊畫面
 - (void)refreshView {
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -56,6 +57,7 @@
     // [self cleanAskLayout];
     
     [self registerForUITextFieldTextDidChangeNotification];
+    
     // keyboard and tapGesture
     [self registerForKeyboardNotifications];
     
@@ -64,74 +66,6 @@
     [self.view addGestureRecognizer:tapGestureRecognizer];
     [self.scrollView addGestureRecognizer:tapGestureRecognizer];
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    self.navigationItem.hidesBackButton = YES;
-//    [self.tabBarController.tabBar setHidden:NO];
-//    [self.navigationController.navigationBar setHidden:YES];
-//
-//    [self removeOpeningLayout];
-//    [self removeCheckEmailLayout];
-//    [self removeCleanAskLayout];
-//    [self removeUploadLayout];
-//    [self removeUploadPreviewLayout];
-//    [self removeNameLayout];
-//
-//
-//    [self openingLayout];
-//
-//    //    switch (self.whichLayout) {
-//    //        case 0:
-//    //            [self openingLayout];
-//    //            break;
-//    //            //            case 1:
-//    //            //                [self checkEmail];
-//    //            //                break;
-//    //        case 1:
-//    //            [self uploadLayout];
-//    //            break;
-//    //        case 2:
-//    //            [self nameLayout];
-//    //            break;
-//    //        case 3:
-//    //            [self cleanAskLayout];
-//    //            break;
-//    //        default:
-//    //            [self openingLayout];
-//    //            break;
-//    //    }
-//
-//    //    [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
-//    //        switch (self.whichLayout) {
-//    //            case 0:
-//    //                [self openingLayout];
-//    //                break;
-//    //                //            case 1:
-//    //                //                [self checkEmail];
-//    //                //                break;
-//    //            case 1:
-//    //                [self uploadLayout];
-//    //                break;
-//    //            case 2:
-//    //                [self nameLayout];
-//    //                break;
-//    //            case 3:
-//    //                [self cleanAskLayout];
-//    //                break;
-//    //            default:
-//    //                [self openingLayout];
-//    //                break;
-//    //        }
-//    //    } failure:^() {
-//            NSLog(@"checkUserAvaliability error");
-//            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-//
-//            [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-//            }]];
-//            [self presentViewController:alertController animated:YES completion:nil];
-//        }];
-//}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -147,6 +81,7 @@
 
 #pragma mark - StringCounter
 
+// 計算一段string的長度中文為2英文為1
 - (NSInteger)stringCounter:(NSString *)string {
     NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
     NSData *data = [string dataUsingEncoding:enc];
@@ -156,6 +91,7 @@
     return [data length];
 }
 
+// 切字串到目標數量
 - (NSString *)stringCounterTo:(NSString *)string number:(CGFloat)number {
     NSString *tempString;
     
