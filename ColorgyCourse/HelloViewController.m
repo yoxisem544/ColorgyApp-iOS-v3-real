@@ -344,7 +344,7 @@
             UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutConversationTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
-            aboutConversationTitleLabel.text = @"想聊的話題";
+            aboutConversationTitleLabel.text = @"關於我";
             [aboutInformationView addSubview:aboutConversationTitleLabel];
             currentY = CGRectGetMaxY(aboutConversationTitleLabel.frame);
             currentY += paddingY;

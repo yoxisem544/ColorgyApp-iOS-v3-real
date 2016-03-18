@@ -276,7 +276,7 @@
     [scrollView addSubview:aboutHabitancyTextField];
     
     aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(marginX, CGRectGetMaxY(aboutHabitancyTextField.frame) + sectionY, width, height)];
-    aboutConversationLabel.text = @"想聊的話題";
+    aboutConversationLabel.text = @"關於我";
     aboutConversationLabel.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
     aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:17.0];
     

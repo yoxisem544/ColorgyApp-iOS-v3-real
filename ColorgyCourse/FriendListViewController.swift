@@ -84,6 +84,7 @@ class FriendListViewController: UIViewController {
 	func updateBackButtonTitle(title: String) {
 		let newBackButton = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 		navigationItem.backBarButtonItem = newBackButton
+		print(navigationItem)
 	}
 	
 	func restoreBackButton() {
@@ -438,6 +439,7 @@ class FriendListViewController: UIViewController {
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == Storyboard.GotoChatroomSegueIdentifier {
 			let vc = segue.destinationViewController as! ChatRoomViewController
+			vc.friendViewControllerReference = self
 			if let historyChatroom = sender as? HistoryChatroom {
 				vc.userId = userId
 				vc.chatroomId = historyChatroom.chatroomId

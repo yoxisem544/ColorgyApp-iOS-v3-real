@@ -77,7 +77,7 @@ extension LaunchNavigationViewController : DismissGuideViewDelegate {
 			CourseDB.deleteAllCourses()
 			// need login
 			let storyboard = UIStoryboard(name: "Main", bundle: nil)
-			let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+			let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
 			self.presentViewController(vc, animated: true, completion: nil)
 		} else {
 			let storyboard = UIStoryboard(name: "Main", bundle: nil)

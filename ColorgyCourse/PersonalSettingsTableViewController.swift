@@ -97,7 +97,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 						Answers.logCustomEventWithName(AnswersLogEvents.userLogout, customAttributes: nil)
                     }
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
                     self.presentViewController(vc, animated: true, completion: nil)
                     }, failure: { () -> Void in
                         if !ColorgyAPITrafficControlCenter.isRefershTokenRefreshable() {
@@ -106,7 +106,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                                 let alert = UIAlertController(title: "驗證過期", message: "請重新登入", preferredStyle: UIAlertControllerStyle.Alert)
                                 let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Cancel, handler: {(hey) -> Void in
                                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                                    let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
                                     self.presentViewController(vc, animated: true, completion: nil)
                                 })
                                 alert.addAction(ok)

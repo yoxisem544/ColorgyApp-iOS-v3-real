@@ -134,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				// dump data
 				CourseDB.deleteAllCourses()
 				// need login
-				let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+				let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
 				self.window?.rootViewController = vc
 				self.window?.makeKeyAndVisible()
 			} else {

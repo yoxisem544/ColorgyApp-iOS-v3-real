@@ -61,7 +61,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 	private var unreadMessages = 0
-	private var friendViewControllerReference: FriendListViewController?
+	var friendViewControllerReference: FriendListViewController?
 	
 	// MARK: Life Cycle
 	override func viewDidLoad() {

@@ -134,7 +134,14 @@ class FBLoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         configureLoginButton()
+		
+		navigationController?.navigationBarHidden = true
     }
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+	}
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -143,6 +150,7 @@ class FBLoginViewController: UIViewController {
             Flurry.logEvent("v3.0: User On FB Login View", timed: true)
 			Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
         }
+		navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -167,7 +175,9 @@ class FBLoginViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Storyboard.emailLogin {
             
-        }
+		} else {
+			navigationController?.setNavigationBarHidden(false, animated: true)
+		}
     }
 
 }

@@ -190,7 +190,7 @@ class UserDetailInformationView: UIView {
 		var labels = [UILabel]()
 		
 		if let con = user.aboutConversation {
-			labels.append(generateAttributedLabel("想聊的話題", content: con, width: width))
+			labels.append(generateAttributedLabel("關於我", content: con, width: width))
 		}
 		if let con = user.aboutPassion {
 			labels.append(generateAttributedLabel("最近熱衷的事", content: con, width: width))

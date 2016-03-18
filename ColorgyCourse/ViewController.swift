@@ -50,7 +50,7 @@ class ViewController: UIViewController {
             print("ready to logout")
             LogoutHelper.logout({ () -> Void in
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! FBLoginViewController
+                let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
                 self.presentViewController(vc, animated: true, completion: nil)
             })
             }) { () -> Void in
