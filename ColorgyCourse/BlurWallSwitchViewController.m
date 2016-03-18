@@ -27,7 +27,7 @@
     // 檢查現在的user是否更換，更換的話重置重置註冊頁面並切換子控制器
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         NSLog(@"%@, %@", chatUser.userId, self.chatUser.userId);
-        if (![chatUser.userId isEqualToString:self.chatUser.userId]) {
+        if (![chatUser.userId isEqualToString:self.chatUser.userId] && chatUser.userId && self.chatUser.userId) {
             // change user
             self.chatUser = chatUser;
             [self.openingViewController refreshView]; // 重置註冊頁面
