@@ -56,6 +56,7 @@
     [completeButton addTarget:self action:@selector(pushToPersonalChatInformationViewController) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:completeButton];
     
+    // 用以紀錄第一次使用app時或是進入過使用者，會有的小藍點
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
         self.uselessBall = [[UIView alloc] initWithFrame:CGRectMake(-3, completeButton.bounds.size.height - 9, 12, 12)];
         self.uselessBall.layer.cornerRadius = 6;
@@ -228,7 +229,6 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    //    return [self.blurwallDataMutableArray count] + self.numberOfColumn;
     return [self.blurWallDataMutableArray count];
 }
 
@@ -265,19 +265,8 @@
     AvailableTarget *availableTarget = [self.blurWallDataMutableArray objectAtIndex:indexPath.item];
     NSString *imageUrl = availableTarget.avatarBlur2XURL;
     
-    //    if ([[ImageCache sharedImageCache]doesExist:imageUrl]) {
-    //        blurImageView.image = [[ImageCache sharedImageCache]getImage:imageUrl];
-    //    } else {
     blurImageView.image = nil;
     [blurImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:nil];
-    /*[self downloadImageAtURL:imageUrl withHandler:^(UIImage *image) {
-     dispatch_sync(dispatch_get_main_queue(), ^{
-     blurImageView.image = [[ImageCache sharedImageCache] getImage:imageUrl];
-     
-     [cell setNeedsLayout];
-     });
-     }];*/
-    //    }
     
     blurImageView.center = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
     [cell addSubview:blurImageView];
