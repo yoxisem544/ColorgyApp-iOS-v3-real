@@ -1334,6 +1334,7 @@ class ColorgyAPI : NSObject {
                 failure()
             }
             }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
                 failure()
         })
     }

@@ -27,7 +27,7 @@ extension UIImage {
 //		guard let output = filter?.valueForKey(kCIOutputImageKey) as? CoreImage.CIImage else { return nil }
 		guard let outputImage = filter?.outputImage else { return nil }
 		
-		let cgimgResult = context.createCGImage(outputImage, fromRect: outputImage.extent)
+		let cgimgResult = context.createCGImage(outputImage, fromRect: coreImage.extent)
 		let result = UIImage(CGImage: cgimgResult)
 		return result
 	}

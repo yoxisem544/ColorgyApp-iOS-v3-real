@@ -162,7 +162,9 @@ class ClassmateTimeTableViewController: UIViewController {
     func loadUserCourse() {
         self.courses = [Course]()
         // check privacy setting
+		print("getting user \(userCourseObject.user_id)")
         ColorgyAPI.GetUserPrivacySetting(userId: userCourseObject.user_id, success: { (isTimeTablePublic) -> Void in
+			print(isTimeTablePublic)
             if isTimeTablePublic {
                 ColorgyAPI.getUserCoursesWithUserId("\(self.userCourseObject.user_id)", completionHandler: { (userCourseObjects) -> Void in
                     if let userCourseObjects = userCourseObjects {

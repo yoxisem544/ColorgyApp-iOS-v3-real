@@ -83,13 +83,6 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOk-sQ-MIg">
-                                <rect key="frame" x="26" y="80" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="Xlt-it-xO9" kind="show" id="4VG-hW-dbN"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3149,6 +3142,5 @@
     <inferredMetricsTieBreakers>
         <segue reference="ypF-3y-Hte"/>
         <segue reference="iw3-Wa-rtI"/>
-        <segue reference="oTF-pk-jbR"/>
     </inferredMetricsTieBreakers>
 </document>
