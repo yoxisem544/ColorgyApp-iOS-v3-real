@@ -9,6 +9,7 @@
 #import "BlurWallSwitchViewController.h"
 #import "ColorgyChatAPIOC.h"
 #import "ColorgyCourse-Swift.h"
+#import "NSString+Email.h"
 
 #define DEBUG_TAG() printf("debug+ [%s], line=%d, func=%s\n", __FILE__, __LINE__, __func__)
 
@@ -42,7 +43,6 @@
 // 畫面Load完，會初始化子控制器，再檢查使用者，失敗的話會出現提醒視窗並新增個重試的按鈕，重試會呼叫切換子控制器的方法
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self childViewLayoutInitializing]; // 初始化子控制器
     [self switchViewController]; // 切換子控制器
     

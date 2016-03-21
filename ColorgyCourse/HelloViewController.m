@@ -108,6 +108,7 @@
 
 #pragma mark - Layout
 
+// hello view layout
 - (void)layout {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -163,12 +164,6 @@
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:14.0];
     
-#pragma mark-Warning
-    //    [messageLabel sizeToFit];
-    
-    //    messageRect.frame = CGRectMake(0, 0, messageLabel.bounds.size.width + 25, 60);
-    //    messageRect.center = CGPointMake(self.userImageView.frame.size.width / 2, self.userImageView.frame.size.height - 50);
-    
     [messageRect addSubview:messageLabel];
     
     // ButtonView
@@ -195,7 +190,7 @@
     [self.helloButton setTitle:@"打招呼" forState:UIControlStateNormal];
     [self.buttonView addSubview:self.helloButton];
     
-    // Cheack hi
+    // Cheack hi 檢查是否已打招呼，並顯示打招呼按鈕
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         [ColorgyChatAPI checkHi:chatUser.userId targetId:self.information.id success:^(BOOL can, NSString *who, NSString *chatroomId) {
             if (can) {
@@ -238,10 +233,12 @@
     [backButton addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
 }
 
+// hello view 基本上是show detail進來，透過dismiss回去
 - (void)goBack {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// 個人資訊的layout
 - (void)scrollViewLayout {
     CGFloat userImageViewLength = self.view.bounds.size.width;
     CGFloat marginY = 10;
@@ -256,6 +253,7 @@
     
     NSString *aboutLabelString = nil;
     
+    // 個人基本資料的label，使用"."切開
     if ([self.information.aboutSchool length]) {
         aboutLabelString = self.information.aboutSchool;
     }
@@ -285,10 +283,9 @@
     
     aboutInformationView.backgroundColor = [UIColor whiteColor];
     [self.scrollView addSubview:aboutInformationView];
-    //
-    //    self.information.aboutConversation = @"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-    //    self.information.aboutExpertise = @"我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機我愛打飛機";
-    //    self.information.aboutPassion = @"我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ我熱衷看ㄆ";
+
+    
+    // 詳細資料的layout，原理：透過currentY做游標，每增加新的元件，就位移ㄧ個paddingY，每一個資料項目位移一個sectionY
     CGFloat sectionY = 30;
     CGFloat currentY = paddingY; // 計算現在偏移位置
     
@@ -386,6 +383,8 @@
 }
 
 #pragma mark - Hello Action
+
+// 目前有些地方無法使用，因為不管對方還是自己回答問題，都會回應無法打招呼，所以都會顯示以打招呼，所以基本上不會對已經跟你打招呼過的人打招呼
 - (void)helloAction {
     
     // 檢查使用者
@@ -509,32 +508,6 @@
 
 - (void)cleanAskViewLayout {
     
-    //    if (self.cleanAskString) {
-    //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"每日清晰問" message:self.cleanAskString preferredStyle:UIAlertControllerStyleAlert];
-    //
-    //        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}]];
-    //        [alertController addAction:[UIAlertAction actionWithTitle:@"發送" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-    //            [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-    //                [ColorgyChatAPI answerQuestion:chatUser.userId answer:alertController.textFields.firstObject.text date:self.questionDate success:^() {
-    //                } failure:^() {
-    //                    NSLog(@"answerQuestion error");
-    //                }];
-    //            } failure:^() {
-    //                NSLog(@"check user error");
-    //
-    //                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-    //
-    //                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-    //                }]];
-    //                [self presentViewController:alertController animated:YES completion:nil];
-    //            }];
-    //        }]];
-    //        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-    //        }];
-    //
-    //        [self presentViewController:alertController animated:YES completion:nil];
-    //    }
-    
     // currentWindow
     self.currentWindow = [UIApplication sharedApplication].keyWindow;
     // cleanAskMaskView
@@ -542,6 +515,7 @@
     self.cleanAskMaskView.backgroundColor = [UIColor blackColor];
     self.cleanAskMaskView.alpha = 0.75;
     [self.currentWindow addSubview:self.cleanAskMaskView];
+    
     // cleanAskAertView
     self.cleanAskAlertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.currentWindow.bounds.size.width - 100, 216)];
     self.cleanAskAlertView.center = self.currentWindow.center;
@@ -569,6 +543,7 @@
     
     self.cleanAskMessageLabel.attributedText = attributedCleanAskMessageString;
     [self.cleanAskAlertView addSubview:self.cleanAskMessageLabel];
+    
     // cleanAskTextView
     self.cleanAskTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.cleanAskAlertView.frame.size.width - 60, 62)];
     self.cleanAskTextView.center = CGPointMake(self.cleanAskAlertView.bounds.size.width / 2, CGRectGetMaxY(self.cleanAskMessageLabel.frame) + self.cleanAskTextView.frame.size.height / 2 + 20);
@@ -647,6 +622,7 @@
     [self.cleanAskTextView resignFirstResponder];
 }
 
+// 畫面移除
 - (void)removeCleanAskViewLayout {
     [self.cleanAskView removeFromSuperview];
     [self.cleanAskMaskView removeFromSuperview];
@@ -662,6 +638,7 @@
     [self.textNumberCounterLabel removeFromSuperview];
 }
 
+// 回答問題
 - (void)answerQuestion {
     [self removeCleanAskViewLayout];
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
@@ -687,6 +664,7 @@
 //    NSLog(@"%f", self.scrollView.contentOffset.y);
 }
 
+// 彈性照片
 - (void)updateUserImageView {
     self.userImageView.backgroundColor = [UIColor yellowColor];
     CGFloat userImageViewLength = self.view.bounds.size.width;
@@ -728,6 +706,7 @@
 
 #pragma mark - StringCounter
 
+// 計算字數中文2英文1
 - (NSInteger)stringCounter:(NSString *)string {
     NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingBig5);
     NSData *data = [string dataUsingEncoding:enc];
@@ -737,6 +716,7 @@
     return [data length];
 }
 
+// 切字串
 - (NSString *)stringCounterTo:(NSString *)string number:(CGFloat)number {
     NSString *tempString;
     

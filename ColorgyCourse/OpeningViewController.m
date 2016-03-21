@@ -335,7 +335,7 @@
                 [self presentViewController:alertController animated:YES completion:nil];
             }];
         } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查學校信箱是否正確" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"失敗Q_Q" message:@"請檢查學校信箱是否正確（格式是否不符）" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];
@@ -968,12 +968,12 @@
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
             [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
                 [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
-                        NSLog(@"updateUserStatus success");
-                    } failure:^() {
-                        DEBUG_TAG();
-                        NSLog(@"updateUserStatus error");
-                    }];
+//                    [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
+//                        NSLog(@"updateUserStatus success");
+//                    } failure:^() {
+//                        DEBUG_TAG();
+//                        NSLog(@"updateUserStatus error");
+//                    }];
                 } failure:^() {
                     DEBUG_TAG();
                     NSLog(@"checkUserAvailability error");
@@ -1008,11 +1008,11 @@
                     [ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
                         [ColorgyChatAPI updateName:self.nameTextField.text userId:user.userId success:^() {
                             [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
-                                [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
-                                    NSLog(@"updateUserStatus success");
-                                } failure:^() {
-                                    NSLog(@"updateUserStatus error");
-                                }];
+//                                [ColorgyChatAPI updateUserStatus:chatUser.userId status:@"3" success:^() {
+//                                    NSLog(@"updateUserStatus success");
+//                                } failure:^() {
+//                                    NSLog(@"updateUserStatus error");
+//                                }];
                             } failure:^() {
                                 NSLog(@"checkUserAvailability error");
                             }];

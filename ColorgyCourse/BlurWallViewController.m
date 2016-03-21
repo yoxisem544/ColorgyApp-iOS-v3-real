@@ -149,6 +149,22 @@
                             [self cleanAskViewLayout];
                         }
                     } else if (answered) {
+                        // 用以紀錄第一次使用app時或是進入過使用者，會有的提醒視窗
+                        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+                            
+                            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"讓別人更暸解妳!" message:@"趕快填寫更多個人資料吧，讓真正與你志同道合的人發覺你。" preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                                
+                            }]];
+                            
+                            [alertController addAction:[UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                                [self pushToPersonalChatInformationViewController];
+                            }]];
+                            
+                            [self presentViewController:alertController animated:YES completion:nil];
+                        }
+
                         [self showUseLess];
                     }
                     //                    } failure:^() {
@@ -890,6 +906,22 @@
     [self.line2 removeFromSuperview];
     [self.textNumberCounterLabel removeFromSuperview];
     useLessView.messageLabel.text = [NSString stringWithFormat:@"每日清晰問：%@", self.cleanAskString];
+    
+    // 用以紀錄第一次使用app時或是進入過使用者，會有的提醒視窗
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"讓別人更暸解妳!" message:@"趕快填寫更多個人資料吧，讓真正與你志同道合的人發覺你。" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            [self pushToPersonalChatInformationViewController];
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)answerQuestion {
