@@ -62,23 +62,38 @@
                                     <action selector="FBloginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="fCM-Hd-mmb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QA1-uD-rhN">
-                                <rect key="frame" x="176" y="440" width="249" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wT-mo-cvj">
+                                <rect key="frame" x="176" y="448" width="118" height="44"/>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.58823529411764708" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="249" id="Iu6-e7-QVw"/>
-                                    <constraint firstAttribute="height" constant="44" id="X2b-Xj-xYQ"/>
+                                    <constraint firstAttribute="height" constant="44" id="cEe-ct-Ty1"/>
+                                    <constraint firstAttribute="width" constant="118" id="egg-74-kvz"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="16"/>
-                                <color key="tintColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="    信箱登入" image="mail">
-                                    <color key="titleColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="信箱註冊">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="EmailLoginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="a5r-aN-UaN"/>
+                                    <segue destination="Xlt-it-xO9" kind="show" id="v9J-p1-D5z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ys-ja-OwO">
+                                <rect key="frame" x="307" y="448" width="118" height="44"/>
+                                <color key="backgroundColor" red="0.97254901959999995" green="0.58823529409999997" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="K3e-Hh-7Bm"/>
+                                    <constraint firstAttribute="width" constant="118" id="XV3-JO-LYY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="信箱登入">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="EmailLoginButtonClicked:" destination="4HF-Ka-ckl" eventType="touchUpInside" id="jxl-5c-rQG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如遇登入問題，重開即可～" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qz-ZF-j4D">
-                                <rect key="frame" x="228" y="492" width="144" height="15"/>
+                                <rect key="frame" x="228" y="504" width="144" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -87,23 +102,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5Dl-ks-TA6" secondAttribute="trailing" constant="-16" id="BXv-i2-0zp"/>
+                            <constraint firstItem="0wT-mo-cvj" firstAttribute="leading" secondItem="2eO-BT-e3R" secondAttribute="leading" id="Mzx-Lg-iTM"/>
+                            <constraint firstItem="5Ys-ja-OwO" firstAttribute="top" secondItem="2eO-BT-e3R" secondAttribute="bottom" constant="16" id="QyF-fy-0v7"/>
+                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="top" secondItem="0wT-mo-cvj" secondAttribute="bottom" constant="12" id="UHT-J8-IZn"/>
+                            <constraint firstItem="0wT-mo-cvj" firstAttribute="top" secondItem="2eO-BT-e3R" secondAttribute="bottom" constant="16" id="Uy9-gq-zeb"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" constant="0.5" id="bpQ-57-mBb"/>
                             <constraint firstAttribute="centerY" secondItem="5Dl-ks-TA6" secondAttribute="centerY" multiplier="1.1" constant="0.5" id="evb-EX-JfY"/>
-                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="centerX" secondItem="QA1-uD-rhN" secondAttribute="centerX" id="fbo-bL-E2p"/>
-                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="top" secondItem="QA1-uD-rhN" secondAttribute="bottom" constant="8" id="gVl-3Z-qQM"/>
                             <constraint firstAttribute="centerX" secondItem="Mtf-RN-KeB" secondAttribute="centerX" id="jVm-0e-T7Q"/>
-                            <constraint firstItem="2eO-BT-e3R" firstAttribute="centerX" secondItem="QA1-uD-rhN" secondAttribute="centerX" id="jeJ-X4-82i"/>
                             <constraint firstItem="5Dl-ks-TA6" firstAttribute="top" secondItem="Mtf-RN-KeB" secondAttribute="bottom" constant="16" id="mnM-rA-G21"/>
                             <constraint firstItem="2eO-BT-e3R" firstAttribute="centerY" secondItem="L7G-jG-sbl" secondAttribute="centerY" multiplier="1.2" constant="50" id="pzH-f2-LFn"/>
-                            <constraint firstItem="QA1-uD-rhN" firstAttribute="top" secondItem="2eO-BT-e3R" secondAttribute="bottom" constant="8" id="qOA-N2-AvP"/>
+                            <constraint firstItem="4qz-ZF-j4D" firstAttribute="centerX" secondItem="2eO-BT-e3R" secondAttribute="centerX" id="trL-pd-LQS"/>
+                            <constraint firstItem="5Ys-ja-OwO" firstAttribute="trailing" secondItem="2eO-BT-e3R" secondAttribute="trailing" id="yHA-cg-ztu"/>
                             <constraint firstItem="5Dl-ks-TA6" firstAttribute="leading" secondItem="L7G-jG-sbl" secondAttribute="leadingMargin" constant="-16" id="ynR-o8-7r9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1bO-Ho-k3Y"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="EmailLoginButton" destination="QA1-uD-rhN" id="HDc-Wu-Ktj"/>
+                        <outlet property="EmailLoginButton" destination="5Ys-ja-OwO" id="knB-4U-4DR"/>
                         <outlet property="FBloginButton" destination="2eO-BT-e3R" id="LWq-Lg-eow"/>
+                        <outlet property="emailRegisterButton" destination="0wT-mo-cvj" id="fnb-fn-mDC"/>
                         <segue destination="aOb-er-GlL" kind="presentation" identifier="To Email Login" id="CwW-cJ-rvU"/>
                         <segue destination="Xlt-it-xO9" kind="show" id="oTF-pk-jbR"/>
                     </connections>
@@ -112,10 +130,10 @@
             </objects>
             <point key="canvasLocation" x="510" y="-127"/>
         </scene>
-        <!--View Controller-->
+        <!--Email Register View Controller-->
         <scene sceneID="VL1-8n-MSa">
             <objects>
-                <viewController id="Xlt-it-xO9" sceneMemberID="viewController">
+                <viewController id="Xlt-it-xO9" customClass="EmailRegisterViewController" customModule="ColorgyCourse" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zd8-oR-AaS"/>
                         <viewControllerLayoutGuide type="bottom" id="Fcv-Pq-avh"/>
@@ -3123,9 +3141,8 @@
         <image name="colorgyLogo" width="94" height="107"/>
         <image name="deletebutton" width="14" height="14"/>
         <image name="downloadFromCloud" width="21" height="22"/>
-        <image name="facebookLogin" width="249" height="44"/>
+        <image name="facebookLogin" width="251" height="46"/>
         <image name="lecturerIcon" width="13" height="13"/>
-        <image name="mail" width="26" height="23"/>
         <image name="mailLarge" width="55" height="47"/>
         <image name="moreInfo" width="24" height="23"/>
         <image name="moreInfoHighlight" width="24" height="23"/>
@@ -3140,7 +3157,8 @@
         <image name="timetableSelected" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ypF-3y-Hte"/>
         <segue reference="iw3-Wa-rtI"/>
+        <segue reference="ypF-3y-Hte"/>
+        <segue reference="v9J-p1-D5z"/>
     </inferredMetricsTieBreakers>
 </document>

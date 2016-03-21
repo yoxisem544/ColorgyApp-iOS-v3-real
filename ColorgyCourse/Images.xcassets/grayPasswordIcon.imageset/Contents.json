@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "facebookLogin.png",
+      "filename" : "grayPasswordIcon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "facebookLogin@2x.png",
+      "filename" : "grayPasswordIcon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "facebookLogin@3x.png",
+      "filename" : "grayPasswordIcon@3x.png",
       "scale" : "3x"
     }
   ],

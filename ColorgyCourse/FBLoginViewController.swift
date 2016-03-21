@@ -116,11 +116,11 @@ class FBLoginViewController: UIViewController {
         }
     }
     func configureLoginButton() {
-        EmailLoginButton.layer.borderColor = EmailLoginButton.tintColor?.CGColor
-        EmailLoginButton.layer.borderWidth = 2.0
-        EmailLoginButton.layer.cornerRadius = 2.0
+        EmailLoginButton.layer.cornerRadius = 4.0
+		emailRegisterButton.layer.cornerRadius = 4.0
     }
     @IBOutlet weak var EmailLoginButton: UIButton!
+	@IBOutlet weak var emailRegisterButton: UIButton!
     @IBAction func EmailLoginButtonClicked(sender: UIButton) {
         self.performSegueWithIdentifier(Storyboard.emailLogin, sender: sender)
     }
