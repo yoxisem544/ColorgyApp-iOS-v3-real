@@ -10,13 +10,15 @@ import Foundation
 
 class ColorgySocket : NSObject {
 	
-	internal let socket = SocketIOClient(socketURL: "http://chat.colorgy.io:80", options: [.Log(false), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"])])
+	internal let socket = SocketIOClient(socketURL: "http://chat.colorgy.io:80", options: [.Log(false), .ForcePolling(true), .ConnectParams(["__sails_io_sdk_version":"0.11.0"]), .ReconnectWait(2)])
 	internal var chatroom: Chatroom?
 	internal var didConnectToSocketOnce: Bool = false
 	
-	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void) {
+	func connectToServer(withParameters parameters: [String : NSObject]!, registerToChatroom: (chatroom: Chatroom) -> Void, withMessages: (messages: [ChatMessage]) -> Void, reconnectToServerWithMessages: (messages: [ChatMessage]) -> Void) {
 		self.socket.on("connect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
-			self.socket.emitWithAck("post", parameters)(timeoutAfter: 1000, callback: { (responseOnEmit) -> Void in
+			self.socket.emitWithAck("post", parameters)(timeoutAfter: 10, callback: { (responseOnEmit) -> Void in
+				
+				print(responseOnEmit)
 
 				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
 					if let _chatroom = Chatroom(json: JSON(responseOnEmit)) {
@@ -35,6 +37,16 @@ class ColorgySocket : NSObject {
 								withMessages(messages: sortedMessages)
 							})
 							self.didConnectToSocketOnce = true
+						} else {
+							// reconnect to server 
+							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
+								// sort message with timestamp
+								let sortedMessages = messages.sort({ (m1: ChatMessage, m2: ChatMessage) -> Bool in
+									return m1.createdAt.timeIntervalSince1970() < m2.createdAt.timeIntervalSince1970()
+								})
+								// complete
+								reconnectToServerWithMessages(messages: sortedMessages)
+							})
 						}
 					}
 				}
@@ -83,8 +95,30 @@ class ColorgySocket : NSObject {
 		self.socket.connect()
 	}
 	
+	func reconnect() {
+		self.socket.reconnect()
+	}
+	
 	func disconnect() {
 		self.socket.disconnect()
+	}
+	
+	func onError() {
+		self.socket.on("error") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
+			print(response)
+		}
+	}
+	
+	func onDisconnect() {
+		self.socket.on("disconnect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
+			print(response)
+		}
+	}
+	
+	func onReconnect() {
+		self.socket.on("reconnect") { (response: [AnyObject], ack: SocketAckEmitter) -> Void in
+			print(response)
+		}
 	}
 	
 	func sendTextMessage(message: String, withUserId userId: String) {

@@ -23,6 +23,7 @@
 		6301587F1B9988B0008172E9 /* FBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301587E1B9988B0008172E9 /* FBLoginViewController.swift */; };
 		630158811B9988B9008172E9 /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158801B9988B9008172E9 /* EmailLoginViewController.swift */; };
 		630158831B998B47008172E9 /* ErrorAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630158821B998B47008172E9 /* ErrorAlertView.swift */; };
+		630230441CA2AC6A00D69860 /* CourseModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630230431CA2AC6A00D69860 /* CourseModelTests.swift */; };
 		6311D2091C3A2F5A00812934 /* LocalCourseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D2081C3A2F5A00812934 /* LocalCourseDB.swift */; };
 		6311D20B1C3A2FA200812934 /* LocalCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D20A1C3A2FA200812934 /* LocalCourse.swift */; };
 		6311D20D1C3A303F00812934 /* LocalCourseDBManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6311D20C1C3A303F00812934 /* LocalCourseDBManagedObject.swift */; };
@@ -260,6 +261,7 @@
 		6301587E1B9988B0008172E9 /* FBLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBLoginViewController.swift; sourceTree = "<group>"; };
 		630158801B9988B9008172E9 /* EmailLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		630158821B998B47008172E9 /* ErrorAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorAlertView.swift; sourceTree = "<group>"; };
+		630230431CA2AC6A00D69860 /* CourseModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseModelTests.swift; sourceTree = "<group>"; };
 		6311D2071C3A2D1600812934 /* ColorgyCourse_v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorgyCourse_v4.xcdatamodel; sourceTree = "<group>"; };
 		6311D2081C3A2F5A00812934 /* LocalCourseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalCourseDB.swift; path = ../LocalCourseDB.swift; sourceTree = "<group>"; };
 		6311D20A1C3A2FA200812934 /* LocalCourse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalCourse.swift; sourceTree = "<group>"; };
@@ -1225,6 +1227,7 @@
 			isa = PBXGroup;
 			children = (
 				63FBCC291B9345B800B3084F /* ColorgyCourseTests.swift */,
+				630230431CA2AC6A00D69860 /* CourseModelTests.swift */,
 				63FBCC271B9345B800B3084F /* Supporting Files */,
 			);
 			path = ColorgyCourseTests;
@@ -1633,6 +1636,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				630230441CA2AC6A00D69860 /* CourseModelTests.swift in Sources */,
 				63FBCC2A1B9345B800B3084F /* ColorgyCourseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,31 +9,31 @@
 import Foundation
 
 enum Gender: String {
-    case Male = "male"
-    case Female = "female"
-    case Unspecified = "unspecified"
+	case Male = "male"
+	case Female = "female"
+	case Unspecified = "unspecified"
 }
 
 enum UserStatus: String {
-    case NotRegistered = "not_registered"
-    case Registered = "registered"
-    case Banned = "banned"
+	case NotRegistered = "not_registered"
+	case Registered = "registered"
+	case Banned = "banned"
 }
 
 enum HiStatus: String {
-    case Pending = "pending"
-    case Accepted = "accepted"
-    case Rejected = "rejected"
+	case Pending = "pending"
+	case Accepted = "accepted"
+	case Rejected = "rejected"
 }
 
 enum NameStatus: String {
-    case Ok = "ok"
-    case AlreadyExists = "exists"
+	case Ok = "ok"
+	case AlreadyExists = "exists"
 }
 
 enum AnsweredLatestQuestionStatus:String {
-    case Answered = "answered"
-    case notAnswered = "not answered"
+	case Answered = "answered"
+	case notAnswered = "not answered"
 }
 
 class ColorgyChatAPI : NSObject {
@@ -60,7 +60,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager()
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let compressedImageData = UIImageJPEGRepresentation(image, 0.1) else {
 			print("error loading iamge")
@@ -107,7 +107,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -119,7 +119,7 @@ class ColorgyChatAPI : NSObject {
 		}
 		
 		let params = ["uuid": uuid, "accessToken": accessToken]
-
+		
 		afManager.POST(serverURL + "/users/check_user_available", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			//            print(response)
 			if let response = response {
@@ -135,8 +135,25 @@ class ColorgyChatAPI : NSObject {
 				Flurry.logError("check user availability fail", message: "fail to parse response", error: nil)
 			}
 			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				// 90% of fail is token expired
+				// renew token
+				ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+					
+					}, failure: { () -> Void in
+						
+				})
 				print(error.localizedDescription)
 				failure()
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				var msg = String()
+				do {
+					if let data = data {
+						msg = try "\(NSJSONSerialization.JSONObjectWithData(data, options: []))"
+					}
+				} catch {
+					
+				}
+				Flurry.logEvent("check user availability fail", withParameters: ["message" : error.localizedDescription, "detail": msg])
 				Flurry.logError("check user availability fail", message: "afnetworking fail", error: error)
 		})
 	}
@@ -152,7 +169,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		let params = ["name": name]
 		print(params)
@@ -179,32 +196,32 @@ class ColorgyChatAPI : NSObject {
 	
 	class func checkNameExists(name: String, success: (status: String) -> Void, failure: () -> Void) {
 		
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        let params = ["name": name]
-        print(params)
-        afManager.POST(serverURL + "/users/check_name_exists", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                print(json["result"].string)
-                if json["result"].string == NameStatus.Ok.rawValue {
-                    success(status: NameStatus.Ok.rawValue)
-                } else if json["result"].string == NameStatus.AlreadyExists.rawValue {
-                    success(status: NameStatus.AlreadyExists.rawValue)
-                } else {
-                    failure()
-                    print("fail to generate NameStatus, unknown status")
-                }
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                failure()
-        })
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		let params = ["name": name]
+		print(params)
+		afManager.POST(serverURL + "/users/check_name_exists", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json["result"].string)
+				if json["result"].string == NameStatus.Ok.rawValue {
+					success(status: NameStatus.Ok.rawValue)
+				} else if json["result"].string == NameStatus.AlreadyExists.rawValue {
+					success(status: NameStatus.AlreadyExists.rawValue)
+				} else {
+					failure()
+					print("fail to generate NameStatus, unknown status")
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
 	}
 	
 	///更新使用者名稱：(simple test passed)
@@ -221,7 +238,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -259,7 +276,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -303,7 +320,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -339,7 +356,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -385,7 +402,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		let params = [
 			"userId": userId
@@ -418,7 +435,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -457,7 +474,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -494,7 +511,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -530,7 +547,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -573,7 +590,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		afManager.GET(serverURL + "/questions/get_question", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			if let response = response {
@@ -598,7 +615,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -636,7 +653,7 @@ class ColorgyChatAPI : NSObject {
 	class func checkHi(userId: String, targetId: String, success: (canSayHi: Bool, whoSaidHi: String?, chatroomId: String?) -> Void, failure: () -> Void) {
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -662,14 +679,14 @@ class ColorgyChatAPI : NSObject {
 				chatroomId = json["chatroomId"].string
 				if json["result"].string == "already said hi" {
 					// can't say hi, return false
-//					success(canSayHi: false, whoSaidHi: "you already said hi")
+					//          success(canSayHi: false, whoSaidHi: "you already said hi")
 					success(canSayHi: false, whoSaidHi: "you already said hi", chatroomId: chatroomId)
 				} else if json["result"].string == "ok, you can say hi" {
 					// can say hi, return true
-//					success(canSayHi: true, whoSaidHi: nil)
+					//          success(canSayHi: true, whoSaidHi: nil)
 					success(canSayHi: true, whoSaidHi: nil, chatroomId: nil)
 				} else if json["result"].string == "target already said hi" {
-//					success(canSayHi: false, whoSaidHi: "He/She already said hi")
+					//          success(canSayHi: false, whoSaidHi: "He/She already said hi")
 					success(canSayHi: false, whoSaidHi: "He/She already said hi", chatroomId: chatroomId)
 				} else {
 					print("fail to check say hi, unknown result")
@@ -695,7 +712,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -747,7 +764,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -778,51 +795,51 @@ class ColorgyChatAPI : NSObject {
 				failure()
 		})
 	}
-    
-    /// 取得打招呼列表：(simple test passed)
-    ///
-    /// 取得被打過招呼的列表：
-    ///
-    /// 用途：取得打過招呼，還沒被接受的id列表
-    /// 使用方式：
-    ///
-    /// 1. 傳一個http post給/hi/get_my_list，參數包含使用者的userId,uuid,accessToken
-    /// 2. 回傳被打過招呼的列表，成功的話會出現status 200：{ result: [...] }的對你打過招呼的人的userId
-    class func getMyList(userId: String, success: (hiedList: NSArray) -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId
-        ]
-        print(params)
-        afManager.POST(serverURL + "/hi/get_my_list", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                print(json)
-                success(hiedList: json["result"].arrayObject!)
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                failure()
-        })
-    }
-
+	
+	/// 取得打招呼列表：(simple test passed)
+	///
+	/// 取得被打過招呼的列表：
+	///
+	/// 用途：取得打過招呼，還沒被接受的id列表
+	/// 使用方式：
+	///
+	/// 1. 傳一個http post給/hi/get_my_list，參數包含使用者的userId,uuid,accessToken
+	/// 2. 回傳被打過招呼的列表，成功的話會出現status 200：{ result: [...] }的對你打過招呼的人的userId
+	class func getMyList(userId: String, success: (hiedList: NSArray) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId
+		]
+		print(params)
+		afManager.POST(serverURL + "/hi/get_my_list", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json)
+				success(hiedList: json["result"].arrayObject!)
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
 	
 	///接受打招呼：(simple test passed)
 	///
@@ -835,7 +852,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -887,7 +904,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -913,340 +930,340 @@ class ColorgyChatAPI : NSObject {
 		})
 	}
 	
-    class func acceptHiWithHistoryChatroomId(userId: String, hiId: String, success: (chatroomId: String) -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "hiId": hiId
-        ]
-        
-        afManager.POST(serverURL + "/hi/accept_hi", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                print(json)
-                
-                if let chatroomId =  json["chatroomId"].string {
-                    success(chatroomId: chatroomId)
-                }
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                print(error.localizedDescription)
-                print(task?.response)
-                print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
-                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
-                do {
-                    try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
-                } catch {
-                    
-                }
-                if let a = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] {
-                    print(JSON(a))
-                } else {
-                    print("false")
-                }
-                failure()
-        })
-    }
-        
-    ///檢查是否回答過最新問題：
-    ///
-    ///用途：在顯示問題之前需要先檢查是否回答過最新問題
-    ///使用方式：
-    ///
-    ///1. 傳一個http post給/users/check_answered_latest，參數包含uuid,accessToken,userId
-    ///2. 成功的會會回傳{ result: 'answered' }以及{ result: 'not answered'  }
-    class func checkAnsweredLatestQuestion(userId: String, success: (answered :Bool) -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId
-        ]
-        
-        print(params)
-        
-        afManager.POST(serverURL + "/users/check_answered_latest", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                if json["result"].string == "answered" {
-                    success(answered: true)
-                } else if json["result"].string == "not answered" {
-                    success(answered: false)
-                } else {
-                    print("check answer lastest fail, unknown type")
-                    failure()
-                }
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                failure()
-        })
-    }
-    
-    ///取得好友列表：
-    ///
-    ///用途：給 app 一個 web API endpoint 來得到過去聊天過的使用者
-    ///使用方式：
-    ///
-    ///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
-    ///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
-    class func getHistoryTarget(userId: String, gender: Gender, page: Int, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "gender": gender.rawValue,
-            "page": page.stringValue
-        ]
-        
-        afManager.POST(serverURL + "/users/get_history_target", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                let rooms = HistoryChatroom.generateHistoryChatrooms(json)
+	class func acceptHiWithHistoryChatroomId(userId: String, hiId: String, success: (chatroomId: String) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"hiId": hiId
+		]
+		
+		afManager.POST(serverURL + "/hi/accept_hi", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json)
+				
+				if let chatroomId =  json["chatroomId"].string {
+					success(chatroomId: chatroomId)
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				print(error.localizedDescription)
+				print(task?.response)
+				print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				do {
+					try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
+				} catch {
+					
+				}
+				if let a = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] {
+					print(JSON(a))
+				} else {
+					print("false")
+				}
+				failure()
+		})
+	}
+	
+	///檢查是否回答過最新問題：
+	///
+	///用途：在顯示問題之前需要先檢查是否回答過最新問題
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/check_answered_latest，參數包含uuid,accessToken,userId
+	///2. 成功的會會回傳{ result: 'answered' }以及{ result: 'not answered'  }
+	class func checkAnsweredLatestQuestion(userId: String, success: (answered :Bool) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId
+		]
+		
+		print(params)
+		
+		afManager.POST(serverURL + "/users/check_answered_latest", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				if json["result"].string == "answered" {
+					success(answered: true)
+				} else if json["result"].string == "not answered" {
+					success(answered: false)
+				} else {
+					print("check answer lastest fail, unknown type")
+					failure()
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	///取得好友列表：
+	///
+	///用途：給 app 一個 web API endpoint 來得到過去聊天過的使用者
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/get_history_target，參數包含gender,uuid,accessToken,userId,page，page從零開始，0,1,2,3,4,5...一直到回傳為空陣列為止
+	///2. 如果成功，回傳的資料包括id,name, about,lastAnswer,avatar_blur_2x_url,一次會回傳20個
+	class func getHistoryTarget(userId: String, gender: Gender, page: Int, success: (targets: [HistoryChatroom]) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"gender": gender.rawValue,
+			"page": page.stringValue
+		]
+		
+		afManager.POST(serverURL + "/users/get_history_target", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				let rooms = HistoryChatroom.generateHistoryChatrooms(json)
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					success(targets: rooms)
 				})
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                failure()
-        })
-    }
-    
-    class func getHistoryTarget(userId: String, gender: Gender, fromPage: Int, toPage: Int, complete: (targets: [HistoryChatroom]) -> Void) {
-        var pagesToGet = toPage - fromPage + 1
-        var targets = [HistoryChatroom]()
-        for page in fromPage...toPage {
-            print("getting page \(page)")
-            getHistoryTarget(userId, gender: gender, page: page, success: { (_targets) -> Void in
-                print(_targets)
-                for t in _targets {
-                    targets.append(t)
-                }
-                pagesToGet -= 1
-                if pagesToGet == 0 {
-                    complete(targets: targets)
-                }
-                }, failure: { () -> Void in
-                    pagesToGet -= 1
-                    if pagesToGet == 0 {
-                        complete(targets: targets)
-                    }
-            })
-        }
-    }
-    
-    class func getHistoryTarget(userId: String, complete: (targets: [HistoryChatroom]) -> Void) {
-        let fromPage = 0
-        let toPage = 1
-        var pagesToGet = toPage - fromPage + 1
-        var targets = [HistoryChatroom]()
-        for page in fromPage...toPage {
-            print("getting page \(page)")
-            getHistoryTarget(userId, gender: Gender.Unspecified, page: page, success: { (_targets) -> Void in
-                print(_targets)
-                for t in _targets {
-                    targets.append(t)
-                }
-                pagesToGet -= 1
-                if pagesToGet == 0 {
-                    complete(targets: targets)
-                }
-                }, failure: { () -> Void in
-                    pagesToGet -= 1
-                    if pagesToGet == 0 {
-                        complete(targets: targets)
-                    }
-            })
-        }
-    }
-    
-    ///刪除聊天室：
-    ///
-    ///用途：提供一個刪除聊天室的api，而聊天室將會從此從自己的聊天列表消失
-    ///使用方式：
-    ///
-    ///1. 傳一個http post給/users/remove_chatroom，參數包括：uuid,accessToken,userId,chatroomId
-    ///2. 若成功的話，會回傳一個{ result: success }
-    class func removeChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "chatroomId": chatroomId
-        ]
-        print(params)
-        afManager.POST(serverURL + "/users/remove_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-                if json["result"].string == "success" {
-                    success()
-                } else {
-                    failure()
-                }
-            } else {
-                failure()
-            }
-            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                print(error.localizedDescription)
-                print(operation?.response)
-                print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
-                let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
-                do {
-                    try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
-                } catch {
-                    
-                }
-                failure()
-        })
-    }
-    
-    ///離開聊天室：
-    ///
-    ///用途：提供一個離開聊天室的api，對方將會收到一個來自系統的訊息，而聊天室將會從此從自己的聊天列表消失
-    ///使用方式：
-    ///
-    ///1. 傳一個http post給/chatroom/leave_chatroom，參數包括：uuid,accessToken,userId,chatroomId
-    ///2. 若成功的話，會回傳一個{ result: success }
-    class func leaveChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "chatroomId": chatroomId
-        ]
-        
-        afManager.POST(serverURL + "/chatroom/leave_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)
-				print(json)
-                if json["result"].string == "success" {
-                    success()
-                } else {
-                    failure()
-                }
-            } else {
-                failure()
-            }
-            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
 				print(error.localizedDescription)
 				failure()
-        })
-    }
+		})
+	}
 	
-    ///更新對方稱呼：
-    ///
-    ///用途：更新對方的暱稱，並不會讓對方知道
-    ///使用方式：
-    ///
-    ///1. 傳一個http post給/chatroom/update_target_alias，參數包括uuid,accessToken,userId,chatroomId,alias
-    ///2. 若成功之後的establish connection後就會回傳對方的alias
-    class func updateOthersNickName(userId: String, chatroomId: String, nickname: String, success:() -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "chatroomId": chatroomId,
-            "alias": nickname
-        ]
-        
-        afManager.POST(serverURL + "/chatroom/update_target_alias", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            success()
-            }, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
-                failure()
-        })
-    }
+	class func getHistoryTarget(userId: String, gender: Gender, fromPage: Int, toPage: Int, complete: (targets: [HistoryChatroom]) -> Void) {
+		var pagesToGet = toPage - fromPage + 1
+		var targets = [HistoryChatroom]()
+		for page in fromPage...toPage {
+			print("getting page \(page)")
+			getHistoryTarget(userId, gender: gender, page: page, success: { (_targets) -> Void in
+				print(_targets)
+				for t in _targets {
+					targets.append(t)
+				}
+				pagesToGet -= 1
+				if pagesToGet == 0 {
+					complete(targets: targets)
+				}
+				}, failure: { () -> Void in
+					pagesToGet -= 1
+					if pagesToGet == 0 {
+						complete(targets: targets)
+					}
+			})
+		}
+	}
+	
+	class func getHistoryTarget(userId: String, complete: (targets: [HistoryChatroom]) -> Void) {
+		let fromPage = 0
+		let toPage = 1
+		var pagesToGet = toPage - fromPage + 1
+		var targets = [HistoryChatroom]()
+		for page in fromPage...toPage {
+			print("getting page \(page)")
+			getHistoryTarget(userId, gender: Gender.Unspecified, page: page, success: { (_targets) -> Void in
+				print(_targets)
+				for t in _targets {
+					targets.append(t)
+				}
+				pagesToGet -= 1
+				if pagesToGet == 0 {
+					complete(targets: targets)
+				}
+				}, failure: { () -> Void in
+					pagesToGet -= 1
+					if pagesToGet == 0 {
+						complete(targets: targets)
+					}
+			})
+		}
+	}
+	
+	///刪除聊天室：
+	///
+	///用途：提供一個刪除聊天室的api，而聊天室將會從此從自己的聊天列表消失
+	///使用方式：
+	///
+	///1. 傳一個http post給/users/remove_chatroom，參數包括：uuid,accessToken,userId,chatroomId
+	///2. 若成功的話，會回傳一個{ result: success }
+	class func removeChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId
+		]
+		print(params)
+		afManager.POST(serverURL + "/users/remove_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				if json["result"].string == "success" {
+					success()
+				} else {
+					failure()
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				print(operation?.response)
+				print(error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey])
+				let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData
+				do {
+					try print(NSJSONSerialization.JSONObjectWithData(data!, options: []))
+				} catch {
+					
+				}
+				failure()
+		})
+	}
+	
+	///離開聊天室：
+	///
+	///用途：提供一個離開聊天室的api，對方將會收到一個來自系統的訊息，而聊天室將會從此從自己的聊天列表消失
+	///使用方式：
+	///
+	///1. 傳一個http post給/chatroom/leave_chatroom，參數包括：uuid,accessToken,userId,chatroomId
+	///2. 若成功的話，會回傳一個{ result: success }
+	class func leaveChatroom(userId: String, chatroomId: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId
+		]
+		
+		afManager.POST(serverURL + "/chatroom/leave_chatroom", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json)
+				if json["result"].string == "success" {
+					success()
+				} else {
+					failure()
+				}
+			} else {
+				failure()
+			}
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				failure()
+		})
+	}
+	
+	///更新對方稱呼：
+	///
+	///用途：更新對方的暱稱，並不會讓對方知道
+	///使用方式：
+	///
+	///1. 傳一個http post給/chatroom/update_target_alias，參數包括uuid,accessToken,userId,chatroomId,alias
+	///2. 若成功之後的establish connection後就會回傳對方的alias
+	class func updateOthersNickName(userId: String, chatroomId: String, nickname: String, success:() -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"chatroomId": chatroomId,
+			"alias": nickname
+		]
+		
+		afManager.POST(serverURL + "/chatroom/update_target_alias", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			success()
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+		})
+	}
 	
 	///得到更多聊天訊息：
 	///
@@ -1259,7 +1276,7 @@ class ColorgyChatAPI : NSObject {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
 		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
 		
 		guard let uuid = UserSetting.UserUUID() else {
 			failure()
@@ -1319,99 +1336,99 @@ class ColorgyChatAPI : NSObject {
 				failure()
 		})
 	}
-
-    // email_hints : Get data of email_hints
-    class func GetEmailHints(organization_code: String, success: (response: String) -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        let url = "https://colorgy.io:443/api/v1/email_hints/\(organization_code).json"
-        guard url.isValidURLString else {
-            print(ColorgyErrorType.invalidURLString)
-            failure()
-            return
-        }
-        
-        afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                print(response)
-                print("get hint OK")
-                var json = JSON(response)
-                
-                success(response:json["hint"].string!)
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                print("fail to get email_hints")
-                failure()
-        })
-        
-        return
-    }
-    
-//    更新使用者狀態
-//    
-//    用途：給 app 一個 web API endpoint 來更新使用者狀態
-//    使用方式：
-//    
-//    1. 傳一個http post給/users/update_user_status，參數包含使用者的status、 uuid、accessToken
-    
-    class func updateUserStatus(userId: String, status: String, success: () -> Void, failure: () -> Void) {
-        
-        let afManager = AFHTTPSessionManager(baseURL: nil)
-        afManager.requestSerializer = AFJSONRequestSerializer()
-        afManager.responseSerializer = AFJSONResponseSerializer()
-        
-        guard let uuid = UserSetting.UserUUID() else {
-            failure()
-            return
-        }
-        guard let accessToken = UserSetting.UserAccessToken() else {
-            failure()
-            return
-        }
-        
-        let params = [
-            "uuid": uuid,
-            "accessToken": accessToken,
-            "userId": userId,
-            "status": status
-        ]
-        
-        afManager.POST(serverURL + "/users/update_user_status", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-            if let response = response {
-                let json = JSON(response)["result"]
-                print(json)
-                success()
-            } else {
-                failure()
-            }
-            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                failure()
-                print(error.localizedDescription)
-        })
-    }
 	
-    class func checkImageType(data: NSData) {
-        var c = UInt8()
-        data.getBytes(&c, length: 1)
-        
-        switch c {
-        case 0xFF:
-            print("jpg")
-        case 0x89:
-            print("png")
-        case 0x47:
-            print("gif")
-        case 0x49:
-            print("tiff")
-        case 0x4D:
-            print("tiff")
-        default:
-            break
-        }
-    }
+	// email_hints : Get data of email_hints
+	class func GetEmailHints(organization_code: String, success: (response: String) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		let url = "https://colorgy.io:443/api/v1/email_hints/\(organization_code).json"
+		guard url.isValidURLString else {
+			print(ColorgyErrorType.invalidURLString)
+			failure()
+			return
+		}
+		
+		afManager.GET(url, parameters: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				print(response)
+				print("get hint OK")
+				var json = JSON(response)
+				
+				success(response:json["hint"].string!)
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				print("fail to get email_hints")
+				failure()
+		})
+		
+		return
+	}
+	
+	//    更新使用者狀態
+	//
+	//    用途：給 app 一個 web API endpoint 來更新使用者狀態
+	//    使用方式：
+	//
+	//    1. 傳一個http post給/users/update_user_status，參數包含使用者的status、 uuid、accessToken
+	
+	class func updateUserStatus(userId: String, status: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer(readingOptions: NSJSONReadingOptions.AllowFragments)
+		
+		guard let uuid = UserSetting.UserUUID() else {
+			failure()
+			return
+		}
+		guard let accessToken = UserSetting.UserAccessToken() else {
+			failure()
+			return
+		}
+		
+		let params = [
+			"uuid": uuid,
+			"accessToken": accessToken,
+			"userId": userId,
+			"status": status
+		]
+		
+		afManager.POST(serverURL + "/users/update_user_status", parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)["result"]
+				print(json)
+				success()
+			} else {
+				failure()
+			}
+			}, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+				print(error.localizedDescription)
+		})
+	}
+	
+	class func checkImageType(data: NSData) {
+		var c = UInt8()
+		data.getBytes(&c, length: 1)
+		
+		switch c {
+		case 0xFF:
+			print("jpg")
+		case 0x89:
+			print("png")
+		case 0x47:
+			print("gif")
+		case 0x49:
+			print("tiff")
+		case 0x4D:
+			print("tiff")
+		default:
+			break
+		}
+	}
 }

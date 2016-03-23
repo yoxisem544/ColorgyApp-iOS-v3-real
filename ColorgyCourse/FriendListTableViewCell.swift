@@ -26,7 +26,8 @@ class FriendListTableViewCell: UITableViewCell {
 	func updateUI() {
 		if historyChatroom.image.isValidURLString {
 			
-			if historyChatroom.chatProgress == 100 {
+			print("chatProgress\(historyChatroom.chatProgress)")
+			if historyChatroom.chatProgress >= 100 {
 				// can show photo
 				userProfileImageView.sd_setImageWithURL(historyChatroom.image.url)
 			} else {

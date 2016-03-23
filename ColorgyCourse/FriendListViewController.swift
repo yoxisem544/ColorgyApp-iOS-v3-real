@@ -61,8 +61,26 @@ class FriendListViewController: UIViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
+		
+		checkRefreshToken()
+		
 		loadFriend()
 		renewChatroom(every: 16.0)
+	}
+	
+	func checkRefreshToken() {
+		// refresh token
+		ColorgyAPI.me({ (result) -> Void in
+			// no need to refresh
+			}) { () -> Void in
+				// fail to get me, need to refresh
+				ColorgyAPITrafficControlCenter.refreshAccessToken({ (loginResult) -> Void in
+					self.hideHintFailView()
+					self.loadFriend()
+					}, failure: { () -> Void in
+						
+				})
+		}
 	}
 	
 	override func viewWillDisappear(animated: Bool) {

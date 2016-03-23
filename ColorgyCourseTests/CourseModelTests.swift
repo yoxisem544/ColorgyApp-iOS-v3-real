@@ -1,17 +1,15 @@
 //
-//  ColorgyCourseTests.swift
-//  ColorgyCourseTests
+//  CourseModelTests.swift
+//  ColorgyCourse
 //
-//  Created by David on 2015/8/30.
-//  Copyright (c) 2015年 David. All rights reserved.
+//  Created by David on 2016/3/23.
+//  Copyright © 2016年 David. All rights reserved.
 //
 
-import UIKit
 import XCTest
-@testable import ColorgyCourse
 
-class ColorgyCourseTests: XCTestCase {
-	
+class CourseModelTests: XCTestCase {
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -24,12 +22,12 @@ class ColorgyCourseTests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
-    
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock() {
+        self.measureBlock {
             // Put the code you want to measure the time of here.
         }
     }

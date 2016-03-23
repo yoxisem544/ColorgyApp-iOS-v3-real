@@ -380,6 +380,17 @@ class ChatRoomViewController: DLMessagesViewController {
 				self.recievingABunchMessages()
 				// set count when connected
 				self.historyMessagesCount = self.messages.count
+			}, reconnectToServerWithMessages: { (messages) -> Void in
+				if messages.count != 0 {
+					for m in messages {
+						if !self.doesContainMessage(m) {
+							self.messages.append(m)
+							self.messageRecievedButDontReload()
+							m.chatProgress = self.historyChatroom.chatProgress
+						}
+					}
+					self.recievingABunchMessages()
+				}
 		})
 		
 		// register for recieving message event
@@ -407,7 +418,20 @@ class ChatRoomViewController: DLMessagesViewController {
 			self.userProfileImageString = thisUser.imageId
 		}
 		
+		colorgySocket.onDisconnect()
+		colorgySocket.onError()
+		
 		colorgySocket.connect()
+	}
+	
+	func doesContainMessage(message: ChatMessage) -> Bool {
+		for m in messages {
+			if m.id == message.id {
+				return true
+			}
+		}
+		
+		return false
 	}
 	
 	func configureFloatingOptionView() {

@@ -164,17 +164,19 @@ class FBLoginViewController: UIViewController {
     func showButtons() {
         FBloginButton.hidden = false
         EmailLoginButton.hidden = false
+		emailRegisterButton.hidden = false
     }
     
     func hideButtons() {
         FBloginButton.hidden = true
         EmailLoginButton.hidden = true
+		emailRegisterButton.hidden = true
     }
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Storyboard.emailLogin {
-            
+            navigationController?.setNavigationBarHidden(false, animated: true)
 		} else {
 			navigationController?.setNavigationBarHidden(false, animated: true)
 		}
