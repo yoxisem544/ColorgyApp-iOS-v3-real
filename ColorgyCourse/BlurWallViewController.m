@@ -366,8 +366,11 @@
     
     if (kind == UICollectionElementKindSectionHeader) {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HEADER_IDENTIFIER forIndexPath:theIndexPath];
-    } else {
+    } else if (canLoadMore) {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
+        for (UIView *subview in reusableView.subviews) {
+            [subview removeFromSuperview];
+        }
         
         if (self.blurWallDataMutableArray.count > 6) {
             UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -377,11 +380,19 @@
             
             [reusableView addSubview:activityIndicator];
             [activityIndicator startAnimating];
-        } else {
-            for(UIView *subview in reusableView.subviews) {
-                [subview removeFromSuperview];
-            }
         }
+    } else {
+        reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
+        for (UIView *subview in reusableView.subviews) {
+            [subview removeFromSuperview];
+        }
+        
+        UIView *endCycleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        endCycleView.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:50];
+        endCycleView.center = CGPointMake(reusableView.bounds.size.width / 2, reusableView.bounds.size.height / 2);
+        endCycleView.layer.masksToBounds = YES;
+        endCycleView.layer.cornerRadius = endCycleView.bounds.size.width / 2;
+        [reusableView addSubview:endCycleView];
     }
     return reusableView;
 }

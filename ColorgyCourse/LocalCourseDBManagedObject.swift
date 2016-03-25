@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class LocalCourseDBManagedObject : NSManagedObject, CustomDebugStringConvertible {
+class LocalCourseDBManagedObject : NSManagedObject {
     
     @NSManaged var name: String?
     @NSManaged var lecturer: String?
