@@ -5,6 +5,10 @@
 //  Created by 張子晏 on 2016/2/1.
 //  Copyright © 2016年 David. All rights reserved.
 //
+/*
+    簡單的打招呼畫面，因為現在檢查對方打招乎，只要有一方打招呼了，
+    就無法打招呼，所以跳轉部分幾本上是用不到的。
+ */
 
 #import "HelloViewController.h"
 #import "ColorgyCourse-Swift.h"

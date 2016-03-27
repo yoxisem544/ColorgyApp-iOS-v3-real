@@ -5,6 +5,18 @@
 //  Created by 張子晏 on 2016/1/26.
 //  Copyright © 2016年 David. All rights reserved.
 //
+/*
+    模糊牆與註冊設計理念，兩個主功能建立在BlurWallSwitcher，
+    透過switchViewController這個method進行子控制器的切換，
+    達成。
+ 
+    在這邊描述一下我們可以改進的方向：
+    1. Model跟Controller切的不夠清楚，現在是Controller直接
+    呼叫Api跟Server拿資料，所以造成同樣的資料大量重複拿取。建議
+    ，有個專門的控制器負責處理，並管理（尤其是圖片！！）。
+    2. 跳轉如何實現？透過AppDelegate接收跳轉頁面的資訊，並通知給
+    TabBarController並Push到目標畫面，所以TabBar之前要先有NivigationController才可以Push，按下返回鍵，會回到TabBarController。
+*/
 
 #import "BlurWallSwitchViewController.h"
 #import "ColorgyChatAPIOC.h"
