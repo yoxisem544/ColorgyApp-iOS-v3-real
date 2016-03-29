@@ -92,8 +92,8 @@ class LocalCourse : NSObject {
                     // cause the starting point is [0, 0, 0]
                     // so must +1 to match the data type, which starting from 1.
                     // ex. day is 1~7
-                    days.append(timePeriods[0] + 1)
-                    periods.append(timePeriods[1] + index + 1)
+                    days.append(timePeriods[0])
+                    periods.append(timePeriods[1] + index)
                     // if no location string, pass in ""
                     locations.append(locationContents![timePeriodsIndex] ?? "")
                 }

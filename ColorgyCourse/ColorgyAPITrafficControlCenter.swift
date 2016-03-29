@@ -129,7 +129,8 @@ class ColorgyAPITrafficControlCenter : NSObject {
                     "client_secret": "d9de77450d6365ca8bd6717bbf8502dfb4a088e50962258d5d94e7f7211596a3",
                     "refresh_token": refreshtoken
                 ]
-                
+				
+				print(params)
                 // change to refresing state
                 ColorgyAPITrafficControlCenter.changeRefreshingState()
                 

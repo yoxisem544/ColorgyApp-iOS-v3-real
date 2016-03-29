@@ -151,6 +151,7 @@ class LocalCourseDB {
 	}
 	
 	class func storeLocalCourseToDB(localCourse: LocalCourse?) {
+		print(localCourse)
 		let qos_queue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)
 		dispatch_async(isSerialMode ? SERIAL_QUEUE : qos_queue , { () -> Void in
 //			let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext

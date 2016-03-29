@@ -16,12 +16,14 @@ class DetailCourseViewController: UIViewController {
     
     var course: Course! {
         didSet {
+			print(course)
             updateUI()
         }
     }
     
     var localCourse: LocalCourse! {
         didSet {
+			print(localCourse)
             updateUI()
         }
     }
@@ -170,7 +172,14 @@ class DetailCourseViewController: UIViewController {
             if let userCourseObject = sender as? UserCourseObject {
                 vc.userCourseObject = userCourseObject
             }
-        }
+		} else if segue.identifier == "edit course segue" {
+			let vc = segue.destinationViewController as! EditCourseViewController
+			if course != nil {
+				vc.course = course
+			} else {
+				vc.localCourse = localCourse
+			}
+		}
     }
 
 }

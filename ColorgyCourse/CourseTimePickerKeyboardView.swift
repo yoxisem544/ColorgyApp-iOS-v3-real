@@ -25,9 +25,9 @@ class CourseTimePickerKeyboardView: UIView {
                 // pass the state to this state
                 pickerViewContentPosition = keyboardInitialState!
                 // select the rows
-                pickerView?.selectRow(keyboardInitialState![0], inComponent: 0, animated: false)
-                pickerView?.selectRow(keyboardInitialState![1], inComponent: 1, animated: false)
-                pickerView?.selectRow(keyboardInitialState![2], inComponent: 2, animated: false)
+                pickerView?.selectRow(keyboardInitialState![0] - 1, inComponent: 0, animated: false)
+                pickerView?.selectRow(keyboardInitialState![1] - 1, inComponent: 1, animated: false)
+                pickerView?.selectRow(keyboardInitialState![2] - 1, inComponent: 2, animated: false)
             }
         }
     }
@@ -144,8 +144,11 @@ extension CourseTimePickerKeyboardView : UIPickerViewDelegate {
                     pickerView.selectRow(pickerViewContentPosition[1], inComponent: 1, animated: true)
                 }
             }
-
-            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], periods: pickerViewContentPosition)
+			
+			let periods = pickerViewContentPosition.map({ (p) -> Int in
+				return p + 1
+			})
+            delegate?.contentUpdated(content![0][pickerViewContentPosition[0]], periods: periods)
         }
     }
 }

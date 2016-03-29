@@ -18,7 +18,7 @@
 
 #import "Reachability.h"
 
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "SDWebImage/UIImageView+WebCache.h"
 
 #import "Mixpanel/Mixpanel.h"
 

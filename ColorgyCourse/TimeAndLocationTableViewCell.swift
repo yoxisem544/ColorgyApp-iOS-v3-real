@@ -102,14 +102,14 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         // 0 -> weekdays
         // 1 -> starting period
         // 2 -> ending period
-        let weekdays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+        let weekdays = ["Error","Mon","Tue","Wed","Thu","Fri","Sat","Sun","Error"]
         let content = [weekdays, trimmedPeriodData(), trimmedPeriodDataWithPrefix()]
         
         if period[1] == period[2] {
             // if ending and starting point is the same
-            return "\(weekdays[period[0]]) \(content[1][period[1]])節"
+            return "\(weekdays[period[0]]) \(content[1][period[1] - 1])節"
         } else {
-            return "\(weekdays[period[0]]) \(content[1][period[1]])節 ~ \(content[1][period[2]])節"
+            return "\(weekdays[period[0]]) \(content[1][period[1] - 1])節 ~ \(content[1][period[2] - 1])節"
         }
     }
     
@@ -119,6 +119,7 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         for period in periodData {
             trimmedPeriodData.append(period["code"]!)
         }
+		print(trimmedPeriodData)
         return trimmedPeriodData
     }
     

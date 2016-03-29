@@ -109,7 +109,7 @@ class CreateCourseTableViewController: UIViewController {
         if locationContents != nil {
             locationContents?.append("")
             timeContents?.append("")
-            timePeriodsContents?.append([0, 0, 0])
+            timePeriodsContents?.append([1, 1, 1])
             createCourseTableView.reloadSections(NSIndexSet(index: timeAndLocationSection), withRowAnimation: .Fade)
             let indexPath = NSIndexPath(forRow: locationContents!.count - 1, inSection: timeAndLocationSection)
             createCourseTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
@@ -142,7 +142,7 @@ class CreateCourseTableViewController: UIViewController {
         
         locationContents?.append("")
         timeContents?.append("")
-        timePeriodsContents?.append([0, 0, 0])
+        timePeriodsContents?.append([1, 1, 1])
     }
     
     override func viewDidDisappear(animated: Bool) {
