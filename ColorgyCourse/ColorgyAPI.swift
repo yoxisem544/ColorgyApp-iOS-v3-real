@@ -1516,4 +1516,38 @@ class ColorgyAPI : NSObject {
         
         return
     }
+	
+	class func registerUserWithName(name: String, email: String, password: String, passwordConfirm: String, success: () -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		afManager.requestSerializer = AFJSONRequestSerializer()
+		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		let url = "https://colorgy.io/api/v1/sign_up"
+		guard url.isValidURLString else {
+			print(ColorgyErrorType.invalidURLString)
+			failure()
+			return
+		}
+		
+		let params = [
+			"user": [
+				"name": name,
+				"email": email,
+				"password": password,
+				"password_confirmation": passwordConfirm
+			]
+		]
+		
+		afManager.POST(url, parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			success()
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				failure()
+		})
+	}
 }
