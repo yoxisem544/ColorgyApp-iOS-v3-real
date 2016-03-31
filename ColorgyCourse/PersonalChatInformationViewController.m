@@ -379,23 +379,57 @@
 #pragma mark - Submit
 
 - (void)submitMethod {
-    
-    // 檢查名字可不可用
-    if (nameIsOk) {
+    [ColorgyChatAPI checkNameExists:nameTextField.text success:^(NSString *status) {
+        if ([status isEqualToString:@"ok"]) {
+            [self showCheck];
+        } else {
+            [self dismissCheck];
+        }
         
-        // 開始上傳
-        self.loadingView = [[LoadingView alloc] init];
-        self.loadingView.loadingString = @"上傳中";
-        self.loadingView.finishedString = @"成功";
-        [self.loadingView start];
-        
-        // 檢查使用者
-        [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+        // 檢查名字可不可用
+        if (nameIsOk) {
             
-            // Update about
-            [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {
+            // 開始上傳
+            self.loadingView = [[LoadingView alloc] init];
+            self.loadingView.loadingString = @"上傳中";
+            self.loadingView.finishedString = @"成功";
+            [self.loadingView start];
+            
+            // 檢查使用者
+            [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
+                
+                // Update about
+                [ColorgyChatAPI updateAbout:chatUser.userId horoscope:aboutHoroscopeTextField.text school:aboutSchoolTextField.text habitancy:aboutHabitancyTextField.text conversation:aboutConversationTextView.text passion:aboutPassionTextView.text expertise:aboutExpertiseTextView.text success:^() {
+                } failure:^() {
+                    NSLog(@"updateabout error");
+                    // 使用者檢查失敗，尚未註冊或是網路連線不正常，通常為後者
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                    }]];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }];
+                
+                // Update name
+                [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
+                    [self.loadingView finished:^() {}];
+                    [ColorgyChatAPI updateFromCore:^() {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    } failure:^() {
+                        NSLog(@"updatefrom core error");
+                        [self.loadingView finished:^() {}];
+                    }];
+                } failure:^() {
+                    NSLog(@"update name error");
+                    // 上傳名字失敗
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+                    }]];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }];
             } failure:^() {
-                NSLog(@"updateabout error");
+                NSLog(@"check use error");
                 // 使用者檢查失敗，尚未註冊或是網路連線不正常，通常為後者
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
                 
@@ -404,45 +438,25 @@
                 [self presentViewController:alertController animated:YES completion:nil];
             }];
             
-            // Update name
-            [ColorgyChatAPI updateName:nameTextField.text userId:chatUser.userId success:^() {
-                [self.loadingView finished:^() {}];
-                [ColorgyChatAPI updateFromCore:^() {
-                    [self.navigationController popViewControllerAnimated:YES];
-                } failure:^() {
-                    NSLog(@"updatefrom core error");
-                    [self.loadingView finished:^() {}];
-                }];
-            } failure:^() {
-                NSLog(@"update name error");
-                // 上傳名字失敗
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-                }]];
-                [self presentViewController:alertController animated:YES completion:nil];
-            }];
-        } failure:^() {
-            NSLog(@"check use error");
-            // 使用者檢查失敗，尚未註冊或是網路連線不正常，通常為後者
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"儲存失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+            // 結束Loading
+            [self.loadingView finished:^() {}];
+        } else {
+            
+            // 名字是重複的
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"名字不可用Q_Q" message:@"請換個新名字吧！！" preferredStyle:UIAlertControllerStyleAlert];
             
             [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
-        }];
-        
-        // 結束Loading
-        [self.loadingView finished:^() {}];
-    } else {
-        
-        // 名字是重複的
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"名字不可用Q_Q" message:@"請換個新名字吧！！" preferredStyle:UIAlertControllerStyleAlert];
+        }
+    } failure:^() {
+        NSLog(@"check name exists");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
-    }
+    }];
 }
 
 // 字串計數，如其他一樣
