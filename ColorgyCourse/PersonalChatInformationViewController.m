@@ -47,8 +47,8 @@
 
 @implementation PersonalChatInformationViewController
 
+// 星座跟居住地的選擇器
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    // result.text = [array objectAtIndex:row];
     if (self.activeTextField == aboutHoroscopeTextField) {
         aboutHoroscopeTextField.text = [horoscpoeArray objectAtIndex:row];
     } else if (self.activeTextField == aboutHabitancyTextField) {
@@ -60,6 +60,7 @@
     return 1;
 }
 
+// 依照不同來源選擇不同的資料
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     if (self.activeTextField == aboutHoroscopeTextField) {
         return [horoscpoeArray objectAtIndex:row];
@@ -80,60 +81,11 @@
     }
 }
 
+// 概念如下，先建立UI再去要求使用者資料，並更新
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
-    [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
-        userInformation = information;
-        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        
-        activityIndicatorView.center = CGPointMake(userImageView.bounds.size.width / 2, userImageView.bounds.size.height / 2);
-        [userImageView addSubview:activityIndicatorView];
-        
-        // [activityIndicatorView startAnimating];
-        [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
-        nameTextField.text = userInformation.name;
-        aboutSchoolTextField.placeholder = information.organizationCode;
-        [self showCheck];
-        
-        nameTextField.text = information.name;
-        NSLog(@"%@", information.name);
-        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", (long)[self stringCounter:nameTextField.text]];
-        [self showCheck];
-        aboutConversationTextView.text = information.aboutConversation;
-        aboutExpertiseTextView.text = information.aboutExpertise;
-        aboutHabitancyTextField.text = information.aboutHabitancy;
-        aboutHoroscopeTextField.text = information.aboutHoroscope;
-        aboutPassionTextView.text = information.aboutPassion;
-        aboutSchoolTextField.text = information.aboutSchool;
-        
-        
-        submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(submitMethod)];
-        self.navigationItem.rightBarButtonItem = submitBarButtonItem;
-        
-        
-        
-        CGFloat buttonHeight = 16;
-        
-        editUserImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [editUserImageButton setFrame:CGRectMake(userImageView.frame.origin.x, CGRectGetMaxY(userImageView.frame) - buttonHeight * 2, userImageView.bounds.size.width, buttonHeight)];
-        [editUserImageButton setTitle:@"編輯" forState:UIControlStateNormal];
-        [editUserImageButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
-        [editUserImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [editUserImageButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
-        [scrollView addSubview:editUserImageButton];
-    } failure:^() {
-        NSLog(@"get me error");
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        }]];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }];
-    
     [self.tabBarController.tabBar setHidden:YES];
     
     // keyboard and tapGesture
@@ -152,15 +104,10 @@
     scrollView.backgroundColor = [self UIColorFromRGB:250 green:247 blue:245 alpha:100];
     [self.view addSubview:scrollView];
     
-    // notificationView
-    //    notificationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 48)];
-    //    notificationView.backgroundColor = [self UIColorFromRGB:<#(CGFloat)#> green:<#(CGFloat)#> blue:<#(CGFloat)#> alpha:<#(CGFloat)#>]
-    
     // userImageview
     CGFloat imageViewLength = 150;
     
     userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width / 2 - imageViewLength / 2, self.view.bounds.origin.y + 100, imageViewLength, imageViewLength)];
-    //    [userImageView sd_setImageWithURL:[NSURL URLWithString:[UserSetting UserAvatarUrl]]];
     [userImageView.layer setCornerRadius:imageViewLength / 2];
     [userImageView.layer setBorderColor:[UIColor whiteColor].CGColor];
     [userImageView.layer setBorderWidth:3];
@@ -183,7 +130,6 @@
     nameTextField = [[UITextField alloc] initWithFrame: CGRectMake(marginX, CGRectGetMaxY(nameLabel.frame) + marginY, width, height)];
     nameTextField.backgroundColor = [UIColor whiteColor];
     nameTextField.textColor = [self UIColorFromRGB:74 green:74 blue:74 alpha:100];
-    //    nameTextField.text = [UserSetting UserNickyName];
     nameTextField.font = [UIFont fontWithName:@"STHeitiTC-Light" size:16.0];
     nameTextField.leftView = [[UIView alloc] initWithFrame:textFieldPaddingRect];
     nameTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -368,6 +314,55 @@
     UselessView *uselessView = [[UselessView alloc] initWithFrame:CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, 50) withMessage:@"新增更多個人資訊～讓對的人找到你！"];
     
     [self.view addSubview:uselessView];
+    
+    [ColorgyChatAPI me:^(ChatMeUserInformation *information) {
+        userInformation = information;
+        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+        activityIndicatorView.center = CGPointMake(userImageView.bounds.size.width / 2, userImageView.bounds.size.height / 2);
+        [userImageView addSubview:activityIndicatorView];
+        
+        [userImageView sd_setImageWithURL:[NSURL URLWithString:userInformation.avatarURL]];
+        nameTextField.text = userInformation.name;
+        aboutSchoolTextField.placeholder = information.organizationCode;
+        [self showCheck];
+        
+        nameTextField.text = information.name;
+        NSLog(@"%@", information.name);
+        textNumberCounterLabel.text = [NSString stringWithFormat:@"%ld/8", (long)[self stringCounter:nameTextField.text]];
+        [self showCheck];
+        aboutConversationTextView.text = information.aboutConversation;
+        aboutExpertiseTextView.text = information.aboutExpertise;
+        aboutHabitancyTextField.text = information.aboutHabitancy;
+        aboutHoroscopeTextField.text = information.aboutHoroscope;
+        aboutPassionTextView.text = information.aboutPassion;
+        aboutSchoolTextField.text = information.aboutSchool;
+        
+        
+        submitBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(submitMethod)];
+        self.navigationItem.rightBarButtonItem = submitBarButtonItem;
+        
+        
+        
+        CGFloat buttonHeight = 16;
+        
+        editUserImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [editUserImageButton setFrame:CGRectMake(userImageView.frame.origin.x, CGRectGetMaxY(userImageView.frame) - buttonHeight * 2, userImageView.bounds.size.width, buttonHeight)];
+        [editUserImageButton setTitle:@"編輯" forState:UIControlStateNormal];
+        [editUserImageButton.titleLabel setFont:[UIFont fontWithName:@"STHeitiTC-Light" size:16.0]];
+        [editUserImageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [editUserImageButton addTarget:self action:@selector(showPhotoMeunAlert) forControlEvents:UIControlEventTouchUpInside];
+        [scrollView addSubview:editUserImageButton];
+    } failure:^() {
+        NSLog(@"get me error");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"傳輸失敗Q_Q" message:@"請網路連線是否正常" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"了解" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 
@@ -450,6 +445,7 @@
     }
 }
 
+// 字串計數，如其他一樣
 #pragma mark - StringCounter
 
 - (NSInteger)stringCounter:(NSString *)string {

@@ -5,6 +5,12 @@
 //  Created by 張子晏 on 2016/1/20.
 //  Copyright © 2016年 張子晏. All rights reserved.
 //
+/*
+    透過CollectionView的FlowLayout，計算每行需要的數量進行排版，
+    更改INSET_NUMBER可以修改一行有幾個Column。每次到達最後的十個Cell
+    會預先載入下個Page，透過PRELOAD_NUMBER來修改預載數量。
+    TODO: sdWebImage的記憶管理並沒有我想像中的好，可以的話完成Utilities/ChatHelper中的ImageCache，並手動管理記憶體（部分圖片可以先存進手機儲存空間，有用到再拿出來）
+*/
 
 #import "BlurwallViewController.h"
 #import "UIImage+GaussianBlurUIImage.h"
@@ -366,8 +372,11 @@
     
     if (kind == UICollectionElementKindSectionHeader) {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:HEADER_IDENTIFIER forIndexPath:theIndexPath];
-    } else {
+    } else if (canLoadMore) {
         reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
+        for (UIView *subview in reusableView.subviews) {
+            [subview removeFromSuperview];
+        }
         
         if (self.blurWallDataMutableArray.count > 6) {
             UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -377,11 +386,19 @@
             
             [reusableView addSubview:activityIndicator];
             [activityIndicator startAnimating];
-        } else {
-            for(UIView *subview in reusableView.subviews) {
-                [subview removeFromSuperview];
-            }
         }
+    } else {
+        reusableView = [theCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:FOOTER_IDENTIFIER forIndexPath:theIndexPath];
+        for (UIView *subview in reusableView.subviews) {
+            [subview removeFromSuperview];
+        }
+        
+        UIView *endCycleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+        endCycleView.backgroundColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:50];
+        endCycleView.center = CGPointMake(reusableView.bounds.size.width / 2, reusableView.bounds.size.height / 2);
+        endCycleView.layer.masksToBounds = YES;
+        endCycleView.layer.cornerRadius = endCycleView.bounds.size.width / 2;
+        [reusableView addSubview:endCycleView];
     }
     return reusableView;
 }
