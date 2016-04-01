@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AudioToolbox
 
 class FriendListViewController: UIViewController {
 
@@ -91,11 +90,6 @@ class FriendListViewController: UIViewController {
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 		renewTimer.invalidate()
-	}
-	
-	// MARK: sound and vibrate
-	func vibrate() {
-		AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
 	}
 	
 	// MARK: update back button title 
@@ -259,7 +253,6 @@ class FriendListViewController: UIViewController {
 				if historyChatroom.chatroomId == list.chatroomId {
 					// check room id
 					if historyChatroom.lastContent != list.lastContent {
-						vibrate()
 						return
 					}
 				}

@@ -509,7 +509,7 @@ extension SearchCourseViewController : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if self.courseSegementedControl.selectedSegmentIndex == 0 {
             if searchControl.searchBar.text == "" {
-                return 1
+                return 0
             } else {
                 return 2
             }
@@ -522,6 +522,8 @@ extension SearchCourseViewController : UITableViewDataSource {
 		
 		if self.courseSegementedControl.selectedSegmentIndex == 0 {
 			if section == 0 {
+				return 1
+			} else {
 				if searchControl.active {
 					// searching
 					if searchControl.searchBar.text == "" {
@@ -534,8 +536,6 @@ extension SearchCourseViewController : UITableViewDataSource {
 					//                return self.localCachingObjects.count
 					return 0
 				}
-			} else {
-				return 1
 			}
 		} else {
 			if section == 0 {
@@ -593,6 +593,15 @@ extension SearchCourseViewController : UITableViewDataSource {
 		if self.courseSegementedControl.selectedSegmentIndex == 0 {
 			// searching
 			if indexPath.section == 0 {
+				// create course section
+				if createCourseCellView == nil {
+					createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
+				}
+				createCourseCellView?.courseName = searchControl.searchBar.text
+				createCourseCellView?.delegate = self
+				
+				return createCourseCellView!
+			} else {
 				let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.courseCellIdentifier, forIndexPath: indexPath) as! SearchCourseCell
 				
 				if searchControl.active {
@@ -615,15 +624,6 @@ extension SearchCourseViewController : UITableViewDataSource {
 				}
 				
 				return cell
-			} else {
-				// create course section
-				if createCourseCellView == nil {
-					createCourseCellView = tableView.dequeueReusableCellWithIdentifier(Storyboard.createCourseCellIdentifier, forIndexPath: indexPath) as? CreateCourseTableViewCell
-				}
-				createCourseCellView?.courseName = searchControl.searchBar.text
-				createCourseCellView?.delegate = self
-				
-				return createCourseCellView!
 			}
 		} else {
 			// viewing enrolled courses
@@ -652,7 +652,7 @@ extension SearchCourseViewController : UITableViewDataSource {
 	
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if self.courseSegementedControl.selectedSegmentIndex == 0 {
-            if indexPath.section == 0 {
+            if indexPath.section == 1 {
                 performSegueWithIdentifier(Storyboard.showCourseDetailViewSegueIdentifier, sender: filteredCourses[indexPath.row])
             }
         } else {
