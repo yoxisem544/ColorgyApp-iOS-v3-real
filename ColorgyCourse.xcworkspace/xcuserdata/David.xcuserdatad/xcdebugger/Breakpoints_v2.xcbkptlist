@@ -106,7 +106,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "481182745.597888"
+                  timestampString = "481451110.743015"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "76"
@@ -121,7 +121,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "481182745.598088"
+                  timestampString = "481451110.743239"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "77"
@@ -186,7 +186,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/LocalCourseDB.swift"
-                  timestampString = "481182745.599824"
+                  timestampString = "481451110.745408"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
@@ -201,7 +201,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/LocalCourseDB.swift"
-                  timestampString = "481182745.600088"
+                  timestampString = "481451110.745693"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
@@ -282,7 +282,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "481182745.602197"
+                  timestampString = "481451110.749504"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "732"
@@ -297,7 +297,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "481182745.602333"
+                  timestampString = "481451110.749784"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "733"
@@ -346,7 +346,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "481182745.603851"
+                  timestampString = "481451110.754154"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "738"
@@ -361,7 +361,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "481182745.604127"
+                  timestampString = "481451110.754438"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "738"
@@ -442,7 +442,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ColorgyAPI.swift"
-                  timestampString = "481182745.608061"
+                  timestampString = "481451110.761999"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1235"
@@ -457,7 +457,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ColorgyAPI.swift"
-                  timestampString = "481182745.608292"
+                  timestampString = "481451110.762147"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1236"
@@ -465,22 +465,6 @@
                   offsetFromSymbolStart = "31">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ColorgyAPI.swift"
-            timestampString = "480053453.948931"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1338"
-            endingLineNumber = "1338"
-            landmarkName = "GetUserPrivacySetting(userId:success:failure:)"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

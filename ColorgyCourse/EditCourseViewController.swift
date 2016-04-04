@@ -51,24 +51,26 @@ class EditCourseViewController: UIViewController {
 	}
 	
 	@IBAction func createLocalCourseClicked() {
-		if let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents) {
-			print(lc)
-			if let periods = lc.periods {
-				print(periods.count)
-				if periods.count >= 9 {
-					alertCreating("小提醒", error: "課程最多只能有9節的時間，多的時間將不會存下來喔！如果還是想要建立課程的話，請按建立！", confirmBlock: { () -> Void in
+		alertCreating("小提醒", error: "我們會幫你建立一個新的自訂課程，然後把雲端上的資料刪除，如果要編輯課程，請按鍵立！") { () -> Void in
+			if let lc = LocalCourse(name: self.courseName, lecturer: self.lecturerName, timePeriodsContents: self.timePeriodsContents, locationContents: self.locationContents) {
+				print(lc)
+				if let periods = lc.periods {
+					print(periods.count)
+					if periods.count >= 9 {
+						self.alertCreating("小提醒", error: "課程最多只能有9節的時間，多的時間將不會存下來喔！如果還是想要建立課程的話，請按建立！", confirmBlock: { () -> Void in
+							self.confirmCreateLocalCourse(lc)
+						})
+					} else {
 						self.confirmCreateLocalCourse(lc)
-					})
+					}
 				} else {
-					confirmCreateLocalCourse(lc)
+					self.confirmCreateLocalCourse(lc)
 				}
 			} else {
-				confirmCreateLocalCourse(lc)
-			}
-		} else {
-			if courseName == nil || courseName == "" {
-				// no name of course
-				alertError("資料有問題", error: "建立課程需要最少輸入課程的名稱！")
+				if self.courseName == nil || self.courseName == "" {
+					// no name of course
+					self.alertError("資料有問題", error: "建立課程需要最少輸入課程的名稱！")
+				}
 			}
 		}
 	}
@@ -80,8 +82,24 @@ class EditCourseViewController: UIViewController {
 	
 	func confirmCreateLocalCourse(lc: LocalCourse) {
 		
-		LocalCourseDB.storeLocalCourseToDB(lc)
-		popBackToSearchView()
+		// TODO: need loading view
+		if course != nil {
+			print(course)
+			ColorgyAPI.DELETECourseToServer(course!.code, success: { (courseCode) -> Void in
+				LocalCourseDB.storeLocalCourseToDB(lc)
+				self.popBackToSearchView()
+				}, failure: { () -> Void in
+					self.alertError("出錯了！", error: "請檢查有沒有連結到網路唷！")
+			})
+		} else {
+			// local course
+			// need revise
+			if let localCourse = localCourse {
+				LocalCourseDB.deleteLocalCourseOnDB(localCourse)
+			}
+			LocalCourseDB.storeLocalCourseToDB(lc)
+			popBackToSearchView()
+		}
 	}
 	
 	func alertCreating(title: String?, error: String?, confirmBlock: () -> Void) {
@@ -152,7 +170,13 @@ class EditCourseViewController: UIViewController {
 			print(x)
 			newData(x)
 		} else if localCourse != nil {
+			guard let days = localCourse?.days else { return }
+			guard let periods = localCourse?.periods else { return }
+			guard let locations = localCourse?.locations else { return }
 			
+			let x = handlePeriod(days, periods: periods, locations: locations)
+			print(x)
+			newData(x)
 		}
 	}
 	
