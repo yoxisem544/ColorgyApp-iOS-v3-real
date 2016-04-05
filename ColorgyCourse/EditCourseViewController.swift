@@ -42,6 +42,8 @@ class EditCourseViewController: UIViewController {
 	
 	var delegate: EditCourseViewControllerDelegate?
 	
+	var didEditCourse: Bool = false
+	
 	@IBAction func testLocalCourse() {
 		let lc = LocalCourse(name: courseName, lecturer: lecturerName, timePeriodsContents: timePeriodsContents, locationContents: locationContents)
 		print(lc)
@@ -76,8 +78,7 @@ class EditCourseViewController: UIViewController {
 	}
 	
 	@IBAction func popBackToSearchView() {
-		delegate?.EditCourseViewControllerDidEditLocalCourse()
-		self.navigationController?.popViewControllerAnimated(true)
+		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 	
 	func confirmCreateLocalCourse(lc: LocalCourse) {
@@ -87,6 +88,7 @@ class EditCourseViewController: UIViewController {
 			print(course)
 			ColorgyAPI.DELETECourseToServer(course!.code, success: { (courseCode) -> Void in
 				LocalCourseDB.storeLocalCourseToDB(lc)
+				self.didEditCourse = true
 				self.popBackToSearchView()
 				}, failure: { () -> Void in
 					self.alertError("出錯了！", error: "請檢查有沒有連結到網路唷！")
@@ -98,6 +100,7 @@ class EditCourseViewController: UIViewController {
 				LocalCourseDB.deleteLocalCourseOnDB(localCourse)
 			}
 			LocalCourseDB.storeLocalCourseToDB(lc)
+			self.didEditCourse = true
 			popBackToSearchView()
 		}
 	}
@@ -204,6 +207,9 @@ class EditCourseViewController: UIViewController {
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 		unregisterNotification()
+		if didEditCourse == true {
+			delegate?.EditCourseViewControllerDidEditLocalCourse()
+		}
 	}
 	
 	func registerNotification() {

@@ -174,6 +174,7 @@ class DetailCourseViewController: UIViewController {
             }
 		} else if segue.identifier == "edit course segue" {
 			let vc = segue.destinationViewController as! EditCourseViewController
+			vc.delegate = self
 			if course != nil {
 				vc.course = course
 			} else {
@@ -194,4 +195,10 @@ extension DetailCourseViewController : ClassmatesContainerViewDelegate {
 		Mixpanel.sharedInstance().track(MixpanelEvents.clickOthersProfileImage)
         self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }
+}
+
+extension DetailCourseViewController : EditCourseViewControllerDelegate {
+	func EditCourseViewControllerDidEditLocalCourse() {
+		navigationController?.popViewControllerAnimated(true)
+	}
 }
