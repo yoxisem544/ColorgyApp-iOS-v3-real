@@ -1520,8 +1520,8 @@ class ColorgyAPI : NSObject {
 	class func registerUserWithName(name: String, email: String, password: String, passwordConfirm: String, success: () -> Void, failure: () -> Void) {
 		
 		let afManager = AFHTTPSessionManager(baseURL: nil)
-		afManager.requestSerializer = AFJSONRequestSerializer()
-		afManager.responseSerializer = AFJSONResponseSerializer()
+//		afManager.requestSerializer = AFJSONRequestSerializer()
+//		afManager.responseSerializer = AFJSONResponseSerializer()
 		
 		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
 			print(ColorgyErrorType.TrafficError.stillRefreshing)
@@ -1547,7 +1547,24 @@ class ColorgyAPI : NSObject {
 		afManager.POST(url, parameters: params, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
 			success()
 			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				print((operation?.response as? NSHTTPURLResponse)?.statusCode)
 				failure()
+				guard let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData else {
+					// fail to get data
+					return
+				}
+				
+				// temp message
+				var message = String()
+				
+				do {
+					message = try "\(NSJSONSerialization.JSONObjectWithData(data, options: []))"
+				} catch {
+					return
+				}
+				
+				print(message)
 		})
 	}
 }

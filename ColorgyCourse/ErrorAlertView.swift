@@ -9,7 +9,7 @@
 import Foundation
 
 class ErrorAlertView {
-    class func alertUserWithError(error: String) -> UIAlertController {
+    class func alertUserWithError(error: String?) -> UIAlertController {
         let alert = UIAlertController(title: "錯誤", message: error, preferredStyle: UIAlertControllerStyle.Alert)
         let ok = UIAlertAction(title: "好", style: UIAlertActionStyle.Default, handler: nil)
         alert.addAction(ok)
