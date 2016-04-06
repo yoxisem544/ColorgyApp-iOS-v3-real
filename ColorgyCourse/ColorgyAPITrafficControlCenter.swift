@@ -53,7 +53,7 @@ class ColorgyAPITrafficControlCenter : NSObject {
     class func queueNewBackgroundJob() {
         let ud = NSUserDefaults.standardUserDefaults()
         var jobCount = ud.integerForKey(TrafficKey.BackgroundJobQueue)
-        jobCount++
+        jobCount += 1
         print("jobs \(jobCount)")
         ud.setInteger(jobCount, forKey: TrafficKey.BackgroundJobQueue)
         ud.synchronize()
@@ -62,7 +62,7 @@ class ColorgyAPITrafficControlCenter : NSObject {
     class func unqueueBackgroundJob() {
         let ud = NSUserDefaults.standardUserDefaults()
         var jobCount = ud.integerForKey(TrafficKey.BackgroundJobQueue)
-        jobCount--
+        jobCount -= 1
         print("jobs \(jobCount)")
         if jobCount < 0 {
             jobCount = 0

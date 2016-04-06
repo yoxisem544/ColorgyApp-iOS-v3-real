@@ -61,11 +61,11 @@ class TimeAndLocationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.selectionStyle = .None
-        timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnTimeView"))
-        locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLocationView"))
-        locationTextField.addTarget(self, action: "locationTextFieldContentChanging", forControlEvents: .EditingChanged)
+        timeBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnTimeView)))
+        locationBackgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnLocationView)))
+        locationTextField.addTarget(self, action: #selector(locationTextFieldContentChanging), forControlEvents: .EditingChanged)
         locationTextField.delegate = self
-        timeTextField.addTarget(self, action: "timeTextFieldContentChanging", forControlEvents: .EditingChanged)
+        timeTextField.addTarget(self, action: #selector(timeTextFieldContentChanging), forControlEvents: .EditingChanged)
         timeTextField.delegate = self
 //        timeTextField.addGestureRecognizer(UIGestureRecognizer(target: self, action: "gestureRecognizer:"))
         print(timeTextField.gestureRecognizers)

@@ -17,7 +17,7 @@ class PrivacyTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        publicTimeTableSwitch.addTarget(self, action: "publicTimeTableSwitchValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        publicTimeTableSwitch.addTarget(self, action: #selector(publicTimeTableSwitchValueChanged), forControlEvents: UIControlEvents.ValueChanged)
         publicTimeTableSwitch.enabled = false
         publicTimeTableSwitch.on = false
         

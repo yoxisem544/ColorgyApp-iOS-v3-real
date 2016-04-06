@@ -178,7 +178,7 @@ class UserDetailInformationView: UIView {
 //		closeButton.setImage(UIImage(named: "closeButton"), forState: UIControlState.Normal)
 		closeButton.setTitle("✕", forState: UIControlState.Normal)
 		closeButton.titleLabel?.font = UIFont.systemFontOfSize(24.0)
-		closeButton.addTarget(self, action: "closeButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		closeButton.addTarget(self, action: #selector(closeButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
 	}
 	
 	internal func closeButtonClicked() {

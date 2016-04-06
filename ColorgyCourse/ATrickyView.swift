@@ -23,7 +23,7 @@ class ATrickyView: UIView {
     */
     
     var isObserverAdded = false
-    var pointer: UnsafeMutablePointer<Void> = UnsafeMutablePointer<Void>()
+    var pointer: UnsafeMutablePointer<Void> = nil
     
     var delegate: ATrickyViewDelegate?
     var barHeight: CGFloat = 44 {

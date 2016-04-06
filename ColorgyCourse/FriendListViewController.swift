@@ -40,7 +40,7 @@ class FriendListViewController: UIViewController {
 		friendListTableView.separatorStyle = .None
 		friendListTableView.backgroundColor = ColorgyColor.BackgroundColor
 		
-		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		refreshContorl.addTarget(self, action: #selector(pullToRefreshHi), forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		friendListTableView.addSubview(refreshContorl)
 		friendListTableView.sendSubviewToBack(refreshContorl)
@@ -48,7 +48,7 @@ class FriendListViewController: UIViewController {
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true
 		failToLoadDataHintView.alpha = 0.1
-		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "failToLoadDataHintViewDidTap"))
+		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(failToLoadDataHintViewDidTap)))
 		
 		view.addSubview(noDataHintView)
 		noDataHintView.hidden = true
@@ -147,7 +147,7 @@ class FriendListViewController: UIViewController {
 	
 	// MARK: Refresh
 	func renewChatroom(every second: NSTimeInterval) {
-		renewTimer = NSTimer(timeInterval: second, target: self, selector: "refreshChatroom", userInfo: nil, repeats: true)
+		renewTimer = NSTimer(timeInterval: second, target: self, selector: #selector(refreshChatroom), userInfo: nil, repeats: true)
 		renewTimer.fire()
 		NSRunLoop.currentRunLoop().addTimer(renewTimer, forMode: NSRunLoopCommonModes)
 	}

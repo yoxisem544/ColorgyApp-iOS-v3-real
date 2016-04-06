@@ -45,11 +45,11 @@ class ActivityWebViewController: UIViewController, UIWebViewDelegate
 //        navigationBar.tintColor = UIColor(red:0.973,  green:0.584,  blue:0.502, alpha:1)
         navigationBar.tintColor = ColorgyColor.MainOrange
         // buttons
-        let nextPage = UIBarButtonItem(image: UIImage(named: "forward"), style: UIBarButtonItemStyle.Done, target: self, action: "goForward")
-        let previousPage = UIBarButtonItem(image: UIImage(named: "backward"), style: UIBarButtonItemStyle.Done, target: self, action: "goBack")
+        let nextPage = UIBarButtonItem(image: UIImage(named: "forward"), style: UIBarButtonItemStyle.Done, target: self, action: #selector(goForward))
+        let previousPage = UIBarButtonItem(image: UIImage(named: "backward"), style: UIBarButtonItemStyle.Done, target: self, action: #selector(goBack))
         self.navItem.setLeftBarButtonItems([previousPage, nextPage], animated: false)
         
-        let reload = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "reloadPage")
+        let reload = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: #selector(reloadPage))
         self.navItem.setRightBarButtonItems([reload], animated: false)
         
         login()

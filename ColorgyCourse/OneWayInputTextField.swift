@@ -1,3 +1,4 @@
+
 //
 //  OneWayInputTextField.swift
 //  ColorgyCourse
@@ -27,7 +28,7 @@ class OneWayInputTextField: UITextField {
     }
     
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
-        if (action == "paste:" || action == "copy:" || action == "select:" || action == "selectAll:") {
+        if (action == #selector(NSObject.paste(_:)) || action == #selector(NSObject.copy(_:)) || action == #selector(NSObject.select(_:)) || action == #selector(NSObject.selectAll(_:))) {
             return false
         }
         return super.canPerformAction(action, withSender: sender)

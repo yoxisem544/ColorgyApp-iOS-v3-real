@@ -51,7 +51,7 @@ class PopView: UIView {
         let okButton = UIButton(type: UIButtonType.System) 
         okButton.frame = CGRectMake(0, 0, popContentViewWidth/2, 30)
         okButton.setTitle("OK!", forState: UIControlState.Normal)
-        okButton.addTarget(self, action: "okButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+        okButton.addTarget(self, action: #selector(okButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
         
         // 70% of width of main screen 
         popContentView = UIView(frame: CGRectMake(0, 0, popContentViewWidth, okButton.bounds.height + 16 + messageLabel.bounds.height + 32))

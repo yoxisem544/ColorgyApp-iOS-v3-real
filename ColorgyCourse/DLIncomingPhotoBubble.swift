@@ -29,7 +29,7 @@ class DLIncomingPhotoBubble: UITableViewCell {
 		userImageView.clipsToBounds = true
 		userImageView.contentMode = .ScaleAspectFill
 		
-		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnUserImageView"))
+		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnUserImageView)))
 		
 		contentImageView.layer.cornerRadius = 10.0
 		contentImageView.clipsToBounds = true
@@ -39,7 +39,7 @@ class DLIncomingPhotoBubble: UITableViewCell {
 		contentImageView.backgroundColor = UIColor.lightGrayColor()
 		userImageView.userInteractionEnabled = true
 		
-		contentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnImageView"))
+		contentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnImageView)))
 		contentImageView.userInteractionEnabled = true
 		
 		self.selectionStyle = .None

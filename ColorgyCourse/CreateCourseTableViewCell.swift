@@ -37,7 +37,7 @@ class CreateCourseTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.selectionStyle = .None
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnCreateCourseCellView"))
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnCreateCourseCellView)))
     }
     
     func tapOnCreateCourseCellView() {

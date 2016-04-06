@@ -84,10 +84,10 @@ class AlertDeleteCourseView: UIView {
         self.addSubview(cancelButton)
         
         // gesture
-        let tap = UITapGestureRecognizer(target: self, action: "tap:")
-        self.addGestureRecognizer(tap)
-        confirmButton.addTarget(self, action: "deleteC", forControlEvents: UIControlEvents.TouchUpInside)
-        cancelButton.addTarget(self, action: "preserveC", forControlEvents: UIControlEvents.TouchUpInside)
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(tap))
+        self.addGestureRecognizer(tapGes)
+        confirmButton.addTarget(self, action: #selector(deleteC), forControlEvents: UIControlEvents.TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(preserveC), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func tap(gesture: UITapGestureRecognizer) {

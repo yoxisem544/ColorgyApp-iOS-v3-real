@@ -49,7 +49,7 @@ class ClassmatesContainerView: UIView {
             // calculate rows, divide by people
             var rows = userCourseObjects.count / peoplePerRow
             if userCourseObjects.count % peoplePerRow != 0 {
-                rows++
+                rows += 1
             }
             // determine imageview height
             // width minus (peoplePerRow+1)*spacing
@@ -67,8 +67,8 @@ class ClassmatesContainerView: UIView {
                     // need user interactable
                     profileImageView.userInteractionEnabled = true
                     // can tap
-                    let tap = UITapGestureRecognizer(target: self, action: "tap:")
-                    profileImageView.addGestureRecognizer(tap)
+                    let tapGes = UITapGestureRecognizer(target: self, action: #selector(tap))
+                    profileImageView.addGestureRecognizer(tapGes)
                     // need to pass self and its objects, use tag? also index of userCourseObjects
                     profileImageView.tag = (rowIndex * peoplePerRow + (peopleIndex))
                     // temp these image views

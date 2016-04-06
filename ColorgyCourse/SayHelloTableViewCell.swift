@@ -38,7 +38,7 @@ class SayHelloTableViewCell: UITableViewCell {
 			}
 		}
 		messageLabel.text = hello.message
-		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "testCHeckhi"))
+		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(testCHeckhi)))
 	}
 	
 	func testCHeckhi() {

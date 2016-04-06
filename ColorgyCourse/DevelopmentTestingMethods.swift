@@ -68,7 +68,7 @@ class DevelopmentTestingMethods {
                     for c in cs {
                         if !(c.days?.count == c.locations?.count) && (c.periods?.count == c.locations?.count) && (c.days?.count == c.periods?.count) {
                             print("*** course: \(c.name) day length: \(c.days?.count) \nlocation length : \(c.locations?.count) \nperiods length: \(c.periods?.count) ***")
-                            failCounter++
+                            failCounter += 1
                         }
                     }
                     print(cs.count)
@@ -147,7 +147,7 @@ class DevelopmentTestingMethods {
                 LocalCourseDB.storeLocalCourseToDB(lc)
                 LocalCourseDB.deleteAllCourses()
             })
-            tryCounter++
+            tryCounter += 1
         }
         print("pass the test")
         print("")

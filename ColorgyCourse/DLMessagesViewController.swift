@@ -80,7 +80,7 @@ class DLMessagesViewController: UIViewController {
 		// customize top inset
 		bubbleTableView.contentInset.top += 10
 		
-		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnBubbleTableView"))
+		bubbleTableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnBubbleTableView)))
 	}
 	
 	private func configureKeyboardTextInputView() {
@@ -105,15 +105,15 @@ class DLMessagesViewController: UIViewController {
 	}
 	
 	private func registerForNotifications() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "frameWillChangeNotification:", name: UIApplicationWillChangeStatusBarFrameNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(frameWillChangeNotification), name: UIApplicationWillChangeStatusBarFrameNotification, object: nil)
 		let kStatusBarTappedNotification = "statusBarTappedNotification"
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "tapOnStatusBarNotification:", name: kStatusBarTappedNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tapOnStatusBarNotification), name: kStatusBarTappedNotification, object: nil)
 		registerKeyboardNotifications()
 	}
 	
 	func registerKeyboardNotifications() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHideNotification), name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShowNotification), name: UIKeyboardWillShowNotification, object: nil)
 	}
 	
 	func unregisterNotifications() {

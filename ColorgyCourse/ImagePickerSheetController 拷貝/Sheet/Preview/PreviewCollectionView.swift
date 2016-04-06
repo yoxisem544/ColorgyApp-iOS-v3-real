@@ -33,7 +33,7 @@ class PreviewCollectionView: UICollectionView {
     }
     
     private func initialize() {
-        panGestureRecognizer.addTarget(self, action: "handlePanGesture:")
+        panGestureRecognizer.addTarget(self, action: #selector(handlePanGesture))
     }
     
     // MARK: - Panning

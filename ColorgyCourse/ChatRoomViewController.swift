@@ -121,7 +121,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// MARK: notification
 	func registerNotification() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageRecievedNotification", name: ColorgyNotification.didRecievedMessageNotification.rawValue, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(messageRecievedNotification), name: ColorgyNotification.didRecievedMessageNotification.rawValue, object: nil)
 	}
 	
 	func unregisterNotification() {
@@ -136,7 +136,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// MARK: yolo
 	func configureRefreshControl() {
-		requestMoreMessageRefreshControl.addTarget(self, action: "needsToRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+		requestMoreMessageRefreshControl.addTarget(self, action: #selector(needsToRefresh), forControlEvents: UIControlEvents.ValueChanged)
 		requestMoreMessageRefreshControl.tintColor = ColorgyColor.MainOrange
 		bubbleTableView.addSubview(requestMoreMessageRefreshControl)
 	}
@@ -168,7 +168,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// MARK: Configuration
 	func addRightNavButton() {
-		dropDownButton = UIBarButtonItem(image: UIImage(named: "chatDropDownIcon"), style: UIBarButtonItemStyle.Done, target: self, action: "toggleDropDownMenu")
+		dropDownButton = UIBarButtonItem(image: UIImage(named: "chatDropDownIcon"), style: UIBarButtonItemStyle.Done, target: self, action: #selector(toggleDropDownMenu))
 		navigationItem.rightBarButtonItem = dropDownButton
 	}
 	

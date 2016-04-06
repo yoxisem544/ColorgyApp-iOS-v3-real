@@ -44,7 +44,7 @@ class ColorgyLoadingView: UIView {
 		// can block user?
 		
 		// tap gesture
-		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnLoadingView"))
+		self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnLoadingView)))
 	}
 	
 	// MARK: Trick

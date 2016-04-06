@@ -35,7 +35,7 @@ class DismissGuideView: UIView {
         self.addSubview(titleLabel!)
         
         // gesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: "dismissViewTapped")
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissViewTapped))
         self.addGestureRecognizer(tapGesture)
     }
     

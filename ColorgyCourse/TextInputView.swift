@@ -82,7 +82,7 @@ class TextInputView: UIView {
         sendMessageButton.layer.borderColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9).CGColor
         sendMessageButton.layer.borderWidth = 1.0
 //        sendMessageButton.backgroundColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9)
-        sendMessageButton.addTarget(self, action: "sendMessageButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		sendMessageButton.addTarget(self, action: #selector(sendMessageButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(sendMessageButton)
 		
 		// camera button
@@ -90,7 +90,7 @@ class TextInputView: UIView {
 		cameraButton.frame.origin.x = leftInset
 		cameraButton.frame.size = cameraButtonSize
 		cameraButton.setImage(UIImage(named: "CameraButton"), forState: UIControlState.Normal)
-		cameraButton.addTarget(self, action: "openCameraButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		cameraButton.addTarget(self, action: #selector(openCameraButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
 		cameraButton.tintColor = UIColor(red: 248/255.0, green: 150/255.0, blue: 128/255.0, alpha: 0.9)
 		self.addSubview(cameraButton)
         

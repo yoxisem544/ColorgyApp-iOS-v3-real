@@ -29,7 +29,7 @@ class DLOutgoingPhotoBubble: UITableViewCell {
 		contentImageView.contentMode = .ScaleAspectFill
 		contentImageView.backgroundColor = UIColor.lightGrayColor()
 		
-		contentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnImageView"))
+		contentImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnImageView)))
 		contentImageView.userInteractionEnabled = true
 		
 		self.selectionStyle = .None

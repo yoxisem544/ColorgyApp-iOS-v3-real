@@ -57,7 +57,7 @@ class ChatReportViewController: UIViewController {
 		}
 		
 		if canSkipContent {
-			skipButton = UIBarButtonItem(title: "略過", style: UIBarButtonItemStyle.Plain, target: self, action: "skipReport")
+			skipButton = UIBarButtonItem(title: "略過", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(skipReport))
 			navItem.leftBarButtonItem = skipButton
 		}
     }
@@ -73,8 +73,8 @@ class ChatReportViewController: UIViewController {
 	}
 	
 	func registerKeyboardNotification() {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
 	}
 	
 	func keyboardWillShow(notification: NSNotification) {

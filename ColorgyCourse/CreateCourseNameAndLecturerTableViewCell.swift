@@ -23,9 +23,9 @@ class CreateCourseNameAndLecturerTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         self.selectionStyle = .None
-        nameTextField.addTarget(self, action: "nameTextFieldEditingChanged", forControlEvents: .EditingChanged)
-        lecturerTextField.addTarget(self, action: "nameTextFieldEditingChanged", forControlEvents: .EditingChanged)
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "focusWhileTapOnView:"))
+        nameTextField.addTarget(self, action: #selector(nameTextFieldEditingChanged), forControlEvents: .EditingChanged)
+		lecturerTextField.addTarget(self, action: #selector(nameTextFieldEditingChanged), forControlEvents: .EditingChanged)
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(focusWhileTapOnView)))
     }
     
     func nameTextFieldEditingChanged() {

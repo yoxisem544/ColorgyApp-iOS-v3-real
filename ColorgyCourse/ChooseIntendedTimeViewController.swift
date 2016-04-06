@@ -39,7 +39,7 @@ class ChooseIntendedTimeViewController: UIViewController {
 		
 		title = "選擇入學年度"
 		
-		let barButton = UIBarButtonItem(title: "送出", style: UIBarButtonItemStyle.Plain, target: self, action: "finishChoosingAndReadyToPATCHUserInfo")
+		let barButton = UIBarButtonItem(title: "送出", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(finishChoosingAndReadyToPATCHUserInfo))
 		self.navigationItem.rightBarButtonItem = barButton
 		
 		Mixpanel.sharedInstance().track(MixpanelEvents.SelectStartTime)

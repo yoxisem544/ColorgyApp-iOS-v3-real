@@ -52,9 +52,9 @@ class FloatingOptionView: UIView {
 		self.addSubview(nameUserView)
 		
 		// tap ges
-		leaveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "leaveChatroom"))
-		blockView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "blockuser"))
-		nameUserView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "nameUser"))
+		leaveView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(leaveChatroom)))
+		blockView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blockuser)))
+		nameUserView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(nameUser)))
 	}
 	
 	func nameUser() {

@@ -100,7 +100,7 @@ class CourseUpdateHelper {
                             })
                             }, failure: { () -> Void in
                                 // if fail to get course, decrease one job to be download....
-                                counter--
+                                counter -= 1
                         })
                     }
                 }

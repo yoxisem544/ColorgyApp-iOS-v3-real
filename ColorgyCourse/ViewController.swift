@@ -124,8 +124,8 @@ class ViewController: UIViewController {
         //        var tm = TimeTableView(frame: self.view.frame)
         //        self.view.addSubview(tm)
         
-        let tap = UITapGestureRecognizer(target: self, action: "tap")
-        self.view.addGestureRecognizer(tap)
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(tap))
+        self.view.addGestureRecognizer(tapG)
         
         let tm = TimeTableView(frame: self.view.frame)
         tm.delegate = self

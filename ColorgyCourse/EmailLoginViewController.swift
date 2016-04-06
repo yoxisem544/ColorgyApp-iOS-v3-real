@@ -37,8 +37,8 @@ class EmailLoginViewController: UIViewController {
 		view.backgroundColor = ColorgyColor.BackgroundColor
 		
 		// tap to dismiss keyboard
-		let tap = UITapGestureRecognizer(target: self, action: "tap")
-		self.view.addGestureRecognizer(tap)
+		let tapGes = UITapGestureRecognizer(target: self, action: #selector(tap))
+		self.view.addGestureRecognizer(tapGes)
 		
 		// test region
 		if !Release.mode {
@@ -218,7 +218,7 @@ class EmailLoginViewController: UIViewController {
 		
 		loginButton.anchorViewTo(containerView)
 		
-		loginButton.addTarget(self, action: "emailLoginButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		loginButton.addTarget(self, action: #selector(emailLoginButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
 	}
 	
 	private func configureContainerView() {

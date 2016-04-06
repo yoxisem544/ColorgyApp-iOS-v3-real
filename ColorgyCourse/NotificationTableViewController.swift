@@ -73,13 +73,13 @@ class NotificationTableViewController: UITableViewController {
         courseNotificationLabel.text = "課前通知： \(time) 分鐘"
         notificationTimeTextField.text = "\(time)"
         
-        courseNotificationSwitch.addTarget(self, action: "courseNotificationSwitchValueChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        courseNotificationSwitch.addTarget(self, action: #selector(courseNotificationSwitchValueChanged), forControlEvents: UIControlEvents.ValueChanged)
         
         tableView.keyboardDismissMode = .OnDrag
         
         navigationItem.title = "提醒設定"
 		
-		notificationTimeTextField.addTarget(self, action: "notificationTimeTextFieldEditingChanged", forControlEvents: UIControlEvents.EditingChanged)
+		notificationTimeTextField.addTarget(self, action: #selector(notificationTimeTextFieldEditingChanged), forControlEvents: UIControlEvents.EditingChanged)
 		setNotificaionButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     }
 	

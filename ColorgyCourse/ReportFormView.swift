@@ -134,7 +134,7 @@ class ReportFormView: UIScrollView {
 		emailTextField.frame.origin.y = emailTitleLabel.frame.maxY + problemDescriptionTextViewGap
 		emailView.addSubview(emailTitleLabel)
 		emailView.addSubview(emailTextField)
-		emailTextField.addTarget(self, action: "emailTextFieldValueChanged:", forControlEvents: UIControlEvents.EditingChanged)
+		emailTextField.addTarget(self, action: #selector(emailTextFieldValueChanged), forControlEvents: UIControlEvents.EditingChanged)
 		// insert email
 		if UserSetting.UserEmail() != nil {
 			emailTextField.text = UserSetting.UserEmail()

@@ -75,7 +75,7 @@ class EmailRegisterViewController: UIViewController {
 		
 		registerButton.anchorViewTo(containerView)
 		
-		registerButton.addTarget(self, action: "registerButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+		registerButton.addTarget(self, action: #selector(registerButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
 	}
 	
 	internal func registerButtonClicked() {

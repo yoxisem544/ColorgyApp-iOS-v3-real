@@ -28,7 +28,7 @@ class SayHelloViewController: UIViewController {
 		sayHelloTableView.separatorStyle = .None
 		sayHelloTableView.backgroundColor = ColorgyColor.BackgroundColor
 		
-		refreshContorl.addTarget(self, action: "pullToRefreshHi:", forControlEvents: UIControlEvents.ValueChanged)
+		refreshContorl.addTarget(self, action: #selector(pullToRefreshHi), forControlEvents: UIControlEvents.ValueChanged)
 		refreshContorl.tintColor = ColorgyColor.MainOrange
 		sayHelloTableView.addSubview(refreshContorl)
 		sayHelloTableView.sendSubviewToBack(refreshContorl)
@@ -36,7 +36,7 @@ class SayHelloViewController: UIViewController {
 		view.addSubview(failToLoadDataHintView)
 		failToLoadDataHintView.hidden = true
 		failToLoadDataHintView.alpha = 0.1
-		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "failToLoadDataHintViewDidTap"))
+		failToLoadDataHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(failToLoadDataHintViewDidTap)))
 		
 		view.addSubview(noDataHintView)
 		noDataHintView.hidden = true

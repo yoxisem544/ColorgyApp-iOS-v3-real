@@ -134,7 +134,7 @@ class ClassmateHeaderView: UIView {
         backButton.frame.size.width = 16 + 12 + 16
 //        backButton.tintColor = UIColor.whiteColor()
         backButton.setImage(backImage.image, forState: UIControlState.Normal)
-        backButton.addTarget(self, action: "backButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(backButton)
         self.userInteractionEnabled = true
 //        userProfileImage.addSubview(backButton)
