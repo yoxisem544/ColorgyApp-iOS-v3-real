@@ -36,7 +36,7 @@ class DLIncomingMessageBubble: UITableViewCell {
         userImageView.contentMode = .ScaleAspectFill
 		userImageView.backgroundColor = UIColor.lightGrayColor()
 		
-		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapOnUserImageView"))
+		userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapOnUserImageView)))
 		userImageView.userInteractionEnabled = true
         
         self.selectionStyle = .None

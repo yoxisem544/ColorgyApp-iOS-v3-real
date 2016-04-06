@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// for dev
 		developmentMethods()
 
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectContextObjectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(objectContextObjectsDidChange), name: NSManagedObjectContextObjectsDidChangeNotification, object: nil)
 		
         return true
     }

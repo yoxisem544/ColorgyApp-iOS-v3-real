@@ -75,7 +75,7 @@ class TimeTableViewController: UIViewController {
 		hintView.addSubview(title)
 		hintView.addSubview(content)
 		
-		hintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "tapToDismissHintView:"))
+		hintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToDismissHintView)))
 		
 		tabBarController?.view.addSubview(hintView)
 	}
