@@ -1567,4 +1567,58 @@ class ColorgyAPI : NSObject {
 				print(message)
 		})
 	}
+	
+	class func availableOrganization(org: String, success: (isAvailable: Bool) -> Void, failure: () -> Void) {
+		
+		let afManager = AFHTTPSessionManager(baseURL: nil)
+		//		afManager.requestSerializer = AFJSONRequestSerializer()
+		//		afManager.responseSerializer = AFJSONResponseSerializer()
+		
+		guard !ColorgyAPITrafficControlCenter.isTokenRefreshing() else {
+			print(ColorgyErrorType.TrafficError.stillRefreshing)
+			failure()
+			return
+		}
+		guard let accesstoken = UserSetting.UserAccessToken() else {
+			print(ColorgyErrorType.noAccessToken)
+			failure()
+			return
+		}
+		let url = "https://colorgy.io:443/api/v1/available_org/\(org.uppercaseString).json?access_token=\(accesstoken)"
+		guard url.isValidURLString else {
+			print(ColorgyErrorType.invalidURLString)
+			failure()
+			return
+		}
+		
+		afManager.GET(url, parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+			if let response = response {
+				let json = JSON(response)
+				print(json["available"].boolValue)
+				success(isAvailable: json["available"].boolValue)
+			} else {
+				failure()
+			}
+			
+			}, failure: { (operation: NSURLSessionDataTask?, error: NSError) -> Void in
+				print(error.localizedDescription)
+				print((operation?.response as? NSHTTPURLResponse)?.statusCode)
+				failure()
+				guard let data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData else {
+					// fail to get data
+					return
+				}
+				
+				// temp message
+				var message = String()
+				
+				do {
+					message = try "\(NSJSONSerialization.JSONObjectWithData(data, options: []))"
+				} catch {
+					return
+				}
+				
+				print(message)
+		})
+	}
 }

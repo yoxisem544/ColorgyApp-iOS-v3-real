@@ -152,6 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func developmentMethods() {
 		if !Release.mode {
 			// for dev
+//			DevelopmentTestingMethods.tryGetOrgAva()
 		}
 	}
 	

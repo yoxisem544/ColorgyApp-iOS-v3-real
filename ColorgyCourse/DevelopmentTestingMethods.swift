@@ -152,4 +152,19 @@ class DevelopmentTestingMethods {
         print("pass the test")
         print("")
     }
+	
+	class func tryGetOrgAva() {
+		ColorgyAPI.getSchools({ (schools) in
+			for s in schools {
+				ColorgyAPI.availableOrganization(s.code, success: { (isAvailable) in
+					let ava = isAvailable ? "available" : "still unavailable"
+					print("org: \(s.name) is now \(isAvailable) \(ava)")
+					}, failure: { 
+						
+				})
+			}
+			}) {
+				
+		}
+	}
 }

@@ -19,6 +19,7 @@
 @property UINavigationController *navigationBlurWallViewController;
 @property UIButton *refreshButton;
 @property ChatUser *chatUser;
+@property UILabel *notAvailableLabel;
 
 - (void)switchViewController;
 
