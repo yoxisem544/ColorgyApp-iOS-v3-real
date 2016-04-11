@@ -33,6 +33,8 @@ struct UserSettingKey {
 	// new key for emails
 	static let userEmail = "user email"
 	static let userFBEmail = "user fbemail"
+	// test account
+	static let isUserTestAccount = "user is test account"
     // guide keu
     static let isGuideShownToUser = "isGuideShownToUser"
     // local course caching data 
@@ -176,6 +178,12 @@ struct UserSettingKey {
 			return fbemail
 		}
 		return nil
+	}
+	
+	// MARK: - test account
+	class func isUserTestAccount() -> Bool {
+		let ud = NSUserDefaults.standardUserDefaults()
+		return ud.boolForKey(UserSettingKey.isUserTestAccount)
 	}
     
     // MARK: - push notification
@@ -370,6 +378,8 @@ struct UserSettingKey {
 		// emails
 		ud.setObject(result.email, forKey: UserSettingKey.userEmail)
 		ud.setObject(result.fbemail, forKey: UserSettingKey.userFBEmail)
+		// test account
+		ud.setBool(result.isTestAccount, forKey: UserSettingKey.isUserTestAccount)
         ud.synchronize()
     }
     
@@ -400,6 +410,8 @@ struct UserSettingKey {
 		// emails
 		ud.removeObjectForKey(UserSettingKey.userEmail)
 		ud.removeObjectForKey(UserSettingKey.userFBEmail)
+		// test account
+		ud.removeObjectForKey(UserSettingKey.isUserTestAccount)
         // new key for unauthorized users
         ud.removeObjectForKey(UserSettingKey.userPossibleOrganization)
         ud.removeObjectForKey(UserSettingKey.userPossibleDepartment)

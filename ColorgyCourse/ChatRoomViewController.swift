@@ -78,7 +78,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		
 		addRightNavButton()
 		
-		title = historyChatroom.name
+		updateRoomTitleWithProgress(historyChatroom.chatProgress)
 		
 		configureRefreshControl()
 		
@@ -112,6 +112,11 @@ class ChatRoomViewController: DLMessagesViewController {
 		}
 		
 		unregisterNotification()
+	}
+	
+	// MARK: Helper
+	func updateRoomTitleWithProgress(progress: Int) {
+		title = historyChatroom.name + "(\(progress)%)"
 	}
 	
 	// MARK: sound and vibrate
@@ -410,6 +415,9 @@ class ChatRoomViewController: DLMessagesViewController {
 				if m.userId != self.userId {
 					self.vibrate()
 				}
+			}
+			if self.chatroom != nil {
+				self.updateRoomTitleWithProgress(self.chatroom!.chatProgress)
 			}
 		}
 		

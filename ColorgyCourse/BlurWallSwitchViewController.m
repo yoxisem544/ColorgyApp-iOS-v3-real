@@ -38,11 +38,13 @@
 	
 	// 檢查使用者的學校
 	NSString *userOrg = [self getUserOrganization];
+	BOOL isTestAccount = [UserSetting isUserTestAccount];
 	if (userOrg) {
 		NSLog(@"%@", userOrg);
 		NSLog(@"%@", userOrg);
 		[ColorgyAPI availableOrganization:userOrg success:^(BOOL isAvailable) {
-			if (isAvailable) {
+			// 如果是測式帳號 還是放行
+			if (isAvailable || isTestAccount) {
 				// 檢查現在的user是否更換，更換的話重置重置註冊頁面並切換子控制器
 				[ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
 					NSLog(@"%@, %@", chatUser.userId, self.chatUser.userId);
@@ -151,9 +153,10 @@
 	
 	// 檢查學校是否開放
 	NSString *userOrg = [self getUserOrganization];
+	BOOL isTestAccount = [UserSetting isUserTestAccount];
 	if (userOrg) {
 		[ColorgyAPI availableOrganization:userOrg success:^(BOOL isAvailable) {
-			if (isAvailable) {
+			if (isAvailable || isTestAccount) {
 				[ColorgyChatAPI checkUserAvailability:^(ChatUser *user) {
 					self.chatUser = user;
 					

@@ -25,6 +25,8 @@ private struct APIResult {
 		//--------------new data----------------
 		static let email = "email"
 		static let fbemail = "fbemail"
+		// test account region
+		static let isTestAccount = "is_test_account"
     }
 }
 
@@ -44,8 +46,9 @@ class ColorgyAPIMeResult : CustomStringConvertible {
 	//--------------new data----------------
 	var email: String?
 	var fbemail: String?
+	var isTestAccount: Bool
     
-    var description: String { return "ColorgyAPIMeResult: {\n\tid => \(id)\n\tuuid => \(uuid)\n\tusername => \(username)\n\tname => \(name)\n\tavatar_url => \(avatar_url)\n\tcover_photo_url => \(cover_photo_url)\n\t_type => \(_type)\n\torganization => \(organization)\n\tdepartment => \(department)\n\tpossible_organization_code => \(possible_organization_code)\n\tpossible_department_code => \(possible_department_code)\n\temail => \(email)\n\tfbemail => \(fbemail)\n}" }
+    var description: String { return "ColorgyAPIMeResult: {\n\tid => \(id)\n\tuuid => \(uuid)\n\tusername => \(username)\n\tname => \(name)\n\tavatar_url => \(avatar_url)\n\tcover_photo_url => \(cover_photo_url)\n\t_type => \(_type)\n\torganization => \(organization)\n\tdepartment => \(department)\n\tpossible_organization_code => \(possible_organization_code)\n\tpossible_department_code => \(possible_department_code)\n\temail => \(email)\n\tfbemail => \(fbemail)\n\tisTestAccount => \(isTestAccount)\n}" }
     
     func isUserRegisteredTheirSchool() -> Bool {
         if (self.possible_organization_code == nil || self.possible_department_code == nil) {
@@ -58,7 +61,8 @@ class ColorgyAPIMeResult : CustomStringConvertible {
         // failable initializer must have all properties initialized before returning nil
         self.id = -1
         self.uuid = ""
-
+		self.isTestAccount = false
+		print(json)
         if let json = json {
             // necessary part
             if let id = json[APIResult.Me.id].int {
@@ -114,6 +118,9 @@ class ColorgyAPIMeResult : CustomStringConvertible {
 			}
 			if let fbemail = json[APIResult.Me.fbemail].string {
 				self.fbemail = fbemail
+			}
+			if let isTestAccount = json[APIResult.Me.isTestAccount].bool {
+				self.isTestAccount = isTestAccount
 			}
         } else {
             return nil
