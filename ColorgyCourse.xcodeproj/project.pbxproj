@@ -66,6 +66,7 @@
 		633D7ED61C6DCC2C00683AFD /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */; };
 		633D7ED71C6DCC2C00683AFD /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */; };
 		633D7ED91C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633D7ED81C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift */; };
+		6340A3441CBB4EE2001AE3AE /* backgroundWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 6340A3431CBB4EE2001AE3AE /* backgroundWhite.png */; };
 		634334001BFDC27700F9B121 /* ChooseSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */; };
 		634896FF1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */; };
 		6348F8781B99FACA005E4D37 /* TimeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */; };
@@ -307,6 +308,7 @@
 		633D7ECD1C6DCC2C00683AFD /* SKPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowser.swift; sourceTree = "<group>"; };
 		633D7ECE1C6DCC2C00683AFD /* SKZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKZoomingScrollView.swift; sourceTree = "<group>"; };
 		633D7ED81C6DD9CC00683AFD /* DLPhotoMessageDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLPhotoMessageDelegate.swift; sourceTree = "<group>"; };
+		6340A3431CBB4EE2001AE3AE /* backgroundWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundWhite.png; sourceTree = "<group>"; };
 		634333FF1BFDC27700F9B121 /* ChooseSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolViewController.swift; sourceTree = "<group>"; };
 		634896FE1C1FDE18008762FE /* ChooseIntendedTimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseIntendedTimeViewController.swift; sourceTree = "<group>"; };
 		6348F8771B99FACA005E4D37 /* TimeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewController.swift; sourceTree = "<group>"; };
@@ -1186,6 +1188,7 @@
 				6313B2271C7AB5AB0075A00E /* FailToLoadDataHintView.swift */,
 				631991DB1C3F6790005052BC /* DevelopmentTestingMethods.swift */,
 				63FBCC101B9345B800B3084F /* AppDelegate.swift */,
+				6340A3431CBB4EE2001AE3AE /* backgroundWhite.png */,
 				63C2F1CD1C86D767007971AE /* ColorgyNotification.swift */,
 				63FBCC171B9345B800B3084F /* Main.storyboard */,
 				6389A7CC1CAA5C61008460E1 /* EditCourseViewController.swift */,
@@ -1359,6 +1362,7 @@
 				63B9428C1C59CE0D0060A097 /* DLIncomingPhotoBubble.xib in Resources */,
 				63FBCC191B9345B800B3084F /* Main.storyboard in Resources */,
 				63BB30241C561F280055BA19 /* DLIncomingMessageBubble.xib in Resources */,
+				6340A3441CBB4EE2001AE3AE /* backgroundWhite.png in Resources */,
 				639D45151B96A75D0053870D /* 4.jpg in Resources */,
 				633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,

@@ -20,6 +20,8 @@
 @property UIButton *refreshButton;
 @property ChatUser *chatUser;
 @property UILabel *notAvailableLabel;
+@property UILabel *notAvailableLabelSubtitle;
+@property UIImageView *notAvailableImageView;
 
 - (void)switchViewController;
 

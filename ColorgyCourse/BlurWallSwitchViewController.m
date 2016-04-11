@@ -85,18 +85,41 @@
 // 尚未開放的畫面
 - (void)setupNotYetAvailableView {
 	if (!self.notAvailableLabel) {
+		
+		UIColor *textColor = [UIColor colorWithRed:135/255.0 green:136/255.0 blue:140/255.0 alpha:1.0];
 		self.notAvailableLabel = [[UILabel alloc] init];
 		self.notAvailableLabel.textAlignment = NSTextAlignmentCenter;
-		self.notAvailableLabel.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-		self.notAvailableLabel.clipsToBounds = YES;
-		self.notAvailableLabel.text = @"您的學校尚未開放模糊聊的功能喔！";
-		self.notAvailableLabel.font = [UIFont systemFontOfSize:16];
-		self.notAvailableLabel.layer.cornerRadius = 4.0;
+		self.notAvailableLabel.text = @"同學抱歉";
+		self.notAvailableLabel.textColor = textColor;
+		self.notAvailableLabel.font = [UIFont systemFontOfSize:24];
 		self.notAvailableLabel.frame = CGRectMake(0, 0, 290, 40);
 		self.notAvailableLabel.center = self.view.center;
 		if (self.notAvailableLabel.superview != self.view) {
 			[self.view addSubview:self.notAvailableLabel];
 		}
+		
+		self.notAvailableLabelSubtitle = [[UILabel alloc] init];
+		self.notAvailableLabelSubtitle.text = @"您的學校還沒有開通哦！";
+		self.notAvailableLabelSubtitle.font = [UIFont systemFontOfSize:14];
+		self.notAvailableLabelSubtitle.frame = CGRectMake(0, 0, 290, 20);
+		self.notAvailableLabelSubtitle.textColor = textColor;
+		self.notAvailableLabelSubtitle.textAlignment = NSTextAlignmentCenter;
+		self.notAvailableLabelSubtitle.center = self.view.center;
+		if (self.notAvailableLabelSubtitle.superview != self.view) {
+			[self.view addSubview:self.notAvailableLabelSubtitle];
+		}
+		
+		self.notAvailableImageView = [[UIImageView alloc] init];
+		self.notAvailableImageView.frame = CGRectMake(0, 0, 135, 130);
+		self.notAvailableImageView.image = [UIImage imageNamed:@"ChatNotOpenedYet"];
+		if (self.notAvailableImageView.superview != self.view) {
+			[self.view addSubview:self.notAvailableImageView];
+		}
+		
+		// arrange
+		self.notAvailableImageView.center = CGPointMake(self.view.center.x, self.view.center.y*0.87);
+		self.notAvailableLabel.center = CGPointMake(self.view.center.x, self.notAvailableImageView.frame.origin.y + self.notAvailableImageView.frame.size.height + 30);
+		self.notAvailableLabelSubtitle.center = CGPointMake(self.view.center.x, self.notAvailableLabel.frame.origin.y + self.notAvailableLabel.frame.size.height + 15);
 	}
 }
 

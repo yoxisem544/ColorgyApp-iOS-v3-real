@@ -148,6 +148,11 @@ class ChatRoomViewController: DLMessagesViewController {
 		requestMoreMessageRefreshControl.addTarget(self, action: #selector(needsToRefresh), forControlEvents: UIControlEvents.ValueChanged)
 		requestMoreMessageRefreshControl.tintColor = ColorgyColor.MainOrange
 		bubbleTableView.addSubview(requestMoreMessageRefreshControl)
+		
+//		let whiteView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 64))
+//		whiteView.backgroundColor = UIColor.whiteColor()
+//		view?.addSubview(whiteView)
+//		view?.bringSubviewToFront(whiteView)
 	}
 	
 	func needsToRefresh(control: UIRefreshControl) {

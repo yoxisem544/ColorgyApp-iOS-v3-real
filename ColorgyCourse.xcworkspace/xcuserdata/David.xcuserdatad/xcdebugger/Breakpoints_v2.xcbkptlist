@@ -89,54 +89,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ChooseIntendedTimeViewController.swift"
-            timestampString = "476009375.352815"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "finishChoosingAndReadyToPATCHUserInfo()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ColorgyCourse.ChooseIntendedTimeViewController.(finishChoosingAndReadyToPATCHUserInfo () -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "482034172.744789"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "297">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ColorgyCourse.ChooseIntendedTimeViewController.(finishChoosingAndReadyToPATCHUserInfo () -&gt; ()).(closure #1).(closure #1).(closure #1)"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChooseIntendedTimeViewController.swift"
-                  timestampString = "482034172.744912"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "19">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/TestAPI.swift"
             timestampString = "475766865.812264"
             startingColumnNumber = "9223372036854775807"
@@ -186,7 +138,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/LocalCourseDB.swift"
-                  timestampString = "482034172.746493"
+                  timestampString = "482045824.821476"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
@@ -201,7 +153,7 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/LocalCourseDB.swift"
-                  timestampString = "482034172.746619"
+                  timestampString = "482045824.821596"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "124"
@@ -250,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ChatRoomViewController.swift"
-            timestampString = "482033880.971765"
+            timestampString = "482039022.410438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "717"
-            endingLineNumber = "717"
+            startingLineNumber = "722"
+            endingLineNumber = "722"
             landmarkName = "floatingOptionViewShouldLeaveChatroom()"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ChatRoomViewController.swift"
-            timestampString = "482033880.971765"
+            timestampString = "482039022.410438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "744"
-            endingLineNumber = "744"
+            startingLineNumber = "749"
+            endingLineNumber = "749"
             landmarkName = "chatReportViewController(didSubmitReportUserContent:description:hi:)"
             landmarkType = "5">
             <Locations>
@@ -282,11 +234,11 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "482034172.748541"
+                  timestampString = "482045824.824122"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "744"
-                  endingLineNumber = "744"
+                  startingLineNumber = "749"
+                  endingLineNumber = "749"
                   offsetFromSymbolStart = "100">
                </Location>
                <Location
@@ -297,11 +249,11 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "482034172.748644"
+                  timestampString = "482045824.824259"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "745"
-                  endingLineNumber = "745"
+                  startingLineNumber = "750"
+                  endingLineNumber = "750"
                   offsetFromSymbolStart = "104">
                </Location>
             </Locations>
@@ -314,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ChatRoomViewController.swift"
-            timestampString = "482033880.971765"
+            timestampString = "482039022.410438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "747"
-            endingLineNumber = "747"
+            startingLineNumber = "752"
+            endingLineNumber = "752"
             landmarkName = "chatReportViewController(didSubmitReportUserContent:description:hi:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ChatRoomViewController.swift"
-            timestampString = "482033880.971765"
+            timestampString = "482039022.410438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "750"
-            endingLineNumber = "750"
+            startingLineNumber = "755"
+            endingLineNumber = "755"
             landmarkName = "chatReportViewController(didSubmitReportUserContent:description:hi:)"
             landmarkType = "5">
             <Locations>
@@ -346,11 +298,11 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "482034172.751034"
+                  timestampString = "482045824.826566"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "750"
-                  endingLineNumber = "750"
+                  startingLineNumber = "755"
+                  endingLineNumber = "755"
                   offsetFromSymbolStart = "658">
                </Location>
                <Location
@@ -361,46 +313,14 @@
                   moduleName = "ColorgyCourse"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ChatRoomViewController.swift"
-                  timestampString = "482034172.751179"
+                  timestampString = "482045824.826737"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "750"
-                  endingLineNumber = "750"
+                  startingLineNumber = "755"
+                  endingLineNumber = "755"
                   offsetFromSymbolStart = "171">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ChooseIntendedTimeViewController.swift"
-            timestampString = "478601721.984598"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "finishChoosingAndReadyToPATCHUserInfo()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ColorgyAPI.swift"
-            timestampString = "479212283.152928"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1241"
-            endingLineNumber = "1241"
-            landmarkName = "PATCHUserInfo(_:department:year:success:failure:)"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -417,54 +337,6 @@
             endingLineNumber = "1513"
             landmarkName = "PATCHUserImage(_:avatar_crop_x:avatar_crop_y:avatar_crop_w:avatar_crop_h:success:failure:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ColorgyCourse/ColorgyAPI.swift"
-            timestampString = "479212283.152928"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1235"
-            endingLineNumber = "1235"
-            landmarkName = "PATCHUserInfo(_:department:year:success:failure:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static ColorgyCourse.ColorgyAPI.PATCHUserInfo (Swift.String, department : Swift.String, year : Swift.String, success : () -&gt; (), failure : () -&gt; ()) -&gt; ()"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ColorgyAPI.swift"
-                  timestampString = "482034172.75403"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1235"
-                  endingLineNumber = "1235"
-                  offsetFromSymbolStart = "1848">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static ColorgyCourse.ColorgyAPI.(PATCHUserInfo (Swift.String, department : Swift.String, year : Swift.String, success : () -&gt; (), failure : () -&gt; ()) -&gt; ()).(closure #1)"
-                  moduleName = "ColorgyCourse"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/David/Desktop/@Hello!/ColorgyApp-iOS-v3-real/ColorgyCourse/ColorgyAPI.swift"
-                  timestampString = "482034172.754136"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1236"
-                  endingLineNumber = "1236"
-                  offsetFromSymbolStart = "35">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -490,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ColorgyCourse/ChatRoomViewController.swift"
-            timestampString = "482033880.971765"
+            timestampString = "482039022.410438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
             landmarkName = "checkAndStartSocket()"
             landmarkType = "5">
          </BreakpointContent>

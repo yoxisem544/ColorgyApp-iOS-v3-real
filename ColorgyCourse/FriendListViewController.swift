@@ -17,7 +17,7 @@ class FriendListViewController: UIViewController {
 	
 	var currentPage = 0
 	
-	private var renewTimer: NSTimer!
+	private var renewTimer: NSTimer?
 	
 	private var isListReloading: Bool = false
 	
@@ -25,6 +25,10 @@ class FriendListViewController: UIViewController {
 	private let noDataHintView = FailToLoadDataHintView(errorTitle: "哦！看起來你還沒有成功配對的聊天室喔！")
 	
 	private var hiList: [Hello] = []
+	
+	private var notAvailableImageView: UIImageView!
+	private var notAvailableLabelSubtitle: UILabel!
+	private var notAvailableLabel: UILabel!
 	
 //	private let newBackButton: UIBarButtonItem = UIBarButtonItem(title: "幹幹", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
 	
@@ -54,6 +58,17 @@ class FriendListViewController: UIViewController {
 		noDataHintView.hidden = true
 		
 		title = "好朋友"
+		
+//		let whiteImage = UIImage(named: "backgroundWhite.png")
+		
+//		navigationController?.navigationBar.setBackgroundImage(whiteImage, forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
+//		navigationController?.navigationBar.shadowImage = UIImage()
+		
+//		let whiteView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 64))
+//		whiteView.backgroundColor = UIColor.whiteColor()
+//		view?.addSubview(whiteView)
+//		view?.bringSubviewToFront(whiteView)
+//		navigationController?.navigationBar.translucent = false
 //		navigationController?.navigationBar.topItem?.backBarButtonItem = newBackButton
 //		print(navigationController?.navigationBar.topItem?.backBarButtonItem)
     }
@@ -61,10 +76,68 @@ class FriendListViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		checkRefreshToken()
+//		checkRefreshToken()
+//		
+//		loadFriend()
+//		renewChatroom(every: 16.0)
+		checkAvailable()
+	}
+	
+	func checkAvailable() {
+		let org = UserSetting.UserOrganization() ?? UserSetting.UserPossibleOrganization() ?? ""
+		let isTestAccount = UserSetting.isUserTestAccount()
 		
-		loadFriend()
-		renewChatroom(every: 16.0)
+		ColorgyAPI.availableOrganization(org, success: { (isAvailable) in
+			if isAvailable || isTestAccount {
+				self.checkRefreshToken()
+				
+				self.loadFriend()
+				self.renewChatroom(every: 16.0)
+			} else {
+				// not yet open
+				self.showNotYetOpenView()
+			}
+			}, failure: {
+				self.showHintFailView()
+		})
+
+	}
+	
+	func showNotYetOpenView() {
+		let textColor = UIColor(red: 135/255.0, green: 136/255.0, blue: 140/255.0, alpha: 1)
+		self.notAvailableLabel = UILabel()
+		self.notAvailableLabel.textAlignment = .Center
+		self.notAvailableLabel.text = "同學抱歉"
+		self.notAvailableLabel.textColor = textColor
+		self.notAvailableLabel.font = UIFont.systemFontOfSize(24)
+		self.notAvailableLabel.frame = CGRectMake(0, 0, 290, 40)
+		self.notAvailableLabel.center = view.center
+		if self.notAvailableLabel.superview != view {
+			view.addSubview(self.notAvailableLabel)
+		}
+		
+		self.notAvailableLabelSubtitle = UILabel()
+		self.notAvailableLabelSubtitle.text = "您的學校還沒有開通哦！"
+		self.notAvailableLabelSubtitle.font = UIFont.systemFontOfSize(14)
+		self.notAvailableLabelSubtitle.frame = CGRectMake(0, 0, 290, 20)
+		self.notAvailableLabelSubtitle.textColor = textColor
+		self.notAvailableLabelSubtitle.textAlignment = .Center
+		self.notAvailableLabelSubtitle.center = self.view.center
+		if self.notAvailableLabelSubtitle.superview != self.view {
+			view.addSubview(self.notAvailableLabelSubtitle)
+		}
+		
+		self.notAvailableImageView = UIImageView()
+		self.notAvailableImageView.frame = CGRectMake(0, 0, 135, 130)
+		self.notAvailableImageView.image = UIImage(named: "ChatNotOpenedYet");
+		if (self.notAvailableImageView.superview != self.view) {
+			view.addSubview(self.notAvailableImageView)
+		}
+		
+		// arrange
+		self.notAvailableImageView.center = CGPointMake(self.view.center.x, self.view.center.y*0.87);
+		self.notAvailableLabel.center = CGPointMake(self.view.center.x, self.notAvailableImageView.frame.origin.y + self.notAvailableImageView.frame.size.height + 30);
+		self.notAvailableLabelSubtitle.center = CGPointMake(self.view.center.x, self.notAvailableLabel.frame.origin.y + self.notAvailableLabel.frame.size.height + 15);
 	}
 	
 	func checkRefreshToken() {
@@ -89,7 +162,7 @@ class FriendListViewController: UIViewController {
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
-		renewTimer.invalidate()
+		renewTimer?.invalidate()
 	}
 	
 	// MARK: update back button title 
@@ -148,8 +221,10 @@ class FriendListViewController: UIViewController {
 	// MARK: Refresh
 	func renewChatroom(every second: NSTimeInterval) {
 		renewTimer = NSTimer(timeInterval: second, target: self, selector: #selector(refreshChatroom), userInfo: nil, repeats: true)
-		renewTimer.fire()
-		NSRunLoop.currentRunLoop().addTimer(renewTimer, forMode: NSRunLoopCommonModes)
+		renewTimer?.fire()
+		if renewTimer != nil {
+			NSRunLoop.currentRunLoop().addTimer(renewTimer!, forMode: NSRunLoopCommonModes)
+		}
 	}
 	
 	func loadHi() {
