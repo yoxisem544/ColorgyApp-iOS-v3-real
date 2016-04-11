@@ -438,8 +438,8 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"前往粉專，私訊Colorgy進行人工驗證。" preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]]) {
-            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:@"https://www.facebook.com/ColorUCollege/?fref=ts"]];
+        if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:@"https://colorgy.io/user_manual_validations/new"]]) {
+            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:@"https://colorgy.io/user_manual_validations/new"]];
         } else {
             NSLog(@"open url error");
             DEBUG_TAG();

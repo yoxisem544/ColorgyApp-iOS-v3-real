@@ -116,7 +116,11 @@ class ChatRoomViewController: DLMessagesViewController {
 	
 	// MARK: Helper
 	func updateRoomTitleWithProgress(progress: Int) {
-		title = historyChatroom.name + "(\(progress)%)"
+		if progress < 100 {
+			title = historyChatroom.name + "(\(progress)%)"
+		} else {
+			title = historyChatroom.name
+		}
 	}
 	
 	// MARK: sound and vibrate
