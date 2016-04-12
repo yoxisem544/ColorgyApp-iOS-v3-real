@@ -436,10 +436,11 @@
 // 人工驗證，打開瀏覽器
 - (void)manualVerification {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"前往粉專，私訊Colorgy進行人工驗證。" preferredStyle:UIAlertControllerStyleAlert];
-    
+	NSString *accessToken = [UserSetting UserAccessToken];
+	NSString *url = [NSString stringWithFormat:@"%@%@", @"https://colorgy.io/user_manual_validation/sso_new_session?access_token=", accessToken];
     [alertController addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:@"https://colorgy.io/user_manual_validations/new"]]) {
-            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:@"https://colorgy.io/user_manual_validations/new"]];
+        if ([[UIApplication sharedApplication] canOpenURL:[[NSURL alloc] initWithString:url]]) {
+            [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:url]];
         } else {
             NSLog(@"open url error");
             DEBUG_TAG();
