@@ -301,8 +301,28 @@
     if (self.information.aboutConversation.length || self.information.aboutPassion.length || self.information.aboutExpertise.length) {
         
         // 檢查各個about有的話會顯示，沒有的話會自動隱藏
+		if (self.information.aboutConversation.length) {
+			UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY + 10, aboutView.bounds.size.width - 2 * paddingX, 15)];
+			aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
+			aboutConversationTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
+			aboutConversationTitleLabel.text = @"關於我";
+			[aboutInformationView addSubview:aboutConversationTitleLabel];
+			currentY = CGRectGetMaxY(aboutConversationTitleLabel.frame);
+			currentY += paddingY;
+			UILabel *aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
+			
+			aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
+			aboutConversationLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
+			aboutConversationLabel.text = self.information.aboutConversation;
+			aboutConversationLabel.numberOfLines = 0;
+			[aboutConversationLabel sizeToFit];
+			[aboutInformationView addSubview:aboutConversationLabel];
+			currentY = CGRectGetMaxY(aboutConversationLabel.frame);
+			currentY += sectionY;
+		}
+
         if (self.information.aboutExpertise.length) {
-            UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY + 10, aboutView.bounds.size.width - 2 * paddingX, 15)];
+            UILabel *aboutExpertiseTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
             
             aboutExpertiseTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
             aboutExpertiseTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
@@ -344,25 +364,6 @@
             currentY += sectionY;
         }
         
-        if (self.information.aboutConversation.length) {
-            UILabel *aboutConversationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
-            aboutConversationTitleLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:13.0];
-            aboutConversationTitleLabel.textColor = [self UIColorFromRGB:248 green:150 blue:128 alpha:100];
-            aboutConversationTitleLabel.text = @"關於我";
-            [aboutInformationView addSubview:aboutConversationTitleLabel];
-            currentY = CGRectGetMaxY(aboutConversationTitleLabel.frame);
-            currentY += paddingY;
-            UILabel *aboutConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingX, currentY, aboutView.bounds.size.width - 2 * paddingX, 15)];
-            
-            aboutConversationLabel.font = [UIFont fontWithName:@"STHeitiTC-Light" size:15.0];
-            aboutConversationLabel.textColor = [self UIColorFromRGB:151 green:151 blue:151 alpha:100];
-            aboutConversationLabel.text = self.information.aboutConversation;
-            aboutConversationLabel.numberOfLines = 0;
-            [aboutConversationLabel sizeToFit];
-            [aboutInformationView addSubview:aboutConversationLabel];
-            currentY = CGRectGetMaxY(aboutConversationLabel.frame);
-            currentY += sectionY;
-        }
     } else {
         UIImageView *showNoneInfotmationImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PersonalInformationNone"]];
         
