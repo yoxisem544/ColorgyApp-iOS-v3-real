@@ -390,9 +390,7 @@
         self.loadingView.finishedString = @"成功";
         [self.loadingView start];
 		
-		NSDictionary *userInfo = [[NSDictionary alloc] init];
-		[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-		[Flurry logEvent:@"v3.0 Chat: User Update Personal Information" withParameters:userInfo];
+		[Flurry logEvent:@"v3.0 Chat: User Update Personal Information"];
         
         // 檢查使用者
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {

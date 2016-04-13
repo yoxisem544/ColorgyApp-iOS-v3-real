@@ -423,9 +423,7 @@
     [self.tabBarController setHidesBottomBarWhenPushed:YES];
     HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
 	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User Tap On Photo On Wall" withParameters:userInfo];
+	[Flurry logEvent:@"v3.0 Chat: User Tap On Photo On Wall"];
 	
     //    [self.navigationController pushViewController:vc animated:YES];
     [self presentViewController:vc animated:YES completion:nil];
@@ -468,20 +466,18 @@
 	[Flurry endTimedEvent:unspecifiedEvent withParameters:nil];
 	[Flurry endTimedEvent:maelEvent withParameters:nil];
 	[Flurry endTimedEvent:femaleEvent withParameters:nil];
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
     switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
         case 0:
             currentGender = @"unspecified";
-			[Flurry logEvent:unspecifiedEvent withParameters:userInfo timed:true];
+			[Flurry logEvent:unspecifiedEvent timed:true];
             break;
         case 1:
             currentGender = @"male";
-			[Flurry logEvent:maelEvent withParameters:userInfo timed:true];
+			[Flurry logEvent:maelEvent timed:true];
             break;
         case 2:
             currentGender = @"female";
-			[Flurry logEvent:femaleEvent withParameters:userInfo timed:true];
+			[Flurry logEvent:femaleEvent timed:true];
             break;
     }
     
@@ -929,9 +925,7 @@
 - (void)answerQuestion {
     if ([self.cleanAskTextView.text length]) {
 		
-		NSDictionary *userInfo = [[NSDictionary alloc] init];
-		[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-		[Flurry logEvent:@"v3.0 Chat: User Answered Everyday Question" withParameters:userInfo];
+		[Flurry logEvent:@"v3.0 Chat: User Answered Everyday Question"];
 		
         [self removeCleanAskViewLayout];
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {

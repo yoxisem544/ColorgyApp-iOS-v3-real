@@ -251,10 +251,8 @@
     self.navigationItem.hidesBackButton = YES;
     [self.tabBarController.tabBar setHidden:NO];
     [self.navigationController.navigationBar setHidden:YES];
-	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User Clicked Start Auth Flow" withParameters:userInfo];
+
+	[Flurry logEvent:@"v3.0 Chat: User Clicked Start Auth Flow"];
     
     [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
         switch (chatUser.status.integerValue) {
@@ -323,10 +321,8 @@
             self.loadingView.maskView.alpha = 0.75;
             
             // 發送email認證
-			
-			NSDictionary *userInfo = [[NSDictionary alloc] init];
-			[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-			[Flurry logEvent:@"v3.0 Chat: User Sent An Email, Waiting For Auth" withParameters:userInfo];
+
+			[Flurry logEvent:@"v3.0 Chat: User Sent An Email, Waiting For Auth"];
             
             [self.chatApiOC postEmail:emailString success:^(NSDictionary *response) {
                 [self.loadingView finished:^() {
@@ -491,9 +487,7 @@
                 [self removeCheckEmailLayout];
                 [self uploadLayout];
 				
-				NSDictionary *userInfo = [[NSDictionary alloc] init];
-				[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-				[Flurry logEvent:@"v3.0 Chat: User Finish Email Auth" withParameters:userInfo];
+				[Flurry logEvent:@"v3.0 Chat: User Finish Email Auth"];
             }];
         } else {
             [self.loadingView dismiss:nil];
@@ -575,9 +569,7 @@
     
     [self.view addSubview:self.uploadPhotoButton];
 	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User On Upload Photo View" withParameters:userInfo];
+	[Flurry logEvent:@"v3.0 Chat: User On Upload Photo View"];
 }
 
 // 清除畫面
@@ -783,9 +775,7 @@
 // 上傳照片，並更新使用者狀態到2
 - (void)uploadingImage {
 	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User Upload A New Blur Photo" withParameters:userInfo];
+	[Flurry logEvent:@"v3.0 Chat: User Upload A New Blur Photo"];
 	
     NSString *path = [[NSHomeDirectory()stringByAppendingPathComponent:@"Documents"]stringByAppendingPathComponent:@"image.png"];
     NSData *data = UIImagePNGRepresentation(self.uploadImage);
@@ -849,10 +839,8 @@
 
 // 名字確認畫面
 - (void)nameLayout {
-	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User On Naming Nick Name View" withParameters:userInfo];
+
+	[Flurry logEvent:@"v3.0 Chat: User On Naming Nick Name View"];
 	
     [self.tabBarController.tabBar setHidden:YES];
     
@@ -989,10 +977,8 @@
 
 // 確認名字，並更新狀態到3
 - (void)submitName {
-	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User Submit A Nick Name" withParameters:userInfo];
+
+	[Flurry logEvent:@"v3.0 Chat: User Submit A Nick Name"];
 	
     // 檢查名字
     
@@ -1184,10 +1170,8 @@
 
 // 清晰問畫面
 - (void)cleanAskLayout {
-	
-	NSDictionary *userInfo = [[NSDictionary alloc] init];
-	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-	[Flurry logEvent:@"v3.0 Chat: User First Time On Answered Everyday Question" withParameters:userInfo];
+
+	[Flurry logEvent:@"v3.0 Chat: User First Time On Answered Everyday Question"];
 	
     [self removeOpeningLayout];
     [self removeCheckEmailLayout];
@@ -1300,10 +1284,8 @@
 // 開始聊，更新狀態到4，透過BlurWallSwitchView的switch方法切換
 - (void)openChatButtonAcion {
     if (self.cleanAskReplyTextView.text.length) {
-		
-		NSDictionary *userInfo = [[NSDictionary alloc] init];
-		[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
-		[Flurry logEvent:@"v3.0 Chat: User Answered Everyday Question" withParameters:userInfo];
+
+		[Flurry logEvent:@"v3.0 Chat: User Answered Everyday Question"];
 		
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
             [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskReplyTextView.text date:self.questionDate success:^() {
