@@ -12,6 +12,7 @@
 #import "ColorgyChatAPIOC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UselessView.h"
+#import "Flurry.h"
 
 @interface PersonalChatInformationViewController () {
     UIBarButtonItem *submitBarButtonItem;
@@ -388,6 +389,10 @@
         self.loadingView.loadingString = @"上傳中";
         self.loadingView.finishedString = @"成功";
         [self.loadingView start];
+		
+		NSDictionary *userInfo = [[NSDictionary alloc] init];
+		[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
+		[Flurry logEvent:@"v3.0 Chat: User Update Personal Information" withParameters:userInfo];
         
         // 檢查使用者
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {

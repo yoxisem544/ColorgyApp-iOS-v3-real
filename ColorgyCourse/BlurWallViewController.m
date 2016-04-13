@@ -21,6 +21,7 @@
 #import "PersonalChatInformationViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UselessView.h"
+#import "Flurry.h"
 
 #define CELL_IDENTIFIER @"cellIdentifier"
 #define FOOTER_IDENTIFIER @"footerIdentifier"
@@ -421,6 +422,11 @@
     
     [self.tabBarController setHidesBottomBarWhenPushed:YES];
     HelloViewController *vc = [[HelloViewController alloc] initWithInformaion:[self.blurWallDataMutableArray objectAtIndex:indexPath.item]];
+	
+	NSDictionary *userInfo = [[NSDictionary alloc] init];
+	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
+	[Flurry logEvent:@"v3.0 Chat: User Tap On Photo On Wall" withParameters:userInfo];
+	
     //    [self.navigationController pushViewController:vc animated:YES];
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -456,15 +462,26 @@
     NSString *currentGender;
     currentPage = 0;
     canLoadMore = YES;
+	NSString *unspecifiedEvent = @"v3.0 Chat: User On Unspecified Wall";
+	NSString *maelEvent = @"v3.0 Chat: User On Male Wall";
+	NSString *femaleEvent = @"v3.0 Chat: User On Female Wall";
+	[Flurry endTimedEvent:unspecifiedEvent withParameters:nil];
+	[Flurry endTimedEvent:maelEvent withParameters:nil];
+	[Flurry endTimedEvent:femaleEvent withParameters:nil];
+	NSDictionary *userInfo = [[NSDictionary alloc] init];
+	[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
     switch (self.blurWallSegmentedControl.selectedSegmentIndex) {
         case 0:
             currentGender = @"unspecified";
+			[Flurry logEvent:unspecifiedEvent withParameters:userInfo timed:true];
             break;
         case 1:
             currentGender = @"male";
+			[Flurry logEvent:maelEvent withParameters:userInfo timed:true];
             break;
         case 2:
             currentGender = @"female";
+			[Flurry logEvent:femaleEvent withParameters:userInfo timed:true];
             break;
     }
     
@@ -911,6 +928,11 @@
 
 - (void)answerQuestion {
     if ([self.cleanAskTextView.text length]) {
+		
+		NSDictionary *userInfo = [[NSDictionary alloc] init];
+		[userInfo setValue:[UserSetting UserName] forKey:@"user name"];
+		[Flurry logEvent:@"v3.0 Chat: User Answered Everyday Question" withParameters:userInfo];
+		
         [self removeCleanAskViewLayout];
         [ColorgyChatAPI checkUserAvailability:^(ChatUser *chatUser) {
             [ColorgyChatAPI answerQuestion:chatUser.userId answer:self.cleanAskTextView.text date:self.questionDate success:^() {

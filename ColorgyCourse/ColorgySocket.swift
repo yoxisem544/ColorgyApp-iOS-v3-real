@@ -19,7 +19,7 @@ class ColorgySocket : NSObject {
 			self.socket.emitWithAck("post", parameters)(timeoutAfter: 10, callback: { (responseOnEmit) -> Void in
 				
 				print(responseOnEmit)
-
+				
 				dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INTERACTIVE.rawValue), 0)) { () -> Void in
 					if let _chatroom = Chatroom(json: JSON(responseOnEmit)) {
 						dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -38,7 +38,7 @@ class ColorgySocket : NSObject {
 							})
 							self.didConnectToSocketOnce = true
 						} else {
-							// reconnect to server 
+							// reconnect to server
 							ChatMessage.generateMessagesOnConnent(JSON(responseOnEmit), complete: { (messages) -> Void in
 								// sort message with timestamp
 								let sortedMessages = messages.sort({ (m1: ChatMessage, m2: ChatMessage) -> Bool in
@@ -135,7 +135,7 @@ class ColorgySocket : NSObject {
 				],
 				"url": "/chatroom/send_message"
 			]
-//			print(postData)
+			//			print(postData)
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)
 			})
@@ -156,7 +156,7 @@ class ColorgySocket : NSObject {
 				],
 				"url": "/chatroom/send_message"
 			]
-
+			
 			self.socket.emitWithAck("post", postData)(timeoutAfter: 10, callback: { (res) -> Void in
 				print(res)
 			})
