@@ -50,6 +50,7 @@ struct UserSettingKey {
     static let isCourseNotificationOn = "isCourseNotificationOn for local notitfication"
 	// for chat
     static let nickyName = "nickyName"
+	static let chatFirstTimeUpdateInformation = "chatFirstTimeUpdateInformation"
 }
 
 @objc class UserSetting : NSObject {
@@ -382,6 +383,18 @@ struct UserSettingKey {
 		ud.setBool(result.isTestAccount, forKey: UserSettingKey.isUserTestAccount)
         ud.synchronize()
     }
+	
+	// MARK: - pop for the first time
+	class func didPopUpdateInformation() {
+		let ud = NSUserDefaults.standardUserDefaults()
+		ud.setBool(true, forKey: UserSettingKey.chatFirstTimeUpdateInformation)
+		ud.synchronize()
+	}
+	
+	class func getDidPopUpdateInformation() -> Bool {
+		let ud = NSUserDefaults.standardUserDefaults()
+		return ud.boolForKey(UserSettingKey.chatFirstTimeUpdateInformation)
+	}
     
     // MARK: - delete user settings
     // TODO: logout delete settings
@@ -429,6 +442,7 @@ struct UserSettingKey {
         // course notification time
         ud.removeObjectForKey(UserSettingKey.courseNotificationTime)
         ud.removeObjectForKey(UserSettingKey.nickyName)
+		ud.removeObjectForKey(UserSettingKey.chatFirstTimeUpdateInformation)
         ud.synchronize()
     }
     // 2. refresh token expired logout

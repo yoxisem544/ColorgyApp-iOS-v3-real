@@ -584,7 +584,7 @@ class ChatRoomViewController: DLMessagesViewController {
 		if PHPhotoLibrary.authorizationStatus() == .Authorized {
 			let imagePickerController = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
 			
-			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("你已經選了 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
+			imagePickerController.addAction(ImagePickerAction(title: "照片圖庫", secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("傳送 %lu 張照片", comment: "Action Title"), $0) as String}, style: ImagePickerActionStyle.Default, handler: { (action: ImagePickerAction) -> () in
 				print("go to photo library")
 				self.shouldDisconnectSocket = false
 				self.dismissKeyboard()

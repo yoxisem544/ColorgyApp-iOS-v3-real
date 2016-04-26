@@ -21,7 +21,7 @@ class FriendListViewController: UIViewController {
 	
 	private var isListReloading: Bool = false
 	
-	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 資料下載錯誤...點擊重新下載...")
+	private let failToLoadDataHintView = FailToLoadDataHintView(errorTitle: "⚠️ 點擊重新下載資料...")
 	private let noDataHintView = FailToLoadDataHintView(errorTitle: "哦！看起來你還沒有成功配對的聊天室喔！")
 	
 	private var hiList: [Hello] = []

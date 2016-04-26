@@ -440,7 +440,7 @@
 
 // 人工驗證，打開瀏覽器
 - (void)manualVerification {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"前往粉專，私訊Colorgy進行人工驗證。" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"使用人工驗證" message:@"我們將帶領你前往人工驗證的網頁，請依照網頁的指示完成人工驗證的步驟！" preferredStyle:UIAlertControllerStyleAlert];
 	NSString *accessToken = [UserSetting UserAccessToken];
 	NSString *url = [NSString stringWithFormat:@"%@%@", @"https://colorgy.io/user_manual_validation/sso_new_session?access_token=", accessToken];
     [alertController addAction:[UIAlertAction actionWithTitle:@"前往" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {

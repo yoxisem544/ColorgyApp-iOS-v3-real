@@ -161,6 +161,22 @@
                     //                    } failure:^() {
                     //                    }];
                 }];
+				//
+				// pop update information here
+				UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"小提醒" message:@"右上角的按鈕可以修改個人資料\nColorgy 建議您將基本資料完整填完，可以大幅增加配對機率唷 💖" preferredStyle:UIAlertControllerStyleAlert];
+				UIAlertAction *ok = [UIAlertAction actionWithTitle:@"填寫資料" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+					[self pushToPersonalChatInformationViewController];
+				}];
+				UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"等一下再填" style:UIAlertActionStyleDefault handler:nil];
+				[alert addAction:ok];
+				[alert addAction:cancel];
+				if (![UserSetting getDidPopUpdateInformation]) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self presentViewController:alert animated:YES completion:nil];
+						[UserSetting didPopUpdateInformation];
+					});
+				}
+				
             } failure:^() {
                 NSLog(@"checkAnswered error");
                 [self.loadingView finished:^() {
