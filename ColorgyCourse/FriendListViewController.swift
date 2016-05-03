@@ -321,6 +321,7 @@ class FriendListViewController: UIViewController {
 	
 	func reloadFriendListV3(list: [HistoryChatroom]) {
 		didReceiveNewMessage(list)
+		print(list)
 		historyChatrooms = list.sort({ (r1: HistoryChatroom, r2: HistoryChatroom) -> Bool in
 			return r1.lastContentTime.timeIntervalSince1970() > r2.lastContentTime.timeIntervalSince1970()
 		})

@@ -434,11 +434,6 @@ class ChatRoomViewController: DLMessagesViewController {
 			let thisUser = (user1.id == self.userId ? user2 : user1)
 			self.userProfileImageString = thisUser.imageId
 		}
-		
-		colorgySocket.onDisconnect()
-		colorgySocket.onError()
-		
-		colorgySocket.connect()
 	}
 	
 	func doesContainMessage(message: ChatMessage) -> Bool {
