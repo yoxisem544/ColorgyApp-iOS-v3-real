@@ -264,8 +264,7 @@ extension ChooseSchoolViewController : ReportViewControllerDelegate {
 						if let periodDataObjects = periodDataObjects {
 							UserSetting.storePeriodsData(periodDataObjects)
 							if Release.mode {
-								Flurry.logEvent("v3.0: User login using FB")
-								Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+								Analytics.trackLoginWithFB()
 							}
 							// need update course
 							CourseUpdateHelper.needUpdateCourse()
@@ -281,8 +280,7 @@ extension ChooseSchoolViewController : ReportViewControllerDelegate {
 							//                                self.presentViewController(alert, animated: true, completion: nil)
 							UserSetting.storeFakePeriodsData()
 							if Release.mode {
-								Flurry.logEvent("v3.0: User login using FB, but has no period data")
-								Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+								Analytics.trackLoginWithFB()
 							}
 							// need update course
 							CourseUpdateHelper.needUpdateCourse()

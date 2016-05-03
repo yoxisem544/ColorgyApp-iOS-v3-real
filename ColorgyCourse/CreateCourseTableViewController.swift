@@ -72,12 +72,7 @@ class CreateCourseTableViewController: UIViewController {
         let department = UserSetting.UserPossibleDepartment() ?? "no department"
         
 		let params: [String : AnyObject] = ["course_name": lc.name, "course_lecturer": lc.lecturer ?? "", "school": school, "department": department, "year": semester.year, "term": semester.term, "user_id": userId]
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Created A Local Course", withParameters: params as [NSObject : AnyObject])
-			Answers.logCustomEventWithName(AnswersLogEvents.userCreateALocalCourse, customAttributes: params)
-        } else {
-            Flurry.logEvent("v3.0: User Created A Local Course", withParameters: params as [NSObject : AnyObject])
-        }
+        Analytics.trackCreateLocalCourse(params)
         
         LocalCourseDB.storeLocalCourseToDB(lc)
         popBackToSearchView()

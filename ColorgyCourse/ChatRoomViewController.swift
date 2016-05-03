@@ -628,7 +628,7 @@ class ChatRoomViewController: DLMessagesViewController {
 	func sendImage(image: UIImage) {
 		ColorgyChatAPI.uploadImage(image, success: { (result) -> Void in
 			print(result)
-			Flurry.logEvent("v3.0 Chat: User Sent A Photo/Image")
+			Analytics.trackSendImage()
 			self.colorgySocket.sendPhotoMessage(result, withUserId: self.userId)
 			}) { () -> Void in
 				print("fail to upload image")
@@ -653,7 +653,7 @@ extension ChatRoomViewController : DLMessagesViewControllerDelegate {
 	func DLMessagesViewControllerDidClickedMessageButton(withReturnMessage message: String?) {
 		print(message)
 		if let message = message {
-			Flurry.logEvent("v3.0 Chat: User Sent A Message")
+			Analytics.trackSendMessage()
 			colorgySocket.sendTextMessage(message, withUserId: userId)
 		}
 	}

@@ -44,6 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		// Mixpanel
 		setupMixpanel()
+		
+		// GA
+		setupGoogleAnalytics()
+		
+		Analytics.trackAppLaunch()
         
         // register for notification
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil))
@@ -87,10 +92,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 	}
 	
+	func setupGoogleAnalytics() {
+		// Configure tracker from GoogleService-Info.plist.
+		var configureError:NSError?
+		GGLContext.sharedInstance().configureWithError(&configureError)
+		assert(configureError == nil, "Error configuring Google services: \(configureError)")
+		
+		// Optional: configure GAI options.
+		let gai = GAI.sharedInstance()
+		gai.trackUncaughtExceptions = true  // report uncaught exceptions
+		gai.logger.logLevel = GAILogLevel.Verbose  // remove before app release
+	}
+	
 	func setupMixpanel() {
 		if Release.mode {
 			let mixpanel = Mixpanel.sharedInstanceWithToken("988f2b266e2bfe423085a0959ca936f3")
-			mixpanel.track(MixpanelEvents.OpenApp)
 		}
 	}
 	
@@ -98,18 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		if Release.mode {
 			// setup Flurry
 			Flurry.startSession(SecretKey.FlurryProductionKey) // replace flurryKey with your own key
-			let id = UserSetting.UserId() ?? -1
-			let school = UserSetting.UserPossibleOrganization() ?? "no school"
-			let name = UserSetting.UserName() ?? "no name"
-			let params = ["user_id": id, "user_name": name, "school": school]
-			Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
 		} else {
 			Flurry.startSession(SecretKey.FlurryDevelopmentKey) // for dev
-			let id = UserSetting.UserId() ?? -1
-			let school = UserSetting.UserPossibleOrganization() ?? "no school"
-			let name = UserSetting.UserName() ?? "no name"
-			let params = ["user_id": id, "user_name": name, "school": school]
-			Flurry.logEvent("v3.0 User didFinishLaunchingWithOptions", withParameters: params as! [NSObject : AnyObject])
 		}
 	}
 	
@@ -229,10 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Close Application, application enter background")
-        }
+		Analytics.trackEnterBackground()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -251,13 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Start Application, applicationDidBecomeActive")
-        } else {
-            Flurry.logEvent("User applicationWillEnterForeground, for testing")
-        }
-
+        Analytics.trackBecomeActive()
     }
 
     func applicationWillTerminate(application: UIApplication) {

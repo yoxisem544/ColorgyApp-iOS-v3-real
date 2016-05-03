@@ -100,18 +100,12 @@ class DetailCourseViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Using Detail Course View", timed: true)
-			Answers.logCustomEventWithName(AnswersLogEvents.userWatchingDetailCourseView, customAttributes: nil)
-        }
+        Analytics.trackUsingDetailCourseView()
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release.mode {
-            Flurry.endTimedEvent("v3.0: User Using Detail Course View", withParameters: nil)
-        }
+        Analytics.stopTrackingUsingDetailCourseView()
     }
     
     private func downloadCourseInfo() {
@@ -188,11 +182,7 @@ class DetailCourseViewController: UIViewController {
 extension DetailCourseViewController : ClassmatesContainerViewDelegate {
     func classmatesContainerView(userDidTapOnUser userCourseObject: UserCourseObject) {
         print(userCourseObject)
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Tap on Classmate's Profile Photo", withParameters: ["user_id": userCourseObject.user_id])
-        }
-		Mixpanel.sharedInstance().track(MixpanelEvents.clickOthersProfileImage)
+		Analytics.trackUserTapOnOthersProfilePhoto(userCourseObject.user_id)
         self.performSegueWithIdentifier("Show Classmate Timetable", sender: userCourseObject)
     }
 }

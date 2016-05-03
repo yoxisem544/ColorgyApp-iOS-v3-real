@@ -7,6 +7,7 @@ target 'ColorgyCourse' do
   pod 'Crashlytics'
   pod 'SDWebImage', '~>3.7'
   pod 'Mixpanel'
+  pod 'Google/Analytics'
 end
 
 target 'ColorgyCourseTests' do

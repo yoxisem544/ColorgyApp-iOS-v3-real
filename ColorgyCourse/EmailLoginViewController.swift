@@ -69,17 +69,12 @@ class EmailLoginViewController: UIViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		// Flurry
-		if Release.mode {
-			Flurry.logEvent("v3.0: User On Email Login View", timed: true)
-		}
+		Analytics.trackOnEmailLoginView()
 	}
 	
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
-		if Release.mode {
-			Flurry.endTimedEvent("User On Email Login View", withParameters: nil)
-		}
+		Analytics.stopTrackingOnEmailLoginView()
 	}
 	
 	func emailLoginButtonClicked() {
@@ -113,8 +108,7 @@ class EmailLoginViewController: UIViewController {
 							if let periodDataObjects = periodDataObjects {
 								UserSetting.storePeriodsData(periodDataObjects)
 								if Release.mode {
-									Flurry.logEvent("v3.0: User login using FB")
-									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+									Analytics.trackLoginWithFB()
 								}
 								// need update course
 								CourseUpdateHelper.needUpdateCourse()
@@ -131,8 +125,7 @@ class EmailLoginViewController: UIViewController {
 								//                                        self.showButtons()
 								UserSetting.storeFakePeriodsData()
 								if Release.mode {
-									Flurry.logEvent("v3.0: User login using FB, but has no period data")
-									Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+									Analytics.trackLoginWithFB()
 								}
 								// need update course
 								CourseUpdateHelper.needUpdateCourse()

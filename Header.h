@@ -24,4 +24,6 @@
 
 #import "UIImage+GaussianBlurUIImage.h"
 
+#import <Google/Analytics.h>
+
 #endif

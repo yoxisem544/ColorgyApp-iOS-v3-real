@@ -185,6 +185,7 @@
 		63E776691B973C6C00B15AF0 /* TestLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */; };
 		63EDDD311C6D8A4800E63B92 /* TimeStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */; };
 		63F4DB2F1CD8462700AFDCA6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F4DB2E1CD8462700AFDCA6 /* Analytics.swift */; };
+		63F4DB311CD847BA00AFDCA6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63F4DB301CD847BA00AFDCA6 /* GoogleService-Info.plist */; };
 		63F718681C3D07C200870C5F /* CourseTimePickerKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */; };
 		63F7186A1C3D17B800870C5F /* OneWayInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F718691C3D17B800870C5F /* OneWayInputTextField.swift */; };
 		63FBCC111B9345B800B3084F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FBCC101B9345B800B3084F /* AppDelegate.swift */; };
@@ -434,6 +435,7 @@
 		63E776681B973C6C00B15AF0 /* TestLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestLoginViewController.swift; sourceTree = "<group>"; };
 		63EDDD301C6D8A4800E63B92 /* TimeStamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeStamp.swift; sourceTree = "<group>"; };
 		63F4DB2E1CD8462700AFDCA6 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		63F4DB301CD847BA00AFDCA6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		63F718671C3D07C200870C5F /* CourseTimePickerKeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTimePickerKeyboardView.swift; sourceTree = "<group>"; };
 		63F718691C3D17B800870C5F /* OneWayInputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneWayInputTextField.swift; sourceTree = "<group>"; };
 		63FBCC0B1B9345B800B3084F /* ColorgyCourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorgyCourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1163,6 +1165,7 @@
 			isa = PBXGroup;
 			children = (
 				63FBCC691B93470700B3084F /* Header.h */,
+				63F4DB301CD847BA00AFDCA6 /* GoogleService-Info.plist */,
 				63FBCC0D1B9345B800B3084F /* ColorgyCourse */,
 				63FBCC261B9345B800B3084F /* ColorgyCourseTests */,
 				63BDC9E71C50F0C1001A84D3 /* ColorgyCourseUITests */,
@@ -1370,6 +1373,7 @@
 				633D7ED51C6DCC2C00683AFD /* SKPhotoBrowser.bundle in Resources */,
 				63FBCC1E1B9345B800B3084F /* LaunchScreen.xib in Resources */,
 				63BB30291C561F280055BA19 /* DLOutgoingMessageBubble.xib in Resources */,
+				63F4DB311CD847BA00AFDCA6 /* GoogleService-Info.plist in Resources */,
 				63B942901C59D6650060A097 /* DLOutgoingPhotoBubble.xib in Resources */,
 				4EB5A9AD1C57525E009BA61B /* 123.jpeg in Resources */,
 				63FBCC1B1B9345B800B3084F /* Images.xcassets in Resources */,
