@@ -86,11 +86,7 @@ class SearchCourseViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
-			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSearchCourseView, customAttributes: nil)
-        }
+        Analytics.trackOnSearchCourseView()
 		
 		// focus
 		self.searchControl.active = true
@@ -109,9 +105,7 @@ class SearchCourseViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release.mode {
-            Flurry.endTimedEvent("v3.0: User Using Search Course View", withParameters: nil)
-        }
+        Analytics.stopTrackingOnSearchCourseView()
     }
     
     func checkToken() {
@@ -347,11 +341,7 @@ extension SearchCourseViewController : AlertDeleteCourseViewDelegate {
 //			self.loadEnrolledCourses()
 			self.removeCourse(course)
 			self.searchCourseTableView.reloadData()
-            // Flurry
-            if Release.mode {
-                Flurry.logEvent("v3.0: User Delete A Course")
-				Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
-            }
+            Analytics.trackDeleteCourse()
             }, failure: { () -> Void in
 				// loading view
 				self.loadingView.stopAniamting()
@@ -421,11 +411,7 @@ extension SearchCourseViewController : SearchCourseCellDelegate {
             CourseUpdateHelper.needUpdateCourse()
             cell.hasEnrolledState = true
 			self.searchCourseTableView.reloadData()
-            // Flurry
-            if Release.mode {
-                Flurry.logEvent("v3.0: User Add A Course")
-				Answers.logCustomEventWithName(AnswersLogEvents.userAddCourse, customAttributes: nil)
-            }
+            Analytics.trackAddCourse()
             }, failure: { () -> Void in
 				// remove loading view
 				self.loadingView.stopAniamting()

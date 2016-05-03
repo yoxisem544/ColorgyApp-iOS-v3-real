@@ -51,8 +51,7 @@ class PrivacyTableViewController: UITableViewController {
 				"user_department": UserSetting.UserPossibleDepartment() ?? "no department",
 				"privacy_setting": self.publicTimeTableSwitch.on ? "On" : "Off"
 			]
-			Flurry.logEvent("v3.0: User Change Their Privacy Setting", withParameters: params as [NSObject : AnyObject])
-			Answers.logCustomEventWithName(AnswersLogEvents.userChangedPrivacySetting, customAttributes: params)
+			Analytics.trackUserChangePrivacySetting(params)
             }) { () -> Void in
 
         }

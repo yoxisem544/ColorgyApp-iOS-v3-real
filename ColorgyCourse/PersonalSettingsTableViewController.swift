@@ -26,10 +26,7 @@ class PersonalSettingsTableViewController: UITableViewController {
 	
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
-		if Release.mode {
-			Flurry.logEvent("v3.0: User On Setting Page")
-			Answers.logCustomEventWithName(AnswersLogEvents.userUsingSettingsPage, customAttributes: nil)
-		}
+		Analytics.trackOnSettingPage()
 	}
 
     // MARK: - Navigation
@@ -70,11 +67,7 @@ class PersonalSettingsTableViewController: UITableViewController {
             } else {
                 UIApplication.sharedApplication().openURL(NSURL(string: "https://www.facebook.com/1529686803975150")!)
             }
-            // Flurry
-            if Release.mode {
-                Flurry.logEvent("v3.0: User goto FB fan page using app.")
-				Answers.logCustomEventWithName(AnswersLogEvents.userGoToFanPage, customAttributes: nil)
-            }
+            Analytics.trackGotoFBFanPage()
         })
         let cancel = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
         alert.addAction(ok)
@@ -91,11 +84,7 @@ class PersonalSettingsTableViewController: UITableViewController {
                     ServerCourseDB.deleteAllCourses()
                     CourseDB.deleteAllCourses()
                     LocalCourseDB.deleteAllCourses()
-                    // Flurry
-                    if Release.mode {
-                        Flurry.logEvent("v3.0: User Logout App")
-						Answers.logCustomEventWithName(AnswersLogEvents.userLogout, customAttributes: nil)
-                    }
+                    Analytics.trackLogout()
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewControllerWithIdentifier("Main Login View") as! UINavigationController
                     self.presentViewController(vc, animated: true, completion: nil)

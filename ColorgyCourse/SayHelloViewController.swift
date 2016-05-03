@@ -245,7 +245,7 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 		print("sayHelloTableViewCellAcceptHelloButtonClicked")
 		removeHi(hi)
 		
-		Flurry.logEvent("v3.0 Chat: User Accept Hi")
+		Analytics.trackAcceptHi()
 		
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.acceptHi(user.userId, hiId: hi.id, success: { () -> Void in
@@ -263,7 +263,7 @@ extension SayHelloViewController : SayHelloTableViewCellDelegate {
 	func sayHelloTableViewCellRejectHelloButtonClicked(hi: Hello) {
 		print("sayHelloTableViewCellRejectHelloButtonClicked")
 		removeHi(hi)
-		Flurry.logEvent("v3.0 Chat: User Reject Hi")
+		Analytics.trackRejectHi()
 		
 		ColorgyChatAPI.checkUserAvailability({ (user) -> Void in
 			ColorgyChatAPI.rejectHi(user.userId, hiId: hi.id, success: { () -> Void in

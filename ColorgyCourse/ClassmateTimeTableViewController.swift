@@ -75,7 +75,6 @@ class ClassmateTimeTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Flurry
         if Release.mode {
 			let params: [String : AnyObject] = ["user_id": userCourseObject.user_id]
 			Analytics.trackUsingTimeTable(params)

@@ -19,9 +19,7 @@ class TimeTableViewController: UIViewController {
     var courses: [Course]!
 
     @IBAction func addCourseButtonClicked(sender: AnyObject) {
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Tap Add Button To Search Course View")
-        }
+        Analytics.trackTapAddCourseButton()
         self.performSegueWithIdentifier("Show Add Course", sender: sender)
     }
 
@@ -97,12 +95,7 @@ class TimeTableViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
-			Answers.logCustomEventWithName(AnswersLogEvents.userUsingTimetable, customAttributes: nil)
-        } else {
-            Flurry.logEvent("test: Using User Timetable", timed: true)
-        }
+        Analytics.trackOnTimeTableView()
         
         // check token
         checkToken()
@@ -130,11 +123,7 @@ class TimeTableViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release.mode {
-            Flurry.endTimedEvent("User Using User Timetable", withParameters: nil)
-        } else {
-            Flurry.logEvent("test: Using User Timetable", timed: true)
-        }
+        Analytics.stopTrackingOnTimeTableView()
 		// recover tab bar
 		hidesBottomBarWhenPushed = false
     }
@@ -255,9 +244,7 @@ extension TimeTableViewController : TimeTableViewDelegate {
     }
     
     func timeTableView(userDidTapOnCourseCell cell: CourseCellView) {
-        if Release.mode {
-            Flurry.logEvent("v3.0: User Tap on Course on Their Timetable")
-        }
+        Analytics.trackTapOnCourse()
         self.performSegueWithIdentifier("Timetable Show Detail Info", sender: cell.courseInfo)
     }
     

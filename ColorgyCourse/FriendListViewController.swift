@@ -82,8 +82,7 @@ class FriendListViewController: UIViewController {
 //		renewChatroom(every: 16.0)
 		checkAvailable()
 		
-		let userInfo: [String : NSObject] = ["user name": UserSetting.UserName() ?? "no name"]
-		Flurry.logEvent("v3.0 Chat: User On Friend List View", withParameters: userInfo, timed: true)
+		Analytics.trackOnFriendListView()
 	}
 	
 	func checkAvailable() {
@@ -166,8 +165,7 @@ class FriendListViewController: UIViewController {
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 		renewTimer?.invalidate()
-		
-		Flurry.endTimedEvent("v3.0 Chat: User On Friend List View", withParameters: nil)
+		Analytics.stopTrackingOnFriendListView()
 	}
 	
 	// MARK: update back button title 

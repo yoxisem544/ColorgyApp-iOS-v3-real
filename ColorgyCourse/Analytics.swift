@@ -45,6 +45,43 @@ class Analytics: NSObject {
 		Flurry.logEvent("v3.0 Chat: User Sent A Message")
 	}
 	
+	class func trackOnFriendListView() {
+		let userInfo: [String : NSObject] = ["user name": UserSetting.UserName() ?? "no name"]
+		Flurry.logEvent("v3.0 Chat: User On Friend List View", withParameters: userInfo, timed: true)
+	}
+	
+	class func stopTrackingOnFriendListView() {
+		Flurry.endTimedEvent("v3.0 Chat: User On Friend List View", withParameters: nil)
+	}
+	
+	class func trackAcceptHi() {
+		Flurry.logEvent("v3.0 Chat: User Accept Hi")
+	}
+	
+	class func trackRejectHi() {
+		Flurry.logEvent("v3.0 Chat: User Reject Hi")
+	}
+	
+	// MARK: - Search Course
+	class func trackOnSearchCourseView() {
+		Flurry.logEvent("v3.0: User Using Search Course View", timed: true)
+		Answers.logCustomEventWithName(AnswersLogEvents.userUsingSearchCourseView, customAttributes: nil)
+	}
+	
+	class func stopTrackingOnSearchCourseView() {
+		Flurry.endTimedEvent("v3.0: User Using Search Course View", withParameters: nil)
+	}
+	
+	class func trackDeleteCourse() {
+		Flurry.logEvent("v3.0: User Delete A Course")
+		Answers.logCustomEventWithName(AnswersLogEvents.userDeleteCourse, customAttributes: nil)
+	}
+	
+	class func trackAddCourse() {
+		Flurry.logEvent("v3.0: User Add A Course")
+		Answers.logCustomEventWithName(AnswersLogEvents.userAddCourse, customAttributes: nil)
+	}
+	
 	// MARK: - Login
 	class func trackLoginWithFB() {
 		Flurry.logEvent("v3.0: User login using FB")
@@ -56,8 +93,17 @@ class Analytics: NSObject {
 		Flurry.logEvent("FacebookLoginFailByUserCancel")
 	}
 	
+	class func trackOnFBLoginView() {
+		Flurry.logEvent("v3.0: User On FB Login View", timed: true)
+		Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+	}
+	
+	class func stopTrackingOnFBLoginView() {
+		Flurry.endTimedEvent("v3.0: User On FB Login View", withParameters: nil)
+	}
+	
 	class func trackLoginWithEmail() {
-		
+		Flurry.logEvent("v3.0: User login using Email")
 	}
 	
 	class func trackOnEmailLoginView() {
@@ -92,9 +138,54 @@ class Analytics: NSObject {
 		Mixpanel.sharedInstance().track(MixpanelEvents.clickOthersProfileImage)
 	}
 	
+	class func trackTapAddCourseButton() {
+		Flurry.logEvent("v3.0: User Tap Add Button To Search Course View")
+	}
+	
+	class func trackOnTimeTableView() {
+		Flurry.logEvent("v3.0: User Using User Timetable", timed: true)
+		Answers.logCustomEventWithName(AnswersLogEvents.userUsingTimetable, customAttributes: nil)
+	}
+	
+	class func stopTrackingOnTimeTableView() {
+		Flurry.endTimedEvent("v3.0: User Using User Timetable", withParameters: nil)
+	}
+	
+	class func trackTapOnCourse() {
+		Flurry.logEvent("v3.0: User Tap on Course on Their Timetable")
+	}
+	
 	// MARK: - Create Course
 	class func trackCreateLocalCourse(params: [String : AnyObject]) {
 		Flurry.logEvent("v3.0: User Created A Local Course", withParameters: params as [NSObject : AnyObject])
 		Answers.logCustomEventWithName(AnswersLogEvents.userCreateALocalCourse, customAttributes: params)
+	}
+	
+	// MARK: - Setting
+	class func trackUserChangePrivacySetting(params: [String : AnyObject]) {
+		Flurry.logEvent("v3.0: User Change Their Privacy Setting", withParameters: params as [NSObject : AnyObject])
+		Answers.logCustomEventWithName(AnswersLogEvents.userChangedPrivacySetting, customAttributes: params)
+	}
+	
+	class func trackOnSettingPage() {
+		Flurry.logEvent("v3.0: User On Setting Page")
+		Answers.logCustomEventWithName(AnswersLogEvents.userUsingSettingsPage, customAttributes: nil)
+	}
+	
+	class func trackGotoFBFanPage() {
+		Flurry.logEvent("v3.0: User goto FB fan page using app.")
+		Answers.logCustomEventWithName(AnswersLogEvents.userGoToFanPage, customAttributes: nil)
+	}
+	
+	class func trackLogout() {
+		Flurry.logEvent("v3.0: User Logout App")
+		Answers.logCustomEventWithName(AnswersLogEvents.userLogout, customAttributes: nil)
+	}
+	
+	// MARK: - Report
+	class func trackUserSendFeedback(params: [String : AnyObject]) {
+		Flurry.logEvent("v3.0: User Send Feedback", withParameters: params as [NSObject : AnyObject])
+		Answers.logCustomEventWithName(AnswersLogEvents.userSendFeedback, customAttributes: params)
+		Mixpanel.sharedInstance().track(MixpanelEvents.SubmitFeedbackFormSuccess)
 	}
 }

@@ -46,8 +46,7 @@ class FBLoginViewController: UIViewController {
                                     if let periodDataObjects = periodDataObjects {
                                         UserSetting.storePeriodsData(periodDataObjects)
                                         if Release.mode {
-                                            Flurry.logEvent("v3.0: User login using FB")
-											Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+                                            Analytics.trackLoginWithFB()
                                         }
                                         // need update course
                                         CourseUpdateHelper.needUpdateCourse()
@@ -64,8 +63,7 @@ class FBLoginViewController: UIViewController {
 //                                        self.showButtons()
                                         UserSetting.storeFakePeriodsData()
                                         if Release.mode {
-                                            Flurry.logEvent("v3.0: User login using FB, but has no period data")
-											Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
+											Analytics.trackLoginWithFB()
                                         }
                                         // need update course
                                         CourseUpdateHelper.needUpdateCourse()
@@ -145,19 +143,13 @@ class FBLoginViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Flurry
-        if Release.mode {
-            Flurry.logEvent("v3.0: User On FB Login View", timed: true)
-			Answers.logCustomEventWithName(AnswersLogEvents.userLoginWithFacebook, customAttributes: nil)
-        }
+        Analytics.stopTrackingOnFBLoginView()
 		navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if Release.mode {
-            Flurry.endTimedEvent("v3.0: User On FB Login View", withParameters: nil)
-        }
+        Analytics.stopTrackingOnFBLoginView()
     }
     
     // MARK: - show/hide buttons
